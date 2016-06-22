@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  copy_right_text: MyString
+  header_phone: MyString
+  header_email: MyString
+
+two:
+  copy_right_text: MyString
+  header_phone: MyString
+  header_email: MyString

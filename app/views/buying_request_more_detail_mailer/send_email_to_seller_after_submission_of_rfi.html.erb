@@ -1,0 +1,13 @@
+<% if @system_email.present? && @system_email.try(:content).present? %>
+	<%= @system_email.content.to_s.gsub("::SELLER_NAME::",@user.name.to_s).gsub("::REQUESTER_NAME::",@buying_request.name.to_s).gsub("::BUYING_REQUEST_NAME::",@buying_request.title.to_s).html_safe %>
+<% else %>
+	<p>HELLO <strong><%= @user.name.to_s %></strong></p>
+
+	<p>We got your Request for more information regarding <strong><%= @buying_request.title.to_s %></strong>, and it forwarded to <strong><%= @buying_request.name.to_s %></strong>, We will inform you once we got any response. A Power Cozmo representative will contact you in case of any raised enquiry. Please print this page for your record.</p>
+
+	<p>&nbsp;</p>
+
+	<p>Best Regards</p>
+
+	<p>Power Cozmo Team</p>
+<% end %>

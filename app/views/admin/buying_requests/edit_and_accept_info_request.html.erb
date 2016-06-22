@@ -1,0 +1,56 @@
+<div class="panel">
+  <h3>More Info Request</h3>
+  <div class="panel_contents">
+    <%= semantic_form_for @info_request, url: admin_update_and_accept_info_request_path, method: :put, multipart: true do |f| %>
+      <ul>
+        <%= hidden_field_tag :info_request_id, @info_request.id %>
+        <%= hidden_field_tag :id, @info_request.buying_request.id %>
+        <%= f.fields_for :user do |seller_form| %>
+          <li>
+            <%= f.label "Seller Name" %>
+            <%= seller_form.text_field :name, :disabled => true%>
+          </li>
+          <li>
+            <%= f.label "Seller Email" %>
+            <%= seller_form.text_field :email, :disabled => true%>
+          </li>
+        <% end %>
+        <li>
+          <%= f.label "Subject" %>
+          <%= f.text_field :subject %>
+          <%= error_message(@info_request, :subject)%>
+        </li>
+        <li>
+          <%= f.label "Message" %>
+          <%= f.text_area :message, cols: "30", rows: "20" %>
+          <%= error_message(@info_request, :message)%>
+        </li>
+         <li>
+          <%= f.label "Attachment" %>
+          <div style="float:left">
+            <%= f.file_field :attachment, accept: 'application/pdf' %>
+            <div class="clr" style="clear: both;"></div>
+            <% if f.object.attachment.present? %>
+            <%= link_to f.object.try(:attachment).try(:url).try(:split, '/').try(:last), f.object.try(:attachment).try(:url)%>
+          </div>
+          <% end %>
+        </li>
+          <li>
+            <%= f.actions style: "clear:both;" do %>
+            <%= f.action :submit, label: "Edit and Forward" %>
+          </li>
+          <li class='cancel'>
+              <%= link_to 'Cancel', admin_buying_request_path(@info_request.buying_request.id) %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>
+
+<style type="text/css">
+  label { width: 255px; float: left; }
+  input[type="file"] { float: left; margin-bottom: 10px; }
+  input[type="text"] { margin-bottom: 10px; }
+  .error-msg { margin-left: 255px; }
+</style>

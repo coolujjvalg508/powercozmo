@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Power Cozmo - BUY.SELL.TRADE</title>
+</head>
+<body style="margin: 0px; padding: 0px; color: #ccc; font-size: 12px;">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td height="93"  bgcolor="#ffffff" >
+				<table width="620" border="0" align="center" cellpadding="0" cellspacing="0" >
+					<tr>
+						<td width="20%" align="left" style="padding-left:30px;">
+							<%= image_tag attachments['logo.jpg'].url %>							
+						</td>
+						<td width="20%" align="right"  style=" font-size:14px; color:#666666; padding-right:30px; font-weight:bold;" >
+							<font face="Segoe UI,Arial, Helvetica, sans-serif ">&nbsp;</font>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table width="620" border="0" cellspacing="0" cellpadding="0" align="center">
+					<tr>
+						<td >
+							<table width="100%" border="0" cellspacing="2" cellpadding="5">
+								<tr>
+									<td>
+										<i><%= image_tag attachments['banner-bg.jpg'].url, width: '600px', height: '202px' %></i><br /><br /><br />
+										<font face="Segoe UI,Arial, Helvetica, sans-serif" color="#666666" style="font-size: 14px;">
+											<%= yield %>
+										</font>
+									</td>
+								</tr>
+								<tr>
+									<td align="center">
+										<a style="margin-right:8px;" href="#"><%= image_tag attachments["fb.png"].url %></a>
+										<a style="margin-right:8px;" href="#"><%= image_tag attachments["twt.png"].url %></a>
+										<a style="margin-right:8px;" href="#"><%= image_tag attachments["in.png"].url %></a>
+										<a style="margin-right:8px;" href="#"><%= image_tag attachments["gl.png"].url %></a>
+										<a style="margin-right:8px;" href="#"><%= image_tag attachments["yt.png"].url %></a>
+									</td>
+								</tr>
+								<tr>
+									<td style="border-bottom:10px solid #dedede;">&nbsp;</td>
+								</tr>
+								<tr>
+									<td height="50px">&nbsp;</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>	
+	</table>
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Power Cozmo - BUY.SELL.TRADE</title>
+  <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	  <![endif]-->
+  <%= stylesheet_link_tag    'seller/seller', media: 'all'%>
+  <%= javascript_include_tag 'seller/seller' %>
+  <%= csrf_meta_tags %>
+  <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini dashboard" data-no-turbolink>
+	<div class="wrapper">
+	  <header class="main-header">
+
+	    <!-- Logo -->
+	    <%= link_to root_path, class: "logo" do %>
+		    <!-- mini logo for sidebar mini 50x50 pixels -->
+		    <span class="logo-mini"><%= image_tag "seller/dsh-logo-mini.png" %></span>
+		    <!-- logo for regular state and mobile devices -->
+		    <span class="logo-lg"><%= image_tag "seller/dsh-pc-logo.png" %></span>
+	    <% end %>
+
+	    <!-- Header Navbar: style can be found in header.less -->
+	    <nav class="navbar navbar-static-top">
+	      <!-- Sidebar toggle button-->
+	      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"> <span class="sr-only">Toggle navigation</span> </a>
+	      <div class="dsh-top-nav">
+	        <ul>
+	          <li><a href="<%= root_path%>"><i class="fa fa-home"></i>Home</a></li>
+	          <li><a href="<%= seller_buying_requests_path%>"><i class="fa fa-credit-card-alt"></i>Buying Requests</a></li>
+	        </ul>
+	      </div>
+	      <!-- Navbar Right Menu -->
+	      <div class="navbar-custom-menu">
+	        <ul class="nav navbar-nav">
+	          <!-- Messages: style can be found in dropdown.less-->
+	          <li class="dropdown messages-menu">
+	          	<% unread_inbox_count = current_user.try(:unread_inbox_count).to_i %>
+	          	<% if unread_inbox_count > 0 %>
+	          		<%= link_to "<i class='fa fa-envelope-o'></i> <span class='label label-success'>#{unread_inbox_count}</span>".html_safe, unread_seller_messages_path, class: 'dropdown-toggle', data: {toggle: 'dropdown'}, remote: true %>
+	          	<% else %>
+	          		<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-envelope-o"></i></a>
+	          	<% end %>
+	            <ul class="dropdown-menu">
+	              <li class="header">You have <%= unread_inbox_count %> messages</li>
+	              <li>
+	                <!-- inner menu: contains the actual data -->
+	                <ul class="menu" id="unread_messages_list">
+	                </ul>
+	              </li>
+	              <li class="footer"><a href="<%= inbox_seller_messages_path %>">See All Messages</a></li>
+	            </ul>
+	          </li>
+	          <!-- Notifications: style can be found in dropdown.less -->
+	          <li class="dropdown notifications-menu">
+	          	<% unread_notifications_count = current_user.try(:unread_notifications_count).to_i %>
+	          	<% if unread_notifications_count > 0 %>
+	          		<%= link_to "<i class='fa fa-bell-o'></i> <span class='label label-warning'>#{unread_notifications_count}</span>".html_safe, unread_seller_equipment_enquiries_path, class: 'dropdown-toggle', data: {toggle: 'dropdown'}, remote: true %>
+	          	<% else %>
+	          		<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-bell-o"></i></a>
+	          	<% end %>
+	            <ul class="dropdown-menu">
+	              <li class="header">You have <%= unread_notifications_count %> notifications</li>
+	              <li>
+	                <!-- inner menu: contains the actual data -->
+	                <ul class="menu" id="unread_notifications_list">
+	                </ul>
+	              </li>
+	              <li class="footer"><a href="<%= seller_questions_path %>">View all questions</a></li>
+	              <li class="footer"><a href="<%= seller_offers_path %>">View all offers</a></li>
+	            </ul>
+	          </li>
+
+	          <!-- User Account: style can be found in dropdown.less -->
+	          <li class="dropdown user user-menu"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	          <% if (current_user.image.blank? || current_user.image.try(:image).blank?)%>
+	          	<img src="/assets/seller/myprofile-placeholder-img.png" class="user-image" alt="User Image">
+	          <% else %>
+	          	<%= image_tag(current_user.image.try(:image).try(:thumb).try(:url), class: "user-image", alt: "User Image") %>
+	          <% end %>
+	          <i class="fa fa-angle-down"></i> </a>
+	            <ul class="dropdown-menu">
+	              <!-- User image -->
+	              <li class="user-header">
+		              <% if (current_user.image.blank? || current_user.image.try(:image).blank?)%>
+				          	<img src="/assets/seller/myprofile-placeholder-img.png" class="img-circle" alt="User Image">
+				          <% else %>
+				          	<%= image_tag(current_user.image.try(:image).try(:thumb).try(:url), class: "img-circle",alt: "User Image") %>
+				          <% end %>
+	                <p> <%= current_user.name.to_s.titleize %> - <%= current_user.profile.company_name.to_s.titleize%><small>Member since <%= (current_user.created_at).strftime("%b %Y") %></small> </p>
+	              </li>
+	              <!-- Menu Body -->
+
+	              <!-- Menu Footer-->
+	              <li class="user-footer">
+	                <div class="pull-left"> <a href="<%= edit_seller_profile_path(current_user)%>" class="btn btn-default btn-flat">Profile</a> </div>
+	                <div class="pull-right"> <%= link_to('Sign out', destroy_user_session_path, :method => :delete, class: "btn btn-default btn-flat") %> </div>
+	              </li>
+	            </ul>
+	          </li>
+	          <!-- Control Sidebar Toggle Button -->
+
+	        </ul>
+	      </div>
+	    </nav>
+	  </header>
+	  <!-- Left side column. contains the logo and sidebar -->
+	  <aside class="main-sidebar">
+	    <!-- sidebar: style can be found in sidebar.less -->
+	    <section class="sidebar">
+	      <!-- Sidebar user panel -->
+	      <div class="sidebar-top">
+	        <div class="user-panel">
+	          <div class="image">
+	          <% if (current_user.image.blank? || current_user.image.try(:image).blank?)%>
+	          	<img src="/assets/seller/myprofile-placeholder-img.png" class="img-circle" alt="User Image">
+	          <% else %>
+	          	<%= image_tag(current_user.image.try(:image).try(:thumb).try(:url), class: "img-circle",alt: "User Image") %>
+	          <% end %>
+	          </div>
+	          <div class="info">
+	            <p>Welcome</p>
+	            <p class="login-user-name"><%= current_user.name.to_s.titleize %></p>
+	          </div>
+	        </div>
+	        <!-- search form -->
+	        <%= form_tag(seller_listing_filter_path, method: :get, class: "sidebar-form") do %>
+	          <div class="input-group">
+	            <input type="text" name="q" value="<%=params[:q]%>" class="form-control" placeholder="Search">
+	            <span class="input-group-btn">
+	            <submit name="submit" id="search-btn" class="btn btn-flat">
+	            	<i class="fa fa-search"></i>
+          		</submit>
+	            <%= submit_tag "", :id => 'submit_search', :style => "display: none;" %>
+	            </span>
+	          </div>
+	        <% end %>
+	      </div>
+	      <!-- /.search form -->
+	      <!-- sidebar menu: : style can be found in sidebar.less -->
+	      <ul class="sidebar-menu">
+	      	<%@controller = params[:controller]%>
+	      	<%@action = params[:action	]%>
+	        <li class="<%= 'active' if seller_dashboard_path == url_for(only_path: true) %>"><a href="<%= seller_dashboard_path %>" title="Dashboard"> <i class="fa fa-dashboard"></i> <span>Dashboard</span> </a></li>
+	        <li class="<%= 'active' if edit_seller_profile_path(current_user) == url_for(only_path: true) %>"> <a href="<%= edit_seller_profile_path(current_user)%>" title="My Profile"> <i class="fa fa-user"></i> <span>My Profile</span> </a></li>
+	        <li class="<%= 'active' if seller_equipment_index_path == url_for(only_path: true) %>"><%= link_to "<i class='fa fa-dashboard'></i> <span>My Listed Equipments</span>".html_safe, seller_equipment_index_path, { :title => "My Listed Equipments" } %></li>
+	        <li class="<%= 'active' if new_seller_equipment_path == url_for(only_path: true) %>"><%= link_to "<i class='fa fa-plus-circle'></i> <span>Add New Post</span>".html_safe, new_seller_equipment_path, { :title => "Add New Post" } %></li>
+          <li class="<%=(@controller == 'seller/equipment_enquiries' && (@action == "offers" || @action == "show_offer")) ?  'active' : ''%>">
+          	<%= link_to seller_offers_path do %>
+          		<div class='label-value' title="My Offers"> <i class='fa fa-tag'></i><small class='label label-danger'><p title=<%= unresponded_offers%>><%= (unresponded_offers > 99) ? "99+" : unresponded_offers %></p></small></div><span>My Offers </span>
+          	<% end %>
+          </li>
+	        <li class="<%=(@controller == 'seller/equipment_enquiries' && (@action == "questions" || @action == "show_question")) ?  'active' : ''%>">
+	        	<%= link_to seller_questions_path do %>
+	         		<div class="label-value" title="Questions List"> <i class="fa fa-list-alt"></i><small class="label label-danger"><p title=<%= unresponded_questions%>><%= (unresponded_questions > 99) ? "99+" : unresponded_questions %></p></small></div> <span>Questions List</span>
+	         	<% end %>
+	         </li>
+	         <%
+	          message_detail_type = nil
+	         	if @conversation.present? && seller_message_path(@conversation) == url_for(only_path: true)
+	         		if URI(request.referer).path == sentbox_seller_messages_path
+	         			message_detail_type = 'sendbox'
+	         		else
+	         			message_detail_type = 'inbox'
+	         		end
+	         	end
+	         %>
+	        <li class="<%= 'active' if inbox_seller_messages_path == url_for(only_path: true) || message_detail_type.to_s=='inbox' %>"> <a href="<%= inbox_seller_messages_path %>">
+	        	<% if current_user.try(:unread_inbox_count).to_i > 0 %>
+		          <div class="label-value"><i class="fa fa-envelope"></i> <small class="label label-danger" title="<%= current_user.try(:unread_inbox_count).to_i %>"><%= current_user.try(:unread_inbox_count).to_i > 99 ? "99+" : current_user.try(:unread_inbox_count).to_i %></small></div>
+	          <% else %>
+	          	<i class="fa fa-envelope"></i>
+	          <% end %>
+		        <span>Received Massages</span> </a>
+	        </li>
+	        <li class="<%= 'active' if sentbox_seller_messages_path == url_for(only_path: true) || message_detail_type.to_s=='sendbox' %>"> <a href="<%= sentbox_seller_messages_path %>" title="Sent Messages"> <i class="fa fa-paper-plane"></i> <span>Sent Messages</span> </a></li>
+	        <li class="<%= 'active' if new_seller_message_path == url_for(only_path: true) %>"> <a href="<%= new_seller_message_path %>" title="Write New Message"> <i class="fa fa-pencil"></i> <span>Write New Message</span> </a></li>
+	        <li class="<%= 'active' if seller_buying_requests_path == url_for(only_path: true) %>"> <a href="<%=seller_buying_requests_path%>" title="Buying Requests List"> <i class="fa fa-list-alt"></i> <span>Buying Requests List</span> </a></li>
+	        <li class="<%= 'active' if seller_buying_proposals_path == url_for(only_path: true) %>"> <a href="<%= seller_buying_proposals_path%>"  title="My Proposals"> <i class="fa fa-file-text-o"></i> <span>My Proposals</span> </a></li>
+	      </ul>
+	    </section>
+	    <!-- /.sidebar -->
+	  </aside>
+
+	  <% if flash[:alert] %>
+    	<div class="alert alert-danger">
+      	<div><%= flash[:alert] %></div>
+      	<% flash.discard(:alert) %>
+      </div>
+    <% end %>
+    <% if flash[:notice] %>
+  		<div class="alert alert-success">
+      	<div class="notice"><%= flash[:notice] %></div>
+      	<% flash.discard(:notice) %>
+      </div>
+    <% end %>
+    <% if flash[:error] %>
+    	<div class="alert alert-danger">
+      	<div class="error"><%= flash[:error] %></div>
+      	<% flash.discard(:error) %>
+      </div>
+    <% end %>
+    <% flash.discard %>
+
+		<%= yield %>
+
+		<footer class="main-footer">
+    	<div class="dsh-copyright"><%= SiteSetting.last.copy_right_text.html_safe%></div>
+  	</footer>
+
+  	<aside class="control-sidebar control-sidebar-dark">
+	    <!-- Create the tabs -->
+	    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+	      <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+	      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+	    </ul>
+	    <!-- Tab panes -->
+	    <div class="tab-content">
+	      <!-- Home tab content -->
+	      <div class="tab-pane" id="control-sidebar-home-tab">
+	        <h3 class="control-sidebar-heading">Recent Activity</h3>
+	        <ul class="control-sidebar-menu">
+	          <li> <a href="javascript:void(0)"> <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+	            <div class="menu-info">
+	              <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+	              <p>Will be 23 on April 24th</p>
+	            </div>
+	            </a> </li>
+	          <li> <a href="javascript:void(0)"> <i class="menu-icon fa fa-user bg-yellow"></i>
+	            <div class="menu-info">
+	              <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+	              <p>New phone +1(800)555-1234</p>
+	            </div>
+	            </a> </li>
+	          <li> <a href="javascript:void(0)"> <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+	            <div class="menu-info">
+	              <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+	              <p>nora@example.com</p>
+	            </div>
+	            </a> </li>
+	          <li> <a href="javascript:void(0)"> <i class="menu-icon fa fa-file-code-o bg-green"></i>
+	            <div class="menu-info">
+	              <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+	              <p>Execution time 5 seconds</p>
+	            </div>
+	            </a> </li>
+	        </ul>
+	        <!-- /.control-sidebar-menu -->
+
+	        <h3 class="control-sidebar-heading">Tasks Progress</h3>
+	        <ul class="control-sidebar-menu">
+	          <li> <a href="javascript:void(0)">
+	            <h4 class="control-sidebar-subheading"> Custom Template Design <span class="label label-danger pull-right">70%</span> </h4>
+	            <div class="progress progress-xxs">
+	              <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+	            </div>
+	            </a> </li>
+	          <li> <a href="javascript:void(0)">
+	            <h4 class="control-sidebar-subheading"> Update Resume <span class="label label-success pull-right">95%</span> </h4>
+	            <div class="progress progress-xxs">
+	              <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+	            </div>
+	            </a> </li>
+	          <li> <a href="javascript:void(0)">
+	            <h4 class="control-sidebar-subheading"> Laravel Integration <span class="label label-warning pull-right">50%</span> </h4>
+	            <div class="progress progress-xxs">
+	              <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+	            </div>
+	            </a> </li>
+	          <li> <a href="javascript:void(0)">
+	            <h4 class="control-sidebar-subheading"> Back End Framework <span class="label label-primary pull-right">68%</span> </h4>
+	            <div class="progress progress-xxs">
+	              <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+	            </div>
+	            </a> </li>
+	        </ul>
+	        <!-- /.control-sidebar-menu -->
+
+	      </div>
+	      <!-- /.tab-pane -->
+
+	      <!-- Settings tab content -->
+	      <div class="tab-pane" id="control-sidebar-settings-tab">
+	        <form method="post">
+	          <h3 class="control-sidebar-heading">General Settings</h3>
+	          <div class="form-group">
+	            <label class="control-sidebar-subheading"> Report panel usage
+	              <input type="checkbox" class="pull-right" checked>
+	            </label>
+	            <p> Some information about this general settings option </p>
+	          </div>
+	          <!-- /.form-group -->
+
+	          <div class="form-group">
+	            <label class="control-sidebar-subheading"> Allow mail redirect
+	              <input type="checkbox" class="pull-right" checked>
+	            </label>
+	            <p> Other sets of options are available </p>
+	          </div>
+	          <!-- /.form-group -->
+
+	          <div class="form-group">
+	            <label class="control-sidebar-subheading"> Expose author name in posts
+	              <input type="checkbox" class="pull-right" checked>
+	            </label>
+	            <p> Allow the user to show his name in blog posts </p>
+	          </div>
+	          <!-- /.form-group -->
+
+	          <h3 class="control-sidebar-heading">Chat Settings</h3>
+	          <div class="form-group">
+	            <label class="control-sidebar-subheading"> Show me as online
+	              <input type="checkbox" class="pull-right" checked>
+	            </label>
+	          </div>
+	          <!-- /.form-group -->
+
+	          <div class="form-group">
+	            <label class="control-sidebar-subheading"> Turn off notifications
+	              <input type="checkbox" class="pull-right">
+	            </label>
+	          </div>
+	          <!-- /.form-group -->
+
+	          <div class="form-group">
+	            <label class="control-sidebar-subheading"> Delete chat history <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a> </label>
+	          </div>
+	          <!-- /.form-group -->
+	        </form>
+	      </div>
+	      <!-- /.tab-pane -->
+	    </div>
+	  </aside>
+	  <!-- /.control-sidebar -->
+	  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  	<div class="control-sidebar-bg"></div>
+  </div>
+  <%#= javascript_include_tag 'seller/app.min' %>
+</body>
+</html>
+
+<script type="text/javascript">
+  $( "#search-btn" ).click(function() {
+    $( "#submit_search" ).click();
+  });
+</script>

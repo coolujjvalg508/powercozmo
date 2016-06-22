@@ -1,0 +1,14 @@
+<%= semantic_form_for :reply, url: admin_create_reply_path, method: :post, multipart: true do |f| %>
+    <%= f.inputs "Reply Message" do %>
+      <li>
+        <label>Message</label>
+        <%= f.bootsy_area :body, :rows => 15, :cols => 100, editor_options: { image: false, html: true } %>
+      </li>
+    <% end %>
+    <%= f.actions do %>
+      <%= f.action :submit, :label => "Reply" %>
+      <li class='cancel'>
+          <%= link_to 'Cancel', {:action => "index"} %>
+      </li>
+    <% end %>
+  <% end %>

@@ -1,0 +1,69 @@
+<section id="md" class="inr-pg">
+  <div class="container log-block">
+    <div class="row">
+      <div class="col-lg-6 log-lt">
+        <div class="log-lt-cont">
+          <h2>Need to sell equipment?</h2>
+          <p>Whether your company is big or small, Power Cozmo. <br>
+            can sell your power equipment or plants quickly, <br>
+            easily, and for the best returns possible.</p>
+        </div>
+        <img src="/assets/log-img.jpg" alt="" class="img-responsive"> <span class="log-img-small"><img src="/assets/log-img-small.png" alt=""></span> </div>
+      <div class="col-lg-6 log-rt">
+        <div class="log-rt-cont">
+          <h2 class="page-hd txtctr">Login to <span>Power Cozmo</span></h2>
+          <div class="log-mid-box">
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:id => "log_in_form"}) do |f| %>
+
+            <div class="form-group"> <i class="fa fa-envelope"></i>
+              <%= f.text_field :email, placeholder: "Enter Email Address*" %>
+              <span class="err-msg"><%= error_message(resource, :email)%></span>
+            </div>
+            <div class="form-group"> <i class="fa fa-lock"></i>
+              <%= f.password_field :password, autocomplete: "off", placeholder: "Enter Password*" %>
+              <span class="err-msg"><%= error_message(resource, :password)%></span>
+            </div>
+            <div class="form-group">
+              <div class="custom-chk list-view">
+                <label class="chk-bx">
+                  <%= f.check_box :remember_me %>
+                  <!-- <input name="cstchk" type="checkbox"/> -->
+                  Remember Me</label>
+              </div>
+              <%= link_to "Forgot password?", new_user_password_path(resource_name), class: "for-pas" %></div>
+            <div class="form-group"><%= f.submit "Login", class: "log-btn" %>
+            </div>
+          <% end %>
+          </div>
+          <div class="cr-acco"> New to our site? <%= link_to('Create a free account', new_user_registration_path) %>. it's fast, free and <br>
+            gives you full access to our website features. <%= link_to('Sign Up', new_user_registration_path, class: "sign-up-btn") %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  $(document).ready(function(){
+    $("#log_in_form").validate({
+      rules: {
+        "user[email]": {
+          required: true,
+          email: true
+        }, 
+        "user[password]": "required"
+      },
+      messages: {    
+        "user[email]": {
+          required: "Email can't be blank",
+          email: "Please enter a valid email address"
+        },
+        "user[password]": {
+          required: "Password can't be blank"
+        }
+      },
+      errorPlacement: function(error, element) {
+        error.insertAfter(element);
+      }
+    });
+  });
+</script>

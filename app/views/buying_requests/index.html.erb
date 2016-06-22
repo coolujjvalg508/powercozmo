@@ -1,0 +1,99 @@
+<header id="hd" class="rlatv list-bnr">
+    <div class="hd-srch">
+      <h2>Buying Request</h2>
+    </div>
+  </header>
+  <section id="md" class="lst-midd-cnt">
+    <div class="wht-bg MB30">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 log-rt-buy log-rt-buy-new">
+            <h2 class="page-hd MT20 log-rt-buy-bg">Looking for <span>requests</span></h2>
+            <p>Are you interested in responding to a customer’s Buying request? As a supplier registered on the Power Cozmo, you have access to online tools that make doing so easy and efficient. It's all done through power Cozmo.</p>
+            <p>Suppliers can respond to Buying Request post through power Cozmo e-mail or through Seller dashboard. Power Cozmo will give the priority for suppliers who’s verified and registered in out Platform </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wht-bg">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 lst-rt-cnt lst-rt-cnt-new">
+           <%= form_tag(buying_requests_filter_path, method: :get) do %>
+             <div class="lst-slt-bx MR10 lst-slt-wdt">
+                <label>Category</label>
+                <%= select_tag "filter[category_id]", options_from_collection_for_select(@categories, "id", "name", params[:filter] ? params[:filter][:category_id] : ""), include_blank: "Select Categories" %>
+              </div>
+              <div class="lst-slt-bx MR10 lst-slt-wdt">
+              	<label>Manufacturer</label>
+                <%= select_tag "filter[brand_id]", options_from_collection_for_select(@manufacturers, "id", "name", params[:filter] ? params[:filter][:brand_id] : ""),include_blank: "Select Manufacturer",class: "listing_filter" %>
+              </div>
+              <div class="lst-slt-bx MR10 lst-slt-wdt">
+                  <label>Lead Type </label>
+                  <%= select_tag "filter[lead_type]", options_for_select(BuyingRequest::LEAD_TYPES, params[:filter] ? params[:filter][:lead_type] : ""), include_blank: "Select Lead Type" %>
+              </div>
+              <div class="lst-slt-bx MR10 lst-slt-wdt filter-btn">
+                <label class="display-none">&nbsp;</label>
+              	<a href="javascript:void(0)" id="apply-link">Apply</a>
+                <%= submit_tag "", id: "apply-btn", :style => "display: none;"%>
+                <% if params[:filter].present? %>
+                  <%= link_to 'Clear Filters', buying_requests_filter_path(:filter => params[:filter].except(:category_id, :brand_id, :lead_type)) %>
+                <% end %>
+              </div>
+            <% end %>
+
+           </div>
+        </div>
+      </div>
+      <div class="container">
+      	<div class="row">
+        	<div class="col-lg-12 MT20">
+            <div class="tbllistt-new">
+            	<table width="100%" border="0" cellspacing="1" cellpadding="0" class="MB30 tbllist">
+                <tr class="tbl-sty">
+                  <th width="36%">Title</th>
+                  <th width="13%">Type</th>
+                  <th width="14%" class="txtctr"> SNo </th>
+                  <th width="12%"> Added Date </th>
+                  <th width="12%"> Expire Date </th>
+                  <th width="12%">More Details</th>
+                </tr>
+                <tr class="tbllistt-pd">
+                  <td colspan="6" height="10"></td>
+                </tr>
+                <% if @buying_requests.present?  %>
+                  <% @buying_requests.each do |br| %>
+                    <tr class=" evnrwbg brd">
+                      <td><%= br.title %></td>
+                      <td><%= br.lead_type%></td>
+                      <td align="center"><%= br.identifier %></td>
+                      <td><%= br.created_at.strftime('%m/%d/%Y')%></td>
+                      <td><%= br.expiration_date.strftime('%m/%d/%Y')%></td>
+                      <td>
+                        <% unless current_user.present? %>
+                          <%= link_to('Read more', new_user_session_path(guest_user: true), class: "btn-lgn") %>
+                        <% else %>
+                          <%= link_to('Read more', seller_buying_request_path(br), class: "btn-lgn") %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                <% else %>
+                  <tr class="evnrwbg brd">
+                    <td colspan="6" align="center">No Result Found</td>
+                  </tr>
+                <% end %>
+              </table>
+            </div>
+            <%= paginate @buying_requests, :theme => 'listing_page_theme' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="text/javascript">
+    $( "#apply-link" ).click(function() {
+      $( "#apply-btn" ).click();
+    });
+  </script>

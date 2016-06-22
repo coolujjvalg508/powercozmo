@@ -1,0 +1,53 @@
+<div class="panel">
+  <h3>Contact Request Detail</h3>
+  <div class="panel_contents">
+    <div class="attributes_table contact" id="attributes_table_contact_<%=cr.id%>">
+      <table border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+          <tr class="row row-id">
+            <th>Id</th>
+            <td><%= cr.id%></td>
+          </tr>
+          <tr class="row row-first_name">
+            <th>First Name</th>
+            <td><%= cr.first_name%></td>
+          </tr>
+          <tr class="row row-last_name">
+            <th>Last Name</th>
+            <td><%= cr.last_name%></td>
+          </tr>
+          <tr class="row row-email">
+            <th>Email</th>
+            <td><%= cr.email%></td>
+          </tr>
+          <tr class="row row-phone">
+            <th>Phone</th>
+            <td><%= cr.phone%></td>
+          </tr>
+          <tr class="row row-subject">
+            <th>Subject</th>
+            <td><%= cr.subject%></td>
+          </tr>
+          <tr class="row row-message">
+            <th>Message</th>
+            <td><%= cr.message%></td>
+          </tr>
+          <tr class="row row-created_at">
+            <th>Created At</th>
+            <td><%= cr.created_at%></td>
+          </tr>
+          <tr class="row row-updated_at">
+            <th>Updated At</th>
+            <td><%= cr.updated_at%></td>
+          </tr>
+          <tr class="row row-status">
+            <th>Status</th>
+            <td><%= cr.status%></td>
+          </tr>
+        </table>
+        <div>
+          <%= render partial: "reply_form", locals: {cr: cr} %>
+        </div>
+    </div>
+  </div>
+</div>

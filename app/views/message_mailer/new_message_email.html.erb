@@ -1,0 +1,13 @@
+<p>HELLO <strong><%= @receiver.try(:name).to_s %></strong></p>
+<p>
+  You have received a new message:
+</p>
+<blockquote>
+  <p>
+    <%= raw @message.body %>
+  </p>
+</blockquote>
+<p>
+  Visit <%= link_to root_url, root_url %> and go to your received messages page for more info.
+</p>
+

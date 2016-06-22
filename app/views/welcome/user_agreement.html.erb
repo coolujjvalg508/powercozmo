@@ -1,0 +1,6 @@
+<header id="hd" class="rlatv list-bnr">
+  <div class="hd-srch">
+    <h2><%= @user_agreement.first.title %></h2>
+  </div>
+</header>
+<%= @user_agreement.first.content.to_s.html_safe %> 

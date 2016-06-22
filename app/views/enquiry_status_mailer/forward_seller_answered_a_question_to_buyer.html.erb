@@ -1,0 +1,27 @@
+<% if @system_email.present? && @system_email.try(:content).present? %>
+	<%= @system_email.content.to_s.gsub("::SELLER_NAME::",@user.name.to_s).gsub("::BUYER_NAME::",@enquiry.name.to_s).gsub("::ITEM_NAME::",@equipment.name.to_s).gsub("::EQIPMENT_SERIALNUMBER::",@equipment.identifier.to_s.upcase).gsub("::EQUIPMENT_NAME::",@equipment.name.to_s).gsub("::EQUIPMENT_PRICE::",number_to_currency(@equipment.price, unit: raw(@equipment.currency))).gsub("::EQUIPMENT_CATEGORY::",@equipment.category.try(:name).to_s).gsub("::SELLER_RESPONCE_MEASSGE_BODY::",@enquiry_response.try(:message).to_s).html_safe %>
+<% else %>
+	<p>HELLO <strong><%= @enquiry.name %></strong>!</p>
+
+	<p><strong><%= @user.name %></strong>has respond to your enquiry about <strong><%= @equipment.name.to_s %></strong> SN.&nbsp;<strong><%= @equipment.identifier.to_s.upcase %></strong>. The next step is to go to <strong><%= @equipment.name.to_s %></strong> page and bid to this item or click on Buy to make buying request and start finalizing the deal. You can find <strong><%= @equipment.name.to_s %></strong> again on website under <strong><%= @equipment.category.try(:name).to_s %> , </strong>or search manually by name or serial number through website search engine.</p>
+
+	<p>Name: <strong><%= @user.name %></strong></p>
+
+	<p>Equipment name:&nbsp;<strong><%= @equipment.name.to_s %></strong></p>
+
+	<p>SN:<strong> <%= @equipment.identifier.to_s.upcase %></strong></p>
+
+	<p>Equipment category: <strong><%= @equipment.category.try(:name).to_s %></strong></p>
+
+	<p>Price: <strong><%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %></strong></p>
+
+	<p>Seller response:</p>
+
+	<p><%= @enquiry_response.try(:message).to_s.html_safe %></p>
+
+	<p>&nbsp;</p>
+
+	<p>Best Regards</p>
+
+	<p>Power Cozmo Team</p>
+<% end %>

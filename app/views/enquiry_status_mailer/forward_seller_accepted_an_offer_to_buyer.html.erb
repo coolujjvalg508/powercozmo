@@ -1,0 +1,31 @@
+<% if @system_email.present? && @system_email.try(:content).present? %>
+	<%= @system_email.content.to_s.gsub("::SELLER_NAME::",@user.name.to_s).gsub("::BUYER_NAME::",@enquiry.name.to_s).gsub("::ITEM_NAME::",@equipment.name.to_s).gsub("::EQIPMENT_SERIALNUMBER::",@equipment.identifier.to_s.upcase).gsub("::EQUIPMENT_NAME::",@equipment.name.to_s).gsub("::EQUIPMENT_PRICE::",number_to_currency(@equipment.price, unit: raw(@equipment.currency))).gsub("::EQUIPMENT_CATEGORY::",@equipment.category.try(:name).to_s).gsub("::SELLER_RESPONCE_MEASSGE_BODY::",@enquiry_response.try(:message).to_s).gsub("::OFFER_PRICE::",number_to_currency(@enquiry.bidding_price, unit: raw(@equipment.currency))).html_safe %>
+<% else %>
+	<p>HELLO <strong><%= @enquiry.name %></strong>!</p>
+
+	<p>Congratulations! <strong><%= @user.name %> </strong>has accepted your offer <strong><%= number_to_currency(@enquiry.bidding_price, unit: raw(@equipment.currency)) %></strong> for the <strong><%= @equipment.name.to_s %></strong> SN.&nbsp;<strong><%= @equipment.identifier.to_s.upcase %></strong>. A Power Cozmo representative will contact you soon to start finalize this deal.</p>
+
+	<p>Name: <strong><%= @user.name %></strong></p>
+
+	<p>Equipment name:&nbsp;<strong><%= @equipment.name.to_s %></strong></p>
+
+	<p>SN:<strong> <%= @equipment.identifier.to_s.upcase %></strong></p>
+
+	<p>Equipment category: <strong><%= @equipment.category.try(:name).to_s %></strong></p>
+
+	<p>Price: <strong><%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %></strong></p>
+
+	<p>Offer: <strong><%= number_to_currency(@enquiry.bidding_price, unit: raw(@equipment.currency)) %></strong></p>
+
+	<p>Status:&nbsp;&nbsp;<strong>Accepted</strong></p>
+
+	<p>Seller response:</p>
+
+	<p><%= @enquiry_response.try(:message).to_s.html_safe %></p>
+
+	<p>&nbsp;</p>
+
+	<p>Best Regards</p>
+
+	<p>Power Cozmo Team</p>
+<% end %>

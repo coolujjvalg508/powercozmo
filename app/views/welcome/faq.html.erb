@@ -1,0 +1,63 @@
+<header id="hd" class="rlatv list-bnr">
+  <div class="hd-srch">
+    <h2>Frequently asked questions</h2>
+  </div>
+</header>
+<section id="md">
+    <div class="wht-bg PT50 PB50">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 wlcm-cnt">
+                    <div >
+                        <div id="accordion" class="ui-accordion ui-widget ui-helper-reset" role="tablist">
+                        <%@faqs.each_with_index do |fq, i|%>
+                            <h3><%= strip_tags("#{fq.question}")%></h3>
+                            <div><p><%= fq.answer.html_safe%></p></div>
+                        <%end%>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+</section>
+<script type="text/javascript">
+$(function() {
+  $( "#accordion" ).accordion({
+        heightStyle: "content",
+        collapsible: true  // makes all pans to be collapsible, default needed one pan to be open
+      });
+});
+$(document).ready(function(){
+  //pass the name of h3 tag as anchor, which you want to activate programmatically..
+  //on page load or on clicking link
+  var anchor = window.location.hash.replace('#', '')
+  if(anchor){
+    //colapse all pan before selecting element to get correct offset
+    $( "#accordion" ).accordion( "option", "active", false)
+    ele = $("h3[name='"+anchor+"']");
+    if(ele.length > 0)
+      jump_to(ele);
+    else
+      $( "#accordion" ).accordion( "option", "active", 0)
+  }
+  $('.anchor').on('click', function(event){
+    id = $(this).attr('href').split('#').pop();
+    $( "#accordion" ).accordion( "option", "active", false)
+    element = $("h3[name='"+id+"']");
+    if(element.length > 0)
+      jump_to(element);
+    // event.preventDefault();
+  })
+  function jump_to(elem){
+    if(elem) {
+      elem_id = parseInt((elem).attr('id'));
+      $( "#accordion" ).accordion( "option", "active", elem_id ); //exapnd pan programmatically
+      var offset = elem.offset();
+      var scrollto = offset.top - $('.navbar').outerHeight();
+      $('html, body').animate({scrollTop:scrollto}, 0);
+    }
+  }
+});
+</script>

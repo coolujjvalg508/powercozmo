@@ -1,0 +1,50 @@
+<section id="md" class="lst-midd-cnt">
+  <div class="wht-bg dtl-blc">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <h2><strong>S. No: <%= @equipment.identifier %></strong> - <em><%= @equipment.name %></em></h2>
+          <div id="home">
+               <div >
+                  <div class="header-backup"></div>
+                  <% if @equipment.images.length > 0 %>
+                    <% @equipment.images.each_with_index do |image,index| %>
+                    <div class="slider dtl-blc-slider" style="position: relative;width: 100%;overflow: hidden;" role="listbox">
+                      <div class="item" style="position: relative;width: 100%;overflow: hidden;"> <%= wicked_pdf_image_tag image.image, size: "750x380" %></div>
+                    </div>
+                    <% end %>
+                  <% else %>
+                  <div class="slider dtl-blc-slider" style="position: relative;width: 100%;overflow: hidden;" role="listbox">
+                    <div class="item"> <%= wicked_pdf_image_tag "slide-one2.jpg" %></div>
+                  </div>
+                  <% end %>
+              </div>
+          <em style="font-size: 20px;">Description</em></h3>
+          <p><%= @equipment.description %></p>
+        </div>
+        <div class="col-lg-4 dtl-blc-rt pull-right" style="position: absolute; width: 100%; margin-left: -15px">
+          <div class="prdct-avlbl" style="margin-top: 0;">
+            <div class="dtl-rt-prfl">
+              <div class="dtl-rt-prfl-lt"><% if @equipment.try(:user).try(:image).try(:image) %>
+                        <%= wicked_pdf_image_tag @equipment.try(:user).try(:image).try(:image)%>
+                        <% else %>
+                        <%= wicked_pdf_image_tag "cdt-prfl.jpg" %></span>
+                        <% end %></div>
+              <div class="dtl-rt-prfl-rt"> <span><%= "#{@equipment.user.try(:profile).try(:first_name) || "John"} #{@equipment.user.try(:profile).try(:last_name) || "Doe"}" %></span> </div>
+            </div>
+            <div class="ad-gray-info" style="height: 80px;">
+              <div class="ad-gray-l"><i class="fa fa-map-marker"></i> Location : <span><%= @equipment.try(:country).try(:name) %></span> </div>
+              <div class="ad-gray-m">Manufacturing : <span><%= @equipment.manufacture_year%></span></div>
+              <div class="ad-gray-r">Rating : <span><a class="<%='active' if @equipment.rating >= 1 %>" href="#"><i class="fa fa-star"></i></a><a class="<%='active' if @equipment.rating >= 2 %>" href="#"><i class="fa fa-star"></i></a><a class="<%='active' if @equipment.rating >= 3 %>" href="#"><i class="fa fa-star"></i></a><a href="#" class="<%='active' if @equipment.rating >= 4 %>"><i class="fa fa-star"></i></a><a href="#" class="<%='active' if @equipment.rating >= 5 %>"><i class="fa fa-star"></i></a></span></div>
+              <div class="clr"></div>
+            </div>
+            <div class="price-info"><span>Price :<em style="font-size: 15px;"><%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %></em></span></div>
+          </div>
+          <div class="dtl-blc-adrs">
+            <div class="hd-graylft"><i class="fa fa-phone"></i> Phone : <em>+(646) 45321069</em> <span class="email"><i class="fa fa-envelope"></i> Email : <a href="mailto:info@powercozmo.com">info@powercozmo.com </a></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

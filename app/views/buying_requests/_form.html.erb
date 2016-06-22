@@ -1,0 +1,212 @@
+<%= nested_form_for @buying_request do |f| %>
+  <div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade active in" id="tellus-one">
+      <p>Use 5 minutes to fill out a Buying Request and match your requested quotes to our Verified Suppliers.</p>
+      <div class="post-buy-form">
+        <div class="post-buy-form-l">
+          <div class="form-group">
+            <%= f.text_field :title, placeholder: 'Equipment, part, system or service name*'%>
+            <%= error_message(@buying_request, :title)%>
+          </div>
+          <div class="form-group">
+            <%= f.text_field :origin, placeholder: 'Origin' %>
+            <%= error_message(@buying_request, :origin)%>
+          </div>
+          <div class="form-group">
+            <% brand_id = f.object.brand_id %>
+            <%= f.select :brand_id, options_for_select(Manufacturer.pluck(:name, :id)+[['Other', 0]], brand_id), prompt: 'Select Manufacturer'%>
+            <%= text_field_tag "other[manufacturer_name]", params[:other].present? ? params[:other][:manufacturer_name] : "",class: 'br-other-field', placeholder: 'Manufacturer name', style: "display:none;" %>
+            <span class="error-mess">If you don’t find the right manufacturer, click on Other to write it. </span>
+            <%= error_message(@buying_request, :brand_id)%>
+          </div>
+          <div class="form-group">
+            <% category_id = f.object.category_id %>
+            <%= f.select :category_id, options_for_select(Category.active.pluck(:name, :id)+[['Other', 0]], category_id), prompt: 'Select Category*'%>
+            <%= f.text_field :category_name, class: 'br-other-field', placeholder: 'Category name*', style: "display:none;" %>
+            <span class="error-mess">If you don’t find the right category, click on Other to write it. </span>
+            <%= error_message(@buying_request, :category_id)%>
+            <%= error_message(@buying_request, :category_name)%>
+          </div>
+          <div class="form-group">
+            <% lead_type = f.object.lead_type %>
+            <%= f.select :lead_type, options_for_select(BuyingRequest::LEAD_TYPES, lead_type), prompt: 'Select Lead Type*'%>
+            <%= error_message(@buying_request, :lead_type)%>
+          </div>
+          <div class="form-group">
+            <% condition = f.object.condition %>
+            <%= f.select :condition, options_for_select(BuyingRequest::CONDITIONS, condition), prompt: 'Select Condition*'%>
+            <%= error_message(@buying_request, :condition)%>
+          </div>
+          <div class="form-group">
+            <div class="file-upload">
+              <%= f.file_field :attachment, accept: 'application/pdf'%>
+              <%= f.hidden_field :attachment_cache %>
+              <input type="text" id="attachment_name" placeholder="Attach pdf file" name="2" value="<%=@buying_request.attachment? ? @buying_request.attachment.filename : "" %>" />
+              <input type="submit" value="UPLOAD" name="3" />
+            </div>
+            <%= error_message(@buying_request, :attachment)%>
+          </div>
+          <div class="form-group">
+            <div class='input-group date' id='datetimepicker1'>
+              <%= f.text_field :expiration_date, placeholder: 'Expiration Date*', readonly: true %>
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+            <span class="error-mess">Select the closing date of this request. </span>
+            <%= error_message(@buying_request, :expiration_date)%>
+          </div>
+          <div class="form-group">
+            <%= f.text_field :end_user, placeholder: 'End user' %>
+          </div>
+          <div class="form-group">
+            <%= f.text_field :city, placeholder: 'City' %>
+            <%= error_message(@buying_request, :city)%>
+          </div>
+          <div class="form-group">
+            <% location_id = f.object.location_id %>
+            <%= f.select :location_id, options_for_select(Country.active.pluck(:name, :id), location_id), prompt: 'Select Country'%>
+          </div>
+        </div>
+        <div class="post-buy-form-r eqp-upload-img">
+          <div class="form-group">
+            <%= f.text_area :description, placeholder: 'Description*'%>
+            <%= error_message(@buying_request, :description)%>
+          </div>
+          <div>Photo</div>
+          <%
+          @tmp_images ||= {}
+          nested_form_count = 1
+        %>
+        <%= f.fields_for :images do |img| %>
+            <div class="form-group mrg-btm-zero">
+              <div class="upload-image-input">
+                <%
+                  img_src = img.object.image.present? ? img.object.image : @tmp_images[img.index.to_s]
+                  tmp_image_src = @tmp_images[img.index.to_s]
+                  nested_form_count += 1
+                %>
+                <%= img.hidden_field :tmp_image, value: tmp_image_src %>
+                <%= img.hidden_field :id %>
+                <%= img.link_to_remove "<i class='fa fa-close'></i>".html_safe %>
+                <%= image_tag img_src, class: 'buying_request_preview_image', id: "buying_request_images_attributes_"+img.index.to_s+"_preview", style: img_src.present? ? "height:90  %;width:100%" : '' %>
+                  <%= img.file_field :image, class: 'form-control upload-photo-input', accept: 'image/*' %></div>
+                  <%= img.hidden_field :image_cache %>
+            </div>
+        <% end %>
+          <%= f.link_to_add "<div class='tips-for-imgupload'><div class='add-new-img' title='Add one more image'><i class='fa fa-plus'></i></div></div>".html_safe, :images, style: nested_form_count >= 4 ? "display:none" : "" %>
+        </div>
+        <div class="form-group MT20 MB20"> <a class="log-btn" href="javascript:void(0)" onclick="change_form_pane()">Next</a> </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="tellus-two">
+      <p>Please describe about yourself which help us for further communications.</p>
+      <div class="post-buy-form">
+          <div class="post-buy-form-l">
+            <div class="form-group">
+              <%= f.text_field :name, placeholder: 'Name*' %>
+              <%= error_message(@buying_request, :name)%>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :email, placeholder: 'Email*' %>
+              <%= error_message(@buying_request, :email)%>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :mobile, placeholder: 'Mobile*' %>
+              <%= error_message(@buying_request, :mobile)%>
+            </div>
+            <div class="form-group">
+              <% country_id = f.object.country_id %>
+              <%= f.select :country_id, options_for_select(Country.active.pluck(:name, :id), country_id), prompt: 'Select Country*'%>
+              <%= error_message(@buying_request, :country_id)%>
+            </div>
+          </div>
+          <div class="post-buy-form-r">
+            <div class="form-group">
+              <%= f.text_field :company_name, placeholder: 'Company Name*' %>
+              <%= error_message(@buying_request, :company_name)%>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :company_website, placeholder: 'Company Website*' %>
+              <%= error_message(@buying_request, :company_website)%>
+            </div>
+            <div class="form-group">
+              <%= f.text_area :address, placeholder: 'Address*', class: 'textarea-height'%>
+              <%= error_message(@buying_request, :address)%>
+            </div>
+          </div>
+        <div class="form-group MT20 MB20">
+          <a class="log-btn" href="javascript:void(0)" onclick="$('#new_buying_request').submit()">Submit</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $('#buying_request_mobile').keypress(function (e) {
+    if ($(this).val().length<18){
+      if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57) && e.which != 43 && e.which != 45 ) {
+        return false;
+      }
+    }
+    else{
+      if (e.which != 8 && e.which != 0 ) {
+        return false;
+      }
+      return true
+    }
+  });
+
+
+  $(document).on('nested:fieldAdded', function(event){
+  var field = event.field;
+  if($("input[type='hidden'][value='false'][id^=buying_request_images_attributes_][id$=_destroy]").length >= 4)
+  {
+    $(".add_nested_fields").hide()
+  }
+
+  $("input[type='file'][id^=buying_request_images_attributes_][id$=_image]").change(function(){
+    var input = this
+    readURL(input)
+  });
+})
+$(document).on('nested:fieldRemoved', function(event){
+  var field = event.field;
+  if($("input[type='hidden'][value='false'][id^=buying_request_images_attributes_][id$=_destroy]").length < 4)
+  {
+    $(".add_nested_fields").show()
+  }
+})
+
+$("input[type='file'][id^=buying_request_images_attributes_][id$=_image]").change(function(){
+    var input = this
+    readURL(input)
+});
+function readURL (input) {
+  var preview_image_id = input.id.split('_')
+  preview_image_id.pop()
+  preview_image_id = preview_image_id.join('_')
+  var ext = input.files[0]['name'].substring(input.files[0]['name'].lastIndexOf('.') + 1).toLowerCase();
+  if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        $("#"+preview_image_id+"_preview").attr('src', e.target.result);
+        $("#"+preview_image_id+"_preview").css({"height":"90%","width":"100%"})
+    }
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
+<style type="text/css">
+  .remove_nested_fields{
+    float: right;
+    margin-top: -15px;
+    margin-right: -8px;
+  }
+  .upload-photo-input { position: absolute; top: 0; left:  0;  }
+  .error-mess {
+    font-size: 11px;
+  }
+</style>

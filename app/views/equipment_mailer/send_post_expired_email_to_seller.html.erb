@@ -1,0 +1,17 @@
+<% if @system_email.present? && @system_email.try(:content).present? %>
+	<%= @system_email.content.to_s.gsub("::SELLER_NAME::",@user.name.to_s).gsub("::ITEM_NAME::",@equipment.name.to_s).gsub("::LINK_TO_USER_SIGN_IN_URL::", link_to(new_user_session_url,new_user_session_url)).html_safe %>
+<% else %>
+	<p>Hello <strong><%= @user.name %></strong></p>
+
+	<p>Warning, your post for <strong><%= @equipment.name.to_s %></strong> is expired and we will lose the opportunity to show your post for thousands of buyers over the world. In case of <strong><%= @equipment.name.to_s %></strong> is still valid at your end, please login to your dashboard and go to my listed equipment page then click on edit to renew the validity of your post.</p>
+
+	<p>Please click on below link to login to your account:</p>
+
+	<p><%= link_to(new_user_session_url,new_user_session_url) %></p>
+
+	<p>&nbsp;</p>
+
+	<p>Best Regards</p>
+
+	<p>Power Cozmo Team</p>
+<% end %>

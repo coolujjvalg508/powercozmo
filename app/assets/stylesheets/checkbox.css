@@ -1,0 +1,13 @@
+/*
+ * CUSTOM CHECKBOX AND RADIO *************************/
+ .custom-chk input[type="checkbox"], .custom-opt input[type="radio"] { left:-9999px; position:absolute; }
+.custom-chk label, .custom-opt label { padding-left:30px; min-height:22px; display:block; margin-bottom:0; font-size:12px; padding-top:4px;}
+.custom-chk label { background:url(/assets/chk-uncheck.png) no-repeat;  }
+.custom-chk label.checked { background:url(/assets/chk-checked.png) no-repeat; }
+.custom-opt label { background:url(/assets/radio-uncheck.png) no-repeat;  }
+.custom-opt label.checked { background:url(/assets/radio-checked.png) no-repeat; }
+.list-view label { float:none; }
+.form-row .thumb-view label { float:left; margin-right:30px; }
+/* ENDED *********************************************/
+
+/*

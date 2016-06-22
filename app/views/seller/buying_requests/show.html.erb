@@ -1,0 +1,115 @@
+<% unless @buying_request.expiration_date >= Date.today %>
+  <div class="alert alert-danger">
+    <div>You can't respond to this request as it is expired.</div>
+  </div>
+<% end %>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>Buying Request Details</h1>
+    <ol class="breadcrumb">
+      <li><a href="<%= seller_dashboard_path%>">Home</a></li>
+      <li class="active">Buying Request Details</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content myprofile-content buy-req-more">
+      <!-- /.row -->
+      <div class="row">
+        <div class="col-lg-7 col-xs-12 myprofile-left">
+          <div class="mp-form-box">
+            <div class="form-group">
+              <label for="fname">Equipment, part, system or service name</label>
+              <%= @buying_request.title%>
+            </div>
+
+            <div class="form-group">
+              <label for="fname">Request SNo</label>
+              <%= @buying_request.identifier%>
+            </div>
+
+            <div class="form-group">
+              <label for="select">Required origin</label>
+                <%= @buying_request.origin%>
+               <%#= BuyingRequest::ORIGINS[@buying_request.origin_id]%>
+            </div>
+
+            <div class="form-group">
+              <label for="select">Brand</label>
+              <%= @buying_request.brand.try(:name)%>
+            </div>
+
+            <div class="form-group">
+              <label for="select">Category</label>
+              <%= @buying_request.category.try(:name) || @buying_request.category_name%>
+            </div>
+
+            <div class="form-group">
+              <label for="select">Type of Lead</label>
+               <%= @buying_request.lead_type%>
+            </div>
+
+            <div class="form-group">
+              <label for="select">Condition</label>
+              <%= @buying_request.condition%>
+            </div>
+
+             <div class="form-group">
+              <label for="fname">Attachment</label>
+              <% if @buying_request.attachment.present? %>
+                <%= link_to @buying_request.attachment.url.split('/').last, @buying_request.attachment.url, target: :blank%>
+              <% end %>
+            </div>
+
+             <div class="form-group">
+              <label for="fname">Expiration Date</label>
+              <%= @buying_request.expiration_date.strftime('%m/%d/%Y')%>
+            </div>
+
+            <div class="form-group">
+              <label for="select">End user location</label>
+               <%= @buying_request.location.try(:name)%>
+            </div>
+          </div>
+          <%# if @buying_request.expiration_date >= Date.today %>
+          <!--   <div class="mp-form-box">
+              <div class="form-group">
+                  <%#= link_to 'Request for More Info', seller_request_for_more_info_path(buying_request_id: @buying_request.id), class: "more-info"%>
+              </div>
+            </div> -->
+          <%# end %>
+          <div class="form-group">
+            <%=link_to "back", seller_buying_requests_path, class: "btn btn-default custom-btn fnone" %>
+          </div>
+        </div>
+        <div class="col-lg-5 col-xs-12 myprofile-right">
+          <div class="mp-form-box">
+            <div class="upload-image">
+              <div class="form-group mrg-btm-zero width-full">
+                <label for="description">Photo</label>
+                <% if @buying_request.images.present? %>
+                  <% @buying_request.images.each do |image| %>
+                    <div class="br-photo">
+                      <%= image_tag(image.image.url(:profile))%>
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="mp-form-box">
+            <div class="form-group">
+              <label for="password">Description</label>
+              <p><%= @buying_request.description%></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

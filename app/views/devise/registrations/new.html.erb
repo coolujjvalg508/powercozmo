@@ -1,0 +1,289 @@
+<section id="md" class="inr-pg">
+  <div class="container log-block">
+    <div class="row">
+      <div class="col-lg-6 log-lt reg-lt">
+        <div class="log-lt-cont">
+          <h2>Why Create An Account?</h2>
+          <p>A free account gives you access to all the <br>
+            features of power Cozmo</p>
+      <ul>
+          <li><i class="fa fa-angle-right"></i>Post your list for buyers</li>
+          <li><i class="fa fa-angle-right"></i>Receive offers and questions</li>
+          <li><i class="fa fa-angle-right"></i>Get Email alerts</li>
+          <li><i class="fa fa-angle-right"></i>Send and receive massages </li>
+      </ul>
+        </div>
+        <img src="/assets/log-img2.jpg" alt="" class="img-responsive"> <span class="log-img-small"><img src="/assets/log-img-small2.jpg" alt=""></span> </div>
+      <div class="col-lg-6 log-rt">
+        <div class="log-rt-cont reg-rt-cont">
+          <h2 class="page-hd txtctr">Easy to Sell, <span>Quick Sign Up</span></h2>
+          <p><strong>Register now to Power</strong> Cozmo and get in touch with thousands of <br>buyers all over the world; advertise your equipment and plant. </p>
+          <%= form_for(resource_name, as: resource_name, url: registration_path(resource_name), :html => {:id => "sign_up_form"}) do |f| %>
+            <%= f.fields_for :profile do |profile_form| %>
+              <div class="form-group">
+                <div class="for-gr-l">
+                  <i class="fa fa-user"></i>
+                  <%= profile_form.text_field :first_name, placeholder: "First Name*", value: params[:user].present? ? params[:user][:profile][:first_name] : '' %>
+                  <span class="err-msg"><%= error_message(resource.profile, :first_name)%></span>
+                </div>
+                <div class="for-gr-r">
+                  <i class="fa fa-user"></i>
+                  <%= profile_form.text_field :last_name, placeholder: "Last Name*", value: params[:user].present? ? params[:user][:profile][:last_name] : '' %>
+                  <span class="err-msg"><%= error_message(resource.profile, :last_name)%></span>
+                </div>
+              </div>
+              <div class="form-group">
+                  <div class="for-gr-l">
+                    <i class="fa fa-building"></i>
+                    <%= profile_form.text_field :company_name, placeholder: "Company/Organization Name*", value: params[:user].present? ? params[:user][:profile][:company_name] : ''  %>
+                    <span class="err-msg"><%= error_message(resource.profile, :company_name)%></span>
+                  </div>
+                  <div class="for-gr-r">
+                    <i class="fa fa-phone"></i>
+                    <%= profile_form.text_field :phone_number, placeholder: "Phone Number*", value: params[:user].present? ? params[:user][:profile][:phone_number] : '' %>
+                    <span class="err-msg"><%= error_message(resource.profile, :phone_number)%></span>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <div class="for-gr-l">
+                    <i class="fa fa-envelope"></i>
+                    <%= f.text_field :email, placeholder: "Email Address*" %>
+                      <span class="error-mess">your user name will be your email address </span>
+                      <span class="err-msg"><%= error_message(resource, :email)%></span>
+                  </div>
+                  <div class="for-gr-r">
+                    <i class="fa fa-envelope"></i>
+                    <%= f.text_field :email_confirmation, placeholder: "Confirm Email address*" %>
+                    <span class="err-msg"><%= error_message(resource, :email_confirmation)%></span>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <div class="for-gr-l">
+                    <i class="fa fa-lock"></i>
+                    <%= f.password_field :password, autocomplete: "off", placeholder: "Create Password*" %>
+                    <span class="err-msg"><%= error_message(resource, :password)%></span>
+                  </div>
+                  <div class="for-gr-r">
+                    <i class="fa fa-lock"></i>
+                    <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Confirm Password*" %>
+                    <span class="err-msg"><%= error_message(resource, :password_confirmation)%></span>
+                  </div>
+              </div>
+              <div class="form-group">
+                <div class="for-gr-l user-type-select">
+                  <%= f.select(:user_type, options_for_select(User::USERTYPE), :prompt => "I am*")  %>
+                  <span id="user-type-error"></span>
+                  <span class="err-msg"><%= error_message(resource, :user_type)%></span>
+                </div>
+                <%= f.fields_for :image do |image_form| %>
+                  <div class="for-gr-r file-upload">
+                  <%= image_form.file_field(:image, placeholder: "Upload a Picture", accept: 'image/png,image/gif,image/jpeg,image/jpg')%>
+                    <input type="text" id="upload-field" placeholder="Upload a Picture">
+                    <input type="button" value="UPLOAD">
+                  </div>
+                <% end %>
+              </div>
+              <div class="form-group">
+                <div class="for-gr-l">
+                  <i class="fa fa-globe"></i>
+                  <%= profile_form.text_field :website, placeholder: "Website", value: params[:user].present? ? params[:user][:profile][:website] : '' %>
+                  <span class="err-msg"><%= error_message(resource.profile, :website)%></span>
+                </div>
+                <div class="for-gr-r country-select">
+                  <%= profile_form.select(:country_id, options_for_select(Country.active.pluck(:name, :id), params[:user].present? ? params[:user][:profile][:country_id] : ''), :prompt => "Select Country*") %>
+                  <span id="country-error"></span>
+                  <span class="err-msg"><%= error_message(resource.profile, :country_id)%></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= profile_form.text_area :business_activity, placeholder: "Business Activity", value: params[:user].present? ? params[:user][:profile][:business_activity] : '' %>
+                <span class="err-msg"><%= error_message(resource.profile, :business_activity)%></span>
+              </div>
+              <div class="form-group">
+                <%= show_simple_captcha(placeholder: "Enter Security Code*") %>
+                <span class="err-msg"><%= @captcha_error%></span>
+              </div>
+              <div class="form-group">
+                <div class="custom-chk list-view">
+                  <label class="chk-bx">
+                  <%= f.check_box :terms_of_service %>
+                    I have read and accepted the <%= link_to "terms and conditions", terms_conditions_path %></label>
+                    <span class="err-msg"><%= error_message(resource, :terms_of_service)%></span>
+                </div>
+              </div>
+              <div class="form-button">
+                <a><%= f.submit "REGISTER NOW", class: "commmon-btn" %></a>
+                <a href="javascript:void();" class="commmon-btn gray-color" id="reset-btn">reset</a>
+              </div>
+              <div class="reg-txt">
+                <div class="fr alrdy-mem"><%= link_to('Already Member?', new_user_session_path) %></div>
+                Do you have any problems registering? Please send an email (<a href="mailto:support@powercozmo.com">support@powercozmo.com</a>) to us, we will gladly help you.
+                <div class="clr"></div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $.validator.addMethod("regex", function(value, element, regexpr) {
+      if (value.length > 0) {
+        return regexpr.test(value);
+      }else{
+        return true;
+      }
+    }, "Please enter a valid name.");
+    var validator = $("#sign_up_form").validate({
+      ignore: ':hidden:not(select)',
+      rules: {
+        "user[email]": {
+          required: true,
+          maxlength: 35,
+          regex: /^[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+$/i
+        },
+        "user[email_confirmation]": {
+          required: true,
+          maxlength: 35,
+          regex: /^[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+$/i,
+          equalTo: "#user_email"
+        },
+        "user[password]": "required",
+        "user[password_confirmation]": {
+          required: true,
+          equalTo: "#user_password"
+        },
+        "user[user_type]": "required",
+        "user[terms_of_service]": "required",
+        "user[profile][first_name]": {
+          required: true,
+          maxlength: 35,
+          regex: /^(?!\d)[a-zA-Z0-9_\s]+$/
+        },
+        "user[profile][last_name]": {
+          required: true,
+          maxlength: 35,
+          regex: /^(?!\d)[a-zA-Z0-9_\s]+$/
+        },
+        "user[profile][company_name]": {
+          required: true,
+          maxlength: 50
+        },
+        "user[profile][phone_number]": {
+          required: true,
+          regex: /^[\+]*[0-9\-]*$/,
+          minlength: 10,
+          maxlength: 18
+        },
+        "user[profile][website]": {
+          required: false,
+          regex:  /^((http|https):\/\/|www[.])[^\s()<>]+[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i
+        },
+        "user[user_type]": "required",
+        "user[profile][country_id]": "required",
+        "captcha": "required"
+      },
+      messages: {
+        "user[email]": {
+          required: "Email can't be blank",
+          regex: "Please enter a valid email address"
+        },
+        "user[email_confirmation]": {
+          required: "Email confirmation can't be blank",
+          regex: "Please enter a valid email address",
+          equalTo: "Email confirmation doesn't match"
+        },
+        "user[password]": {
+          required: "Password can't be blank"
+        },
+        "user[password_confirmation]": {
+          required: "Password confirmation can't be blank",
+          equalTo: "Password confirmation doesn't match"
+        },
+        "user[profile][first_name]": {
+          required: "First name can't be blank"
+        },
+        "user[profile][last_name]": {
+          required: "Last name can't be blank"
+        },
+        "user[profile][company_name]": {
+          required: "Company name can't be blank"
+        },
+        "user[profile][phone_number]": {
+          required: "Phone number can't be blank",
+          regex: "Please enter valid phone number",
+          minlength: "Phone number must be at least 10 digits",
+          maxlength: "Phone number must be at most 18 digits"
+        },
+        "user[user_type]": {
+          required: "I am can't be blank"
+        },
+        "user[profile][country_id]": {
+          required: "Country can't be blank"
+        },
+        "user[profile][website]": {
+          required: "Website can't be blank",
+          regex: "Please enter a valid website."
+        },
+        "user[terms_of_service]": {
+          required: "You must accept our terms of service"
+        },
+        "captcha": {
+          required: "Captcha can't be blank"
+        }
+      },
+      errorPlacement: function(error, element) {
+        if (element.attr("name") == "user[profile][country_id]") {
+          error.insertAfter("#country-error");
+        }
+        else if(element.attr("name") == "user[user_type]")  {
+          error.insertAfter("#user-type-error");
+        }
+        else if(element.attr("name") == "user[email]")  {
+          error.insertAfter("span.error-mess");
+        }
+        else{
+          error.insertAfter(element);
+        }
+      }
+    });
+  });
+
+  $(document).ready(function() {
+    $('#reset-btn').click(function(event){
+      $('#sign_up_form')[0].reset();
+      validator.resetForm();
+    });
+  });
+
+  $('#user_email, #user_email_confirmation').blur(function(e){
+    $(this).val($(this).val().toLowerCase());
+  });
+
+  $('#user_profile_phone_number').keypress(function (e) {
+    if ($(this).val().length<18){
+      if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57) && e.which != 43 && e.which != 45 ) {
+        return false;
+      }
+    }
+    else{
+      if (e.which != 8 && e.which != 0 ) {
+        return false;
+      }
+      return true
+    }
+  }); 
+
+  $( "#user_image_image" ).change(function() {
+    var filename = $(this).val();
+     var lastIndex = filename.lastIndexOf("\\");
+     if (lastIndex >= 0) {
+         filename = filename.substring(lastIndex + 1);
+     }
+     var trim_file = filename.length > 17 ? filename.substring(0, 17 - 3) + '...' : filename
+     var str = $('#upload-field').val(trim_file);
+  });
+
+</script>

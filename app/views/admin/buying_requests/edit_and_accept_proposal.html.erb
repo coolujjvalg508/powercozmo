@@ -1,0 +1,68 @@
+<div class="panel">
+  <h3>Seller Proposal</h3>
+  <div class="panel_contents">
+    <%= semantic_form_for @buying_proposal, url: admin_update_and_accept_proposal_path, method: :put, multipart: true do |f| %>
+      <ul>
+        <%= hidden_field_tag :proposal_id, @buying_proposal.id %>
+        <%= hidden_field_tag :id, @buying_proposal.buying_request.id %>
+        <%= f.fields_for :user do |seller_form| %>
+          <li>
+            <%= f.label "Seller Name" %>
+            <%= seller_form.text_field :name, :disabled => true%>
+          </li>
+          <li>
+            <%= f.label "Seller Email" %>
+            <%= seller_form.text_field :email, :disabled => true%>
+          </li>
+        <% end %>
+        <li>
+          <%= f.label "Price" %>
+          <%= f.text_field :price %>
+          <%= error_message(@buying_proposal, :price)%>
+        </li>
+        <li>
+          <%= f.label "Currency" %>
+          <%= f.select :currency_id, Currency.active.pluck(:id,:name,:symbol).map{|id,name,symbol| [(name.to_s+' (<span>'+symbol.to_s+'</span>)').html_safe,id] }, {prompt: 'Select Currency'} %>
+          <%= error_message(@buying_proposal, :currency_id)%>
+        </li>
+        <li>
+          <%= f.label "Delivery Time" %>
+          <%= f.select :delivery_time, options_for_select((1..3).collect { |week| week.to_s+" Week".pluralize(week)  }+(1..24).collect { |month| month.to_s+" Month".pluralize(month)  },selected: f.object.delivery_time)%>
+          <%= error_message(@buying_proposal, :delivery_time)%>
+        </li>
+        <li>
+          <%= f.label "Body" %>
+          <%= f.text_area :proposal, cols: "30", rows: "20" %>
+          <%= error_message(@buying_proposal, :proposal)%>
+        </li>
+         <li>
+         <!-- instead of image , we are using attachment uploader-->
+         <%#= f.fields_for :image, f.object.image || f.object.build_image do |image_form| %>
+            <%#= image_form.label "Photo" %>
+            <%#= image_form.file_field :image, accept: 'image/png,image/gif,image/jpeg,image/jpg'%>
+            <%#= image_form.hidden_field :image_cache %>
+            <%#= link_to image_tag f.object.try(:image).try(:image).try(:url, :thumb)%>
+          <%# end %>
+          <%= f.label "Attachment" %>
+          <%= f.file_field :attachment, accept: 'application/pdf,image/png,image/gif,image/jpeg,image/jpg' %>
+          <% if f.object.attachment.present? %>
+            <%= link_to f.object.try(:attachment).try(:url).try(:split, '/').try(:last), f.object.try(:attachment).try(:url)%>
+          <% end %>
+        </li>
+        <%= f.actions style: "clear:both;" do %>
+          <%= f.action :submit, label: "Edit and Forward" %>
+          <li class='cancel'>
+              <%= link_to 'Cancel', admin_buying_request_path(@buying_proposal.buying_request.id) %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>
+
+<style type="text/css">
+  label { width: 255px; float: left; }
+  input[type="file"] { float: left; margin-bottom: 10px; }
+  input[type="text"], form select { margin-bottom: 10px; }
+  .error-msg { margin-left: 255px; }
+</style>

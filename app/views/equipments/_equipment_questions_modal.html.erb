@@ -1,0 +1,264 @@
+<!-- Modal -->
+<div id="myModal" class="modal fade bid-popup" role="dialog">
+  <div class="modal-dialog">
+    <div class="success-message">
+      <button type="button" class="close close-success" data-dismiss="modal"><span class="popup-close"></span></button>
+      <%= image_tag "success-message-img.png" %>
+      <h2><span id="success_type">sent</span>
+        successfully</h2>
+      <p>we will respond to you as soon as possible.</p>
+    </div>
+    <!-- Modal content-->
+    <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal"><span class="popup-close"></span></button>
+      <div class="content-part">
+        <h2 id="title_first"><span id="title_last"></span></h2>
+        <div class="ask-quents-form">
+          <%= form_tag(send_equipment_enquiry_path, method: 'post', remote: true, :id => "equipment_enquiry_form" ) do %>
+            <%= hidden_field_tag "enquiry[enquiry_type]", 'question' %>
+            <div class="ask-quents-form-right ask-quents-form-lft col-lg-6 col-sm-6 col-xs-12 ">
+              <div class="tooltip-ico">
+                <a href="#" class="tooltip-info" title="Your question will be sent to the seller immediately and we will email you as soon as they reply."><i class="fa fa-info-circle"></i></a>
+              </div>
+        			<div class="detail-pop-infoline">
+           			<div class="form-group">
+                  <div class="price-area">
+                    <div class="det-pop-frm-block1 wautofnone" id="eqp_identifier">
+                      <span>S. No</span>
+                    </div>
+                      <%= hidden_field_tag "enquiry[equipment_id]", '' %>
+                    </div>
+                    <div class="price-area fr">
+                      <div class="det-pop-frm-block1 wautofnone" id="eqp_name">
+                        <span>Item Name</span>
+                      </div>
+                    </div>
+                    <div class="clr"></div>
+                  </div>
+  					    <div class="form-group">
+                  <div class="price-area">
+                    <div class="det-pop-frm-block1 wautofnone" id="eqp_price">
+                      <span>Price</span>
+                    </div>
+                  </div>
+                  <div class="price-area fr">
+                    <div class="det-pop-frm-block1 wautofnone" id="eqp_location">
+                      <span>Location</span>
+                    </div>
+                  </div>
+                  <div class="clr"></div>
+                </div>
+              </div>
+              <div class="form-group" id="bidding_price_field" style="display: none;">
+                <%= text_field_tag "enquiry[bidding_price]",'',placeholder: "Your Bidding Price*",class: "form-control" %>
+                <div id="bidding_price-error" class="error-text"></div>
+              </div>
+              <div class="form-group">
+              <%=text_area_tag "enquiry[message]",'',placeholder: "Message to Seller*",class: "form-control",style: "min-height:207px;"%>
+              <div id="message-error" class="error-text"></div>
+              </div>
+
+            </div>
+            <div class="ask-quents-form-right col-lg-6 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <i class="fa fa-user"></i>
+                  <%=text_field_tag "enquiry[name]",'',placeholder: "Name*",class: "form-control"%>
+                  <div id="name-error" class="error-text"></div>
+              </div>
+              <div class="form-group">
+                <i class="fa fa-envelope"></i>
+                  <%=text_field_tag "enquiry[email]",'',placeholder: "Email Address*",class: "form-control"%>
+                  <div id="email-error" class="error-text"></div>
+              </div>
+              <div class="form-group">
+                <i class="fa fa-mobile"></i>
+                  <%=text_field_tag "enquiry[mobile]",'',placeholder: "Mobile*",class: "form-control"%>
+                  <div id="mobile-error" class="error-text"></div>
+              </div>
+              <div class="form-group">
+                <%=select_tag("enquiry[country_id]",options_for_select([["Select Country*",""]]+@countries.collect{ |c| [c.name, c.id] }))%>
+                <span id="country-error"></span>
+              </div>
+              <div class="form-group">
+                <i class="fa fa-building"></i>
+                  <%=text_field_tag "enquiry[company_name]",'',placeholder: "Company Name*",class: "form-control"%>
+                  <div id="company_name-error" class="error-text"></div>
+              </div>
+              <div class="form-group mrg-btm-zero">
+                <i class="fa fa-globe"></i>
+                  <%=text_field_tag "enquiry[company_website]",'',placeholder: "Company Website*",class: "form-control"%>
+                  <div id="company_website_error" class="error-text"></div>
+              </div>
+            </div>
+            <div class="custom-submit-btn">
+              <%=submit_tag "Submit",class: "btn btn-default success-modal", id: "query_submit_button"%>
+            </div>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$(document).ready(function(){
+  $.validator.addMethod("regex", function(value, element, regexpr) {
+   return regexpr.test(value);
+  }, "Please enter a valid name.");
+  var validator = $("#equipment_enquiry_form").validate({
+    ignore: ':hidden:not(select)',
+    rules: {
+      "enquiry[name]": {
+        required: true,
+        maxlength: 35,
+        regex: /^(?!\d)[a-zA-Z0-9_\s]+$/
+      },
+      "enquiry[email]": {
+        required: true,
+        email: true
+      },
+      "enquiry[mobile]": {
+        required: true,
+        regex: /^[\+]*[0-9\-]*$/,
+        minlength: 10,
+        maxlength: 18
+      },
+      "enquiry[company_name]": "required",
+      "enquiry[company_website]": {
+        required: true,
+        regex:  /^((http|https):\/\/|www[.])[^\s()<>]+[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i
+      },
+      "enquiry[message]": {
+        required: true,
+        maxlength: 300
+      },
+      "enquiry[country_id]": "required",
+      "enquiry[bidding_price]": {
+        required: function(){
+          if($("input[name='enquiry[enquiry_type]']").val() == "bid")
+            return true;
+          else
+            return false;
+        },
+        number: true,
+        regex: /^[0-9]{0,10}[\.]*[0-9]{0,2}$/
+      }
+    },
+    messages: {
+      "enquiry[email]": {
+        required: "Email can't be blank",
+        email: "Please enter a valid email address"
+      },
+      "enquiry[name]": {
+        required: "Name can't be blank"
+      },
+      "enquiry[mobile]": {
+        required: "Mobile number can't be blank",
+        regex: "Please enter valid mobile number",
+        minlength: "Mobile number must be at least 10 digits",
+        maxlength: "Mobile number must be at most 18 digits"
+      },
+      "enquiry[company_name]": {
+        required: "Company name can't be blank"
+      },
+      "enquiry[company_website]": {
+        required: "Company website can't be blank",
+        regex: "Please enter a valid website."
+      },
+      "enquiry[message]": {
+        required: "Message can't be blank"
+      },
+      "enquiry[country_id]": {
+        required: "Please select a country"
+      },
+      "enquiry[bidding_price]": {
+        required: "Bidding price can not be blank",
+        number: "Please enter number only",
+        regex: "Max value for price is 9999999999.99"
+      }
+    },
+    errorPlacement: function(error, element) {
+      if (element.attr("name") == "enquiry[country_id]") {
+        error.insertAfter("#country-error");
+      } else {
+        error.insertAfter(element);
+      }
+    }
+  });
+});
+</script>
+<script>
+
+//mobile accepts only 10 integers
+  $('#question_mobile,#enquiry_mobile').keypress(function (e) {
+    if ($(this).val().length<18){
+      if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57) && e.which != 43 && e.which != 45 ) {
+        return false;
+      }
+    }
+    else{
+      if (e.which != 8 && e.which != 0 ) {
+        return false;
+      }
+      return true
+    }
+  });
+
+  $('#myModal').on('show.bs.modal', function (modal) {
+    $('#equipment_enquiry_form')[0].reset();
+    $('#enquiry_country_id').selectric();
+    $("#myModal .success-message").hide();
+    $("#myModal .modal-content").show();
+    var enquiry_type = $(modal.relatedTarget).data('enquiry-type');
+    var cache = $('#title_first').children();
+    $(modal.currentTarget).find("#enquiry_enquiry_type").val(enquiry_type);
+    if(enquiry_type == 'bid'){
+      $('#bidding_price_field').show();
+      $('#enquiry_message').css('min-height', '');
+      $('#success_type').text("Your bidding request sent");
+      $('#title_first').text('BID ').append(cache);
+      $('#title_last').text("NOW");
+      $('#query_submit_button').val('BID NOW');
+    }
+    else{
+      $('#bidding_price_field').hide();
+      $('#enquiry_message').css('min-height', '207px');
+      if(enquiry_type == 'buy'){
+        $('#success_type').text("Your buying request sent")
+        $('#title_first').text('BUY ').append(cache);
+        $('#title_last').text("NOW");
+        $('#query_submit_button').val('BUY NOW');
+      }
+      else if(enquiry_type == 'question'){
+        $('#success_type').text("Your question sent");
+        $('#title_first').text('Ask the ').append(cache);
+        $('#title_last').text("Seller a Question");
+        $('#query_submit_button').val('send my question to seller');
+      }
+    }
+    cur_equipment = $(modal.relatedTarget).data('equipment');
+    $('#enquiry_equipment_id').val(cur_equipment.id);
+    identifier_cache = $('#eqp_identifier').children();
+    $('#eqp_identifier').text(cur_equipment.identifier).prepend(identifier_cache);
+    name_cache = $('#eqp_name').children();
+    $('#eqp_name').text(cur_equipment.name).prepend(name_cache);
+    price_cache = $('#eqp_price').children();
+    $('#eqp_price').text(cur_equipment.price).prepend(price_cache);
+    location_cache = $('#eqp_location').children();
+    $('#eqp_location').text(cur_equipment.location).prepend(location_cache);
+  })
+  $("#myModal").on("hidden.bs.modal", function(){
+    $(".error-text").html("");
+    $("label.error").html("");
+});
+
+  $('#myModal').on("ajax:success", function(e, data, status, xhr){
+    $("#myModal .modal-content").fadeOut();
+    $("#myModal .success-message").fadeIn();
+  }).on("ajax:error", function(e, xhr, status, error){
+    $('.error-text').html('')
+    $.each(xhr.responseJSON.errors, function( k, v ) {
+      $('#'+k+'-error').html(k.split('_').join(" ") + " "+ v[0])
+    });
+  });
+</script>

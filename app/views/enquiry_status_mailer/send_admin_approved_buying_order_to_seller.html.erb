@@ -1,0 +1,31 @@
+<% if @system_email.present? && @system_email.try(:content).present? %>
+	<%= @system_email.content.to_s.gsub("::SELLER_NAME::",@user.name.to_s).gsub("::BUYER_NAME::",@enquiry.name.to_s).gsub("::COUNTRY_NAME::",@enquiry.country.try(:name)).gsub("::ITEM_NAME::",@equipment.name.to_s).gsub("::EQIPMENT_SERIALNUMBER::",@equipment.identifier.to_s.upcase).gsub("::EQUIPMENT_NAME::",@equipment.name.to_s).gsub("::BUYER_MESSAGE_BODY::",@enquiry.message.to_s).gsub("::EQUIPMENT_PRICE::",number_to_currency(@equipment.price, unit: raw(@equipment.currency))).gsub("::LINK_TO_USER_SIGN_IN_URL::",link_to(new_user_session_url,new_user_session_url)).html_safe %>
+<% else %>
+	<p>HELLO <strong><%= @user.name %></strong>!</p>
+
+	<p>Sounds good! <strong><%= @enquiry.name.to_s %></strong> from <strong><%= @enquiry.country.try(:name) %></strong> has an interest on your listed <strong><%= @equipment.name.to_s %></strong> SN. <strong><%= @equipment.identifier.to_s.upcase %></strong>, And has sent you buying request. Please login to your dashboard then go to offer list to accept or reject this request. Power Cozmo will do best to converge views between you and buyers, your fast response will help us to finish this deal.</p>
+
+	<p>Name: <strong><%= @enquiry.name.to_s %></strong></p>	
+
+	<p>Equipment name: <strong><%= @equipment.name.to_s %></strong></p>
+
+	<p>SN:&nbsp;<strong><%= @equipment.identifier.to_s.upcase %></strong></p>
+
+	<p>Price: <strong><%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %></strong></p>
+
+	<p>Message from potential buyer:</p>
+
+	<p><%= @enquiry.message.to_s.html_safe %></p>
+
+	<p>Click on this link to log in to your account on Powercozmo.com.</p>
+
+	<p><%= link_to new_user_session_url,new_user_session_url %></p>
+
+	<p>A Power Cozmo representative will contact you in case of any raised enquiry. Please print this page for your record.</p>
+
+	<p>&nbsp;</p>
+
+	<p>Best Regards</p>
+
+	<p>Power Cozmo Team</p>
+<% end %>

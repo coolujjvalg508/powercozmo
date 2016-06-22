@@ -1,0 +1,712 @@
+
+<header id="hd" class="rlatv" style="background: url(<%= @banner_url%>) center top">
+  <div class="hd-srch">
+    <div class="banner-slogan"><span>Trading platform </span> for used and surplus of capital power equipment and power generation plants, providing effective sources and logistics solutions to buyers and sellers </div>
+    <div class="hd-srch-bg PD30">
+      <h2>Search Thousands of Verified Power Plants, Equipment &amp; Machines in One Place</h2>
+      <%= form_tag listing_filter_path, method: :get do %>
+        <div class="srch-blk1 MR20">
+          <%= search_field_tag "q[name_or_identifier_or_country_name_or_description_or_manufacturer_name_or_sub_category_name_or_sub_sub_category_name_cont]", "", placeholder: "Search Name, Identifier, Manufacturer, Country", title: "Search Name, Identifier, Manufacturer, Country"%>
+        </div>
+        <div class="srch-blk1 MR20">
+          <%= select_tag "filter[category_id]", options_from_collection_for_select(@categories, "id", "name"), include_blank: "Select Categories" %>
+        </div>
+        <div class="srch-blk2">
+          <%=submit_tag "Search" %>
+        </div>
+      <% end %>
+      <div class="clr"></div>
+    </div>
+    <div class="postad-btn PT20 txtctr"><%= link_to "post an ad", new_seller_equipment_path%></div>
+  </div>
+</header>
+<section id="md">
+  <div class="wht-bg PT50 PB50">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 wlcm-cnt">
+          <h2 class="page-hd txtctr">WELCOME TO <span>POWER COZMO</span> TRADE PLATFORM</h2>
+          <ul class="wlcm-list">
+            <li id="_about_power_cozmo">
+              <div class="wlcm-l fr"><img alt="" src="/assets/platform-img1.png"></div>
+              <div class="wlcm-r PR50 PT20">
+                <h3>What is power Cozmo?</h3>
+                <p>Power Cozmo is online automated platform works as market place for all power plants need, based on connecting sellers & buyers together all over the world,
+                  You can :</p>
+                <%= link_to "Read More", about_path(anchor: "power_cozmo"),class: "readmore-btn anchor" %>   </div>
+              <div class="clr"></div>
+            </li>
+            <li id="_about_us">
+              <div class="wlcm-l"><img alt="" src="/assets/platform-img2.png"></div>
+              <div class="wlcm-r PL50 PT30">
+                <h3>Who We are?</h3>
+                <p>Power Cozmo has selected a team of leaders who are passionate about the business and are committed to its success. Together, they foster a culture of
+                  excellence with employees at the heart of the business.</p>
+                <%= link_to "Read More", about_path(anchor: "us"),class: "readmore-btn anchor" %> </div>
+              <div class="clr"></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="drkgry-bg PT50" id="_why_us">
+    <div class="why-cnt-tab">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <h2 class="page-hd txtctr">Why <span>POWER COZMO?</span></h2>
+            <ul id="myTab">
+              <li class="active"><a href="#why-one" data-toggle="tab">Why sell in Power Cozmo?</a></li>
+              <li class=""><a href="#why-two" data-toggle="tab">Why Buy from Power Cozmo?</a></li>
+              <li class=""><a href="#why-three" data-toggle="tab">How we protect you?</a></li>
+              <li class=""><a href="#why-four" data-toggle="tab">How we market your equipment?</a></li>
+            </ul>
+            <div class="clr"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-cnt-tab-desc PT50 PB50">
+      <div class="container">
+        <div class="row">
+          <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active in" id="why-one">
+              <div class="col-lg-3 col-md-3 why-cozmo-lst">
+                <div class="why-cozmo-lst-ico MB30"> <span class="sprites why-ico5"></span> </div>
+                <div class="why-cozmo-lst-area">
+                  <h3>100% commission based structure</h3>
+                  <div class="why-cozmo-lst-desc">if we don’t sell your equipment you pay Nothing.</div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 why-cozmo-lst">
+                <div class="why-cozmo-lst-ico MB30"> <span class="sprites why-ico6"></span> </div>
+                <div class="why-cozmo-lst-area">
+                  <h3>Easy, painless processes.</h3>
+                  <div class="why-cozmo-lst-desc">Anyone can list equipment for sale,-you just need to create a free account.</div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 why-cozmo-lst">
+                <div class="why-cozmo-lst-ico MB30"> <span class="sprites why-ico7"></span> </div>
+                <div class="why-cozmo-lst-area">
+                  <h3>Global Reach.</h3>
+                  <div class="why-cozmo-lst-desc">We successfully market equipment worldwide on our filtered database promotion tools.</div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 why-cozmo-lst">
+                <div class="why-cozmo-lst-ico MB30"> <span class="sprites why-ico8"></span> </div>
+                <div class="why-cozmo-lst-area">
+                  <h3>Secure escrow process</h3>
+                  <div class="why-cozmo-lst-desc">Seller does not release equipment until Power Cozmo has received full payment. </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="why-two">
+              <div class="col-lg-3 col-md-3 why-cozmo-lst">
+                <div class="why-cozmo-lst-ico MB30"> <span class="sprites why-ico1"></span> </div>
+                <div class="why-cozmo-lst-area">
+                  <h3>No limits</h3>
+                  <div class="why-cozmo-lst-desc">No limit on the number of photos and information provided by sellers. </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 why-cozmo-lst">
+                <div class="why-cozmo-lst-ico MB30"> <span class="sprites why-ico2"></span> </div>
+                <div class="why-cozmo-lst-area">
+                  <h3>Secure and safe processes</h3>
+                  <div class="why-cozmo-lst-desc">Your money is held by power cozmo and only released to the seller .</div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 why-cozmo-lst">
+                <div class="why-cozmo-lst-ico MB30"> <span class="sprites why-ico3"></span> </div>
+                <div class="why-cozmo-lst-area">
+                  <h3>Open, transparent negotiations</h3>
+                  <div class="why-cozmo-lst-desc">Our Automated online negotiation system puts the fairness into private sale.</div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 why-cozmo-lst">
+                <div class="why-cozmo-lst-ico MB30"> <span class="sprites why-ico4"></span> </div>
+                <div class="why-cozmo-lst-area">
+                  <h3>Convenient services</h3>
+                  <div class="why-cozmo-lst-desc">Buyers can take advantage of other power Cozmo services. inspection and other services.</div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="why-three">
+              <div class="col-lg-3 col-md-3 why-cozmo-lst">
+                <div class="why-cozmo-lst-ico MB30"> <span class="sprites why-ico9"></span> </div>
+                <div class="why-cozmo-lst-area">
+                  <h3>Trusted costumer account service</h3>
+                  <div class="why-cozmo-lst-desc"></div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 why-cozmo-lst">
+                <div class="why-cozmo-lst-ico MB30"> <span class="sprites why-ico10"></span> </div>
+                <div class="why-cozmo-lst-area">
+                  <h3>Third party inspection</h3>
+                  <div class="why-cozmo-lst-desc"></div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 why-cozmo-lst">
+                <div class="why-cozmo-lst-ico MB30"> <span class="sprites why-ico11"></span> </div>
+                <div class="why-cozmo-lst-area">
+                  <h3>Unlimited Q &amp; A</h3>
+                  <div class="why-cozmo-lst-desc"></div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 why-cozmo-lst">
+                <div class="why-cozmo-lst-ico MB30"> <span class="sprites why-ico12"></span> </div>
+                <div class="why-cozmo-lst-area">
+                  <h3>Unlimited photos &amp; videos</h3>
+                  <div class="why-cozmo-lst-desc"></div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="why-four">
+              <div class="col-lg-3 col-md-3 why-cozmo-lst">
+                <div class="why-cozmo-lst-ico MB30"> <span class="sprites why-ico13"></span> </div>
+                <div class="why-cozmo-lst-area">
+                  <h3>Detailed listings on Powercozmo</h3>
+                  <div class="why-cozmo-lst-desc"></div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 why-cozmo-lst">
+                <div class="why-cozmo-lst-ico MB30"> <span class="sprites why-ico14"></span> </div>
+                <div class="why-cozmo-lst-area">
+                  <h3>Emails shot &amp; Direct mail</h3>
+                  <div class="why-cozmo-lst-desc"></div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 why-cozmo-lst">
+                <div class="why-cozmo-lst-ico MB30"> <span class="sprites why-ico15"></span> </div>
+                <div class="why-cozmo-lst-area">
+                  <h3>Print &amp; Online Advertising</h3>
+                  <div class="why-cozmo-lst-desc"></div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 why-cozmo-lst">
+                <div class="why-cozmo-lst-ico MB30"> <span class="sprites why-ico16"></span> </div>
+                <div class="why-cozmo-lst-area">
+                  <h3>Full-color Brochures</h3>
+                  <div class="why-cozmo-lst-desc"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="txtctr clr"><%= link_to 'Read More', why_us_path, class: "readmore-btn" %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wht-bg PT50 PB50" id="how_we_work">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 hwitwk-cnt">
+          <h2 class="page-hd txtctr">How <span>we work?</span></h2>
+          <div class="hwitwk-tab">
+            <ul id="myTab1">
+              <li class="active"><a href="#how-one" data-toggle="tab">Sell</a></li>
+              <li class=""><a href="#how-two" data-toggle="tab">Buy</a></li>
+              <li class=""><a href="#how-three" data-toggle="tab">Pay</a></li>
+              <li class=""><a href="#how-four" data-toggle="tab">Commission</a></li>
+            </ul>
+            <div class="clr"></div>
+          </div>
+          <!--<h3 class="page-hd txtctr">Power Cozmo platform is simple, safe, realistic you can sell thorough below simple steps:</h3> -->
+          <div id="myTabContent1" class="tab-content txtctr">
+            <div class="tab-pane fade active in" id="how-one">
+             <h3 class="page-hd txtctr">Power Cozmo platform is simple, safe, realistic you can sell thorough below simple steps:</h3>
+              <ul class="hwitwk-process">
+                <li>
+                  <div class="sprites hwitwk-ico1 MB20"></div>
+                  <h4>Register on <br>
+                    Power Cozmo</h4>
+                  <p>You simply register in Power Cozmo, Then Go to your awesome dashboard.</p>
+                </li>
+                <li>
+                  <div class="sprites hwitwk-ico2 MB20"></div>
+                  <h4>Start Receiving <br>
+                    questions & offers</h4>
+                  <p>When an interested party see your Item. He may at this time ask any questions. </p>
+                </li>
+                <li>
+                  <div class="sprites hwitwk-ico3 MB20"></div>
+                  <h4>Start Finalizing the deal <br>
+                    -Signing agreements</h4>
+                  <p>When the Potential Buyer is satisfied and the price is agreed, a seller/buyer. </p>
+                </li>
+                <li>
+                  <div class="sprites hwitwk-ico4 MB20"></div>
+                  <h4>Prepare item for <br>
+                    shipping</h4>
+                  <p>While the payment is clearing the bank you will be sent the seller/buyer.</p>
+                </li>
+                <li>
+                  <div class="sprites hwitwk-ico5 MB20"></div>
+                  <h4>Get your money <br>
+                    in your account.</h4>
+                  <p>Within 24 hours after the item is received by the buyer you will be sent pay.</p>
+                </li>
+              </ul>
+              <br>
+            </div>
+            <div class="tab-pane fade" id="how-two">
+              <h3 class="page-hd txtctr">Power Cozmo platform is simple, safe, realistic you can sell thorough below simple steps:</h3>
+              <ul class="hwitwk-process">
+                <li>
+                  <div class="sprites hwitwk-ico6 MB20"></div>
+                  <h4>Search & find <br>
+                    your equipment</h4>
+                  <p>First find the plant or the equipment you are interested in on our web site. </p>
+                </li>
+                <li>
+                  <div class="sprites hwitwk-ico7 MB20"></div>
+                  <h4>Make an <br>
+                    offer</h4>
+                  <p>Once you get all your questions answered click in "Make an offer button". </p>
+                </li>
+                <li>
+                  <div class="sprites hwitwk-ico8 MB20"></div>
+                  <h4>Start Finalizing the <br>
+                    deal–Sign agreements.</h4>
+                  <p>When an offer is accepted and the price agreed, a seller/buyer agreement. </p>
+                </li>
+                <li>
+                  <div class="sprites hwitwk-ico9 MB20"></div>
+                  <h4>Prepare item <br>
+                    for shipping</h4>
+                  <p>While the payment is clearing the bank you will be sent the seller/buyer contract. </p>
+                </li>
+                <li>
+                  <div class="sprites hwitwk-ico10 MB20"></div>
+                  <h4>Get your shipping doc. <br>
+                    and receive the Item.</h4>
+                  <p>Power Cozmo will send you shipping documents within materials expected arrival. </p>
+                </li>
+              </ul>
+              <br>
+            </div>
+            <div class="tab-pane fade" id="how-three">
+              <h3 class="page-hd txtctr">Power Cozmo platform is simple, safe, realistic you can sell thorough below simple steps:</h3>
+              <ul class="hwitwk-process">
+                <li>
+                  <div class="sprites hwitwk-ico11 MB20"></div>
+                  <h4>T\T</h4>
+                  <p>T\T cash transfer to our Trusted costumer account.</p>
+                </li>
+                <li>
+                  <div class="sprites hwitwk-ico12 MB20"></div>
+                  <h4>L\C</h4>
+                  <p>Transferable Irrevocable Confirmed L\C for big projects.</p>
+                </li>
+              </ul>
+              <br>
+            </div>
+            <div class="tab-pane fade" id="how-four">
+              <ul class="hwitwk-process">
+                <li>
+                  <div class="sprites hwitwk-ico13 MB20"></div>
+                  <h4>Commission rate</h4>
+                  <!--<p>The commission due from you and payable by you to us shall be calculated by </p> -->
+                </li>
+              </ul>
+              <div class="commission-rate-bg nomrgn">
+                <ul>
+                  <% @commissions.each do |commission| %>
+                    <li>
+                      <div class="commission-rate-l"><%= number_to_percentage(commission.percent, precision: 2, strip_insignificant_zeros: true) %></div>
+                      <div class="commission-rate-r">$<%= number_with_delimiter(number_with_precision(commission.min_price, precision: 2, strip_insignificant_zeros: true)) %> to $<%= number_with_delimiter(number_with_precision(commission.max_price, precision: 2, strip_insignificant_zeros: true)) %></div>
+                      <div class="clr"></div>
+                    </li>
+                  <% end %>
+                  <li>
+                  <div class="commission-rate-l">20%</div>
+                  <div class="commission-rate-r discount-seller-cnt">Discount for Exclusive Sellers</div>
+                  <div class="clr"></div>
+                  </li>
+                </ul>
+                <div class="clr"></div>
+              </div>
+              <br>
+            </div>
+          </div>
+          <div class="txtctr"><%= link_to 'Read More', how_we_work_path, class: "readmore-btn" %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="lghdrkgry-bg PT30 PB30">
+  		<div class="container">
+    	  <div class="row">
+        	<div class="col-lg-12">
+            	<div class="home-msg">
+                	<div class="home-msg-l">
+                    	<h3>Are you ready for listing your product with "<span>PowerCozmo</span>"?</h3>
+                        <p>Register now to Power Cozmo and get in touch with thousands of buyers all over the world; buy & trade your used equipment or plants safely here.</p>
+                    </div>
+                    <div class="home-msg-r"><%= link_to "Get Started", new_user_registration_path %></div>
+                    <div class="clr"></div>
+                </div>
+            </div>
+	      </div>
+      </div>
+  </div>
+  <% if @categories.present? %>
+    <div class="lghtgry-bg PT50 PB50" id="_categories">
+      <div class="container">
+        <div class="row cat-cnt">
+          <div class="col-lg-12">
+            <h2 class="page-hd txtctr">Categories</h2>
+            <h3 class="page-hd txtctr">We are not only brokers we are service provider select your machine and find out what services we can do for you.</h3>
+          </div>
+          <div id="pr-category" class="owl-carousel">
+          <% @categories.each do |category| %>
+            <div class="item">
+              <div class="col-lg-12 col-md-12 cat-lst">
+                <div class="cat-lst-cnt">
+                  <div class="cat-lst-img">
+                    <% if category.image.present? && category.image.image.present?%>
+                      <%= image_tag category.image.image.home_blog.url %>
+                    <% else %>
+                      <%= image_tag "category-noimage.png" %>
+                    <% end %>
+                    <h3><%=link_to category.name,listing_filter_path(filter: {category_id: category.id}) %></h3>
+                  </div>
+                  <div class="cat-lst-desc" style="height: 160px;">
+                    <% if category.children.count > 0 %>
+                      <ul>
+                        <% category.children.first(4).each do |sub_category| %>
+                          <li><%=link_to sub_category.name,listing_filter_path(filter: {category_id: category.id, sub_category_id: sub_category.id}) %></li>
+                        <% end %>
+                      </ul>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          </div>
+
+          <!--<div class="col-lg-3 col-md-3 cat-lst">
+          <div class="cat-lst-cnt">
+              <div class="cat-lst-img"><img alt="" src="/assets/cat-img1.jpg"><h3>Complete Power Plant</h3></div>
+                <div class="cat-lst-desc">
+                  <ul>
+                    <li>Coal Fired Power Plants</li>
+                    <li>Cogeneration Power Plants</li>
+                    <li>Diesel Fired Power Plants</li>
+                    <li>Heavy Fuel Oil Power Plants</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 cat-lst">
+          <div class="cat-lst-cnt">
+              <div class="cat-lst-img"><img alt="" src="/assets/cat-img2.jpg"><h3>Turbines</h3></div>
+                <div class="cat-lst-desc">
+                  <ul>
+                    <li>Steam Turbines</li>
+                    <li>Gas Turbines</li>
+                    <li>Combined cycle</li>
+                    <li>Wind Turbines</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 cat-lst">
+          <div class="cat-lst-cnt">
+              <div class="cat-lst-img"><img alt="" src="/assets/cat-img3.jpg"><h3>Turbine Parts</h3></div>
+                <div class="cat-lst-desc">
+                  <ul>
+                    <li>Gas Turbine Parts</li>
+                    <li>Steam Turbine parts</li>
+                    <li>Other Related Equipment</li>
+                    <li>Turbine Control Systems</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 cat-lst">
+          <div class="cat-lst-cnt">
+              <div class="cat-lst-img"><img alt="" src="/assets/cat-img4.jpg"><h3>Steam Boilers</h3></div>
+                <div class="cat-lst-desc">
+                  <ul>
+                    <li>Steam Turbines</li>
+                    <li>Gas Turbines</li>
+                    <li>Combined cycle</li>
+                    <li>Wind Turbines</li>
+                    </ul>
+                </div>
+            </div>
+        </div> -->
+          <div class="clr"></div>
+          <!--<div class="owl-nav"><a href="#" class="owl-prev" style="">prev</a><a href="#" class="owl-next" style="">next</a></div>-->
+          <div class="txtctr MT30">
+            <%=link_to 'View All Categories', listings_path, class: "readmore-btn" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <div class="wht-bg PT50 PB50">
+    <div class="container">
+      <div class="row ltestpost-cnt">
+        <div class="col-lg-12">
+          <h2 class="page-hd txtctr">latest <span>posted equipment</span></h2>
+          <div class="hwitwk-tab">
+            <ul id="myTab2">
+              <li class="active"><a href="#post-one" data-toggle="tab">Latest Ads</a></li>
+              <li class=""><a href="#post-two" data-toggle="tab">Popular Ads</a></li>
+              <li class=""><a href="#post-three" data-toggle="tab">Random Ads</a></li>
+            </ul>
+            <div class="clr"></div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div id="myTabContent2" class="tab-content">
+            <div class="tab-pane fade active in" id="post-one">
+              <div class="carousel1" data-transition="slide" data-paginate>
+                <% max_carousal = (@latest_ads.length/4.0).ceil %>
+                <% (1..max_carousal).each do |n| %>
+                  <div class="item">
+                    <% @latest_ads[(n-1)*4, 4].each do |ad| %>
+                      <div class="col-lg-6 col-md-6 post-equip">
+                        <div class="post-equip-cnt">
+                          <div class="PD10">
+                            <div class="post-equip-l"><% if ad.try(:images).try(:first).try(:image) %>
+                              <%= image_tag ad.try(:images).try(:first).try(:image).try(:card_image).try(:url) %>
+                            <% else %>
+                              <%= image_tag "equipment-noimage.png" %>
+                            <% end %></div>
+                            <div class="post-equip-r">
+                              <h3><%= "#{truncate(ad.name, length: 20)} - #{ad.identifier}" %></h3>
+                              <p><%= truncate(ad.description, length: 140) %></p>
+                              <div class="price-info"><%= number_to_currency(ad.price, unit: raw(ad.currency)) %><%= link_to 'MORE INFO', equipment_details_path(ad) %></div>
+                            </div>
+                            <div class="clr"></div>
+                          </div>
+                          <div class="ad-gray-info ad-gray-info-big">
+                            <div class="ad-gray-l"><i class="fa fa-map-marker"></i> Location: <span><%= truncate(ad.country.name,:length => 25)%></span>
+                            <% if ad.equipment_type == "equipment"%>
+                              <div class="">Manufacturing : <span><%= ad.manufacture_year%></span></div>
+                            <% else %>
+                              <div class="">Power Plant Age : <span><%= ad.power_plant_age%></span></div>
+                            <% end %>
+
+                             </div>
+
+
+                            <div class="ad-gray-r">
+                            <% if ad.equipment_type == "equipment"%>
+                              <div class="">Brand : <span><%= truncate(ad.try(:manufacturer).try(:name),length: 15)%></span></div>
+                            <% else %>
+                              <div class="">Turbine Brand : <span><%= truncate(ad.turbine_manufacturer_name, length: 12)%></span></div>
+                            <% end %>
+                             Rating : <span><a class="<%='active' if ad.try(:rating).to_i >= 1 %>" href="#"><i class="fa fa-star"></i></a><a class="<%='active' if ad.try(:rating).to_i >= 2 %>" href="#"><i class="fa fa-star"></i></a><a class="<%='active' if ad.try(:rating).to_i >= 3 %>" href="#"><i class="fa fa-star"></i></a><a href="#" class="<%='active' if ad.try(:rating).to_i >= 4 %>"><i class="fa fa-star"></i></a><a href="#" class="<%='active' if ad.try(:rating).to_i >= 5 %>"><i class="fa fa-star"></i></a></span></div>
+                            <div class="clr"></div>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="post-two">
+              <div class="carousel2" data-transition="slide" data-paginate>
+                <% max_carousal2 = (@popular_ads.length/4.0).ceil %>
+                <% (1..max_carousal2).each do |n| %>
+                  <div class="item">
+                    <% @popular_ads[(n-1)*4, 4].each do |ad| %>
+                      <div class="col-lg-6 col-md-6 post-equip">
+                        <div class="post-equip-cnt">
+                          <div class="PD10">
+                            <div class="post-equip-l"><% if ad.try(:images).try(:first).try(:image) %>
+                                <%= image_tag ad.try(:images).try(:first).try(:image).try(:card_image).try(:url) %>
+                              <% else %>
+                                <%= image_tag "equipment-noimage.png" %>
+                              <% end %></div>
+                            <div class="post-equip-r">
+                                <h3><%= "#{truncate(ad.name, length: 20)} - #{ad.identifier}" %></h3>
+                                <p><%= truncate(ad.description, length: 140) %></p>
+                                <div class="price-info"><%= number_to_currency(ad.price, unit: raw(ad.currency)) %><%= link_to 'MORE INFO', equipment_details_path(ad) %></div>
+                              </div>
+                            <div class="clr"></div>
+                          </div>
+                          <div class="ad-gray-info ad-gray-info-big">
+                            <div class="ad-gray-l"><i class="fa fa-map-marker"></i> Location : <span><%= truncate(ad.country.name,:length => 25)%></span>
+
+                            <% if ad.equipment_type == "equipment"%>
+                                <div class="">Manufacturing : <span><%= ad.manufacture_year%></span></div>
+                              <% else %>
+                                <div class="">Power Plant Age : <span><%= ad.power_plant_age%></span></div>
+                              <% end %>
+                              </div>
+
+
+                              <div class="ad-gray-r">
+                                  <% if ad.equipment_type == "equipment"%>
+                                <div class="">Brand : <span><%= truncate(ad.try(:manufacturer).try(:name), length: 15)%></span></div>
+                              <% else %>
+                                <div class="">Turbine Brand : <span><%= truncate(ad.turbine_manufacturer_name, length: 12)%></span></div>
+                              <% end %>
+
+                              Rating : <span><a class="<%='active' if ad.try(:rating).to_i >= 1 %>" href="#"><i class="fa fa-star"></i></a><a class="<%='active' if ad.try(:rating).to_i >= 2 %>" href="#"><i class="fa fa-star"></i></a><a class="<%='active' if ad.try(:rating).to_i >= 3 %>" href="#"><i class="fa fa-star"></i></a><a href="#" class="<%='active' if ad.try(:rating).to_i >= 4 %>"><i class="fa fa-star"></i></a><a href="#" class="<%='active' if ad.try(:rating).to_i >= 5 %>"><i class="fa fa-star"></i></a></span></div>
+                            <div class="clr"></div>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="post-three">
+              <div class="carousel3" data-transition="slide" data-paginate>
+                <% max_carousal3 = (@random_ads.length/4.0).ceil %>
+                <% (1..max_carousal3).each do |n| %>
+                  <div class="item">
+                    <% @random_ads[(n-1)*4, 4].each do |ad| %>
+                      <div class="col-lg-6 col-md-6 post-equip">
+                        <div class="post-equip-cnt">
+                          <div class="PD10">
+                            <div class="post-equip-l"><% if ad.try(:images).try(:first).try(:image) %>
+                              <%= image_tag ad.try(:images).try(:first).try(:image).try(:card_image).try(:url) %>
+                            <% else %>
+                              <%= image_tag "equipment-noimage.png" %>
+                            <% end %></div>
+                            <div class="post-equip-r">
+                              <h3><%= "#{truncate(ad.name, length: 20)} - #{ad.identifier}" %></h3>
+                              <p><%= truncate(ad.description, length: 140) %></p>
+                              <div class="price-info"><%= number_to_currency(ad.price, unit: raw(ad.currency)) %><%= link_to 'MORE INFO', equipment_details_path(ad) %></div>
+                            </div>
+                            <div class="clr"></div>
+                          </div>
+                          <div class="ad-gray-info ad-gray-info-big">
+                            <div class="ad-gray-l"><i class="fa fa-map-marker"></i> Location : <span><%= truncate(ad.country.name,:length => 25)%></span>
+                            <% if ad.equipment_type == "equipment"%>
+                              <div class="">Manufacturing : <span><%= ad.manufacture_year%></span></div>
+                            <% else %>
+                              <div class="">Power Plant Age : <span><%= ad.power_plant_age%></span></div>
+                            <% end %>
+                            </div>
+
+
+                            <div class="ad-gray-r">
+                            <% if ad.equipment_type == "equipment"%>
+                              <div class="">Brand : <span><%= truncate(ad.try(:manufacturer).try(:name), length: 15)%></span></div>
+                            <% else %>
+                              <div class="">Turbine Brand : <span><%= truncate(ad.turbine_manufacturer_name, length: 12)%></span></div>
+                            <% end %>
+
+                             Rating : <span><a class="<%='active' if ad.try(:rating).to_i >= 1 %>" href="#"><i class="fa fa-star"></i></a><a class="<%='active' if ad.try(:rating).to_i >= 2 %>" href="#"><i class="fa fa-star"></i></a><a class="<%='active' if ad.try(:rating).to_i >= 3 %>" href="#"><i class="fa fa-star"></i></a><a href="#" class="<%='active' if ad.try(:rating).to_i >= 4 %>"><i class="fa fa-star"></i></a><a href="#" class="<%='active' if ad.try(:rating).to_i >= 5 %>"><i class="fa fa-star"></i></a></span></div>
+                            <div class="clr"></div>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script type="text/javascript">
+$(document).ready(function($) {
+	$("#owl-example").owlCarousel({
+		loop:true,
+		margin:0,
+		nav:true,
+		autoplay:true,
+		autoplayHoverPause:true,
+		items : 1
+	});
+
+	$("#pr-category").owlCarousel({
+		loop:true,
+		margin:0,
+		nav:true,
+		autoplay:true,
+		autoplayHoverPause:true,
+		items : 4,
+		responsiveClass:true,
+		responsive:{
+			0:{
+				items:1
+			},
+			700:{
+				items:2
+			},
+			1000:{
+				items:4
+			}
+		}
+	});
+
+  /* custom on click and onload event for anchor tag navigation.
+     To prevent browsers default navaigation for anchor field,
+     mark the anchor tag with class 'anchor', and id as '_foo' to
+     navigate to url like www.yoururl.com/#foo
+  */
+  var anchor = window.location.hash.replace('#', '')
+  var ele = $('#_' + anchor);
+  var tab = $("li a[href='#"+anchor+"']").length;
+  if(ele.length > 0)
+    jump_to(ele);
+  else if(tab > 0){
+    setTimeout(function() {
+      jump_to_tab(anchor);
+    }, 1);
+  }
+  $('.anchor').on('click', function(event){
+    id = $(this).attr('href').split('#').pop();
+    element = $('#_'+id);
+    tab_present = $("li a[href='#"+id+"']").length;
+    if(element.length > 0)
+      jump_to(element);
+    else if(tab_present > 0)
+      {
+        jump_to_tab(id);
+        event.preventDefault();
+      }
+  })
+  function jump_to(elem){
+    if(elem) {
+      var offset = elem.offset();
+      var scrollto = offset.top - $('.navbar').outerHeight();
+      $('html, body').animate({scrollTop:scrollto}, 0);
+    }
+  }
+  function jump_to_tab(id){
+    // for how-we-work tab navigation
+    if(id && (id.indexOf('how') >= 0)){
+      change_to = $("#myTab1 li a[href='#"+id+"']");
+      change_to.removeClass('active'); // will remove active class from 'a' only
+      change_to.addClass('active'); // will add active class to both 'li' and 'a'
+      change_to.tab('show');
+      var offset = $('#how_we_work').offset();
+      var scrollto = offset.top - $('.navbar').outerHeight();
+      $('html, body').animate({scrollTop:scrollto}, 0);
+    }
+    // for why-us tab navigation
+    else if(id && (id.indexOf('why') >= 0)){
+      change_to = $("#myTab li a[href='#"+id+"']");
+      change_to.removeClass('active'); // will remove active class from 'a' only
+      change_to.addClass('active'); // will add active class to both 'li' and 'a'
+      change_to.tab('show');
+      var offset = $('#_why_us').offset();
+      var scrollto = offset.top - $('.navbar').outerHeight();
+      $('html, body').animate({scrollTop:scrollto}, 0);
+    }
+  }
+})
+</script>
+<script type="text/javascript">
+  jQuery(".carousel1").carousel();
+	jQuery(".carousel2").carousel();
+	jQuery(".carousel3").carousel();
+</script>
+

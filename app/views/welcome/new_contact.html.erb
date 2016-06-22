@@ -1,0 +1,183 @@
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+
+<header id="hd" class="rlatv list-bnr">
+  <div class="hd-srch">
+    <h2>Contact Us</h2>
+  </div>
+</header>
+<section id="md" class="lst-midd-cnt">
+  <div class="wht-bg PT40 PB40">
+    <div class="container">
+      <div class="row">
+      <div class="col-lg-12 contact-headline"><%= @contact_static_data.first.title.html_safe%></div>
+        <div class="col-lg-5 col-md-5 contact-l">
+          <div class="contact-info">
+          <div class="contact-info-txt">
+            <p><%= @contact_static_data.first.content.html_safe %></p>
+            </div>        
+          </div>
+        </div>
+        <div class="col-lg-7 col-md-7 contact-r">
+        	<div class="contact-form">
+          	<h3 class="page-heading">Contact Form</h3>
+            <%= form_for :contact, url: contacts_path , :html => {:id => "contact_form"} do |f| %>
+              <% if @contact.errors.any? %>
+                 <div id="error_explanation">
+                   <h2>
+                     <%= pluralize(@contact.errors.count, "error") %> prohibited
+                     this contact from being saved:
+                   </h2>
+                   <ul>
+                     <% @contact.errors.full_messages.each do |msg| %>
+                       <li><%= msg %></li>
+                     <% end %>
+                   </ul>
+                 </div>
+               <% end %>
+              <div class="form-group"> 
+                <div class="for-gr-l">
+                     <%= f.text_field :first_name, placeholder: 'First Name*' %>
+                     <div class="error-mesg error-mesg_contact_first_name">
+                       <%= "FirstName "+"#{@errors['first_name'][0]}" if @errors.present? and @errors['first_name'].present? %>
+                     </div>
+                </div>
+                <div class="for-gr-r">
+                  <%= f.text_field :last_name, placeholder: 'Last Name*' %>
+                  <div class="error-mesg error-mesg_contact_last_name">
+                    <%= "LastName "+"#{@errors['last_name'][0]}" if @errors.present? and @errors['last_name'].present? %>
+                  </div>
+                </div>
+                <div class="clr"></div>
+              </div>
+            
+              <div class="form-group"> 
+                  <div class="for-gr-l">
+                      <%= f.text_field :email, placeholder: 'E-mail Address*' %>
+                      <div class="error-mesg error-mesg_contact_email">
+                        <%= "Email "+"#{@errors['email'][0]}" if @errors.present? and @errors['email'].present? %>
+                      </div>
+                  </div>
+                  <div class="for-gr-r">
+                    <%= f.text_field :phone, placeholder: 'Phone'%>
+                    <div class="error-mesg error-mesg_contact_phone">
+                      <%= "Phone "+"#{@errors['phone'][0]}" if @errors.present? and @errors['phone'].present? %>
+                    </div>
+                  </div>
+                  <div class="clr"></div>
+              </div>
+              
+              <div class="form-group"> 
+                  <%= f.text_field :subject, placeholder: 'Subject*' %>
+                  <div class="error-mesg error-mesg_contact_subject">
+                      <%= "Subject "+"#{@errors['subject'][0]}" if @errors.present? and @errors['subject'].present? %>
+                  </div>
+                  <div class="clr"></div>
+              </div>
+              
+              <div class="form-group"> 
+                   <%= f.text_area :message, :cols => "", :rows => "", placeholder: 'Message*' %>
+                   <div class="error-mesg error-mesg_contact_message">
+                       <%= "Message "+"#{@errors['message'][0]}" if @errors.present? and @errors['message'].present? %>
+                   </div>
+                  <div class="clr"></div>
+              </div>
+              <div class="form-button nomrgn">
+                  <%= f.submit 'Submit', :class => 'commmon-btn' %>
+              </div>
+            <% end %>  
+          </div>
+        </div>
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<script type="text/javascript">
+
+$(document).ready(function($) {
+  $.validator.addMethod(
+    "regex",
+    function(value, element, regexp) {
+        return this.optional(element) || regexp.test(value);
+    },
+    "Please enter a valid input."
+  );
+
+  $("#contact_form").validate({
+    debug: true,
+    rules: {
+      'contact[first_name]': {
+        required: true,
+      },
+      'contact[last_name]': {
+        required: true,
+      },
+      'contact[subject]': {
+        required: true,
+      },
+      'contact[message]': {
+        required: true,
+      },
+      'contact[phone]': {
+        required: false,
+        regex: /^[\+]*[0-9\-]*$/,
+        minlength: 10,
+        maxlength: 18
+      },
+      'contact[email]':{
+        required: true,
+        regex : /^[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+$/i
+      },
+      },
+      messages:{
+        'contact[email]': {
+          required: "Email is required",
+          regex: "Invalid email"
+        },
+        'contact[first_name]': {
+          required: "Firstname is required\n",
+        },
+        'contact[last_name]': {
+          required: "Lastname is required\n",
+        },
+        'contact[subject]': {
+          required: "Subject is required\n",
+        },
+        'contact[message]': {
+          required: "Message is required\n",
+        },
+        'contact[phone]': {
+          regex: "Please enter valid phone number",
+          minlength: "Phone number must be at least 10 digits",
+          maxlength: "Phone number must be at most 18 digits"
+        },
+      },
+      errorPlacement: function ($error, $element) {
+        // Custom holder for validation message
+            var name = $element.attr("id");
+            $(".error-mesg_" + name).append($error);
+        },
+        submitHandler: function(form) {
+          //Hack for form submit
+        if ($(form).valid())
+            form.submit();
+        return false; // prevent normal form posting
+          }
+    })
+  })
+
+
+  $('#contact_phone').keypress(function (e) {
+    if ($(this).val().length<18){
+      if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57) && e.which != 43 && e.which != 45 ) {
+        return false;
+      }
+    }
+    else{
+      if (e.which != 8 && e.which != 0 ) {
+        return false;
+      }
+      return true
+    }
+  });
+</script>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PowerCozmo</title>
+  <%= wicked_pdf_stylesheet_link_tag "bootstrap" %>
+  <%= wicked_pdf_stylesheet_link_tag "jquery-ui" %>
+  <%= wicked_pdf_stylesheet_link_tag "style" %>
+  <%= wicked_pdf_stylesheet_link_tag "customstyle" %>
+  <%= wicked_pdf_stylesheet_link_tag "pdf_fonts" %>
+  <%= stylesheet_link_tag "http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome-64.css", media: "all", "data-turbolinks-track" => true %>
+ 	<%= stylesheet_link_tag "http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css", media: "all", "data-turbolinks-track" => true %>
+</head>
+<body>
+	<%= yield %>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<% if @system_email.present? && @system_email.try(:content).present? %>
+	<%= @system_email.content.to_s.gsub("::REQUESTER_NAME::",@buying_request.name.to_s).gsub("::REQUESTER_EMAIL::",@buying_request.email.to_s).gsub("::BUYING_REQUEST_NAME::",@buying_request.title.to_s).gsub("::REQUESTER_COUNTRY::",@buying_request.country.try(:name).to_s).gsub("::DATE_OF_EXPIERY::",format_date(@buying_request.expiration_date)).gsub("::PRICE_CURRENCY::",number_to_currency(@buying_proposal.price.to_f, unit: raw(@buying_proposal.currency.try(:symbol)))).gsub("::PROPOSAL_DESCRIPTION::",@buying_proposal.proposal.to_s).gsub("::ATTACHMENT_NAME::",@attachment_name).html_safe %>
+<% else %>
+	<p>HELLO <strong><%= @buying_request.name.to_s %></strong></p>
+
+	<p>Sounds great! One of our registered sellers submit proposal for your buying request <strong><%= @buying_request.title.to_s %>,</strong> Please check the proposal and back to us with your feedback. Power Cozmo will do best to converge views between you and seller, your fast response will help us to finish this deal. A Power Cozmo representative will contact you in case of any raised enquiry. Please print this page for your record.</p>
+
+	<p>Name: <strong><%= @buying_request.name.to_s %></strong></p>
+
+	<p>E-mail: <strong><%= @buying_request.email.to_s %></strong></p>
+
+	<p>Country: <strong><%= @buying_request.country.try(:name).to_s %></strong></p>
+
+	<p>Buying request name:&nbsp;<strong><%= @buying_request.title.to_s %></strong></p>
+
+	<p>Expiration date: <strong><%= format_date(@buying_request.expiration_date) %></strong></p>
+
+	<p>Offer price:&nbsp;<strong><%= number_to_currency(@buying_proposal.price.to_f, unit: raw(@buying_proposal.currency.try(:symbol))) %></strong></p>
+
+	<p>Proposal: <strong><%= @buying_proposal.proposal.to_s.html_safe %></strong></p>
+
+	<p>Attachment:<strong><%= @attachment_name %></strong><br />
+	&nbsp;</p>
+
+	<p>Best Regards</p>
+
+	<p>Power Cozmo Team</p>
+<% end %>

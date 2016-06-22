@@ -1,0 +1,28 @@
+<% if @system_email.present? && @system_email.try(:content).present? %>
+	<%= @system_email.content.to_s.gsub("::BUYER_NAME::",@enquiry.name.to_s).gsub("::ITEM_NAME::",@equipment.name.to_s).gsub("::EQIPMENT_SERIALNUMBER::",@equipment.identifier.to_s.upcase).gsub("::EQUIPMENT_NAME::",@equipment.name.to_s).gsub("::BUYER_EMAIL::",@enquiry.email.to_s).gsub("::BUYER_MESSAGE_BODY::",@enquiry.message.to_s).gsub("::EQUIPMENT_PRICE::",number_to_currency(@equipment.price, unit: raw(@equipment.currency))).html_safe %>
+<% else %>
+	<p>HELLO <strong><%= @enquiry.name %></strong></p>
+
+	<p>Thank you for your interest in <strong><%= @equipment.name.to_s %></strong>&nbsp;SN.&nbsp;<strong><%= @equipment.identifier.to_s.upcase %></strong>, You will get response for your purchase request from seller. asap A Power Cozmo representative will contact you in case of any raised enquiry. Please print this page for your record.</p>
+
+	<p>Name: <strong><%= @enquiry.name.to_s %></strong></p>
+
+	<p>E-mail: <strong><%= @enquiry.email.to_s %></strong></p>
+
+	<p>Equipment name: <strong><%= @equipment.name.to_s %></strong></p>
+
+	<p>SN: <strong><%= @equipment.identifier.to_s.upcase %></strong></p>
+
+	<p>Price: <strong><%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %></strong></p>
+
+	<p>Your Massage to seller:</p>
+
+	<p><%= @enquiry.message.to_s.html_safe %></p>
+
+	<p>&nbsp;</p>
+
+	<p>Best Regards</p>
+
+	<p>Power Cozmo Team</p>
+<% end %>
+

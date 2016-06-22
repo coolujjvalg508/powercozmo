@@ -1,0 +1,65 @@
+<% if @offer.equipment.availble_for < Date.today %>
+  <% unless (@offer.response.present? || @offer.response_status.present?) %>
+    <div class="alert alert-danger">
+      <div>You can't respond to this enquiry as this equipment is expired.</div>
+    </div>
+  <% end %>
+<% end %>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>Equipment Offers List Detail </h1>
+    <ol class="breadcrumb">
+      <li><%= link_to "Home", seller_dashboard_path %></li>
+      <li class="active">Equipment Offers List Detail</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content new-msg-content">
+      <!-- /.row -->
+      <div class="row">
+        <div class="col-lg-12 msg-info-area">
+          <div class="new-msg-form-box">
+          <% if @offer.present? %>
+         	  <div class="detail-list-row">
+            	<div class="detail-list-l">Offer Provider Name</div>
+              <div class="detail-list-r"><%= @offer.name %></div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="detail-list-row">
+            	<div class="detail-list-l">Offer Provider Location</div>
+              <div class="detail-list-r"><%= @offer.country.name %></div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="detail-list-row">
+            	<div class="detail-list-l">Offered Price</div>
+              <div class="detail-list-r"><%= @offer.bidding_price || @offer.equipment.price %></div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="detail-list-row">
+            	<div class="detail-list-l">Message</div>
+              <div class="detail-list-r"><%= @offer.message %></div>
+              <div class="clearfix"></div>
+            </div>
+            <% if (@offer.response.present? || @offer.response_status.present?) %>
+              <div class="detail-list-row">
+                <div class="detail-list-l">Your Response</div>
+                <div class="detail-list-r"><b><%= "You have #{@offer.replied_as.downcase} this offer."%></b></div>
+                <div class="clearfix"></div>
+              </div>
+            <% end %>
+          <% else %>
+            <p style="text-align:center;margin-top: 8px;font-size:16px;">No offer found.</p>
+          <% end %>
+          </div>
+        </div>
+      </div>
+    <!-- /.row -->
+    <%= render partial: "enquiry_responses", locals: {enquiry: @offer} %>
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

@@ -1,0 +1,28 @@
+<% if @system_email.present? && @system_email.try(:content).present? %>
+	<%= @system_email.content.to_s.gsub("::ADMIN_USERNAME::",@admin_user.name.to_s).gsub("::BUYER_NAME::",@enquiry.name.to_s).gsub("::ITEM_NAME::",@equipment.name.to_s).gsub("::EQIPMENT_SERIALNUMBER::",@equipment.identifier.to_s.upcase).gsub("::EQUIPMENT_NAME::",@equipment.name.to_s).gsub("::BUYER_EMAIL::",@enquiry.email.to_s).gsub("::BUYER_MESSAGE_BODY::",@enquiry.message.to_s).gsub("::EQUIPMENT_PRICE::",number_to_currency(@equipment.price, unit: raw(@equipment.currency))).html_safe %>
+<% else %>
+	<p>HELLO <strong><%= @admin_user.name %></strong></p>
+
+	<p><strong><%= @enquiry.name.to_s %></strong> has sent buying request for <strong><%= @equipment.name.to_s %></strong> SN.&nbsp;<strong><%= @equipment.identifier.to_s.upcase %></strong>, Please check the content of message and make sure no contacts details mentioned on it, then share immediately with seller and get the approval and start finalizing the deal, please follow up with seller in case of not getting answer within 24 hours.</p>
+
+	<p>Name: <strong><%= @enquiry.name.to_s %></strong></p>
+
+	<p>E-mail: <strong><%= @enquiry.email.to_s %>/strong></p>
+
+	<p>Equipment name: <strong><%= @equipment.name.to_s %></strong></p>
+
+	<p>SN: <strong><%= @equipment.identifier.to_s.upcase %></strong></p>
+
+	<p>Price: <strong><%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %></strong></p>
+
+	<p>Massage to seller:</p>
+
+	<p><%= @enquiry.message.to_s.html_safe %></p>
+
+	<p>&nbsp;</p>
+
+	<p>Best Regards</p>
+
+	<p>Power Cozmo Team</p>
+<% end %>
+

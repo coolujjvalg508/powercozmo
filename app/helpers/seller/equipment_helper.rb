@@ -1,0 +1,2 @@
+module Seller::EquipmentHelper
+end

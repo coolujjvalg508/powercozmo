@@ -1,0 +1,26 @@
+<header id="hd" class="rlatv list-bnr">
+  <div class="hd-srch">
+    <h2><%= @our_service.first.title %></h2>
+  </div>
+</header>
+<%= @our_service.first.content.to_s.html_safe %>
+<script type="text/javascript">
+  $(document).ready(function($) {
+    var ele = $('#_' + window.location.hash.replace('#', ''));
+    if(ele.length > 0)
+      jump_to(ele);
+    $('.anchor').on('click', function(event){
+      id = $(this).attr('href').split('#').pop();
+      element = $('#_'+id);
+      if(element.length > 0)
+        jump_to(element);
+    })
+    function jump_to(elem){
+      if(elem) {
+        var offset = elem.offset();
+        var scrollto = offset.top - $('.navbar').outerHeight();
+        $('html, body').animate({scrollTop:scrollto}, 0);
+      }
+    }
+  })
+</script>

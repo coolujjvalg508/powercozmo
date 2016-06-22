@@ -1,0 +1,17 @@
+<% if current_admin_user.present? %>
+	<li class="has_nested" id="current_user">
+		<%= link_to current_admin_user.name, admin_super_admin_path(current_admin_user) %>	           
+		<ul>
+			<% if AdminUser.global_email_admin.present? %>
+		    <li id="emails">
+		    	<% unread_inbox_count =  AdminUser.global_email_admin.try(:unread_inbox_count).to_i %>
+		    	<%= link_to "Emails#{unread_inbox_count > 0 ? ' ('+unread_inbox_count.to_s+')' : ''}", admin_messages_path %>	    	
+		    </li>
+	    <% end %>
+	    <li id="notifications">
+	    	<% unread_notifications_count =  current_admin_user.try(:unread_notifications_count).to_i %>
+	    	<%= link_to "Notifications#{unread_notifications_count > 0 ? ' ('+unread_notifications_count.to_s+')' : ''}", admin_equipment_enquiries_path %>	    	
+	    </li>
+	  </ul>
+	</li>
+<% end %>

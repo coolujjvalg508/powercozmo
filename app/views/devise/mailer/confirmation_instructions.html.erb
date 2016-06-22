@@ -1,0 +1,15 @@
+<% if @system_email.present? && @system_email.try(:content).present? %>
+	<%= @system_email.content.to_s.gsub("::USER_NAME::",(@resource.try(:name).to_s.blank? ? @email : @resource.try(:name).to_s)).gsub("::REGISTRATION_CONFIRMATION_LINK::",link_to('Confirm my account', confirmation_url(@resource, confirmation_token: @token))).html_safe %>
+<% else %>
+	<p>Hello <%= @resource.try(:name).to_s.blank? ? @email : @resource.try(:name).to_s %>,</p>
+
+	<p>Thank you for registering with PowerCozmo.com. Please click on below link to activate your account.</p>
+
+	<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+
+	<p>&nbsp;</p>
+
+	<p>Best Regards</p>
+
+	<p>Power Cozmo Team</p>
+<% end %>

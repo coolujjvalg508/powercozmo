@@ -1,0 +1,17 @@
+<%= semantic_form_for [:admin, Mailboxer::Message.new], url: admin_messages_path, method: :post, multipart: true do |f| %>
+  <%= f.inputs "New Message" do %>
+  	<%= f.input :recipients, as: :string, label: 'To', required: true %>
+  	<%= f.input :subject %>
+    <li>            
+      <label>Message<abbr title="required">*</abbr></label>
+      <%= f.bootsy_area :body, :rows => 15, :cols => 100, editor_options: { image: false, html: true } %>
+    </li>
+    <%= f.input :attachment, as: :file %>      
+  <% end %>
+  <%= f.actions do %>       
+    <%= f.action :submit, :label => "Send Message" %>
+    <li class='cancel'>
+        <%= link_to 'Cancel', {:action => "index"} %>
+    </li>
+  <% end %>
+<% end %>

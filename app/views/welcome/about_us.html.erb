@@ -1,0 +1,54 @@
+<header id="hd" class="rlatv list-bnr">
+  <div class="hd-srch">
+    <h2><%= @about_us.first.title %></h2>
+  </div>
+</header>
+<%= @about_us.first.content.to_s.html_safe %> 
+<script type="text/javascript">
+  $(document).ready(function($) {
+    $("#owl-example").owlCarousel({
+      loop:true,
+      margin:0,
+      nav:true,
+      autoplay:true,
+      autoplayHoverPause:true,
+      items : 1
+    });
+
+    $("#pr-category").owlCarousel({
+      loop:true,
+      margin:0,
+      nav:true,
+      autoplay:true,
+      autoplayHoverPause:true,
+      items : 4,
+      responsiveClass:true,
+      responsive:{
+        0:{
+          items:1
+        },
+        700:{
+          items:3
+        },
+        1000:{
+          items:4
+        }
+      }
+    });
+    /** custom code for moving to specific anchor on page**/
+    var ele = $('#_' + window.location.hash.replace('#', ''));
+    jump_to(ele);
+    $('.anchor').on('click', function(event){
+      id = $(this).attr('href').split('#').pop();
+      element = $('#_'+id);
+      jump_to(element);
+    })
+    function jump_to(elem){
+      if(elem) {
+        var offset = elem.offset();
+        var scrollto = offset.top - $('.navbar').outerHeight();
+        $('html, body').animate({scrollTop:scrollto}, 0);
+      }
+    }
+  })
+</script>

@@ -1,0 +1,33 @@
+<% if @system_email.present? && @system_email.try(:content).present? %>
+	<%= @system_email.content.to_s.gsub("::SELLER_NAME::",@user.name.to_s).gsub("::ITEM_NAME::",@equipment.name.to_s).gsub("::USER_EMAIL::",@user.email.to_s).gsub("::EQIPMENT_SERIALNUMBER::",@equipment.identifier.to_s.upcase).gsub("::EQUIPMENT_NAME::",@equipment.name.to_s).gsub("::POST_DATE::",format_time(@equipment.created_at)).gsub("::EXPIRY_DATE::",format_time(@equipment.availble_for)).gsub("::EQUIPMENT_CATEGORY::",@equipment.category.try(:name).to_s).gsub("::EQUIPMENT_SUBCATEGORY::",@equipment.sub_category.try(:name).to_s).gsub("::EQUIPMENT_LOCATION::",@equipment.country.try(:name).to_s).gsub("::EQUIPMENT_PRICE::",number_to_currency(@equipment.price, unit: raw(@equipment.currency))).html_safe %>
+<% else %>
+	<p>Hello <strong><%= @user.name %></strong></p>
+
+	<p>Thank you for listing your <strong><%= @equipment.name.to_s %></strong> with power Cozmo. Now your advertising is live for thousands of buyers worldwide. A Power Cozmo representative will contact you in case of any raised enquiry. Please print this page for your records.</p>
+
+	<p>User name: <strong><%= @user.name.to_s %></strong></p>
+
+	<p>User ID: <strong><%= @user.email.to_s %></strong></p>
+
+	<p>Post Serial number: <strong><%= @equipment.identifier.to_s.upcase %></strong></p>
+
+	<p>Equipment name: <strong><%= @equipment.name.to_s %></strong></p>
+
+	<p>Date of Submission: <strong><%= format_time(@equipment.created_at) %></strong></p>
+
+	<p>Expiry date : <strong><%= format_time(@equipment.availble_for) %></strong></p>
+
+	<p>Category: <strong><%= @equipment.category.try(:name).to_s %></strong></p>
+
+	<p>Sub Category: <strong><%= @equipment.sub_category.try(:name).to_s %></strong></p>
+
+	<p>Location: <strong><%= @equipment.country.try(:name).to_s %></strong></p>
+
+	<p>Asking Price: <strong><%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %></strong></p>
+
+	<p>&nbsp;</p>
+
+	<p>Best Regards</p>
+
+	<p>Power Cozmo Team .</p>
+<% end %>

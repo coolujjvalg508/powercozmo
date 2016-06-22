@@ -1,0 +1,27 @@
+<header id="hd" class="rlatv list-bnr">
+  <div class="hd-srch">
+    <h2><%= @terms_and_conditions.first.title %></h2>
+  </div>
+</header>
+<%= @terms_and_conditions.first.content.to_s.html_safe %> 
+<script>
+  $(document).ready(function($) {
+    $("#owl-example").owlCarousel({
+      loop:true,
+      margin:0,
+      nav:true,
+      autoplay:true,
+      autoplayHoverPause:true,
+      items : 1
+    });
+
+    $("#pr-category").owlCarousel({
+      loop:true,
+      margin:0,
+      nav:true,
+      autoplay:true,
+      autoplayHoverPause:true,
+      items : 1,
+    });
+  })
+</script>

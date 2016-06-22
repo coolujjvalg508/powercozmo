@@ -1,0 +1,46 @@
+<% if conversation.present? %>
+  <% conversation.messages.each_with_index do |message,index| %>
+    <div class="panel">
+      <h3><%= index > 0 ? 'Reply Message' : 'Message Details' %></h3>
+      <div class="panel_contents">
+        <div class="attributes_table mailboxer_message" id="attributes_table_mailboxer_message_27">
+          <table border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+              <tr class="row row-from">
+                <th>From</th>
+                <td><%= message.receipts.try(:sentbox).try(:first).try(:receiver).try(:name) %></td>
+              </tr>
+              <tr class="row row-to">
+                <th>To</th>
+                <td><%= message.receipts.try(:inbox).try(:first).try(:receiver).try(:name) %></td>
+              </tr>
+              <tr class="row row-subject">
+                <th>Subject</th>
+                <td><%= message.subject %></td>
+              </tr>
+              <tr class="row row-message">
+                <th>Message</th>
+                <td><%= message.body.to_s.html_safe  %></td>
+              </tr>
+              <tr class="row row-date_time">
+                <th>Date &amp; Time</th>
+                <td><%= message_time_format(message.created_at) %></td>
+              </tr>
+              <% if message.attachment? %>
+                <tr class="row row-attachment">
+                  <th>Attachment</th>
+                  <td><%= link_to "#{image_tag('attachment-icon.png', alt: "")} #{message.attachment.try(:url).to_s.split('/').last}".html_safe, message.attachment.url,target: '_blank' %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <% if @receipt.present? && conversation.messages.count == index+1 %>
+            <div>
+              <%= render partial: "reply_form", locals: {message: message, conversation: conversation} %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

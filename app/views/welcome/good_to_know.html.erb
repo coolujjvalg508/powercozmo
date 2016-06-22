@@ -1,0 +1,71 @@
+<header id="hd" class="rlatv list-bnr">
+<div class="hd-srch">
+  <h2>Good to know</h2>
+</div>
+</header>
+
+<section id="md">
+  <div class="wht-bg PT50 PB50">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 wlcm-cnt wlcm-cntgood-know">
+          <div class="stlytype">
+            <div id="accordion" class="ui-accordion ui-widget ui-helper-reset" role="tablist">
+            <!-- assign id to all h3 tags to make it easily identifiable when activating panels programmatically. assign the ids as the serial number of h3, starting from '0' -->
+              <% @good_to_knows.each_with_index do |good_to_know, i|%>
+                <h3 name=<%= good_to_know.name %> id=<%= i%>><%= strip_tags("#{good_to_know.question}")%></h3>
+                <div>
+                  <%= good_to_know.answer.html_safe%>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script type="text/javascript">
+$(function() {
+  $( "#accordion" ).accordion({
+        heightStyle: "content",
+        collapsible: true  // makes all pans to be collapsible, default needed one pan to be open
+      });
+});
+</script>
+<script>
+$(document).ready(function(){
+  $("a.user-submenu").click(function(){
+      $(".myaccount-menu").toggle();
+  });
+  //pass the name of h3 tag as anchor, which you want to activate programmatically..
+  //on page load or on clicking link
+  var anchor = window.location.hash.replace('#', '')
+  if(anchor){
+    //colapse all pan before selecting element to get correct offset
+    $( "#accordion" ).accordion( "option", "active", false)
+    ele = $("h3[name='"+anchor+"']");
+    if(ele.length > 0)
+      jump_to(ele);
+    else
+      $( "#accordion" ).accordion( "option", "active", 0)
+  }
+  $('.anchor').on('click', function(event){
+    id = $(this).attr('href').split('#').pop();
+    $( "#accordion" ).accordion( "option", "active", false)
+    element = $("h3[name='"+id+"']");
+    if(element.length > 0)
+      jump_to(element);
+    // event.preventDefault();
+  })
+  function jump_to(elem){
+    if(elem) {
+      elem_id = parseInt((elem).attr('id'));
+      $( "#accordion" ).accordion( "option", "active", elem_id ); //exapnd pan programmatically
+      var offset = elem.offset();
+      var scrollto = offset.top - $('.navbar').outerHeight();
+      $('html, body').animate({scrollTop:scrollto}, 0);
+    }
+  }
+});
+</script>

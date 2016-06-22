@@ -1,0 +1,11 @@
+<% if @system_email.present? && @system_email.try(:content).present? %>
+	<%= @system_email.content.to_s.gsub("::REQUESTER_NAME::",@buying_request.name.to_s).gsub("::BUYING_REQUEST_NAME::",@buying_request.title.to_s).html_safe %>
+<% else %>
+	<p>HELLO <strong><%= @buying_request.name.to_s %></strong></p>
+
+	<p>Thank you for your posting <strong><%= @buying_request.title.to_s %></strong>, Power Cozmo team will review your post and give You the approval to be live in site within less than 6 hours, you will receive notification Email once your request become live. A Power Cozmo representative will contact you in case of any raised enquiry. Please print this page for your record.</p>
+
+	<p>Best Regards</p>
+
+	<p>Power Cozmo Team</p>
+<% end %>
