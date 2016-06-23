@@ -79,10 +79,9 @@ a[disabled] {
   font-family: 'PoppinsMedium';
   text-transform: uppercase;
   text-align: center;
-  color: #fff;
   border: none;
-  display: block;
   width: 100%;
+  color: #fff;
 }
 
 .clear_filter{
@@ -259,11 +258,11 @@ a[disabled] {
 .frequency-table table { margin-top: 10px;}
 
 .frequency-table tr:nth-child(even) {
-    background-color: #fff; 
+    background-color: #fff;
 }
 
 .frequency-table tr:nth-child(odd) {
-    background-color: #f2f2f2; 
+    background-color: #f2f2f2;
 }
 
 .owl-carousel .owl-item img{ display: inline !important; }

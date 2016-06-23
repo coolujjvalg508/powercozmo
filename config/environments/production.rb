@@ -29,7 +29,7 @@ Rails.application.configure do
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  config.assets.compile = true #enabled it since assets failed to compile. it may slow down performance
 
   # Asset digests allow you to set far-future HTTP expiration dates on all assets,
   # yet still be able to expire them through the digest params.
@@ -76,4 +76,21 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.action_mailer.default_url_options ={ :host => 'localhost:3011' }
+  config.action_mailer.asset_host = ENV["SMTP_HOST"]
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    #Enter the smtp provider here ex: smtp.mandrillapp.com
+    address: ENV["SMTP_ADDRESS"],
+    port: 587,
+    #Enter the smtp domain here ex: localhost:3000
+    domain: ENV["SMTP_DOMAIN"],
+    #Enter the user name for smtp provider here
+    user_name: ENV["SMTP_USERNAME"],
+    #Enter the password for smtp provider here
+    password: ENV["SMTP_PASSWORD"],
+    authentication: 'plain',
+    enable_starttls_auto: true
+  }
 end

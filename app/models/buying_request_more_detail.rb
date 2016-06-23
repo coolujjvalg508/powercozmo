@@ -1,6 +1,6 @@
 class BuyingRequestMoreDetail < ActiveRecord::Base
 	include Bootsy::Container
-	mount_uploader :attachment, AttachmentUploader
+	mount_uploader :attachment, FileUploader
 
 	########################### Associations ###########################
 	belongs_to :user

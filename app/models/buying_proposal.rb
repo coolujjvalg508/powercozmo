@@ -6,7 +6,7 @@ class BuyingProposal < ActiveRecord::Base
 	########################### Associations ################################
 	belongs_to :user
 	has_one :image, as: :imageable, dependent: :destroy
-	mount_uploader :attachment, AttachmentUploader
+	mount_uploader :attachment, FileUploader
 	belongs_to :buying_request
 	belongs_to :currency
 	accepts_nested_attributes_for :image

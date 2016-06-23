@@ -45,7 +45,7 @@
   margin-top: 2px;
   list-style: none;
   background-color: #ffffff;
-  border: 1px solid #ccc
+  border: 1px solid #ccc;
   -webkit-border-radius: 5px;
      -moz-border-radius: 5px;
           border-radius: 5px;
@@ -146,9 +146,9 @@ p.response-msg { word-wrap: break-word; }
 }
 
 .detail-list-r.big-msg { overflow-x: auto; }
-.field_with_errors { 
+.field_with_errors {
   height: 100%;
-  width: 100%; 
+  width: 100%;
 }
 .field_with_errors label.error {
   position: absolute;
