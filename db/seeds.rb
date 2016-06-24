@@ -924,3 +924,11 @@ puts '######################### Creating Contact Request data###################
 cr1 = Contact.create(first_name: "John", last_name: "Doe", email: "john@example.com", phone: "9998887779", subject: "Enquiry about registration process", message: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", status: "New")
 cr2 = Contact.create(first_name: "Jane", last_name: "Doe", email: "jane@example.com", phone: "9998886669", subject: "Enquiry about buying process", message: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", status: "Replied")
 cr3 = Contact.create(first_name: "John", last_name: "marshall", email: "marshall@example.com", phone: "9998885559", subject: "Enquiry about selling process", message: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.", status: "New")
+
+puts '######################### Creating Power Plant categories #################'
+
+pp_category = Category.create(name: "Complete power plant", status: "active")
+	pp_sub_categories = ["Coal Fired Power Plants", "Cogeneration Power Plants", "Diesel Fired Power Plants", "Heavy Fuel Oil Fired Power Plants", "Natural Gas Fired Power Plants", "Waste and Biomass Fired Power Plants", "Nuclear power plants", "Power barge", "Solar power plants", "Wind power plants"]
+	pp_sub_categories.each do |sub_cat|
+		Category.create(name: sub_cat, parent_id: pp_category.id, status: "active")
+	end
