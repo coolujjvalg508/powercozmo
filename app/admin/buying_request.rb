@@ -261,7 +261,9 @@ ActiveAdmin.register BuyingRequest do
 			row :lead_type
 			row :condition
       row :attachment do |br|
-      	link_to br.attachment.url.to_s.split('/').last, br.attachment.url, target: :blank
+      	if br.attachment.present?
+      		link_to br.attachment.url.to_s.split('/').last, br.attachment.url, target: :blank
+      	end
       end
 			row :expiration_date
 			row :end_user
