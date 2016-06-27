@@ -1,6 +1,6 @@
 class MessageMailer < Mailboxer::MessageMailer
   helper ApplicationHelper
-  default from: "mailer@powercozmo.com"
+  default from: "PowerCozmo <#{ ENV['DEFAULT_FROM_EMAIL'] }>"
   layout 'mailer'
   before_filter :add_inline_attachment!
 

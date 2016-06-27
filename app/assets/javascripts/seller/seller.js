@@ -23,7 +23,7 @@
 
 $(document).ready(function(){
   $(".alert").fadeIn();
-  $(".alert").fadeOut(7000);
+  $(".alert").fadeOut(30000);
 });
 
 $(document).ready(function(element){

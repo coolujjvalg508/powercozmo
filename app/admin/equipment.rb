@@ -281,7 +281,7 @@ ActiveAdmin.register Equipment do
         ul class: "image-blk" do
           equipment.images.each do |img|
             li do
-              image_tag(img.image.url, class: "show-img")
+              image_tag(img.image.medium.url, class: "show-img")
             end
           end
         end

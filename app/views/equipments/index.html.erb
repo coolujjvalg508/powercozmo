@@ -123,7 +123,7 @@
                         <span class="cdt-prfl"><% if equipment.try(:user).try(:image).try(:image) %>
                         <%= image_tag equipment.try(:user).try(:image).try(:image).try(:url)%>
                         <% else %>
-                        <%= image_tag "cdt-prfl.jpg" %></span>
+                        <%= image_tag "seller/myprofile-placeholder-img.png" %></span>
                         <% end %></p>
                       </div>
                       <div class="avlble-bx">
@@ -219,8 +219,8 @@
                               <div class="">Power Plant Age : <span><%= post.power_plant_age%></span></div>
                             <% end %>
                              </div>
-                            
-                            
+
+
                             <div class="ad-gray-r">
                             <% if post.equipment_type == "equipment"%>
                               <div class="">Brand : <span><%= truncate(post.try(:manufacturer).try(:name), length: 15)%></span></div>

@@ -90,7 +90,7 @@
               <div class="dtl-rt-prfl-lt"><% if @equipment.try(:user).try(:image).try(:image) %>
                         <%= image_tag @equipment.try(:user).try(:image).try(:image)%>
                         <% else %>
-                        <%= image_tag "cdt-prfl.jpg" %></span>
+                        <%= image_tag "seller/myprofile-placeholder-img.png" %></span>
                         <% end %></div>
               <div class="dtl-rt-prfl-rt"> <span><%= @equipment.user.name %></span> </div>
             </div>

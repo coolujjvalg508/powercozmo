@@ -46,8 +46,8 @@ class BuyingProposalMailer < ApplicationMailer
     @subject =  @system_email.try(:subject).to_s.gsub("::BUYING_REQUEST_NAME::",@buying_request.try(:title).to_s)
     @subject = "Proposal for Your buying request for #{@buying_request.try(:title).to_s}." if @subject.blank?
     if @buying_proposal.is_a?(BuyingProposal) && @buying_request.is_a?(BuyingRequest)
-    	@attachment_name = @buying_request.try(:attachment).try(:url).to_s.split('/').last
-    	attachments[@attachment_name] = @buying_request.try(:attachment).try(:url) if @attachment_name.present?
+    	@attachment_name = @buying_proposal.try(:attachment).try(:url).to_s.split('/').last
+    	attachments[@attachment_name] = @buying_proposal.try(:attachment).read if @attachment_name.present?
     	@attachment_name = "No attachment" unless @attachment_name.present?
 	    @receiver = @buying_request.email
 	    mail(to: @receiver, subject: @subject)

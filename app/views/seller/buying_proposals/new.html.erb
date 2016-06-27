@@ -46,7 +46,7 @@
                 <div class="form-group">
                   <label for="select">Currency* :</label>
                   <% currency_id = f.object.currency_id %>
-                  <%= f.select :currency_id, options_for_select(Currency.select(:symbol, :id, :name).map{|x| [raw(x.symbol)+" (#{x.name})", x.id]}, currency_id), prompt: 'Select Currency*'%>
+                  <%= f.select :currency_id, options_for_select(Currency.active.select(:symbol, :id, :name).map{|x| [raw(x.symbol)+" (#{x.name})", x.id]}, currency_id), prompt: 'Select Currency*'%>
                   <%= error_message(@buying_proposal, :currency_id)%>
                 </div>
               </div>
