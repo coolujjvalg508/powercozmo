@@ -73,7 +73,7 @@ function showAttachment(input){
 
 $(document).ready(function(){
   $(".alert").fadeIn();
-  $(".alert").fadeOut(5000);
+  $(".alert").fadeOut(30000);
   if( navigator.userAgent.match(/iPad|iPhone/i) ) {
 
     $('.modal').on('show.bs.modal', function() {

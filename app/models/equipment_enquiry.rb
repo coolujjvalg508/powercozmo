@@ -35,8 +35,8 @@ class EquipmentEnquiry < ActiveRecord::Base
 	after_update :send_admin_approved_enquiry_email_to_seller , :if => Proc.new {|e| e.status=="Approved" && e.status_changed?}
 
 	def self.get_enquiry_count_by_type(e_type, days_from)
-		today = Date.today
-		days_from = Date.today - days_from.to_i.days
+		today = DateTime.now
+		days_from = DateTime.now - days_from.to_i.days
 		return select(:id).where(enquiry_type: e_type).where("created_at <= '#{today}' AND created_at >= '#{days_from}'").count
 	end
 

@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include SimpleCaptcha::ControllerHelpers
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
+  helper Bootsy::Engine.helpers
   protect_from_forgery with: :exception
   skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'sessions' && (action_name == 'create' || action_name == 'destroy')}
   before_action :configure_permitted_parameters, if: :devise_controller?

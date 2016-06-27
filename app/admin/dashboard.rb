@@ -145,10 +145,10 @@ ActiveAdmin.register_page "Dashboard" do
   		        	td do
   		        		b k
   		        	end 
-  		        	td link_to EquipmentEnquiry.get_enquiry_count_by_type(v, 7), admin_equipment_enquiries_path("q[enquiry_type_eq]"=> v, "q[created_at_gteq]" => EquipmentEnquiry.get_date_range(7)[:days_from], "q[created_at_lteq]" => EquipmentEnquiry.get_date_range(7)[:today])			        
-  			        td link_to EquipmentEnquiry.get_enquiry_count_by_type(v, 30), admin_equipment_enquiries_path("q[enquiry_type_eq]"=> v, "q[created_at_gteq]" => EquipmentEnquiry.get_date_range(30)[:days_from], "q[created_at_lteq]" => EquipmentEnquiry.get_date_range(30)[:today])
-  			        td link_to EquipmentEnquiry.get_enquiry_count_by_type(v, 90), admin_equipment_enquiries_path("q[enquiry_type_eq]"=> v, "q[created_at_gteq]" => EquipmentEnquiry.get_date_range(90)[:days_from], "q[created_at_lteq]" => EquipmentEnquiry.get_date_range(90)[:today])
-  			        td link_to EquipmentEnquiry.get_enquiry_count_by_type(v, 365), admin_equipment_enquiries_path("q[enquiry_type_eq]"=> v, "q[created_at_gteq]" => EquipmentEnquiry.get_date_range(365)[:days_from], "q[created_at_lteq]" => EquipmentEnquiry.get_date_range(365)[:today])
+  		        	td link_to EquipmentEnquiry.get_enquiry_count_by_type(v, 7), admin_equipment_enquiries_path("q[enquiry_type_eq]"=> v, "q[created_at_gteq]" => EquipmentEnquiry.get_date_range(7)[:days_from], "q[created_at_lteqdate]" => EquipmentEnquiry.get_date_range(7)[:today])			        
+  			        td link_to EquipmentEnquiry.get_enquiry_count_by_type(v, 30), admin_equipment_enquiries_path("q[enquiry_type_eq]"=> v, "q[created_at_gteq]" => EquipmentEnquiry.get_date_range(30)[:days_from], "q[created_at_lteqdate]" => EquipmentEnquiry.get_date_range(30)[:today])
+  			        td link_to EquipmentEnquiry.get_enquiry_count_by_type(v, 90), admin_equipment_enquiries_path("q[enquiry_type_eq]"=> v, "q[created_at_gteq]" => EquipmentEnquiry.get_date_range(90)[:days_from], "q[created_at_lteqdate]" => EquipmentEnquiry.get_date_range(90)[:today])
+  			        td link_to EquipmentEnquiry.get_enquiry_count_by_type(v, 365), admin_equipment_enquiries_path("q[enquiry_type_eq]"=> v, "q[created_at_gteq]" => EquipmentEnquiry.get_date_range(365)[:days_from], "q[created_at_lteqdate]" => EquipmentEnquiry.get_date_range(365)[:today])
   		        end
   	        end
   	      end
