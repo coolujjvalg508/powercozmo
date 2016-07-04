@@ -20,7 +20,7 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 		end
 	end
 
-	def repond_to_offer		
+	def respond_to_offer
 		@offer = find_enquiry
 		if @offer.present?
 			response = @offer.responses.new(user_id: current_user.id, message: enquiry_response_params[:message])
@@ -39,8 +39,8 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 	  				order = Order.new(order_params)
 	  				if order.save
 	  					eq = @offer.equipment
-	  					eq.status = 'in_progress'
-	  					eq.save	  					  					
+	  					eq.status = 'sold'
+	  					eq.save
 		  			end
 	  			end
 					flash[:notice] = "Offer #{response_type.downcase} successfully"
@@ -56,9 +56,9 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 						@error = "Please enter maximum 3000 characters"
 					end
 					render :show_offer and return
-				end				
+				end
 			end
-		else			
+		else
 			flash[:alert] = "Offer not found"
 		end
 		redirect_to seller_offers_path
@@ -71,7 +71,7 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 		end
 	end
 
-	def reply_to_question		
+	def reply_to_question
 		@question = find_enquiry
 		if @question.present?
 			response = @question.responses.new(user_id: current_user.id, message: enquiry_response_params[:message])
@@ -106,7 +106,7 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
   end
 
 	private
-	
+
 	def find_enquiry
 		enquiry = EquipmentEnquiry.approved.find_by_id params[:id]
 		if current_user.present? && enquiry.present?

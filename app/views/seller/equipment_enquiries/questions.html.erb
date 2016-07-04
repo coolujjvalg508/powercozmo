@@ -17,34 +17,38 @@
             <div class="box box-info dsh-table-details">
             <!-- /.box-header -->
             <div class="box-body">
-              <div class="table-responsive">
-                <table class="table no-margin">
-                  <thead>
-                    <tr>
-                      <th width="5%">S. No</th>
-                      <th class="txtlft">Equipment Name</th>
-                      <th width="20%">Name</th>
-                      <th width="20%" style="text-align:center;">Country</th>
-                      <th width="10%" style="text-align:center;">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <%@questions.each_with_index do |question,index|%>
-                      <tr style="<%='font-weight: bold;' unless question.is_read? %>">
-                        <th><%=index+1%></th>
-                        <td class="txtlft"><%= question.equipment.name %></td>
-                        <td><%=question.try(:name)%></td>
-                        <td align="center"><%=question.try(:country).try(:name)%></td>
-                        <td align="center" class="table-links">
-                          <%=link_to '<i class="fa fa-file-text-o"></i> Detail</a>'.html_safe,seller_question_path(id: question.id)%>
-                          <%=link_to '<i class="fa fa fa-remove"></i> Delete</a>'.html_safe,seller_question_path(id: question.id),method: 'delete',data: {confirm: 'Are you sure to delete the question?'}%>
-                        </td>
+              <% if @questions.present? %>
+                <div class="table-responsive">
+                  <table class="table no-margin">
+                    <thead>
+                      <tr>
+                        <th width="5%">S. No</th>
+                        <th class="txtlft">Equipment Name</th>
+                        <th width="20%">Name</th>
+                        <th width="20%" style="text-align:center;">Country</th>
+                        <th width="10%" style="text-align:center;">Action</th>
                       </tr>
-                    <%end%>
-                   </tbody>
-                </table>
-              </div>
-              <!-- /.table-responsive -->
+                    </thead>
+                    <tbody>
+                      <%@questions.each_with_index do |question,index|%>
+                        <tr style="<%='font-weight: bold;' unless question.is_read? %>">
+                          <th><%=index+1%></th>
+                          <td class="txtlft"><%= question.equipment.name %></td>
+                          <td><%=question.try(:name)%></td>
+                          <td align="center"><%=question.try(:country).try(:name)%></td>
+                          <td align="center" class="table-links">
+                            <%=link_to '<i class="fa fa-file-text-o"></i> Detail</a>'.html_safe,seller_question_path(id: question.id)%>
+                            <%=link_to '<i class="fa fa fa-remove"></i> Delete</a>'.html_safe,seller_question_path(id: question.id),method: 'delete',data: {confirm: 'Are you sure to delete the question?'}%>
+                          </td>
+                        </tr>
+                      <%end%>
+                     </tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              <% else %>
+                <p style="text-align:center;margin-top: 8px;font-size:16px;">No Questions Received Yet</p>
+              <% end %>
             </div>
             <!-- /.box-body -->
 

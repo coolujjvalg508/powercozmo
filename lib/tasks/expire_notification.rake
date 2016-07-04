@@ -19,7 +19,7 @@ namespace :expire_notification do
 
     desc "Notification to requester about expired buying request"
     task to_buyer: :environment do
-      @buying_requests = BuyingRequest.where(expiration_date: (cur_time - 24.hours).to_date..cur_time.to_date).approved
+      @buying_requests = BuyingRequest.where(expiration_date: Date.yesterday).approved
       @buying_requests.each do |buying_request|
         BuyingRequestMailer.delay.send_email_to_buyer_about_expiring_buying_request(buying_request)
       end

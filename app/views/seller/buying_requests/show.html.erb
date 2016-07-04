@@ -22,7 +22,7 @@
           <div class="mp-form-box">
             <div class="form-group">
               <label for="fname">Equipment, part, system or service name</label>
-              <%= @buying_request.title%>
+              <%= @buying_request.title.present? ? @buying_request.title : "&nbsp".html_safe %>
             </div>
 
             <div class="form-group">
@@ -32,13 +32,13 @@
 
             <div class="form-group">
               <label for="select">Required origin</label>
-                <%= @buying_request.origin%>
+                <%= @buying_request.origin.present? ? @buying_request.origin : "&nbsp".html_safe %>
                <%#= BuyingRequest::ORIGINS[@buying_request.origin_id]%>
             </div>
 
             <div class="form-group">
               <label for="select">Brand</label>
-              <%= @buying_request.brand.try(:name)%>
+              <%= @buying_request.brand.try(:name).present? ? @buying_request.brand.try(:name) : "&nbsp".html_safe %>
             </div>
 
             <div class="form-group">
@@ -53,24 +53,26 @@
 
             <div class="form-group">
               <label for="select">Condition</label>
-              <%= @buying_request.condition%>
+              <%= @buying_request.condition.present? ? @buying_request.condition : "&nbsp".html_safe %>
             </div>
 
              <div class="form-group">
               <label for="fname">Attachment</label>
               <% if @buying_request.attachment.present? %>
                 <%= link_to @buying_request.attachment.url.split('/').last, @buying_request.attachment.url, target: :blank%>
+              <% else %>
+                <%= "&nbsp".html_safe %>
               <% end %>
             </div>
 
              <div class="form-group">
               <label for="fname">Expiration Date</label>
-              <%= @buying_request.expiration_date.strftime('%m/%d/%Y')%>
+              <%= @buying_request.expiration_date.present? ? @buying_request.expiration_date.strftime('%m/%d/%Y') : "&nbsp".html_safe %>
             </div>
 
             <div class="form-group">
               <label for="select">End user location</label>
-               <%= @buying_request.location.try(:name)%>
+               <%= @buying_request.location.try(:name).present? ? @buying_request.location.try(:name) : "&nbsp".html_safe %>
             </div>
           </div>
           <%# if @buying_request.expiration_date >= Date.today %>
@@ -95,6 +97,8 @@
                       <%= image_tag(image.image.url(:profile))%>
                     </div>
                   <% end %>
+                <% else %>
+                  <%= "&nbsp".html_safe %>
                 <% end %>
               </div>
             </div>
@@ -102,7 +106,9 @@
           <div class="mp-form-box">
             <div class="form-group">
               <label for="password">Description</label>
-              <p><%= @buying_request.description%></p>
+              <div class="long-descp">
+                <p><%= @buying_request.description.present? ? @buying_request.description : "&nbsp".html_safe %></p>
+              </div>
             </div>
           </div>
         </div>

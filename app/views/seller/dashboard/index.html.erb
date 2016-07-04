@@ -96,6 +96,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
+          <% if @equipments.present? %>
             <div class="table-responsive">
               <table class="table no-margin">
                 <thead>
@@ -110,37 +111,34 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% if @equipments.present? %>
-                    <% @equipments.each_with_index do |equipment,index| %>
-                      <tr>
-                        <td><%= equipment.identifier %></td>
-                        <td><%= equipment.name %></td>
-                        <td><%=truncate(equipment.description, :length => 50) %></td>
-                        <td align="center">
-                          <% if equipment.images.present? %>
-                            <%= image_tag(equipment.images.first.try(:image), width: '32', height: '32', alt: '') %>
-                          <% else %>
-                            <i class="fa fa-file-image-o"></i>
-                          <% end %>
-                        </td>
-                        <td><%= equipment.availble_for.strftime("%d-%b-%Y %H:%M %p") if equipment.availble_for.present? %></td>
-                        <td><span class="label label-<%= ['closed','sold','inactive'].include?(equipment.status.to_s) ? 'deactive' : 'active' %>"><%= equipment.status.humanize %></span></td>
-                        <td>
-                          <%= link_to '<i class="fa fa-pencil-square-o"></i>'.html_safe, edit_seller_equipment_path(equipment) %>
-                          <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, seller_equipment_path(equipment),method: :delete,data: { confirm: 'Are you sure?' } %>
-                        </td>
-                      </tr>
-                    <% end %>
-                  <% else %>
+                  <% @equipments.each_with_index do |equipment,index| %>
                     <tr>
-                      <td colspan="6" align="center">No Result Found</td>
+                      <td><%= equipment.identifier %></td>
+                      <td><%= equipment.name %></td>
+                      <td><%=truncate(equipment.description, :length => 50) %></td>
+                      <td align="center">
+                        <% if equipment.images.present? %>
+                          <%= image_tag(equipment.images.first.try(:image), width: '32', height: '32', alt: '') %>
+                        <% else %>
+                          <i class="fa fa-file-image-o"></i>
+                        <% end %>
+                      </td>
+                      <td><%= equipment.availble_for.strftime("%d-%b-%Y %H:%M %p") if equipment.availble_for.present? %></td>
+                      <td><span class="label label-<%= ['closed','sold','inactive'].include?(equipment.status.to_s) ? 'deactive' : 'active' %>"><%= equipment.status.humanize %></span></td>
+                      <td>
+                        <%= link_to '<i class="fa fa-pencil-square-o"></i>'.html_safe, edit_seller_equipment_path(equipment) %>
+                        <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, seller_equipment_path(equipment),method: :delete,data: { confirm: 'Are you sure?' } %>
+                      </td>
                     </tr>
                   <% end %>
                 </tbody>
               </table>
             </div>
             <!-- /.table-responsive -->
-          <%= paginate @equipments, :theme => 'listing_page_theme' %>
+            <%= paginate @equipments, :theme => 'listing_page_theme' %>
+          <% else %>
+            <p style="text-align:center;margin-top: 8px;font-size:16px;">No Equipments Found</p>
+          <% end %>
           </div>
           <!-- /.box-body -->
 

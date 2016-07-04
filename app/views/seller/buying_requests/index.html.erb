@@ -17,45 +17,49 @@
           <div class="box box-info dsh-table-details">
             <!-- /.box-header -->
             <div class="box-body">
-              <div class="table-responsive">
-                <table class="table no-margin">
-                  <thead>
-                    <tr>
-                      <th width="11%" style="text-align:center;">SNo </th>
-                      <th style="text-align:center;">Requester Name</th>
-                      <th width="23%" class="txtlft">Title</th>
-                      <th width="12%">Type</th>
-                      <th width="22%">Description</th>
-                      <th width="9%" style="text-align:center;">Added Date</th>
-                      <th width="9%" style="text-align:center;">Expire Date</th>
-                      <th width="12%" style="text-align:center;">&nbsp;</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% @buying_requests.each do |br| %>
+              <% if @buying_requests.present? %>
+                <div class="table-responsive">
+                  <table class="table no-margin">
+                    <thead>
                       <tr>
-                        <td align="center"><%= br.identifier%></td>
-                        <td align="center"><%= br.name%></td>
-                        <td class="txtlft"><%= br.title%></td>
-                        <td><%= br.lead_type%></td>
-                        <td><%= truncate(br.description, length: 35)%></td>
-                        <td align="center"><%= br.created_at.strftime('%m/%d/%Y')%></td>
-                        <td align="center"><%= br.expiration_date.strftime('%m/%d/%Y')%></td>
-                        <td align="center" class="table-links">
-                          <%= link_to 'More Info', seller_buying_request_path(br)%>
-                          <% if br.expiration_date >= Date.today %>
-                            <%= link_to 'Request for Info', seller_request_for_more_info_path(buying_request_id: br.id)%>
-                          <% end %>
-                          <% if br.expiration_date >= Date.today %>
-                            <%= link_to 'Submit Your Proposal', new_seller_buying_proposal_path(buying_request_id: br.id)%>
-                          <% end %>
-                        </td>
+                        <th width="11%" style="text-align:center;">SNo </th>
+                        <th style="text-align:center;">Requester Name</th>
+                        <th width="23%" class="txtlft">Title</th>
+                        <th width="12%">Type</th>
+                        <th width="22%">Description</th>
+                        <th width="9%" style="text-align:center;">Added Date</th>
+                        <th width="9%" style="text-align:center;">Expire Date</th>
+                        <th width="12%" style="text-align:center;">&nbsp;</th>
                       </tr>
-                    <% end %>
-                   </tbody>
-                </table>
-              </div>
-              <!-- /.table-responsive -->
+                    </thead>
+                    <tbody>
+                      <% @buying_requests.each do |br| %>
+                        <tr>
+                          <td align="center"><%= br.identifier%></td>
+                          <td align="center"><%= br.name%></td>
+                          <td class="txtlft"><%= br.title%></td>
+                          <td><%= br.lead_type%></td>
+                          <td><%= truncate(br.description, length: 35)%></td>
+                          <td align="center"><%= br.created_at.strftime('%m/%d/%Y')%></td>
+                          <td align="center"><%= br.expiration_date.strftime('%m/%d/%Y')%></td>
+                          <td align="center" class="table-links">
+                            <%= link_to 'More Info', seller_buying_request_path(br)%>
+                            <% if br.expiration_date >= Date.today %>
+                              <%= link_to 'Request for Info', seller_request_for_more_info_path(buying_request_id: br.id)%>
+                            <% end %>
+                            <% if br.expiration_date >= Date.today %>
+                              <%= link_to 'Submit Your Proposal', new_seller_buying_proposal_path(buying_request_id: br.id)%>
+                            <% end %>
+                          </td>
+                        </tr>
+                      <% end %>
+                     </tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              <% else %>
+                <p style="text-align:center;margin-top: 8px;font-size:16px;">No Buying Requests Found</p>
+              <% end %>
             </div>
             <!-- /.box-body -->
             <!-- /.box-footer -->

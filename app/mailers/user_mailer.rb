@@ -1,6 +1,6 @@
 class UserMailer < Devise::Mailer
 	helper ApplicationHelper
-  default from: "PowerCozmo <#{ ENV['DEFAULT_FROM_EMAIL'] }>"
+  default from: "Power Cozmo <#{ ENV['DEFAULT_FROM_EMAIL'] }>"
   layout 'mailer'
   before_filter :add_inline_attachment!
 

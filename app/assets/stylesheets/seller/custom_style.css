@@ -76,7 +76,7 @@
 }
 
 body.sidebar-mini.sidebar-collapse .sidebar-menu>li span { text-indent: -99999px;  }
-.dashboard .sidebar-menu li small { top: -3px !important; right: -7px !important;  }
+.dashboard .sidebar-menu li small { top: -3px !important; right: -10px !important;  }
 .upload-photo-input { position: absolute; top: 0; left:  0;  }
 .equipment-content .eqp-form-box .upload-image-input { position: relative; }
 
@@ -145,7 +145,7 @@ p.response-msg { word-wrap: break-word; }
   text-align: center;
 }
 
-.detail-list-r.big-msg { overflow-x: auto; }
+.detail-list-r.big-msg { overflow: hidden; overflow-x: auto; }
 .field_with_errors {
   height: 100%;
   width: 100%;
@@ -156,3 +156,4 @@ p.response-msg { word-wrap: break-word; }
 }
 .box.box-info.dsh-table-details .table>tbody>tr>td { border-bottom: 1px solid #f4f4f4; }
 .box.box-info.dsh-table-details .pagination { margin: 70px 0 0 -25px; }
+.long-descp { height: 290px; overflow: hidden; overflow-y: auto; }

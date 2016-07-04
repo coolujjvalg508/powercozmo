@@ -8,6 +8,7 @@
       <div class="box box-info dsh-table-details">
       <!-- /.box-header -->
       <div class="box-body">
+      <% if conversations.present? %>
         <div class="table-responsive">
           <table class="table no-margin">
             <thead>
@@ -33,13 +34,17 @@
                   <td align="center"><%= message_time_format(conversation.updated_at) %></td>
                 </tr>
               <% end %>
-              <% unless conversations.present? %>
-                <tr><th colspan="5">No received messages</th></tr>
-              <% end %>
-             </tbody>
+            </tbody>
           </table>
         </div>
         <!-- /.table-responsive --> 
+        <% else %>
+          <% if params[:action]=='inbox' %>
+            <p style="text-align:center;margin-top: 8px;font-size:16px;">No Messages Received Yet</p>
+          <% else %>
+            <p style="text-align:center;margin-top: 8px;font-size:16px;">No Messages Sent Yet</p>
+          <% end %>
+        <% end %>
       </div>
       <!-- /.box-body -->
       <!-- /.box-footer --> 

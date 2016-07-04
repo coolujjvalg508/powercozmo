@@ -52,7 +52,7 @@ Rails.application.routes.draw do
       get 'offers' => 'equipment_enquiries#offers', as: "offers"
       get 'offer/:id' => 'equipment_enquiries#show_offer', as: "offer"
       delete 'offer/:id' => 'equipment_enquiries#destroy'
-      put 'respond_to_offer/:id' => 'equipment_enquiries#repond_to_offer', as: "respond_to_offer"
+      put 'respond_to_offer/:id' => 'equipment_enquiries#respond_to_offer', as: "respond_to_offer"
       post 'reply_to_question/:id' => 'equipment_enquiries#reply_to_question', as: "reply_to_question"
       resources :messages, only: [:show, :new, :create] do
         collection do
