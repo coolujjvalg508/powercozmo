@@ -1,3 +1,13 @@
+<% content_for :head do %>
+  <meta property="og:type" content="article" />
+  <meta itemprop="og:headline" content="<%= @equipment.name %>" />
+  <meta itemprop="og:description" content="<%= truncate(@equipment.description, length: 600) %>" />
+
+  <meta property="og:title" content="<%= @equipment.name %>" />
+  <meta property="og:description" content="<%= truncate(@equipment.description, length: 600) %>" />
+  <meta property="og:url" content="<%= request.original_url %>" />
+  <meta property="og:image" content="<%=image_url(@equipment.try(:images).try(:first).try(:image).try(:url))%>" />
+<% end %>
 <header id="hd" class="rlatv list-bnr">
   <div class="hd-srch">
     <h2><%= @equipment.name %></h2>
@@ -31,13 +41,21 @@
         <div class="col-lg-8 dtl-blc-lt">
           <h2><strong><em><%= "#{@equipment.name} - #{@equipment.identifier}" %></em></strong> <span>
             <ul class="share-links">
-            <li><a href="javascript:void(0)" id="social-share"><i class="fa fa-share-alt"></i></a>
-            <div class="share-menu">
-              <ul>
-                <li><a class="btnShare" href="javascript:void(0)" data-url='<%= request.original_url%>' data-image="<%=image_url(@equipment.try(:images).try(:first).try(:image).try(:url))%>" data-title='<%=@equipment.name%>' data-desc="<%= truncate(@equipment.description, length: 600) %>"><i class="fa fa-facebook"></i> Facebook</a></li>
-              <li><a href='https://twitter.com/intent/tweet?text=<%=@equipment.name%>&url=<%= request.original_url%>' onclick="return !window.open(this.href, 'Twitter', 'width=640,height=580')"><i class="fa fa-twitter"></i> Twitter</a></li>
-              </ul>
-            </div></li>
+            <!-- <li><a href="javascript:void(0)" id="social-share"><i class="fa fa-share-alt"></i></a>
+              <div class="share-menu"><ul></ul></div>
+            </li> -->
+            <!-- Facebook share -->
+            <li><a class="btnShare" href="javascript:void(0)" data-url='<%= request.original_url%>' data-image="<%=image_url(@equipment.try(:images).try(:first).try(:image).try(:url))%>" data-title='<%=@equipment.name%>' data-desc="<%= truncate(@equipment.description, length: 600) %>"><i class="fa fa-facebook share-icon"></i></a></li>
+
+            <!-- Twitter share -->
+            <li><a href='https://twitter.com/intent/tweet?text=<%=@equipment.name%>&url=<%= request.original_url%>' onclick="return !window.open(this.href, 'Twitter', 'width=640,height=580')"><i class="fa fa-twitter share-icon"></i></a></li>
+
+            <!-- Google Plus share -->
+            <li><a href="https://plus.google.com/share?url=<%= request.original_url%>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><i class="fa fa-google-plus share-icon"></i></a></li>
+
+            <!-- LinkedIn share -->
+            <li><a href="https://www.linkedin.com/shareArticle?mini=true&url=<%= request.original_url%>&title=<%=URI.encode(@equipment.name)%>&summary=<%=truncate(@equipment.description, length: 600)%>&source=PowerCozmo.com" onclick="return !window.open(this.href, 'LinkedIn', 'width=520,height=570')"><i class="fa fa-linkedin share-icon"></i></a></li>
+
             <li><a href="javascript:window.print()"><i class="fa fa-print"></i></a></li>
             <li><%= link_to "<i class='fa fa-save'></i>".html_safe, equipment_details_path(@equipment, format: :pdf) %></li>
             </ul>

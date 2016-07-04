@@ -266,3 +266,8 @@ a[disabled] {
 }
 
 .owl-carousel .owl-item img{ display: inline !important; }
+
+.share-icon{
+  border-right: 1px solid #757575;
+  padding-right: 9px;
+}
