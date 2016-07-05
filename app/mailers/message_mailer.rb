@@ -19,7 +19,7 @@ class MessageMailer < Mailboxer::MessageMailer
     set_subject(message)
     if message.attachment.try(:url).present?
 	    attachment_name = message.attachment.try(:url).split('/').last
-	    attachments[attachment_name] = message.attachment.try(:url) if attachment_name.present?
+	    attachments[attachment_name] = message.try(:attachment).read if attachment_name.present?
     end
     mail :to => receiver.send(Mailboxer.email_method, message),
          :subject => t('mailboxer.message_mailer.subject_new', :subject => @subject),
@@ -33,7 +33,7 @@ class MessageMailer < Mailboxer::MessageMailer
     set_subject(message)
     if message.attachment.try(:url).present?
 	    attachment_name = message.attachment.try(:url).split('/').last
-	    attachments[attachment_name] = message.attachment.try(:url) if attachment_name.present?
+	    attachments[attachment_name] = message.try(:attachment).read if attachment_name.present?
     end
     mail :to => receiver.send(Mailboxer.email_method, message),
          :subject => t('mailboxer.message_mailer.subject_reply', :subject => @subject),

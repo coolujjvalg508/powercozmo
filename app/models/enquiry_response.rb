@@ -3,12 +3,12 @@ class EnquiryResponse < ActiveRecord::Base
 
   belongs_to :equipment_enquiry
   belongs_to :user
-  belongs_to :forwarded_user, :class_name => "AdminUser", :foreign_key => "forwarded_by" 
+  belongs_to :forwarded_user, :class_name => "AdminUser", :foreign_key => "forwarded_by"
 
   validates :message, presence: true
   validates :message, length: { maximum: 3000,
     too_long: "Please enter maximum %{count} characters" }, :if => "message.present?"
-	
+
 	after_create :update_enquiry_read_by_admin
 	after_create :send_enquiry_seller_response_email_to_admin , :if => Proc.new {|e| (e.status=="responded") }
 	after_update :send_email_to_buyer_admin_approved_enquiry_seller_response , :if => Proc.new {|e| (e.status=="forwarded" && e.status_changed?) }
@@ -18,7 +18,7 @@ class EnquiryResponse < ActiveRecord::Base
 	end
 
 	def send_enquiry_seller_response_email_to_admin
-		enquiry = equipment_enquiry		
+		enquiry = equipment_enquiry
 		if status=="responded"
 			case
 			when enquiry.question? && enquiry.replied_as=='Accepted'
@@ -32,7 +32,7 @@ class EnquiryResponse < ActiveRecord::Base
 	end
 
 	def send_email_to_buyer_admin_approved_enquiry_seller_response
-		enquiry = equipment_enquiry		
+		enquiry = equipment_enquiry
 		if status=="forwarded"
 			case
 			when enquiry.question? && enquiry.replied_as=='Accepted'

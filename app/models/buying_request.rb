@@ -103,7 +103,7 @@ class BuyingRequest < ActiveRecord::Base
   end
 
   def send_admin_approved_buying_request_email_to_buyer
-    BuyingRequestMailer.delay.send_admin_approved_buying_request_email_to_buyer(self) if status=="Approved"
+    BuyingRequestMailer.delay.send_admin_approved_buying_request_email_to_buyer(self)
   end
 
   def send_admin_approved_buying_request_email_to_seller

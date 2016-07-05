@@ -24,10 +24,10 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 		@offer = find_enquiry
 		if @offer.present?
 			response = @offer.responses.new(user_id: current_user.id, message: enquiry_response_params[:message])
-			response.save
 			if ["Accept","Reject"].include?(params[:commit])
 				response_type = params[:commit]+"ed"  # to make it enum compatable like 'Accepted'
 				if @offer.update(:response => enquiry_response_params[:message], :response_status => "Responded", :replied_as => response_type)
+					response.save
 					if @offer.replied_as == 'Accepted'
 	  				order_params = [:name, :email, :mobile, :country_id, :company_website, :equipment_id].inject({}) do |params, element|
 	  					params[element] = @offer[element]
@@ -36,6 +36,9 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 	  				order_params[:status] = "Seller Confirmed"
 	  				order_params[:price] = @offer.bidding_price
 	  				order_params[:commission] = Commission.for_price(@offer.bidding_price).first.to_f
+	  				if order_params[:commission] == 0.0
+	  					order_params[:commission] = Commission.order("max_price DESC").first.percent.to_f
+	  				end
 	  				order = Order.new(order_params)
 	  				if order.save
 	  					eq = @offer.equipment
