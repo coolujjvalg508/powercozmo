@@ -78,13 +78,20 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 		@question = find_enquiry
 		if @question.present?
 			response = @question.responses.new(user_id: current_user.id, message: enquiry_response_params[:message])
-			if response.save
-				@question.update(:response => enquiry_response_params[:message], :response_status => "Responded", :replied_as => "Accepted")
-				flash[:notice] = "Message sent successfully."
+			if @question.update(:response => enquiry_response_params[:message], :response_status => "Responded", :replied_as => "Accepted")
+					if response.save
+						flash[:notice] = "Message sent successfully."
+					else
+						@error = response.errors.full_messages[0]
+					end
 			else
-				@error = response.errors.messages[:message][0]
-				render :action => :show_question and return
+				if @question.errors.messages[:responses]
+					@error = @question.responses.last.errors.full_messages[0]
+				else
+					@error = @question.errors.full_messages[0]
+				end
 			end
+			render :action => :show_question and return if @error.present?
 		else
 			flash[:notice] = "Question not found"
 		end

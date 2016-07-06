@@ -18,7 +18,6 @@ every 1.day, :at => '12:01 am' do
 	rake "expire_notification:buying_request:to_buyer"
 	rake "expire_notification:buying_request:to_admin"
 	rake "expire_notification:buying_request:to_seller"
-	rake "expire_notification:post:change_status"
 end
 
 
