@@ -1,9 +1,10 @@
 namespace :expire_notification do
-  cur_time = Time.now
+  cur_time = Time.now.beginning_of_day
   namespace :buying_request do
     desc "Reminder to admin about buying requests expiring in next 24 hours."
     task to_admin: :environment do
-    	@buying_requests = BuyingRequest.where(expiration_date: cur_time.to_date..(cur_time+24.hours).to_date)
+      # Below will fetch records expiring on the current date.
+    	@buying_requests = BuyingRequest.where(expiration_date: Date.today)
     	@buying_requests.each do |buying_request|
   			BuyingRequestMailer.delay.send_email_to_admin_about_near_to_expire_buying_request(buying_request)
   		end
@@ -11,7 +12,7 @@ namespace :expire_notification do
 
     desc "Reminder to seller about buying requests expiring in next 24 hours."
     task to_seller: :environment do
-    	@buying_requests = BuyingRequest.where(expiration_date: cur_time.to_date..(cur_time+24.hours).to_date).approved
+    	@buying_requests = BuyingRequest.where(expiration_date: Date.today).approved
       @buying_requests.each do |buying_request|
   			BuyingRequestMailer.delay.send_email_to_seller_about_near_to_expire_buying_request(buying_request)
   		end

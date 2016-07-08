@@ -31,7 +31,7 @@ class EquipmentMailer < ApplicationMailer
     @user = @equipment.try(:user)
     if @equipment.is_a?(Equipment) && @user.is_a?(User)
       @receiver = @user.email
-      mail(to: @receiver, subject: @subject) if @equipment.active? && @equipment.expired?
+      mail(to: @receiver, subject: @subject)
     end
   end
 end
