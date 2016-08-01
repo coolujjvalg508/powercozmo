@@ -24,6 +24,6 @@ log/*
 /db/schema.rb
 .byebug_history
 
-/Gemfile.lock
+# /Gemfile.lock
 
 /public/uploads/*
