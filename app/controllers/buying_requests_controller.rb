@@ -20,7 +20,7 @@ class BuyingRequestsController < ApplicationController
 		end
 		render :index
 	end
-
+ 
 	def new
 		@buying_request = BuyingRequest.new
 		@buying_request.images.build
