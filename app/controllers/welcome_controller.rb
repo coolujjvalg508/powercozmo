@@ -6,7 +6,7 @@ class WelcomeController < ApplicationController
 		@random_ads = Equipment.random.limit(12)
 		@banner_url = Banner.where(:status => 1).limit(1).order('created_at DESC').first.try(:image).try(:image)
 		@banner_url = 'assets/banner-bg.jpg' unless @banner_url
-		@commissions = Commission.all.order("percent desc")
+		@commissions = Commission.all.order("percent desc")		
 	end
 
 	def new_contact
@@ -33,7 +33,8 @@ class WelcomeController < ApplicationController
 	end
 
 	def about_us
-		@about_us = StaticPage.where(:url => "welcome_to_power_cozmo")
+		#@our_team = OurTeam.joins("LEFT JOIN images ON images.imageable_id = our_teams.id AND images.imageable_type = 'OurTeam'").where(active: true).select('our_teams.*', 'images.image')
+		@our_team = OurTeam.joins(:image).where(active: true).select('our_teams.*', 'images.image')
 	end
 
 	def why_us
