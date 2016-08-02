@@ -5,19 +5,19 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # Ignore bundler config.
-/.bundle
+# /.bundle
 
 # Ignore all logfiles and tempfiles.
 /log/*
 !/log/.keep
-/tmp
+# /tmp
 
 # Ignore application configuration
-/config/application.yml
+# /config/application.yml
 
 # DB configurations
-/config/database.yml
-log/*
+# /config/database.yml
+# log/*
 
-/db/schema.rb
-.byebug_history
+# /db/schema.rb
+# .byebug_history

@@ -9,7 +9,11 @@ class ApplicationController < ActionController::Base
   before_action :set_message, if: -> { controller_name == 'sessions' && action_name == 'new'}
   before_action :check_admin, if: -> { controller_path =~ /admin/ && controller_name != 'sessions' && controller_name != 'passwords'}
   around_filter :with_timezone
-
+  before_filter :test
+  	
+  	def test
+  	  abort('xyz')
+  	end
   def configure_permitted_parameters
     if params[:user].present? &&  params[:user][:profile].present?
       params[:user][:profile_attributes] = params[:user][:profile]
