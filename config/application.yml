@@ -11,9 +11,9 @@
 #   stripe_publishable_key: pk_live_9lcthxpSIHbGwmdO941O1XVU
 
 SMTP_HOST: "powercozmo.com"
-DATABASE_NAME: 'powercozmo'
-DB_USER_NAME: 'root'
-DB_PASSWORD: '123456'
+DATABASE_NAME: 'heroku_d8b4bca3a20ba2c'
+DB_USER_NAME: 'bb20be338feda8'
+DB_PASSWORD: 'f83a1df0'
 SMTP_ADDRESS: 'gmail.com'
 SMTP_DOMAIN: 'powercozmo.com'
 SMTP_USERNAME: 'developer@brsoftech.com'
