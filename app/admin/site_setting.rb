@@ -1,6 +1,6 @@
 ActiveAdmin.register SiteSetting do
   menu label: 'Settings', parent: 'CMS', if: proc{ (current_admin_user.has_permission('sitesetting_read'))}
-  permit_params :copy_right_text, :header_phone, :header_email
+  permit_params :copy_right_text, :header_phone, :header_email, :homepage_heading, :homepage_text, :homepage_search_text
   actions :all, except: [:destroy, :new, :create]
   controller do
     def action_methods
@@ -30,6 +30,9 @@ ActiveAdmin.register SiteSetting do
       end
       row :header_phone
       row :header_email
+      row :homepage_heading
+      row :homepage_text
+      row :homepage_search_text
     end
   end
 
@@ -38,6 +41,9 @@ ActiveAdmin.register SiteSetting do
       f.input :copy_right_text
       f.input :header_phone
       f.input :header_email
+      f.input :homepage_heading
+      f.input :homepage_text
+      f.input :homepage_search_text
     end
     f.actions
   end

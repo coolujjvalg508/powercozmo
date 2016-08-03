@@ -40,7 +40,7 @@ class FileUploader < CarrierWave::Uploader::Base
   # For images you might use something like this:
   #added image formats, attachment can be pdf or image
   def extension_white_list
-    %w(pdf jpg jpeg gif png)
+    %w(pdf jpg jpeg gif png jpe)
   end
 
   # Override the filename of the uploaded files:

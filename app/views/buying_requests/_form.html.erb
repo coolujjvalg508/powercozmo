@@ -189,7 +189,7 @@ function readURL (input) {
   preview_image_id.pop()
   preview_image_id = preview_image_id.join('_')
   var ext = input.files[0]['name'].substring(input.files[0]['name'].lastIndexOf('.') + 1).toLowerCase();
-  if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) {
+  if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg" || ext == "jpe")) {
     var reader = new FileReader();
     reader.onload = function (e) {
         $("#"+preview_image_id+"_preview").attr('src', e.target.result);
