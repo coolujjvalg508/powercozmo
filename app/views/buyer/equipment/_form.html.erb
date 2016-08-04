@@ -1,0 +1,211 @@
+<%= nested_form_for [:buyer,@equipment] do |f| %>
+  <!-- /.row -->
+  <div class="row">
+    <div class="col-lg-4 eqp-form-left">
+      <div class="eqp-form-box">
+        <div class="form-group">
+          <div style="display: <%=(action_name == 'edit' || action_name == 'update' ) ? 'none' : 'block'%>">
+          <%= f.radio_button :equipment_type, "equipment",:checked => f.object.equipment_type.present? ? f.object.equipment_type == "equipment" : true,class: "eq_type fl"%>
+          <%= f.label :equipment_type, "Equipment", :value => "equipment", class: "eq_radio_label fl" %>
+          <%= f.radio_button :equipment_type, "power_plant",:checked => f.object.equipment_type.present? ? f.object.equipment_type == "power_plant" : false, class: "eq_radio_label fl eq_type" %>
+          <%= f.label :equipment_type, 'Power Plant', :value => "power_plant", class: "eq_radio_label fl" %>
+          </div>
+          <label for="Name" style="clear:both;"><span class="eq_type_text">Equipment</span> Name*</label>
+          <%= f.text_field :name, class: 'form-control', placeholder: 'Enter name' %>
+          <%= form_error_msg_for(@equipment,:name) %>
+        </div>
+        <div class="form-group eq_total">
+          <label for="number">Equipment Model Number* </label>
+          <%= f.text_field :equipment_model, class: 'form-control', placeholder: 'Enter Equipment Model number' %>
+          <%= form_error_msg_for(@equipment,:equipment_model, 'Equipment model') %>
+        </div>
+        <div class="form-group mrg-btm-zero eq_total">
+          <label for="select">Equipment Condition*</label>
+          <%= f.select :condition, Equipment::CONDITION_TYPES, {prompt: 'Select Equipment Condition'} %>
+          <%= form_error_msg_for(@equipment,:condition, 'Equipment condition') %>
+        </div>
+        <div class="form-group pp_total hide">
+          <label for="number">Power Plant Type*</label>
+          <%= f.select :power_plant_type, Equipment::POWER_PLANT_TYPES.inject([]){|arr,ele|arr << [ele.capitalize, ele]}, {include_blank: 'Select Power Plant Type'}%>
+          <%= form_error_msg_for(@equipment,:power_plant_type, 'Power Plant type') %>
+        </div>
+        <div class="form-group mrg-btm-zero pp_total hide">
+          <label for="number">Power Plant Age*</label>
+          <%= f.text_field :power_plant_age, class: 'form-control',placeholder: 'Enter Power Plant Age. e.g 4 years' %>
+          <%= form_error_msg_for(@equipment,:power_plant_age, 'Power Plant Age') %>
+        </div>
+      </div>
+      <div class="eqp-form-box">
+        <div class="form-group">
+          <label for="Name"><span class="eq_type_text">Equipment</span> Owner Name </label>
+          <%= f.text_field :owner_name, class: 'form-control', placeholder: 'Enter Owner Name' %>
+          <span class="error-mess">We strongly recommend to write Owner Name </span>
+          <%= form_error_msg_for(@equipment,:owner_name) %>
+        </div>
+        <div class="form-group mrg-btm-zero eq_total">
+          <label for="select">Equipment Manufacturer's Name </label>
+          <%= f.select :manufacturer_id, @manufactures.map{|id,name| [name,id] }+[['Other', 0]], include_blank: 'Select Equipment Manufacturer' %>
+          <%= text_field_tag "other[manufacturer_name]", params[:other].present? ? params[:other][:manufacturer_name] : "",class: 'form-control equipment-other-field', placeholder: 'Manufacturer name*', style: "display:none;" %>
+          <%= form_error_msg_for(@equipment,:manufacturer_id, "Manufacture name") %>
+        </div>
+        <div class="form-group pp_total hide">
+          <label for="number">Turbine Model*</label>
+          <%= f.text_field :turbine_model, class: 'form-control', placeholder: 'Enter Turbine Model' %>
+          <%= form_error_msg_for(@equipment,:turbine_model, 'Turbine model') %>
+        </div>
+        <div class="form-group mrg-btm-zero pp_total hide">
+          <label for="number">Turbine Manufacturer Name*</label>
+          <%= f.text_field :turbine_manufacturer_name, class: 'form-control', placeholder: 'Enter Turbine Manufacturer Name' %>
+          <%= form_error_msg_for(@equipment,:turbine_model, 'Turbine manufacturer name') %>
+        </div>
+      </div>
+      <div class="eqp-form-box">
+        <div class="form-group" id="category_select">
+          <label for="select"><span class="eq_type_text">Equipment</span> Category*</label>
+          <%= f.select :category_id, @categories.map{|id,name| [name,id] }+[['Other', 0]], {include_blank: 'Select Category'}, {disabled: @equipment.require_moderation == 1} %>
+          <%= text_field_tag "other[category_name]", params[:other].present? ? params[:other][:category_name] : "",class: 'form-control equipment-other-field', placeholder: 'Category name', style: "display:none;" %>
+          <%= form_error_msg_for(@equipment,:category_id, "Category") %>
+        </div>
+        <div class="form-group" id="sub_category_select">
+          <label for="select"><span class="eq_type_text">Equipment</span> Sub Category</label>
+          <%= f.select :sub_category_id, @sub_categories.map{|id,name| [name,id] }+[['Other', 0]], {include_blank: 'Select Sub Category'}, {disabled: @equipment.require_moderation == 1} %>
+          <%= text_field_tag "other[sub_category_name]", params[:other].present? ? params[:other][:sub_category_name] : "",class: 'form-control equipment-other-field', placeholder: 'Sub Category name', style: "display:none;" %>
+          <%= form_error_msg_for(@equipment,:sub_category_id, "Sub Category") %>
+        </div>
+        <div class="form-group mrg-btm-zero eq_total" id="sub_sub_category_select">
+          <label for="select"><span class="eq_type_text">Equipment</span> Sub Sub Category </label>
+          <%= f.select :sub_sub_category_id, @child_categories.map{|id,name| [name,id] }+[['Other', 0]], {include_blank: 'Select Sub Sub Category'}, {disabled: @equipment.require_moderation == 1} %>
+          <%= text_field_tag "other[sub_sub_category_name]", params[:other].present? ? params[:other][:sub_sub_category_name] : "",class: 'form-control equipment-other-field', placeholder: 'Sub Sub Category name', style: "display:none;" %>
+          <%= form_error_msg_for(@equipment,:sub_sub_category_id,'Sub Sub Category') %>
+        </div>
+      </div>
+      <div class="eqp-form-box">
+        <div class="form-group">
+          <label for="city">Location City*</label>
+          <%= f.text_field :city, class: 'form-control', placeholder: 'Enter City' %>
+          <%= form_error_msg_for(@equipment,:city) %>
+        </div>
+        <div class="form-group mrg-btm-zero">
+          <label for="select"><span class="eq_type_text">Equipment</span> Location Country*</label>
+          <%= f.select :country_id, @countries.map{|id,name| [name,id] }, {prompt: 'Select Country'} %>
+          <%= form_error_msg_for(@equipment,:country_id, 'Country') %>
+        </div>
+      </div>
+    <div class="static-text1">
+      <h3 class="static-txt-hd">How to create a better listing:</h3>
+      <ul class="static-txt-lst">
+      <li>include a price</li>
+      <li>write a full and accurate description. Make it sell!</li>
+      <li>don't copy the manufacturer's description from their website</li>
+      <li>upload several photos</li>
+      <li>upload a video</li>
+      </ul>
+    </div>
+    </div>
+    <div class="col-lg-8 eqp-form-right">
+      <div class="eqp-form-box" id="images-box">
+        <h3><span class="eq_type_text">Equipment</span> Photo</h3>
+          <label for="description"><strong>Tips</strong></label>
+
+          <ul class="static-txt-lst">
+            <li><strong>a.</strong> The first image will be the master image which will show in the product list page.</li>
+            <li><strong>b.</strong> Notes: Make sure the file is no larger than 5MB. Image must be one of the following formats: JPG/JPEG, GIF or PNG.</li>
+            <li><strong>c.</strong> More good quality images will help you grab buyers attention faster</li>
+          </ul>
+        <%
+          @tmp_images ||= {}
+          nested_form_count = 0
+        %>
+        <%= f.fields_for :images do |img| %>
+          <div class="upload-image">
+            <div class="form-group mrg-btm-zero">
+              <label for="description">Upload an image</label>
+              <div class="upload-image-input">
+                <%
+                  img_src = img.object.image.present? ? img.object.image : @tmp_images[img.index.to_s]
+                  tmp_image_src = @tmp_images[img.index.to_s]
+                  nested_form_count += 1
+                %>
+                <%= img.hidden_field :tmp_image, value: tmp_image_src %>
+                <%= img.hidden_field :id %>
+                <%= img.link_to_remove "<i class='fa fa-close'></i>".html_safe %>
+                <%= image_tag img_src, class: 'equipment_preview_image', id: "equipment_images_attributes_"+img.index.to_s+"_preview", style: img_src.present? ? "height:95%;width:100%" : '' %>
+                <%= img.file_field :image, title: " ", class: 'form-control upload-photo-input', accept: 'image/*' %>
+                <%= img.hidden_field :image_cache %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+          <%= f.link_to_add "<div class='tips-for-imgupload'><div class='add-new-img' title='Add one more image'><i class='fa fa-plus'></i></div></div>".html_safe, :images, style: nested_form_count >= 4 ? "display:none" : "" %>
+        <!-- </div> -->
+      </div>
+      <div class="eqp-form-box">
+        <div class="form-group mrg-btm-zero">
+          <label for="description"><span class="eq_type_text">Equipment</span> Description*</label>
+          <%= f.text_area :description, class: 'form-control', placeholder: 'Description', rows: 5 %>
+          <%= form_error_msg_for(@equipment,:description) %>
+        </div>
+      </div>
+      <div class="eqp-form-box half-width-box eqp-form-details-height">
+        <div class="form-group">
+          <label for="availble_for">Expiration Date*</label>
+          <div class='input-group date' id='datetimepicker1'>
+            <%= f.text_field :availble_for, class: 'form-control', placeholder: 'Expiration Date' %>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+          <%= form_error_msg_for(@equipment,:availble_for, 'Expiration Date') %>
+        </div>
+        <div class="form-group mrg-btm-zero eq_total">
+          <label for="select">Manufacture Year*</label>
+          <%= f.select :manufacture_year, (1950..Date.today.year).to_a.reverse , {prompt: 'Select Year'} %>
+          <%= form_error_msg_for(@equipment,:manufacture_year) %>
+        </div>
+        <div class="form-group">
+          <label for="price">Price*</label>
+          <%= f.text_field :price, class: 'form-control', placeholder: 'Enter Price' %>
+          <%= form_error_msg_for(@equipment,:price) %>
+        </div>
+        <div class="form-group mrg-btm-zero">
+          <label for="select">Currency*</label>
+          <%= f.select :currency, @currencies.map{|name,symbol| [(name.to_s+' (<span>'+symbol.to_s+'</span>)').html_safe,symbol] }, {prompt: 'Select Currency'} %>
+          <%= form_error_msg_for(@equipment,:currency) %>
+        </div>
+      </div>
+      <div class="eqp-form-box half-width-box fr eqp-nobg-area">
+        <div class="eqp-form-box">
+         <h3 class="static-txt-hd"><label for="price"><span class="eq_type_text">Equipment</span> Condition Rating</label></h3>
+        <%= f.hidden_field :rating %>
+        <ul class="equipment_rating_stars">
+          <% 5.times do |i| %>
+            <li class="<%=f.object.rating.to_i >= i+1 ? 'filled-star' : '' %>" id="equipment_rating_<%= i+1 %>" data-value="<%= i+1 %>"><i class="fa fa-star"></i></li>
+          <% end %>
+        </ul>
+        <%= form_error_msg_for(@equipment,:rating) %>
+        </div>
+        <div class="eqp-form-box static-txt2">
+          <h3 class="static-txt-hd">Listing Tip</h3>
+          <p class="mrg-btm-zero">It has been said that a picture is worth a thousand words. This is especially true when selling equipment online, where many of the buyers will place a bid without inspecting the item in person. Providing 15 to 20 quality photos of the interior, exterior and mechanical components of your item will increase the amount buyers are willing to bid</p>
+        </div>
+      </div>
+      <div class="eqp-form-box static-txt2">
+        <h3 class="static-txt-hd">Location of Item</h3>
+        <p class="mrg-btm-zero">The item's location is where Buyers must go to pick up the item once they have paid in full. The Owner Name, Email Address and Phone Number provided will be given to the successful Buyer, so they can contact the storage location and schedule a removal appointment, if necessary. We may contact this person if we have questions about removal.</p>
+      </div>
+    </div>
+
+    <div class="form-group col-lg-12 col-sm-12 col-xs-12">
+      <%= f.submit "Submit", class: 'btn btn-default btn-submit custom-btn' %>
+    </div>
+  </div>
+  <!-- /.row -->
+<% end %>
+<%= javascript_include_tag "buyer/equipment" %>
+<style type="text/css">
+  .remove_nested_fields{
+    float: right;
+    margin-top: -15px;
+    margin-right: -8px;
+  }
+</style>

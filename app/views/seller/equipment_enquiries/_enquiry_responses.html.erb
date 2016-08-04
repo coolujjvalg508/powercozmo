@@ -3,8 +3,21 @@
     <% unless enquiry_response.new_record? %>
       <div class="row">
         <div class="col-lg-12 msg-info-area">
-          <%= "<h3>Your Responses</h3>".html_safe if index==0%>          
+          <%= "<h3>Responses</h3>".html_safe if index==0%>          
           <div class="new-msg-form-box">
+          
+           <div class="detail-list-row">
+              <div class="detail-list-l">From</div>
+              <div class="detail-list-r big-msg">
+				<% if (enquiry_response.user_id == current_user.id) %>
+					Seller
+				<% else %>
+					Buyer
+				<% end %>
+              </div>
+              <div class="clearfix"></div>
+			</div>
+          
             <div class="detail-list-row">
               <div class="detail-list-l">Message</div>
               <div class="detail-list-r big-msg">

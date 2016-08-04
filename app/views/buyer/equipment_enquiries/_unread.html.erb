@@ -1,0 +1,18 @@
+<% if notifications.present? %>
+	<% notifications.each do |notification| %>
+		<%
+			notification_url = "#"
+			case notification.enquiry_type
+			when 'bid'
+				notification_url = buyer_offer_path(notification)
+			when 'buy'
+				notification_url = buyer_offer_path(notification)
+			when 'question'
+				notification_url = buyer_question_path(notification)				
+			end
+		%>
+		<li><%=link_to notification.notification_message, notification_url %></li>
+	<% end %>
+<% else %>
+	<li>No notifications</li>
+<% end %>

@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :set_message, if: -> { controller_name == 'sessions' && action_name == 'new'}
   before_action :check_admin, if: -> { controller_path =~ /admin/ && controller_name != 'sessions' && controller_name != 'passwords'}
   around_filter :with_timezone
-  
+
   def configure_permitted_parameters
     if params[:user].present? &&  params[:user][:profile].present?
       params[:user][:profile_attributes] = params[:user][:profile]
@@ -22,10 +22,17 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
+ 
+	#abort(resource.to_json)
+  
     if resource.is_a?(AdminUser)
       admin_root_path
-    else
-      stored_location_for(resource) || seller_dashboard_path || root_path
+    else        
+		if resource.role == 2
+			stored_location_for(resource) || buyer_dashboard_path || root_path
+		else
+			stored_location_for(resource) || seller_dashboard_path || root_path
+		end
     end
   end
 

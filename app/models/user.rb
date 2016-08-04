@@ -19,21 +19,24 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :image
 
   ############################ Constants ################################
-  USERTYPE = ["Equipment Owner", "Equipment Broker-Dealer", "Trader", "Other"]
-  enum role: { 'seller' => 1, 'admin' => 2}
+  #USERTYPE = ["Equipment Owner", "Equipment Broker-Dealer", "Trader", "Other"]
+  USERTYPE = ["Seller", "Buyer", "Both"]
+  USERROLE = {'Seller'=> 1, 'Buyer'=> 2, 'Both'=> 3}
+  #enum role: { 'seller' => 1, 'buyer' => 2, 'both' => 3}
   ########################### Validations ################################
 
   validates :email, confirmation: true
-	validates :password, confirmation: true
-	validates :email, presence: {message: "Email can't be blank"}
+  validates :password, confirmation: true
+  validates :email, presence: {message: "Email can't be blank"}
   validates :email, :email_confirmation, length: { maximum: 35, message: "Please enter no more than 35 characters." }
-	validates :email_confirmation, presence: {message: "Email confirmation can't be blank"}, on: :create
+  validates :email_confirmation, presence: {message: "Email confirmation can't be blank"}, on: :create
   validates :email, uniqueness: {message: 'This email is already registered with us.'}
   validates_format_of :email, :with  => /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i, :message => 'Please enter a valid email'
   validates_format_of :email_confirmation, :with  => /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i, :message => 'Please enter a valid email', if: "email_confirmation.present?"
-	validates :password, presence: {message: "Password can't be blank"}, on: :create
+  validates :password, presence: {message: "Password can't be blank"}, on: :create
   validates :password_confirmation, presence: {message: "Password confirmation can't be blank"}, on: :create
   validates :terms_of_service, :acceptance => true
+  #validates :role, presence: {message: "My Role can't be blank"}, on: :create
   validates :user_type, presence: {message: "I am can't be blank"}, on: :create
 
   ########################### Scopes ####################################
@@ -42,6 +45,7 @@ class User < ActiveRecord::Base
 
   ########################## Callbacks ################################
   before_save :add_role
+  before_update :update_role
 
   def active_for_authentication?
     super && self.active
@@ -63,10 +67,31 @@ class User < ActiveRecord::Base
     equipment_enquiries.approved.unread.count
   end
 
-  def add_role
-    unless self.role.present?
-      self.role = 1
-    end
+  def add_role	
+	if self.role.present? == false
+	  if self.user_type == 'Buyer'
+		self.role = 2
+	  elsif self.user_type == 'Both'
+		self.role = 3
+	  else
+	    self.role = 1
+	  end	  
+	end
+    #unless self.role.present?
+     # self.role = 1
+    #end
+  end
+  
+  def update_role	
+	if self.user_type.present? == true
+	  if self.user_type == 'Buyer'
+		self.role = 2
+	  elsif self.user_type == 'Both'
+		self.role = 3
+	  else
+	    self.role = 1
+	  end	  
+	end
   end
 
   class << self
