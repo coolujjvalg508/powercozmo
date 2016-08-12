@@ -1,0 +1,110 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>Order Details </h1>
+    <ol class="breadcrumb">
+      <li><%= link_to "Home", seller_dashboard_path %></li>
+      <li class="active">Order Details</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content new-msg-content">
+      <!-- /.row -->
+      <div class="row">
+        <div class="col-lg-12 msg-info-area">
+			
+			<% if @order.present? %>
+						
+			  <div class="new-msg-form-box">
+				  
+				<div class="detail-list-row">
+					<div class="detail-list-l">Order SN.</div>
+					<div class="detail-list-r"><%= @order.id %></div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="detail-list-row">
+					<div class="detail-list-l">Equipment SN.</div>
+					<div class="detail-list-r"><%= @order.equipment.identifier %></div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="detail-list-row">
+					<div class="detail-list-l">Equipment Name</div>
+					<div class="detail-list-r"><%= @order.equipment.name %></div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="detail-list-row">
+					<div class="detail-list-l">Price</div>
+					<div class="detail-list-r"><%= raw(@order.equipment.currency) + @order.price.to_s %></div>
+					<div class="clearfix"></div>
+				</div>
+				
+				<div class="detail-list-row">
+					<div class="detail-list-l">Status</div>
+					<div class="detail-list-r">
+						<% if @order.status == 'Seller Confirmed' %>
+							Waiting for buyer confirmation
+						<% else %>
+								<%= @order.status %>
+						<% end %>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				
+			</div>
+			
+			<div class="new-msg-form-box">
+				<div class="detail-list-row">
+					<div class="detail-list-l text-bold">Buyer Details</div>
+					<div class="clearfix"></div>
+				</div>
+				
+				<div class="detail-list-row">
+					<div class="detail-list-l">Name</div>
+					<div class="detail-list-r"><%= @order.equipment.owner_name %></div>
+					<div class="clearfix"></div>
+				</div>
+				
+				<div class="detail-list-row">
+					<div class="detail-list-l">Country</div>
+					<div class="detail-list-r"><%= @order.equipment.country.name %></div>
+					<div class="clearfix"></div>
+				</div>
+				
+			</div>	
+			
+			<div class="new-msg-form-box">
+				<div class="detail-list-row">
+					<div class="detail-list-l text-bold">Seller Details</div>
+					<div class="clearfix"></div>
+				</div>
+				
+				<div class="detail-list-row">
+					<div class="detail-list-l">Name</div>
+					<div class="detail-list-r"><%= @order.name %></div>
+					<div class="clearfix"></div>
+				</div>
+				
+				<div class="detail-list-row">
+					<div class="detail-list-l">Country</div>
+					<div class="detail-list-r"><%= @order.country.name %></div>
+					<div class="clearfix"></div>
+				</div>
+				
+			</div>
+          
+           <% else %>
+				<div class="new-msg-form-box">
+					<p style="text-align:center;margin-top: 8px;font-size:16px;">No order found.</p>
+				</div>	
+          <% end %>
+          
+        </div>
+      </div>
+    <!-- /.row -->
+   
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

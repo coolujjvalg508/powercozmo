@@ -1,3 +1,5 @@
+<% if current_user %>
+ 
 <!-- Modal -->
 <div id="myModal" class="modal fade bid-popup" role="dialog">
   <div class="modal-dialog">
@@ -16,6 +18,7 @@
         <div class="ask-quents-form">
           <%= form_tag(send_equipment_enquiry_path, method: 'post', remote: true, :id => "equipment_enquiry_form" ) do %>
             <%= hidden_field_tag "enquiry[enquiry_type]", 'question' %>
+            <%= hidden_field_tag "enquiry[user_id]", current_user[:id] %>
             <div class="ask-quents-form-right ask-quents-form-lft col-lg-6 col-sm-6 col-xs-12 ">
               <div class="tooltip-ico">
                 <a href="#" class="tooltip-info" title="Your question will be sent to the seller immediately and we will email you as soon as they reply."><i class="fa fa-info-circle"></i></a>
@@ -67,7 +70,7 @@
               </div>
               <div class="form-group">
                 <i class="fa fa-envelope"></i>
-                  <%=text_field_tag "enquiry[email]",'',placeholder: "Email Address*",class: "form-control"%>
+                  <%=text_field_tag "enquiry[email]",'',placeholder: "Email Address*",value: current_user[:email], disabled: true,class: "form-control"%>
                   <div id="email-error" class="error-text"></div>
               </div>
               <div class="form-group">
@@ -99,6 +102,22 @@
     </div>
   </div>
 </div>
+
+<% end %>
+
+<!-- Modal -->
+<div id="myModalNotLogin" class="modal fade bid-popup" role="dialog">
+  <div class="modal-dialog">
+    <div class="login-restrict-message">
+      <button type="button" class="close close-success" data-dismiss="modal"><span class="popup-close"></span></button>
+      <%= image_tag "restricted-icon.png" %>
+      <h2>Restricted !</h2>
+      <p>Please login to access this functionality.</p>
+    </div>
+  </div>
+</div>
+
+
 
 <script>
 $(document).ready(function(){

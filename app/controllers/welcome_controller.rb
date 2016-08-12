@@ -82,6 +82,6 @@ class WelcomeController < ApplicationController
 		end
 
 		def equipment_enquiry_params
-			params.require(:enquiry).permit(:name, :email, :mobile, :country_id, :enquiry_type, :equipment_id, :company_name, :company_website, :message, :bidding_price)
+			params.require(:enquiry).permit(:name, :email, :mobile, :country_id, :enquiry_type, :equipment_id, :company_name, :company_website, :message, :bidding_price, :user_id)
 		end
 end

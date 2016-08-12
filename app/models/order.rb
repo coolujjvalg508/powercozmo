@@ -2,7 +2,11 @@ class Order < ActiveRecord::Base
 	######################### Associations ########################
 	belongs_to :equipment
 	belongs_to :country
+	belongs_to :user
+	belongs_to :pickup_country, :class_name => "Country", :foreign_key => "pickup_country_id"
+	belongs_to :delivery_country, :class_name => "Country", :foreign_key => "delivery_country_id"
 	has_one :seller, through: :equipment, :source => :user
+	has_many :shipping_package
 	######################## Validations ##########################
 	validates :price, presence: {message: "Price can't be blank"}
 	validates :price, numericality: { :greater_than_or_equal_to => 0.1 }
@@ -17,9 +21,25 @@ class Order < ActiveRecord::Base
 	validates :company_website, length: { maximum: 255, message: "Website can not be more that 255 character"}
 	validates :commission, presence: {message: "Commission can't be blank"}
 	validates :status, presence: {message: "Status can't be blank"}
+	validates :no_of_packages, numericality: { only_integer: true }
 
 	############################# Constants #######################
-	STATUS = ["Seller Confirmed", "Request For Shipping", "Shipped To Buyer", "Buyer Confirmed", "Payment Done", "Completed", "Closed"]
+	SHIPPING_METHOD = ["Air fright", "Sea freight", "Land transportation"]
+	STATUS = ["Seller Confirmed", "Request For Shipping", "Shipped To Buyer", "Buyer Confirmed", "Payment Done", "Completed", "Closed", "Order Cancelled"]
+	
+	############ Order Status #############
+	
+	#1.Waiting for buyer /seller confirmation.
+	#2.Waiting for buyer payment.
+	#4.Waiting for shipping.
+	#5.Waiting for delivery confirmation.
+	#6.Order cancel requested.
+	#7. In dispute.
+	#8.Completed 
+	#9.Closed 
+	
+	#######################################
+	
 end
 
 ########################## Schema Information ########################

@@ -1,0 +1,172 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>Update Shipping(<%= @order.equipment.name %>) </h1>
+    <ol class="breadcrumb">
+      <li><%= link_to "Home", seller_dashboard_path %></li>
+      <li><%= link_to "Order Details", seller_order_path(@order) %></li>
+      <li class="active">Update Shipping</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content new-msg-content">
+      <!-- /.row -->
+      <div class="row">
+        <div class="col-lg-12 msg-info-area">
+			
+			<% if @order.present? %>
+			
+				<% if current_user.id == @order.equipment.user_id %>
+				
+					<%= form_for(@order, url: seller_save_shipping_path(@order), html: { method: :post, :id => "update_shipping" }) do |f| %>
+					
+					<%= hidden_field_tag "order[update_type]", 'seller' %>
+				
+					<div class="new-msg-form-box">
+					
+						<div class="detail-list-row">
+							<div class="detail-list-l">Number Of Packages</div>
+							<div class="detail-list-r">
+								
+								<%= f.text_field :no_of_packages, autocomplete: "off", class: 'form-control numericOnly', id: 'no_of_packages', placeholder: 'Enter Number Of Packages' %>
+																																
+								<% if @user %>
+									<div class="clearfix"></div>
+									<%= 'Number of packages ' + @user.errors[:no_of_packages].first if @user.errors.any? %>
+								<% end %>
+																
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						
+						
+						<div class="detail-list-row">
+							<div class="detail-list-l">Pickup Country</div>
+							<div class="detail-list-r">
+								
+								<%= f.select :pickup_country_id, @countries.map{|id,name| [name,id] }, {prompt: 'Select Country'} %>
+																
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						
+						
+						<div class="detail-list-row">
+							<div class="detail-list-l">Pickup City</div>
+							<div class="detail-list-r">
+								
+								<%= f.text_field :pickup_city, autocomplete: "off", class: 'form-control', id: 'pickup_city', placeholder: 'Enter Pickup City' %>
+																								
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						
+						<div class="detail-list-row">
+							<div class="detail-list-l">Pickup Port</div>
+							<div class="detail-list-r">
+								
+								<%= f.text_field :pickup_port, autocomplete: "off", class: 'form-control', id: 'pickup_port', placeholder: 'Enter Pickup port' %>
+																
+							</div>
+							<div class="clearfix"></div>
+						</div>
+												
+						<div class="form-group pull-left mrg-btm-zero">
+							<%= f.submit "Update", class: "btn btn-default custom-btn pull-left" %>
+							<%=link_to "back", seller_order_path(@order), class: "btn btn-default custom-btn fnone pull-left", style: "margin-left: 20px;" %>
+						</div>
+					
+					</div>
+					<% end %>
+				
+				<% else %>
+				
+				
+					<%= form_for(@order, url: seller_save_shipping_path(@order), html: { method: :post, :id => "update_shipping" }) do |f| %>
+					
+					<%= hidden_field_tag "order[update_type]", 'buyer' %>
+				
+					<div class="new-msg-form-box">
+					
+						<div class="detail-list-row">
+							<div class="detail-list-l">Shipping Method</div>
+							<div class="detail-list-r">
+								
+								<%= f.select :shipping_method, options_for_select(Order::SHIPPING_METHOD), {prompt: 'Select Shipping Method'} %>
+								<%= form_error_msg_for(@order,:shipping_method, 'Country') %>
+																
+								<% if @user %>
+									<div class="clearfix"></div>
+									<%= @user.errors[:shipping_method].first if @user.errors.any? %>
+								<% end %>
+																
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						
+						<div class="detail-list-row">
+							<div class="detail-list-l">Delivery Country</div>
+							<div class="detail-list-r">
+								
+								<%= f.select :delivery_country_id, @countries.map{|id,name| [name,id] }, {prompt: 'Select Country'} %>
+																
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						
+						
+						<div class="detail-list-row">
+							<div class="detail-list-l">Delivery City</div>
+							<div class="detail-list-r">
+								
+								<%= f.text_field :delivery_city, autocomplete: "off", class: 'form-control', id: 'delivery_city', placeholder: 'Enter Delivery City' %>
+																								
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						
+						<div class="detail-list-row">
+							<div class="detail-list-l">Delivery Port</div>
+							<div class="detail-list-r">
+								
+								<%= f.text_field :delivery_port, autocomplete: "off", class: 'form-control', id: 'delivery_port', placeholder: 'Enter Delivery port' %>
+																								
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						
+						<div class="form-group pull-left mrg-btm-zero">
+							<%= f.submit "Update", class: "btn btn-default custom-btn pull-left" %>
+							<%=link_to "back", seller_order_path(@order), class: "btn btn-default custom-btn fnone", style: "margin-left: 20px;" %>
+						</div>
+					
+					</div>
+					<% end %>
+					
+				<% end %>
+			
+           <% else %>
+				<div class="new-msg-form-box">
+					<p style="text-align:center;margin-top: 8px;font-size:16px;">No order found.</p>
+				</div>	
+          <% end %>
+          
+        </div>
+      </div>
+    <!-- /.row -->
+   
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('.numericOnly').keyup(function () {
+            this.value = this.value.replace(/[^0-9]/g,'');
+        });
+        jQuery("#GlobalSettingAdminGlobalSettingsForm").validationEngine();
+    });
+</script>

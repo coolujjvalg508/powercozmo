@@ -9,11 +9,7 @@
            <div class="detail-list-row">
               <div class="detail-list-l">From</div>
               <div class="detail-list-r big-msg">
-				<% if (enquiry_response.user_id == current_user.id) %>
-					Seller
-				<% else %>
-					Buyer
-				<% end %>
+				<%= enquiry_response.user.profile.first_name + ' ' + enquiry_response.user.profile.last_name %>
               </div>
               <div class="clearfix"></div>
 			</div>

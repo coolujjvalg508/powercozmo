@@ -29,7 +29,6 @@ Rails.application.routes.draw do
   get 'equipment_details/:id' => 'equipments#equipment_details', as: "equipment_details"
   get 'listings' => 'equipments#index'
   get 'listings/filter' => 'equipments#filter', as: "listing_filter"
-  #get '/user/edit' => 'users#edit'
 
   authenticate :user do
     namespace :seller do
@@ -69,6 +68,13 @@ Rails.application.routes.draw do
           post :untrash
         end
       end
+      
+      get 'orders' => 'order#index', as: "orders"
+      get 'orders/:id' => 'order#show', as: "order"
+      put 'order_update/:id' => 'order#update', as: "orders_update"
+      get 'update_shipping/:id' => 'order#update_shipping', as: "update_shipping"
+      post 'save_shipping/:id' => 'order#save_shipping', as: "save_shipping"
+      
     end
     
     
@@ -109,13 +115,11 @@ Rails.application.routes.draw do
           post :untrash
         end
       end
-    end
-    
+    end     
     
     namespace :user do
       resources :profile, only: [:edit, :update]
     end
-       
     
   end
 

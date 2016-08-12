@@ -1,3 +1,11 @@
+<% 
+	if current_user 
+		data_target = '#myModal'
+	else 
+		data_target = '#myModalNotLogin'
+	end		
+ %>
+
 <% content_for :head do %>
   <meta property="og:type" content="article" />
   <meta itemprop="og:headline" content="<%= @equipment.name %>" />
@@ -82,8 +90,8 @@
           <% available = get_available_for(@equipment.availble_for) %>
           <% (@equipment.status == 'closed' || available[:status] == 'closed' || @equipment.status == 'sold' || (current_user && current_user.id == @equipment.user_id)) ? button_disabled = true : button_disabled = false %>
           <h3><span>
-          <a href="javascript:void(0)" class="cont-sellbtn" data-toggle="modal" data-target="#myModal" data-enquiry-type="question" data-equipment='{"id": <%=@equipment.id%>, "identifier": "<%=@equipment.identifier%>", "location": "<%=@equipment.try(:country).try(:name)%>", "price": "<%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %>", "name": "<%=@equipment.name%>"}' <%= 'disabled' if button_disabled%>>Contact Seller for Question</a>
-          <a href="javascript:void(0)" class="bidnow-btn"  data-toggle="modal" data-target="#myModal" data-enquiry-type="bid" data-equipment='{"id": <%=@equipment.id%>, "identifier": "<%=@equipment.identifier%>", "location": "<%=@equipment.try(:country).try(:name)%>", "price": "<%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %>", "name": "<%=@equipment.name%>"}' <%= 'disabled' if button_disabled%>>Bid now</a>
+          <a href="javascript:void(0)" class="cont-sellbtn" data-toggle="modal" data-target="<%= data_target %>" data-enquiry-type="question" data-equipment='{"id": <%=@equipment.id%>, "identifier": "<%=@equipment.identifier%>", "location": "<%=@equipment.try(:country).try(:name)%>", "price": "<%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %>", "name": "<%=@equipment.name%>"}' <%= 'disabled' if button_disabled%>>Contact Seller for Question</a>
+          <a href="javascript:void(0)" class="bidnow-btn"  data-toggle="modal" data-target="<%= data_target %>" data-enquiry-type="bid" data-equipment='{"id": <%=@equipment.id%>, "identifier": "<%=@equipment.identifier%>", "location": "<%=@equipment.try(:country).try(:name)%>", "price": "<%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %>", "name": "<%=@equipment.name%>"}' <%= 'disabled' if button_disabled%>>Bid now</a>
             </span><em>Description</em></h3>
           <p><%= @equipment.description %></p>
           <div class="dtl-blc-adrs">
@@ -128,7 +136,7 @@
               <div class="clr"></div>
             </div>
             <div class="price-info"><span>Price :<em><%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %></em></span>
-             <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal" class="buynow-btn" data-enquiry-type="buy" data-equipment='{"id": <%=@equipment.id%>, "identifier": "<%=@equipment.identifier%>", "location": "<%=@equipment.try(:country).try(:name)%>", "price": "<%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %>", "name": "<%=@equipment.name%>"}' <%='disabled' if button_disabled == true %> >Buy now</a>
+             <a href="javascript:void(0)" data-toggle="modal" data-target="<%= data_target %>" class="buynow-btn" data-enquiry-type="buy" data-equipment='{"id": <%=@equipment.id%>, "identifier": "<%=@equipment.identifier%>", "location": "<%=@equipment.try(:country).try(:name)%>", "price": "<%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %>", "name": "<%=@equipment.name%>"}' <%='disabled' if button_disabled == true %> >Buy now</a>
              </div>
           </div>
           <div class="dtl-blc-add hide-block-area"><a href="#">

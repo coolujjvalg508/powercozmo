@@ -21,25 +21,8 @@
 	            <div class="hd-graylft"><i class="fa fa-phone"></i> <%= SiteSetting.last.try(:header_phone) || '+(646) 45321069' %>  <span class="email"><i class="fa fa-envelope"></i> <a href="mailto:<%= SiteSetting.last.try(:header_email) || 'info@powercozmo.com'%>"><%= SiteSetting.last.try(:header_email) || 'info@powercozmo.com'%></a></span><span class="contactus"><a href="<%= contacts_new_path%>">Contact Us</a></span></div>
 	            <div class="hd-grayrht">
 		            <% if user_signed_in? %>
-				
-				<% if current_user.role == 2 %>
-
-					<% unread_inbox_count = current_user.try(:unread_inbox_count).to_i %>
-			          	<% if unread_inbox_count > 0 %>
-			          		<%= link_to "<i class='fa fa-envelope-o'></i> <span class='label label-warning'>#{unread_inbox_count}</span>".html_safe, buyer_dashboard_path(message_notification: :true) %>
-			          	<% else %>
-			          		<%= link_to "<i class='fa fa-envelope-o'></i>".html_safe, buyer_dashboard_path, class: "dropdown-toggle" %>
-			          	<% end %>
-		            		<% unread_notifications_count = current_user.try(:unread_notifications_count).to_i %>
-			          	<% if unread_notifications_count > 0 %>
-			          		<%= link_to "<i class='fa fa-bell-o'></i> <span class='label label-warning'>#{unread_notifications_count}</span>".html_safe, buyer_dashboard_path %>
-			          	<% else %>
-			          		<%= link_to "<i class='fa fa-bell-o'></i>".html_safe, buyer_dashboard_path, class: "dropdown-toggle" %>
-			          	<% end %>
-		            		<%= link_to('<i class="fa fa-table"></i>Dashboard'.html_safe, buyer_dashboard_path) %>
-
-				<% elsif current_user.role == 1 %>
-					<% unread_inbox_count = current_user.try(:unread_inbox_count).to_i %>
+		            
+						<% unread_inbox_count = current_user.try(:unread_inbox_count).to_i %>
 			          	<% if unread_inbox_count > 0 %>
 			          		<%= link_to "<i class='fa fa-envelope-o'></i> <span class='label label-warning'>#{unread_inbox_count}</span>".html_safe, seller_dashboard_path(message_notification: :true) %>
 			          	<% else %>
@@ -53,29 +36,9 @@
 			          		<%= link_to "<i class='fa fa-bell-o'></i>".html_safe, seller_dashboard_path, class: "dropdown-toggle" %>
 			          	<% end %>
 				    	<%= link_to('<i class="fa fa-table"></i>Dashboard'.html_safe, seller_dashboard_path) %>
-
-
-				<% elsif current_user.role == 3 %>
-					<% unread_inbox_count = current_user.try(:unread_inbox_count).to_i %>
-			          	<% if unread_inbox_count > 0 %>
-			          		<%= link_to "<i class='fa fa-envelope-o'></i> <span class='label label-warning'>#{unread_inbox_count}</span>".html_safe, seller_dashboard_path(message_notification: :true) %>
-			          	<% else %>
-			          		<%= link_to "<i class='fa fa-envelope-o'></i>".html_safe, seller_dashboard_path, class: "dropdown-toggle" %>
-			          	<% end %>
-
-		            		<% unread_notifications_count = current_user.try(:unread_notifications_count).to_i %>
-			          	<% if unread_notifications_count > 0 %>
-			          		<%= link_to "<i class='fa fa-bell-o'></i> <span class='label label-warning'>#{unread_notifications_count}</span>".html_safe, seller_dashboard_path %>
-			          	<% else %>
-			          		<%= link_to "<i class='fa fa-bell-o'></i>".html_safe, seller_dashboard_path, class: "dropdown-toggle" %>
-			          	<% end %>
-				    	<%= link_to('<i class="fa fa-table"></i>Seller Dashboard'.html_safe, seller_dashboard_path) %>		
-					<%= link_to('<i class="fa fa-table"></i>Buyer Dashboard'.html_safe, buyer_dashboard_path) %>
-
-				<% end %>
-
-				<%= link_to('<i class="fa fa-user"></i>My Profile'.html_safe, edit_user_profile_path(current_user)) %>
+						<%= link_to('<i class="fa fa-user"></i>My Profile'.html_safe, edit_seller_profile_path(current_user)) %>
 		            	<%= link_to('<i class="fa fa-sign-out"></i>Logout'.html_safe, destroy_user_session_path, :method => :delete) %>
+		            	
 		            <% else %>
 		            	<%= link_to('<i class="fa fa-edit"></i>Register'.html_safe, new_user_registration_path) %>
 		            	<%= link_to('<i class="fa fa-sign-in"></i>Login'.html_safe, new_user_session_path) %>
