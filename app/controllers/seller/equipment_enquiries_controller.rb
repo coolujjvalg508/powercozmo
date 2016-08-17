@@ -22,6 +22,7 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 
 	def respond_to_offer
 		@offer = find_enquiry
+				
 		if @offer.present?
 			response = @offer.responses.new(user_id: current_user.id, message: enquiry_response_params[:message])
 			if ["Accept","Reject"].include?(params[:commit])
@@ -29,23 +30,28 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 				if @offer.update(:response => enquiry_response_params[:message], :response_status => "Responded", :replied_as => response_type)
 					response.save
 					if @offer.replied_as == 'Accepted'
-	  				order_params = [:name, :email, :mobile, :country_id, :company_website, :equipment_id].inject({}) do |params, element|
-	  					params[element] = @offer[element]
-	  					params
-	  				end
-	  				order_params[:status] = "Seller Confirmed"
-	  				order_params[:price] = @offer.bidding_price
-	  				order_params[:commission] = Commission.for_price(@offer.bidding_price).first.to_f
-	  				if order_params[:commission] == 0.0
-	  					order_params[:commission] = Commission.order("max_price DESC").first.percent.to_f
-	  				end
-	  				order = Order.new(order_params)
-	  				if order.save
-	  					eq = @offer.equipment
-	  					eq.status = 'sold'
-	  					eq.save
-		  			end
-	  			end
+						order_params = [:name, :email, :mobile, :country_id, :company_website, :equipment_id].inject({}) do |params, element|
+							params[element] = @offer[element]
+							params
+						end
+						order_params[:status] = "Seller Confirmed"
+						order_params[:price] = @offer.bidding_price
+						order_params[:commission] = Commission.for_price(@offer.bidding_price).first.to_f
+						if order_params[:commission] == 0.0
+							order_params[:commission] = Commission.order("max_price DESC").first.percent.to_f
+						end
+						
+						order_params[:user_id] = @offer.user_id
+						order_params[:equipment_enquiry_id] = @offer.id
+						order_params[:no_of_packages] = 0
+						
+						order = Order.new(order_params)
+						if order.save
+							eq = @offer.equipment
+							eq.status = 'sold'
+							eq.save
+						end
+					end
 					flash[:notice] = "Offer #{response_type.downcase} successfully"
 				else
 					flash[:alert] = "Failed to process request, please try again."
