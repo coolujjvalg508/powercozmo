@@ -1,110 +1,290 @@
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <h1>Order Details </h1>
-    <ol class="breadcrumb">
-      <li><%= link_to "Home", seller_dashboard_path %></li>
-      <li class="active">Order Details</li>
-    </ol>
-  </section>
-
-  <!-- Main content -->
-  <section class="content new-msg-content">
-      <!-- /.row -->
-      <div class="row">
-        <div class="col-lg-12 msg-info-area">
+<section id="md" class="lst-midd-cnt">
+	<div class="wht-bg dtl-blc">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8">
+					
+					<% if @order.present? %>
+					
+					<h2><strong>Order No. : <%= @order.id %></strong> - <em><%= @order.equipment.name %></em></h2>
 			
-			<% if @order.present? %>
+					<div class="col-lg-4 dtl-blc-rt pull-right" style="position: absolute; width: 100%; margin-left: -15px">
 						
-			  <div class="new-msg-form-box">
-				  
-				<div class="detail-list-row">
-					<div class="detail-list-l">Order SN.</div>
-					<div class="detail-list-r"><%= @order.id %></div>
-					<div class="clearfix"></div>
-				</div>
-				<div class="detail-list-row">
-					<div class="detail-list-l">Equipment SN.</div>
-					<div class="detail-list-r"><%= @order.equipment.identifier %></div>
-					<div class="clearfix"></div>
-				</div>
-				<div class="detail-list-row">
-					<div class="detail-list-l">Equipment Name</div>
-					<div class="detail-list-r"><%= @order.equipment.name %></div>
-					<div class="clearfix"></div>
-				</div>
-				<div class="detail-list-row">
-					<div class="detail-list-l">Price</div>
-					<div class="detail-list-r"><%= raw(@order.equipment.currency) + @order.price.to_s %></div>
-					<div class="clearfix"></div>
-				</div>
-				
-				<div class="detail-list-row">
-					<div class="detail-list-l">Status</div>
-					<div class="detail-list-r">
-						<% if @order.status == 'Seller Confirmed' %>
-							Waiting for buyer confirmation
-						<% else %>
-								<%= @order.status %>
+						<div class="prdct-avlbl" style="margin-top: 0; padding: 10px; width: 100%;">
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">Order Status</div>
+								<div style="width: 60%; float: left; "><%= @order.status %></div>
+							</div>
+							<div style="clear: both; padding: 2px;"></div>
+							
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">Contact Name</div>
+								<div style="width: 60%; float: left; ">
+									<% if current_user.id == @order.equipment.user_id %>
+										<%= @order.seller.profile.first_name + ' ' + @order.seller.profile.last_name %>
+									<% else %>
+										<%= @order.user.profile.first_name + ' ' + @order.user.profile.last_name %>
+									<% end %>
+								</div>
+							</div>
+							<div style="clear: both; padding: 2px;"></div>
+							
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">Contact Company</div>
+								<div style="width: 60%; float: left; ">
+									<% if current_user.id == @order.equipment.user_id %>
+										<%= @order.seller.profile.company_name %>		
+									<% else %>
+										<%= @order.user.profile.company_name %>		
+									<% end %>
+								</div>
+							</div>
+							<div style="clear: both;"></div>
+							
+						</div>
+						
+						<h3 style="margin-bottom: 10px;"><em style="font-size: 20px;">Equipment</em></h3>
+												
+						<div class="prdct-avlbl" style="margin-top: 0; padding: 10px; width: 100%;">
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">Equipment Name</div>
+								<div style="width: 60%; float: left; "><%= @order.equipment.name %></div>
+							</div>
+							<div style="clear: both; padding: 2px;"></div>
+							
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">Equipment SN.</div>
+								<div style="width: 60%; float: left; "><%= @order.equipment.identifier %></div>
+							</div>
+							<div style="clear: both; padding: 2px;"></div>
+							
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">Equipment Condition</div>
+								<div style="width: 60%; float: left; "><%= @order.equipment.condition %></div>
+							</div>
+							<div style="clear: both; padding: 2px;"></div>
+							
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">Equipment Link On Site</div>
+								<div style="width: 60%; float: left; "><%= link_to equipment_details_url(@order.equipment.id), equipment_details_path(@order.equipment.id) %></div>
+							</div>
+							<div style="clear: both; padding: 2px;"></div>
+							
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">Description</div>
+								<div style="width: 60%; float: left; "><%= @order.equipment.description %></div>
+							</div>
+							
+							<div style="clear: both;"></div>
+							
+						</div>
+						
+						
+						<h3 style="margin-bottom: 10px;"><em style="font-size: 20px;">Price</em></h3>
+												
+						<div class="prdct-avlbl" style="margin-top: 0; padding: 10px; width: 100%;">
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">Amount Will Be Paid From Buyer</div>
+								<div style="width: 60%; float: left; "><%= raw(@order.equipment.currency) + @order.price.to_s %></div>
+							</div>
+							<div style="clear: both; padding: 2px;"></div>
+							
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">Power Cozmo Commission</div>
+								<div style="width: 60%; float: left; ">
+									<% commission = (@order.price * @order.commission) / 100 %>
+									<%= raw(@order.equipment.currency) + commission.to_s %>
+								</div>
+							</div>
+							<div style="clear: both; padding: 2px;"></div>
+							
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">Amount Will Be Paid To Seller</div>
+								<div style="width: 60%; float: left; ">
+									<% seller_amount = @order.price - commission %>
+									<%= raw(@order.equipment.currency) + seller_amount.to_s %>
+								</div>
+							</div>
+							
+							<div style="clear: both;"></div>
+							
+						</div>
+						
+						
+						<h3 style="margin-bottom: 10px;"><em style="font-size: 20px;">Shipping Details</em></h3>
+						
+						
+						<div class="prdct-avlbl" style="margin-top: 0; margin-bottom: 10px; padding: 10px; width: 100%;">
+							
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">Number Of Packages</div>
+								<div style="width: 60%; float: left; "><%= @order.no_of_packages %></div>
+							</div>
+							<div style="clear: both; padding: 2px;"></div>
+							
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">Shipping Method</div>
+								<div style="width: 60%; float: left; "><%= @order.shipping_method %></div>
+							</div>
+							<div style="clear: both; padding: 5px; margin-bottom: 5px; border-bottom: 1px solid #e5e5e5;"></div>
+							
+							<div style="width: 100%;">
+								<div style="float: left; font-weight: bold; text-decoration: underline;">Pickup Location :</div>
+							</div>
+							<div style="clear: both; padding: 2px;"></div>
+							
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">Country</div>
+								<div style="width: 60%; float: left; ">
+									<% if @order.pickup_country %>
+										<%= @order.pickup_country.name %>
+									<% end %>
+								</div>
+							</div>
+							<div style="clear: both; padding: 2px;"></div>
+							
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">City</div>
+								<div style="width: 60%; float: left; "><%= @order.pickup_city %></div>
+							</div>
+							<div style="clear: both; padding: 2px;"></div>
+							
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">Port</div>
+								<div style="width: 60%; float: left; "><%= @order.pickup_port %></div>
+							</div>
+							<div style="clear: both; padding: 5px; margin-bottom: 5px; border-bottom: 1px solid #e5e5e5;"></div>
+							
+														
+							<div style="width: 100%;">
+								<div style="float: left; font-weight: bold; text-decoration: underline;">Delivery Location :</div>
+							</div>
+							<div style="clear: both; padding: 2px;"></div>
+							
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">Country</div>
+								<div style="width: 60%; float: left; ">
+									<% if @order.delivery_country %>
+										<%= @order.delivery_country.name %>
+									<% end %>
+								</div>
+							</div>
+							<div style="clear: both; padding: 2px;"></div>
+							
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">City</div>
+								<div style="width: 60%; float: left; "><%= @order.delivery_city %></div>
+							</div>
+							<div style="clear: both; padding: 2px;"></div>
+							
+							<div style="width: 100%;">
+								<div style="width: 40%; float: left; font-weight: bold">Port</div>
+								<div style="width: 60%; float: left; "><%= @order.delivery_port %></div>
+							</div>
+							
+							<div style="clear: both;"></div>
+							
+						</div>
+						
+						<% if @order.shipping_package %>
+						
+							<div class="prdct-avlbl" style="margin-top: 0; padding: 10px; width: 100%;">
+							
+								<div style="width: 100%;">
+									<div style="float: left; font-weight: bold; text-decoration: underline;">Packages Dimensions :</div>
+								</div>
+								<div style="clear: both; padding: 2px;"></div>
+								
+								<div style="width: 100%;">
+									<div style="width: 20%; float: left; font-weight: bold;">&nbsp;</div>
+									<div style="width: 20%; float: left; font-weight: bold;">Length</div>
+									<div style="width: 20%; float: left; font-weight: bold;">Width</div>
+									<div style="width: 20%; float: left; font-weight: bold;">Height</div>
+									<div style="width: 20%; float: left; font-weight: bold;">Weight</div>
+								</div>
+								<div style="clear: both; padding: 2px;"></div>
+							
+								<% i = 0 %>
+								<% @order.shipping_package.each_with_index do |s_package,index| %>
+									<% i = i + 1 %>
+									
+									<div style="width: 100%;">
+										<div style="width: 20%; float: left;">Package <%= i %></div>
+										<div style="width: 20%; float: left;"><%= s_package.length %></div>
+										<div style="width: 20%; float: left;"><%= s_package.width %></div>
+										<div style="width: 20%; float: left;"><%= s_package.height %></div>
+										<div style="width: 20%; float: left;"><%= s_package.weight %></div>
+									</div>
+									<div style="clear: both; padding: 2px;"></div>
+							
+								<% end %>
+							</div>
+						
 						<% end %>
+						
+						<% if @enquiry %>
+						
+							<h3 style="margin-bottom: 10px;"><em style="font-size: 20px;">Responses</em></h3>
+							<% @enquiry.responses.each_with_index do |enquiry_response,index| %>
+						
+								<div class="prdct-avlbl" style="margin-top: 0; margin-bottom: 10px; padding: 10px; width: 100%;">
+									
+									<div style="width: 100%;">
+										<div style="width: 40%; float: left; font-weight: bold">From</div>
+										<div style="width: 60%; float: left; ">
+											<%= enquiry_response.user.profile.first_name + ' ' + enquiry_response.user.profile.last_name %>
+										</div>
+									</div>
+									<div style="clear: both; padding: 2px;"></div>
+									
+									<div style="width: 100%;">
+										<div style="width: 40%; float: left; font-weight: bold">Message</div>
+										<div style="width: 60%; float: left; ">
+											<%= enquiry_response.message.to_s.html_safe %>
+										</div>
+									</div>
+									<div style="clear: both; padding: 2px;"></div>
+									
+									<div style="width: 100%;">
+										<div style="width: 40%; float: left; font-weight: bold">Date</div>
+										<div style="width: 60%; float: left; ">
+											<%=format_time(enquiry_response.created_at)%>
+										</div>
+									</div>
+									<div style="clear: both;"></div>
+									
+								</div>
+						
+							<% end %>
+						<% end %>
+						
+						
+						<h3 style="margin-bottom: 10px;"><em style="font-size: 20px;">Terms</em></h3>
+						<div class="prdct-avlbl" style="margin-top: 0; padding: 10px; width: 100%;">
+							
+							<% if current_user.id == @order.equipment.user_id %>				
+								<%= @order.seller_remark %>						
+							<% else %>
+								<%= @order.buyer_remark %>
+							<% end %>
+							
+						</div>
+					
+						<div class="dtl-blc-adrs">
+							<div class="hd-graylft">
+								<i class="fa fa-phone"></i> Phone : <em>+(646) 45321069</em> <span class="email"><i class="fa fa-envelope"></i> Email : <a href="mailto:info@powercozmo.com">info@powercozmo.com </a></span>
+							</div>
+						</div>	
 					</div>
-					<div class="clearfix"></div>
+					
+					<% else %>
+						<div class="prdct-avlbl" style="margin-top: 10; padding: 10px; width: 100%;">
+							<p style="text-align:center;margin-top: 8px;font-size:16px;">No order found.</p>
+						</div>	
+					<% end %>
+					
 				</div>
-				
 			</div>
-			
-			<div class="new-msg-form-box">
-				<div class="detail-list-row">
-					<div class="detail-list-l text-bold">Buyer Details</div>
-					<div class="clearfix"></div>
-				</div>
-				
-				<div class="detail-list-row">
-					<div class="detail-list-l">Name</div>
-					<div class="detail-list-r"><%= @order.equipment.owner_name %></div>
-					<div class="clearfix"></div>
-				</div>
-				
-				<div class="detail-list-row">
-					<div class="detail-list-l">Country</div>
-					<div class="detail-list-r"><%= @order.equipment.country.name %></div>
-					<div class="clearfix"></div>
-				</div>
-				
-			</div>	
-			
-			<div class="new-msg-form-box">
-				<div class="detail-list-row">
-					<div class="detail-list-l text-bold">Seller Details</div>
-					<div class="clearfix"></div>
-				</div>
-				
-				<div class="detail-list-row">
-					<div class="detail-list-l">Name</div>
-					<div class="detail-list-r"><%= @order.name %></div>
-					<div class="clearfix"></div>
-				</div>
-				
-				<div class="detail-list-row">
-					<div class="detail-list-l">Country</div>
-					<div class="detail-list-r"><%= @order.country.name %></div>
-					<div class="clearfix"></div>
-				</div>
-				
-			</div>
-          
-           <% else %>
-				<div class="new-msg-form-box">
-					<p style="text-align:center;margin-top: 8px;font-size:16px;">No order found.</p>
-				</div>	
-          <% end %>
-          
-        </div>
-      </div>
-    <!-- /.row -->
-   
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+		</div>
+	</div>
+</section>

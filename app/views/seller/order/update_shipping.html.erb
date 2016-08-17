@@ -27,22 +27,6 @@
 					<div class="new-msg-form-box">
 					
 						<div class="detail-list-row">
-							<div class="detail-list-l">Number Of Packages</div>
-							<div class="detail-list-r">
-								
-								<%= f.text_field :no_of_packages, autocomplete: "off", class: 'form-control numericOnly', id: 'no_of_packages', placeholder: 'Enter Number Of Packages' %>
-																																
-								<% if @user %>
-									<div class="clearfix"></div>
-									<%= 'Number of packages ' + @user.errors[:no_of_packages].first if @user.errors.any? %>
-								<% end %>
-																
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						
-						
-						<div class="detail-list-row">
 							<div class="detail-list-l">Pickup Country</div>
 							<div class="detail-list-r">
 								
@@ -72,11 +56,67 @@
 							</div>
 							<div class="clearfix"></div>
 						</div>
-												
+						
+						
+						
+						<div class="detail-list-row">
+							<div class="detail-list-l text-bold">Packages Detail :</div>
+							<div class="detail-list-r"><%= link_to 'javascript:void(0);', class: "pull-right add-package", title: "Add More Packages"  do %>
+											<i class="fa fa-plus"></i><span> Add More</span>
+										<% end %>
+							</div>
+							
+							<div class="clearfix"></div>
+						</div>
+						
+						<div class="detail-list-row">
+							<div class="detail-list text-bold">
+								<span class="shipping-detail-edit">Length</span>
+								<span class="shipping-detail-edit">Width</span>
+								<span class="shipping-detail-edit">Height</span>
+								<span class="shipping-detail-edit">Weight</span>
+																														
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						
+						
+						<% i = 0 %>
+						<%= f.fields_for :shipping_package do |s| %>
+						
+							<div id="package-list">	
+							<% @order.shipping_package.each_with_index do |s_package,index| %>
+						
+						        <% i = index + 1 %>
+								<div class="detail-list-row" id="package-list-<%= index %>">
+									<div class="detail-list">	
+										<%= s.text_field :length, autocomplete: "off", class: 'form-control shipping-detail-edit', id: 'length' + index.to_s, placeholder: 'Enter Length', value: s_package.length, name: 'order[shipping_package][' + index.to_s + '][length]' %>
+										
+										<%= s.text_field :width, autocomplete: "off", class: 'form-control shipping-detail-edit', id: 'width' + index.to_s, placeholder: 'Enter Width', value: s_package.width, name: 'order[shipping_package][' + index.to_s + '][width]' %>
+										
+										<%= s.text_field :height, autocomplete: "off", class: 'form-control shipping-detail-edit', id: 'height' + index.to_s, placeholder: 'Enter Height', value: s_package.height, name: 'order[shipping_package][' + index.to_s + '][height]' %>
+										
+										<%= s.text_field :weight, autocomplete: "off", class: 'form-control shipping-detail-edit', id: 'weight' + index.to_s, placeholder: 'Enter Weight', value: s_package.weight, name: 'order[shipping_package][' + index.to_s + '][weight]' %>
+										
+										<%= link_to 'javascript:void(0);', class: "pull-right remove-package", title: "Remove Package", data_reference: 'package-list-' + index.to_s  do %>
+											<i class="fa fa-remove"></i>
+										<% end %>
+																																
+									</div>
+									<div class="clearfix"></div>
+								</div>
+							<% end %>
+							</div>
+							
+						<% end %>
+						
+						<input type="hidden" id="package-counter" value="<%= i %>">
+											
 						<div class="form-group pull-left mrg-btm-zero">
 							<%= f.submit "Update", class: "btn btn-default custom-btn pull-left" %>
 							<%=link_to "back", seller_order_path(@order), class: "btn btn-default custom-btn fnone pull-left", style: "margin-left: 20px;" %>
 						</div>
+						
 					
 					</div>
 					<% end %>
@@ -163,10 +203,23 @@
 <!-- /.content-wrapper -->
 
 <script type="text/javascript">
-    jQuery(document).ready(function(){
-        jQuery('.numericOnly').keyup(function () {
-            this.value = this.value.replace(/[^0-9]/g,'');
+    $(document).ready(function(){
+               
+        $('.add-package').click(function () {
+            var i = $('#package-counter').val();
+            var html_data = '<div class="detail-list-row" id="package-list-' + i + '"><div class="detail-list"><input autocomplete="off" class="form-control shipping-detail-edit" id="length' + i + '" placeholder="Enter Length"  name="order[shipping_package][' + i + '][length]" type="text"><input autocomplete="off" class="form-control shipping-detail-edit" id="width' + i + '" placeholder="Enter Width" name="order[shipping_package][' + i + '][width]" type="text"><input autocomplete="off" class="form-control shipping-detail-edit" id="height' + i + '" placeholder="Enter Height" name="order[shipping_package][' + i + '][height]" type="text"><input autocomplete="off" class="form-control shipping-detail-edit" id="weight' + i + '" placeholder="Enter Weight" name="order[shipping_package][' + i + '][weight]" type="text"><a class="pull-right remove-package" title="Remove Package" data_reference="package-list-' + i + '" href="javascript:void(0);"><i class="fa fa-remove"></i></a></div><div class="clearfix"></div></div>';
+            
+            $("#package-list").append(html_data);
+            
+            i++;
+            $('#package-counter').val(i);
+            
         });
-        jQuery("#GlobalSettingAdminGlobalSettingsForm").validationEngine();
+        
     });
+    
+     $(document).on('click', '.remove-package', function () {
+            var ref = $(this).attr('data_reference');
+            $("#" + ref).remove();
+      });
 </script>

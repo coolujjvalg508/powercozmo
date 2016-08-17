@@ -28,11 +28,7 @@ class ApplicationController < ActionController::Base
     if resource.is_a?(AdminUser)
       admin_root_path
     else        
-		if resource.role == 2
-			stored_location_for(resource) || buyer_dashboard_path || root_path
-		else
-			stored_location_for(resource) || seller_dashboard_path || root_path
-		end
+		stored_location_for(resource) || seller_dashboard_path || root_path
     end
   end
 

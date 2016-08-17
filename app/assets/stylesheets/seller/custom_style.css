@@ -157,3 +157,5 @@ p.response-msg { word-wrap: break-word; }
 .box.box-info.dsh-table-details .table>tbody>tr>td { border-bottom: 1px solid #f4f4f4; }
 .box.box-info.dsh-table-details .pagination { margin: 70px 0 0 -25px; }
 .long-descp { height: 290px; overflow: hidden; overflow-y: auto; }
+.shipping-detail-edit {float: left !important; width: 22% !important; margin-right: 10px !important;}
+

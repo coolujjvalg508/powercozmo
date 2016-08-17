@@ -8,22 +8,36 @@ class Seller::OrderController < Seller::BaseController
 
   def show
     
-    @order = current_user.orders.all.order('created_at desc').find_by_id(params[:id])
+    #@order = current_user.orders.all.order('created_at desc').find_by_id(params[:id])
+    #@order = Order.all.find_by_id(params[:id])
     
-    #@enquiry_data = EquipmentEnquiry.first.where('equipment_enquiries.user_id = ? AND equipment_enquiries.id = ?', @order.user_id, @order.equipment_enquiry_id)
+    @order = Order.all.joins(:equipment).where('orders.id = ? AND (equipment.user_id = ? OR orders.email = ?) ', params[:id], current_user, current_user.email).first
     
-    @enquiry = EquipmentEnquiry.find_by_id @order.equipment_enquiry_id
+    #abort(@order.to_json)
+    
+    if !@order
+		flash[:error] = "Invalid Access !"
+		redirect_to seller_orders_path
 		
-    #abort(@enquiry.responses.to_json)
+	else
+	
+		 #@enquiry_data = EquipmentEnquiry.first.where('equipment_enquiries.user_id = ? AND equipment_enquiries.id = ?', @order.user_id, @order.equipment_enquiry_id)
     
-    respond_to do |format|
-      format.html
-      format.pdf do
-        render :pdf => "power_cozmo_#{@order.equipment.name}",
-        			 :layout => 'listing_detail_pdf.html.erb',
-        			 :disposition => 'attachment'
-      end
-    end  
+		@enquiry = EquipmentEnquiry.find_by_id @order.equipment_enquiry_id
+		   
+		#abort(@enquiry.responses.to_json)
+		
+		respond_to do |format|
+		  format.html
+		  format.pdf do
+			render :pdf => "power_cozmo_#{@order.equipment.name}",
+						 :layout => 'listing_detail_pdf.html.erb',
+						 :disposition => 'attachment'
+		  end
+		end  	
+		
+    end
+    
      
   end
   
@@ -60,7 +74,8 @@ class Seller::OrderController < Seller::BaseController
 			#abort(@user.errors[:first_name].to_json)
 			#abort(@user.errors.to_json)
 
-			@order = current_user.orders.all.order('created_at desc').find_by_id(params[:id])
+			#@order = current_user.orders.all.order('created_at desc').find_by_id(params[:id])
+			@order = Order.all.joins(:equipment).where('orders.id = ? AND (equipment.user_id = ? OR orders.email = ?) ', params[:id], current_user, current_user.email).first
 			@enquiry = EquipmentEnquiry.find_by_id @order.equipment_enquiry_id
 			render 'show'
 		end
@@ -82,22 +97,27 @@ class Seller::OrderController < Seller::BaseController
 			redirect_to seller_order_path(params[:id])
 			
 	  else
-			flash[:notice] = "Invalid action !"
+			flash[:error] = "Invalid action !"
 			redirect_to seller_order_path(params[:id])
 	  end
 	  
   end
   
   def update_shipping
-    @order = current_user.orders.all.order('created_at desc').find_by_id(params[:id])
+  
+    #@order = current_user.orders.all.order('created_at desc').find_by_id(params[:id])
+    @order = Order.all.joins(:equipment).where('orders.id = ? AND (equipment.user_id = ? OR orders.email = ?) ', params[:id], current_user, current_user.email).first
     @countries = Hash[Country.active.pluck(:id, :name)]
   end
   
   def save_shipping
   
+	
 	#abort(params.to_json)
+	
 	#abort(params[:order][:seller_remark].to_json)
-	@order = current_user.orders.all.order('created_at desc').find_by_id(params[:id])
+	#@order = current_user.orders.all.order('created_at desc').find_by_id(params[:id])
+	@order = Order.all.joins(:equipment).where('orders.id = ? AND (equipment.user_id = ? OR orders.email = ?) ', params[:id], current_user, current_user.email).first
 	@countries = Hash[Country.active.pluck(:id, :name)]
   
 	if params[:commit] == 'Update'
@@ -106,13 +126,43 @@ class Seller::OrderController < Seller::BaseController
 		
 		if params[:order][:update_type] == 'seller'
 		
-			if @user.update(no_of_packages: params[:order][:no_of_packages], pickup_country_id: params[:order][:pickup_country_id], pickup_city: params[:order][:pickup_city], pickup_port: params[:order][:pickup_port])
-			
-				flash[:notice] = "Successfully updated."
-				redirect_to seller_order_path(params[:id])
+			i = 0
+			shipping_package = params[:order][:shipping_package]
+    
+			if shipping_package
+				shipping_package.each_with_index do |s_package, index| 
+					#abort(s_package[1][:width].to_json)
+					
+					length = s_package[1][:length]
+					width = s_package[1][:width]
+					height = s_package[1][:height]
+					weight = s_package[1][:weight]
+					
+					if length != '' || width != '' || height != '' || weight != ''
+						if i == 0
+							ShippingPackage.where(order_id: params[:id]).delete_all
+						end
+						ShippingPackage.create(order_id: params[:id], length: length, width: width, height: height, weight: weight)
+						i = i + 1
+					end
+				 end
+			 end
+		
+		    if i > 0
+				if @user.update(no_of_packages: i, pickup_country_id: params[:order][:pickup_country_id], pickup_city: params[:order][:pickup_city], pickup_port: params[:order][:pickup_port])
+				
+					flash[:notice] = "Successfully updated."
+					redirect_to seller_order_path(params[:id])
+				else
+					#@order = current_user.orders.all.order('created_at desc').find_by_id(params[:id])
+					@order = Order.all.joins(:equipment).where('orders.id = ? AND (equipment.user_id = ? OR orders.email = ?) ', params[:id], current_user, current_user.email).first
+					render 'update_shipping'
+				end
 			else
-				@order = current_user.orders.all.order('created_at desc').find_by_id(params[:id])
-				render 'update_shipping'
+			
+				flash[:error] = "Failed, Enter atlease one shipping detail !"
+				redirect_to seller_update_shipping_path(params[:id])
+			
 			end
 			
 		elsif params[:order][:update_type] == 'buyer'
@@ -126,13 +176,13 @@ class Seller::OrderController < Seller::BaseController
 			end
 			
 		else
-			flash[:notice] = "Invalid action !"
+			flash[:error] = "Invalid action !"
 			redirect_to seller_order_path(params[:id])		
 			
 		end
 			
 	  else
-			flash[:notice] = "Invalid action !"
+			flash[:error] = "Invalid action !"
 			redirect_to seller_order_path(params[:id])
 	  end
 	  
