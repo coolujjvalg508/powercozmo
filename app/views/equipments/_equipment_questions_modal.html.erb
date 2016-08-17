@@ -70,7 +70,7 @@
               </div>
               <div class="form-group">
                 <i class="fa fa-envelope"></i>
-                  <%=text_field_tag "enquiry[email]",'',placeholder: "Email Address*",value: current_user[:email], disabled: true,class: "form-control"%>
+                  <%=text_field_tag "enquiry[email]",'',placeholder: "Email Address*",value: current_user[:email], readonly: true,class: "form-control"%>
                   <div id="email-error" class="error-text"></div>
               </div>
               <div class="form-group">
