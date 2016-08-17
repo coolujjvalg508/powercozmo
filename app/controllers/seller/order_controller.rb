@@ -2,7 +2,7 @@ class Seller::OrderController < Seller::BaseController
 
   def index  	
   	#@orders = current_user.orders.all.order('created_at desc').page(params[:page]).per(10)
-  	@orders = Order.all.order('created_at desc').joins(:equipment).where('equipment.user_id = ? OR orders.email = ? ', current_user, current_user.email).page(params[:page]).per(10)
+  	@orders = Order.all.order('created_at desc').joins(:equipment).where('equipment.user_id = ? OR orders.user_id = ? ', current_user, current_user).page(params[:page]).per(10)
   	#abort(@orders.to_json)
   end
 
@@ -11,7 +11,7 @@ class Seller::OrderController < Seller::BaseController
     #@order = current_user.orders.all.order('created_at desc').find_by_id(params[:id])
     #@order = Order.all.find_by_id(params[:id])
     
-    @order = Order.all.joins(:equipment).where('orders.id = ? AND (equipment.user_id = ? OR orders.email = ?) ', params[:id], current_user, current_user.email).first
+    @order = Order.all.joins(:equipment).where('orders.id = ? AND (equipment.user_id = ? OR orders.user_id = ?) ', params[:id], current_user, current_user).first
     
     #abort(@order.to_json)
     
@@ -75,7 +75,7 @@ class Seller::OrderController < Seller::BaseController
 			#abort(@user.errors.to_json)
 
 			#@order = current_user.orders.all.order('created_at desc').find_by_id(params[:id])
-			@order = Order.all.joins(:equipment).where('orders.id = ? AND (equipment.user_id = ? OR orders.email = ?) ', params[:id], current_user, current_user.email).first
+			@order = Order.all.joins(:equipment).where('orders.id = ? AND (equipment.user_id = ? OR orders.user_id = ?) ', params[:id], current_user, current_user).first
 			@enquiry = EquipmentEnquiry.find_by_id @order.equipment_enquiry_id
 			render 'show'
 		end
@@ -106,7 +106,7 @@ class Seller::OrderController < Seller::BaseController
   def update_shipping
   
     #@order = current_user.orders.all.order('created_at desc').find_by_id(params[:id])
-    @order = Order.all.joins(:equipment).where('orders.id = ? AND (equipment.user_id = ? OR orders.email = ?) ', params[:id], current_user, current_user.email).first
+    @order = Order.all.joins(:equipment).where('orders.id = ? AND (equipment.user_id = ? OR orders.user_id = ?) ', params[:id], current_user, current_user).first
     @countries = Hash[Country.active.pluck(:id, :name)]
   end
   
@@ -117,7 +117,7 @@ class Seller::OrderController < Seller::BaseController
 	
 	#abort(params[:order][:seller_remark].to_json)
 	#@order = current_user.orders.all.order('created_at desc').find_by_id(params[:id])
-	@order = Order.all.joins(:equipment).where('orders.id = ? AND (equipment.user_id = ? OR orders.email = ?) ', params[:id], current_user, current_user.email).first
+	@order = Order.all.joins(:equipment).where('orders.id = ? AND (equipment.user_id = ? OR orders.user_id = ?) ', params[:id], current_user, current_user).first
 	@countries = Hash[Country.active.pluck(:id, :name)]
   
 	if params[:commit] == 'Update'
@@ -155,7 +155,7 @@ class Seller::OrderController < Seller::BaseController
 					redirect_to seller_order_path(params[:id])
 				else
 					#@order = current_user.orders.all.order('created_at desc').find_by_id(params[:id])
-					@order = Order.all.joins(:equipment).where('orders.id = ? AND (equipment.user_id = ? OR orders.email = ?) ', params[:id], current_user, current_user.email).first
+					@order = Order.all.joins(:equipment).where('orders.id = ? AND (equipment.user_id = ? OR orders.user_id = ?) ', params[:id], current_user, current_user).first
 					render 'update_shipping'
 				end
 			else
