@@ -83,7 +83,15 @@
             </div> -->
           <%# end %>
           <div class="form-group">
-            <%=link_to "back", seller_buying_requests_path, class: "btn btn-default custom-btn fnone" %>
+			  
+			<% if params[:action] == 'my_buying_request_show' %>
+				<%=link_to "back", seller_my_buying_request_list_path, class: "btn btn-default custom-btn fnone" %>
+			<% else %>
+				<%=link_to "back", seller_buying_requests_path, class: "btn btn-default custom-btn fnone" %>
+			<% end %>  
+			  
+			  
+            
           </div>
         </div>
         <div class="col-lg-5 col-xs-12 myprofile-right">

@@ -35,7 +35,9 @@
 	      <div class="dsh-top-nav">
 	        <ul>
 	          <li><a href="<%= root_path%>"><i class="fa fa-home"></i>Home</a></li>
-		  <li><a href="<%= seller_dashboard_path%>"><i class="fa fa-table"></i>Switch To Seller Dashboard</a></li>
+		  <% if current_user.role == 1 %>
+		  	<li><a href="<%= seller_dashboard_path%>"><i class="fa fa-table"></i>Switch To Seller Dashboard</a></li>
+		  <% end %>
 	        </ul>
 	      </div>
 	      <!-- Navbar Right Menu -->
@@ -152,7 +154,16 @@
 	        <li class="<%= 'active' if buyer_dashboard_path == url_for(only_path: true) %>"><a href="<%= buyer_dashboard_path %>" title="Dashboard"> <i class="fa fa-dashboard"></i> <span>Dashboard</span> </a></li>
 	        <li class="<%= 'active' if edit_user_profile_path(current_user) == url_for(only_path: true) %>"> <a href="<%= edit_user_profile_path(current_user)%>" title="My Profile"> <i class="fa fa-user"></i> <span>My Profile</span> </a></li>
 	        
-          	        
+          <li class="<%=(@controller == 'buyer/equipment_enquiries' && (@action == "offers" || @action == "show_offer")) ?  'active' : ''%>">
+          	<%= link_to buyer_offers_path do %>
+          		<div class='label-value' title="My Offers"> <i class='fa fa-tag'></i></div><span>My Offers </span>
+          	<% end %>
+          </li>
+	        <li class="<%=(@controller == 'buyer/equipment_enquiries' && (@action == "questions" || @action == "show_question")) ?  'active' : ''%>">
+	        	<%= link_to buyer_questions_path do %>
+	         		<div class="label-value" title="Questions List"> <i class="fa fa-question"></i></div> <span>Questions List</span>
+	         	<% end %>
+	         </li>
 	         <%
 	          message_detail_type = nil
 	         	if @conversation.present? && buyer_message_path(@conversation) == url_for(only_path: true)

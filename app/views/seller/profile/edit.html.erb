@@ -47,11 +47,11 @@
                   <%= profile_form.text_field :phone_number, class: 'form-control', id: 'mobnumber', placeholder: 'Enter Mobile Number' %>
                   <%= error_message(@user.profile,:phone_number) %>
                 </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                   <label for="user-type">I am*</label>
                   <%= f.select(:user_type, options_for_select((User::USERTYPE),selected: @user.user_type, :prompt => "I am"))  %>
                   <span class="err-msg"><%= error_message(@user, :user_type)%></span>
-                </div>
+                </div>-->
                 <div class="form-group">
                   <label for="select">Country*</label>
                   <%= profile_form.select(:country_id, options_for_select(Country.pluck(:name, :id), :selected => @user.profile.country_id), :prompt => "Select Country") %>

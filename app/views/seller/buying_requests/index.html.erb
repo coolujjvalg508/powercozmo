@@ -1,11 +1,18 @@
+<% if params[:action] == 'my_buying_request_list'  
+	title = 'My Buying Request List';
+else 
+	title = 'Buying Request List';
+end %>
+
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>Buying Request List </h1>
+    <h1><%= title %></h1>
     <ol class="breadcrumb">
       <li><a href="<%= seller_dashboard_path%>">Home</a></li>
-      <li class="active">Buying Request List</li>
+      <li class="active"><%= title %></li>
     </ol>
   </section>
 
@@ -43,13 +50,27 @@
                           <td align="center"><%= br.created_at.strftime('%m/%d/%Y')%></td>
                           <td align="center"><%= br.expiration_date.strftime('%m/%d/%Y')%></td>
                           <td align="center" class="table-links">
-                            <%= link_to 'More Info', seller_buying_request_path(br)%>
-                            <% if br.expiration_date >= Date.today %>
-                              <%= link_to 'Request for Info', seller_request_for_more_info_path(buying_request_id: br.id)%>
+                            
+                            
+                            <% if params[:action] == 'my_buying_request_list' %>
+								<%= link_to 'More Info', seller_my_buying_request_path(br)%>
+								<%= link_to '<i class="fa fa-trash-o"></i> Delete'.html_safe, seller_buying_request_path(br),method: :delete,data: { confirm: 'Are you sure?' } %>
+                            
+                            <% else %>
+								<%= link_to 'More Info', seller_buying_request_path(br)%>
+								
+								<% if br.user_id != current_user[:id] && br.email != current_user[:email] %>
+									<% if br.expiration_date >= Date.today %>
+									  <%= link_to 'Request for Info', seller_request_for_more_info_path(buying_request_id: br.id)%>
+									<% end %>
+									<% if br.expiration_date >= Date.today %>
+									  <%= link_to 'Submit Your Proposal', new_seller_buying_proposal_path(buying_request_id: br.id)%>
+									<% end %>
+								<% end %>
+                            
                             <% end %>
-                            <% if br.expiration_date >= Date.today %>
-                              <%= link_to 'Submit Your Proposal', new_seller_buying_proposal_path(buying_request_id: br.id)%>
-                            <% end %>
+                            
+                            
                           </td>
                         </tr>
                       <% end %>

@@ -1,11 +1,17 @@
+<% if params[:action] == 'received_proposals_show'  %>
+	<% title = 'Received Buying Proposal Details' %>
+<% else %> 
+	<% title = 'Buying Proposal Details' %>
+<% end %>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>Buying Proposal Details</h1>
+    <h1><%= title %></h1>
     <ol class="breadcrumb">
       <li><a href="<%= seller_dashboard_path%>">Home</a></li>
-      <li class="active">Buying Proposal Details</li>
+      <li class="active"><%= title %></li>
     </ol>
   </section>
 
@@ -21,8 +27,16 @@
             </div>
 
             <div class="form-group">
-              <label for="fname">Buying request name</label>
-              <%=@buying_proposal.try(:buying_request).try(:name)%>
+              
+              <% if params[:action] == 'received_proposals_show'  %>
+					<label for="fname">Proposal sender name</label>
+					<%= @buying_proposal.try(:user).try(:profile).try(:first_name) + ' ' + @buying_proposal.try(:user).try(:profile).try(:last_name) %>
+			  <% else %> 
+					<label for="fname">Buying request name</label>
+					<%=@buying_proposal.try(:buying_request).try(:name)%>
+			  <% end %>
+              
+              
             </div>
 
             <div class="form-group">
@@ -64,7 +78,13 @@
             <% end %>
           </div>
           <div class="form-group">
-            <%=link_to "back", seller_buying_proposals_path, class: "btn btn-default custom-btn fnone" %>
+			  
+				<% if params[:action] == 'received_buying_request_proposals_show'  %>
+					<%=link_to "back", seller_received_proposals_path, class: "btn btn-default custom-btn fnone" %>
+				<% else %> 
+					<%=link_to "back", seller_buying_proposals_path, class: "btn btn-default custom-btn fnone" %>
+				<% end %>
+				
           </div>
         </div>        
       </div>

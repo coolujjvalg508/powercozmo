@@ -36,7 +36,9 @@
 	        <ul>
 	          <li><a href="<%= root_path%>"><i class="fa fa-home"></i>Home</a></li>
 	          <li><a href="<%= seller_buying_requests_path%>"><i class="fa fa-credit-card-alt"></i>Buying Requests</a></li>
-		  <li><a href="<%= buyer_dashboard_path%>"><i class="fa fa-table"></i>Switch To Buyer Dashboard</a></li>
+		  <% if current_user.role == 3 %>
+		  	<li><a href="<%= buyer_dashboard_path%>"><i class="fa fa-table"></i>Switch To Buyer Dashboard</a></li>
+		  <% end %>
 	        </ul>
 	      </div>
 	      <!-- Navbar Right Menu -->
@@ -186,6 +188,7 @@
 	        <li class="<%= 'active' if new_seller_message_path == url_for(only_path: true) %>"> <a href="<%= new_seller_message_path %>" title="Write New Message"> <i class="fa fa-pencil"></i> <span>Write New Message</span> </a></li>
 	        <li class="<%= 'active' if seller_buying_requests_path == url_for(only_path: true) %>"> <a href="<%=seller_buying_requests_path%>" title="Buying Requests List"> <i class="fa fa-list-alt"></i> <span>Buying Requests List</span> </a></li>
 	        <li class="<%= 'active' if seller_buying_proposals_path == url_for(only_path: true) %>"> <a href="<%= seller_buying_proposals_path%>"  title="My Proposals"> <i class="fa fa-file-text-o"></i> <span>My Proposals</span> </a></li>
+		<li class="<%= 'active' if seller_order_path == url_for(only_path: true) %>"> <a href="<%= seller_order_path%>"  title="My Orders"> <i class="fa fa-shopping-bag"></i> <span>My Orders</span> </a></li>
 	      </ul>
 	    </section>
 	    <!-- /.sidebar -->

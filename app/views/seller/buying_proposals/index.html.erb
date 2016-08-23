@@ -1,10 +1,16 @@
+<% if params[:action] == 'received_proposals'  %>
+	<% title = 'Received Proposals' %>
+<% else %> 
+	<% title = 'My Proposals' %>
+<% end %>
+
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>My Proposals </h1>
+    <h1><%= title %></h1>
     <ol class="breadcrumb">
       <li><a href="<%= seller_dashboard_path %>">Home</a></li>
-      <li class="active">My Proposals</li>
+      <li class="active"><%= title %></li>
     </ol>
   </section>
 
@@ -22,7 +28,13 @@
                   <thead>
                     <tr>
                       <th width="17%">Buying request SNO</th>
-                      <th width="20%" class="txtlft">Buying request name</th>
+                      <th width="20%" class="txtlft">
+						  <% if params[:action] == 'received_proposals'  %>
+								Proposal sender name
+						  <% else %> 
+								Buying request name
+						  <% end %>
+					  </th>
                       <th width="7%" style="text-align:center;">Price</th>
                       <th width="7%" style="text-align:center;">Currency </th>
                       <th width="10%" style="text-align:center;">Delivery time</th>
@@ -36,7 +48,16 @@
                     <% @proposals.each do |proposal| %>
                       <tr>
                         <td><%=proposal.try(:buying_request).try(:identifier) %></th>
-                        <td class="txtlft"><%=proposal.try(:buying_request).try(:name)%></td>
+                        <td class="txtlft">
+							
+							<% if params[:action] == 'received_proposals'  %>
+								<%= proposal.try(:user).try(:profile).try(:first_name) + ' ' + proposal.try(:user).try(:profile).try(:last_name) %>
+							<% else %> 
+								<%= proposal.try(:buying_request).try(:name) %>
+							<% end %>
+							
+							
+						</td>
                         <td style="text-align:center;"><%=number_to_currency(proposal.price, unit: raw(proposal.currency.symbol)) %></td>
                         <td style="text-align:center;"><%= proposal.currency.name %></td>
                         <td style="text-align:center;"><%= proposal.delivery_time.to_s %></td>
@@ -53,7 +74,14 @@
                             <% end %>
                           <% end %>
                         </td>
-                        <td><%= link_to 'View Details', seller_buying_proposal_path(proposal)%></td>
+                        <td align="center" class="table-links">
+							<% if params[:action] == 'received_proposals'  %>
+								<%= link_to 'View Details', seller_received_proposal_path(proposal)%></td>
+							<% else %> 
+								<%= link_to 'View Details', seller_buying_proposal_path(proposal)%></td>
+							<% end %>
+							
+							
                       </tr>
                     <% end %>
                   </tbody>

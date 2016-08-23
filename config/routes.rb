@@ -38,6 +38,13 @@ Rails.application.routes.draw do
       resources :buying_proposals, only: [:index, :new, :create, :show]
       get 'request_for_more_info' => 'buying_requests#request_for_more_info', as: :request_for_more_info
       post 'send_request_for_more_info' => 'buying_requests#send_request_for_more_info', as: :send_request_for_more_info
+      
+      get 'my_buying_request_list' => 'buying_requests#my_buying_request_list', as: :my_buying_request_list
+      get 'my_buying_request/:id' => 'buying_requests#my_buying_request_show', as: :my_buying_request
+      
+      get 'received_proposals' => 'buying_proposals#received_proposals', as: :received_proposals
+      get 'received_proposal/:id' => 'buying_proposals#received_proposals_show', as: :received_proposal
+      
       get 'listings/filter' => 'equipment#filter', as: "listing_filter"
       resources :equipment
       get 'fetch_categories' => 'equipment#categories'
@@ -76,51 +83,7 @@ Rails.application.routes.draw do
       post 'save_shipping/:id' => 'order#save_shipping', as: "save_shipping"
       
     end
-    
-    
-    namespace :buyer do
-      get 'dashboard' => 'dashboard#index'
-      resources :profile, only: [:edit, :update]
-      resources :buying_requests
-      resources :buying_proposals, only: [:index, :new, :create, :show]
-      get 'request_for_more_info' => 'buying_requests#request_for_more_info', as: :request_for_more_info
-      post 'send_request_for_more_info' => 'buying_requests#send_request_for_more_info', as: :send_request_for_more_info
-      get 'listings/filter' => 'equipment#filter', as: "listing_filter"
-      resources :equipment
-      get 'fetch_categories' => 'equipment#categories'
-      resources "equipment-enquiries", only: [:index, :show, :destroy], :controller => :equipment_enquiries, :as => :equipment_enquiries do
-        collection do
-          get 'unread'
-        end
-      end
-      get 'questions' => 'equipment_enquiries#questions', as: "questions"
-      get 'question/:id' => 'equipment_enquiries#show_question', as: "question"
-      delete 'question/:id' => 'equipment_enquiries#destroy'
-      get 'offers' => 'equipment_enquiries#offers', as: "offers"
-      get 'offer/:id' => 'equipment_enquiries#show_offer', as: "offer"
-      delete 'offer/:id' => 'equipment_enquiries#destroy'
-      put 'respond_to_offer/:id' => 'equipment_enquiries#respond_to_offer', as: "respond_to_offer"
-      post 'reply_to_question/:id' => 'equipment_enquiries#reply_to_question', as: "reply_to_question"
-      resources :messages, only: [:show, :new, :create] do
-        collection do
-          get 'inbox'
-          get 'sentbox'
-          get 'autocomplete'
-          post 'remove'
-          get 'unread'
-        end
-        member do
-          post :reply
-          post :trash
-          post :untrash
-        end
-      end
-    end     
-    
-    namespace :user do
-      resources :profile, only: [:edit, :update]
-    end
-    
+        
   end
 
   namespace :admin do

@@ -13,6 +13,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     build_resource(sign_up_params)
       params[:user][:profile] = sign_up_params["profile_attributes"]
+           
     if simple_captcha_valid?
       super
     else

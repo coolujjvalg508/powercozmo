@@ -20,7 +20,7 @@ class BuyingRequestsController < ApplicationController
 		end
 		render :index
 	end
- 
+
 	def new
 		@buying_request = BuyingRequest.new
 		@buying_request.images.build
@@ -96,7 +96,7 @@ class BuyingRequestsController < ApplicationController
 
 	private
 	def buying_request_params
-		params.require(:buying_request).permit(:title, :origin, :city, :end_user, :location_id, :brand_id, :category_id, :lead_type, :condition, :expiration_date, :attachment, :image, :description, :name, :email, :mobile, :country_id, :company_name, :company_website, :address, :image_cache, :attachment_cache, :category_name, :images_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image,:image_cache])
+		params.require(:buying_request).permit(:user_id, :title, :origin, :city, :end_user, :location_id, :brand_id, :category_id, :lead_type, :condition, :expiration_date, :attachment, :image, :description, :name, :email, :mobile, :country_id, :company_name, :company_website, :address, :image_cache, :attachment_cache, :category_name, :images_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image,:image_cache])
 	end
 
 	def filter_params

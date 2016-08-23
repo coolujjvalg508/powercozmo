@@ -30,6 +30,27 @@ class Seller::BuyingProposalsController < Seller::BaseController
       flash[:error] = "Proposal not found."
       redirect_to seller_buying_proposals_path
 	end
+	
+	def received_proposals
+		@proposals = BuyingProposal.joins(:buying_request).where('(buying_requests.user_id = ? OR buying_requests.email = ?)', current_user, current_user.email).order('created_at desc').page(params[:page])
+		render :index
+	end
+	
+	def received_proposals_show
+		
+		if current_user.present?			
+			@buying_proposal = BuyingProposal.joins(:buying_request).where('(buying_requests.user_id = ? OR buying_requests.email = ?)', current_user, current_user.email).first
+						
+			if !@buying_proposal 
+				flash[:error] = "Invalid Access !"
+				redirect_to seller_received_proposals_path
+			else
+				render :show
+			end	
+		else
+			redirect_to root_url
+		end
+	end
 
 	private
 	def buying_proposal_params
