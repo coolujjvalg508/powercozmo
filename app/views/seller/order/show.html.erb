@@ -19,6 +19,11 @@
 			
 			<%= link_to "<i class='fa fa-download'></i> Download PDF".html_safe, seller_order_path(@order, format: :pdf), class: "pull-right" %>	 	
 			
+			<% if current_user.id == @order.user_id %>
+			
+				<%= link_to "<i class='fa fa-download'></i> Download Invoice".html_safe, seller_order_invoice_path(@order, format: :pdf), class: "pull-right", style: "margin-right: 25px;" %>
+			
+			<% end %>
 			
 			<div class="new-msg-form-box">
 				

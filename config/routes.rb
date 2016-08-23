@@ -81,6 +81,7 @@ Rails.application.routes.draw do
       put 'order_update/:id' => 'order#update', as: "orders_update"
       get 'update_shipping/:id' => 'order#update_shipping', as: "update_shipping"
       post 'save_shipping/:id' => 'order#save_shipping', as: "save_shipping"
+      get 'order_invoice/:id' => 'order#download_invoice', as: "order_invoice"
       
     end
         

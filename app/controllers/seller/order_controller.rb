@@ -26,6 +26,7 @@ class Seller::OrderController < Seller::BaseController
 		@enquiry = EquipmentEnquiry.find_by_id @order.equipment_enquiry_id
 		   
 		#abort(@enquiry.responses.to_json)
+		#abort(respond_to.to_json)
 		
 		respond_to do |format|
 		  format.html
@@ -35,6 +36,25 @@ class Seller::OrderController < Seller::BaseController
 						 :disposition => 'attachment'
 		  end
 		end  	
+		
+    end
+    
+  end
+  
+  
+  def download_invoice
+        
+    @order = Order.all.joins(:equipment).where('orders.id = ? AND (equipment.user_id = ? OR orders.user_id = ?) ', params[:id], current_user, current_user).first
+        
+    if !@order
+		flash[:error] = "Invalid Access !"
+		redirect_to seller_orders_path
+		
+	else
+	      		
+		render :pdf => "power_cozmo_#{@order.equipment.name}",
+						 :layout => 'listing_detail_pdf.html.erb',
+						 :disposition => 'attachment' 	
 		
     end
     
