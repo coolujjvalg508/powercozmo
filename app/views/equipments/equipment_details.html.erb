@@ -94,9 +94,11 @@
           <a href="javascript:void(0)" class="bidnow-btn"  data-toggle="modal" data-target="<%= data_target %>" data-enquiry-type="bid" data-equipment='{"id": <%=@equipment.id%>, "identifier": "<%=@equipment.identifier%>", "location": "<%=@equipment.try(:country).try(:name)%>", "price": "<%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %>", "name": "<%=@equipment.name%>"}' <%= 'disabled' if button_disabled%>>Bid now</a>
             </span><em>Description</em></h3>
           <p><%= @equipment.description %></p>
-          
-          <h3><em>Faults</em></h3>
-          <p><%= @equipment.faults %></p>
+                    
+          <% if @equipment.faults %>
+			  <h3><em>Faults</em></h3>
+			  <p><%= @equipment.faults %></p>
+		  <% end %>	  
           
           <div class="dtl-blc-adrs">
             <div class="hd-graylft"><i class="fa fa-phone"></i> Phone : <em><%= SiteSetting.last.try(:header_phone) || '+(646) 45321069' %></em> <span class="email"><i class="fa fa-envelope"></i> Email : <a href="mailto:<%= SiteSetting.last.try(:header_email) || 'info@powercozmo.com'%>"><%= SiteSetting.last.try(:header_email) || 'info@powercozmo.com'%> </a></span></div>
