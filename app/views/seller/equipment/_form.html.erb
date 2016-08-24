@@ -146,6 +146,15 @@
           <%= form_error_msg_for(@equipment,:description) %>
         </div>
       </div>
+      
+      <div class="eqp-form-box">
+        <div class="form-group mrg-btm-zero">
+          <label for="description">Faults</label>
+          <%= f.text_area :faults, class: 'form-control', placeholder: 'Faults', rows: 5 %>
+          <%= form_error_msg_for(@equipment,:faults) %>
+        </div>
+      </div>
+      
       <div class="eqp-form-box half-width-box eqp-form-details-height">
         <div class="form-group">
           <label for="availble_for">Expiration Date*</label>

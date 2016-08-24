@@ -36,7 +36,7 @@
             </div>
             <div class="detail-list-row">
             	<div class="detail-list-l">Offered Price</div>
-              <div class="detail-list-r"><%= @offer.bidding_price || @offer.equipment.price %></div>
+              <div class="detail-list-r"><%= raw(@offer.try(:equipment).try(:currency)) %><%= @offer.bidding_price || @offer.equipment.price %></div>
               <div class="clearfix"></div>
             </div>
             <div class="detail-list-row">
@@ -46,8 +46,15 @@
             </div>
             <% if (@offer.response.present? || @offer.response_status.present?) %>
               <div class="detail-list-row">
-                <div class="detail-list-l">Your Response</div>
-                <div class="detail-list-r"><b><%= "You have #{@offer.replied_as.downcase} this offer."%></b></div>
+				
+				<% if(@offer.user_id == current_user.id) %>
+					<div class="detail-list-l">Seller Response</div>
+					<div class="detail-list-r"><b><%= "Seller have #{@offer.replied_as.downcase} this offer."%></b></div>
+				<% else %>
+					<div class="detail-list-l">Your Response</div>
+					<div class="detail-list-r"><b><%= "You have #{@offer.replied_as.downcase} this offer."%></b></div>
+				<% end %>
+				
                 <div class="clearfix"></div>
               </div>
             <% end %>

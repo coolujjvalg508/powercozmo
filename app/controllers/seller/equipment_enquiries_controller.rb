@@ -5,12 +5,12 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 	# end
 
 	def questions
-		@questions = EquipmentEnquiry.joins(:equipment).where("equipment_enquiries.enquiry_type = ? AND equipment.user_id = ?", 1, current_user.id).approved.order("created_at DESC").page(params[:page])
+		@questions = EquipmentEnquiry.joins(:equipment).where("equipment_enquiries.enquiry_type = ? AND (equipment.user_id = ? OR equipment_enquiries.user_id = ?)", 1, current_user.id, current_user.id).approved.order("created_at DESC").page(params[:page])
 	end
 
 	def offers
 		#It fetches the both bids and buy requests
-		@offers = EquipmentEnquiry.joins(:equipment).where("equipment_enquiries.enquiry_type IN (?) AND equipment.user_id = ?", [2,3], current_user.id).approved.order("created_at DESC").page(params[:page])
+		@offers = EquipmentEnquiry.joins(:equipment).where("equipment_enquiries.enquiry_type IN (?) AND (equipment.user_id = ? OR equipment_enquiries.user_id = ?)", [2,3], current_user.id, current_user.id).approved.order("created_at DESC").page(params[:page])
 	end
 
 	def show_offer

@@ -1,34 +1,43 @@
 <% if enquiry.present? && enquiry.is_a?(EquipmentEnquiry) %>
+
+  <% i = 0 %>
+
   <% enquiry.responses.each_with_index do |enquiry_response,index| %>      
     <% unless enquiry_response.new_record? %>
-      <div class="row">
-        <div class="col-lg-12 msg-info-area">
-          <%= "<h3>Responses</h3>".html_safe if index==0%>          
-          <div class="new-msg-form-box">
-          
-           <div class="detail-list-row">
-              <div class="detail-list-l">From</div>
-              <div class="detail-list-r big-msg">
-				<%= enquiry_response.user.profile.first_name + ' ' + enquiry_response.user.profile.last_name %>
-              </div>
-              <div class="clearfix"></div>
+      
+      <% if enquiry_response.status == 'forwarded' || enquiry_response.user_id == current_user.id %>
+        
+		  <div class="row">
+			<div class="col-lg-12 msg-info-area">
+			  <%= "<h3>Responses</h3>".html_safe if i == 0%>          
+			  <div class="new-msg-form-box">
+			  
+			   <div class="detail-list-row">
+				  <div class="detail-list-l">From</div>
+				  <div class="detail-list-r big-msg">
+					<%= enquiry_response.user.profile.first_name + ' ' + enquiry_response.user.profile.last_name %>
+				  </div>
+				  <div class="clearfix"></div>
+				</div>
+			  
+				<div class="detail-list-row">
+				  <div class="detail-list-l">Message</div>
+				  <div class="detail-list-r big-msg">
+					<%= enquiry_response.message.to_s.html_safe %>
+				  </div>
+				  <div class="clearfix"></div>
+				</div>
+				<div class="detail-list-row">
+				  <div class="detail-list-l">Date</div>
+					<div class="detail-list-r"><%=format_time(enquiry_response.created_at)%><!-- 10/03/2016 --></div>
+					<div class="clearfix"></div>
+				</div>
+			  </div>
 			</div>
-          
-            <div class="detail-list-row">
-              <div class="detail-list-l">Message</div>
-              <div class="detail-list-r big-msg">
-                <%= enquiry_response.message.to_s.html_safe %>
-              </div>
-              <div class="clearfix"></div>
-            </div>
-            <div class="detail-list-row">
-              <div class="detail-list-l">Date</div>
-                <div class="detail-list-r"><%=format_time(enquiry_response.created_at)%><!-- 10/03/2016 --></div>
-                <div class="clearfix"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+		  </div>
+		  <% i = i + 1 %>	
+      <% end %>
+      
     <% end %>
   <% end %>
   <% if enquiry.question? %>
@@ -52,32 +61,45 @@
       </div>
     <% end %>
   <% elsif enquiry.bid? || enquiry.buy? %>
-    <% if enquiry.equipment.availble_for >= Date.today %>
-      <%= form_for enquiry.responses.new, url: seller_respond_to_offer_path(enquiry), method: :put do |f|%>
-        <div class="row">
-          <div class="col-lg-12 msg-info-area">
-            <%= "<h3>Reply Message</h3>".html_safe %>          
-            <div class="new-msg-form-box">
-              <div class="form-group">
-                <label for="fname">Reply Message * : <span></span></label>
-                <%= f.bootsy_area :message, class: 'form-control', id: "message" , placeholder: 'Enter Message', value: params[:enquiry_response].present? ? params[:enquiry_response][:message] : '', editor_options: { image: false } %>
-                 <span class="error-mess">Please enter maximum 3000 characters </span><br>
-                <span class="error-msg"><%= @error%></span>
-              </div>
-              <div class="form-group">
-                <%=link_to "back", seller_offers_path, class: "btn btn-default custom-btn fnone" %>
-                <% if enquiry.replied_as=="Requested" && enquiry.equipment.try(:availble_for).present? && enquiry.equipment.try(:availble_for) >= Date.today %>
-                  <%= f.submit 'Accept', class: "btn btn-default custom-btn sent-mail-btn fnone" %>
-                  <%= f.submit 'Reject', class: "btn btn-default custom-btn sent-mail-btn fnone reject-btn" %>
-                <% else %>
-                  <button type="submit" class="btn btn-default custom-btn sent-mail-btn fnone">Reply</button>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    <% end %>
+  
+	<% if enquiry.equipment.availble_for >= Date.today %>
+	  <%= form_for enquiry.responses.new, url: seller_respond_to_offer_path(enquiry), method: :put do |f|%>
+		<div class="row">
+		  <div class="col-lg-12 msg-info-area">
+			<%= "<h3>Reply Message</h3>".html_safe %>          
+			<div class="new-msg-form-box">
+			  <div class="form-group">
+				<label for="fname">Reply Message * : <span></span></label>
+				<%= f.bootsy_area :message, class: 'form-control', id: "message" , placeholder: 'Enter Message', value: params[:enquiry_response].present? ? params[:enquiry_response][:message] : '', editor_options: { image: false } %>
+				 <span class="error-mess">Please enter maximum 3000 characters </span><br>
+				<span class="error-msg"><%= @error%></span>
+			  </div>
+			  <div class="form-group">
+				<%=link_to "back", seller_offers_path, class: "btn btn-default custom-btn fnone" %>
+				
+				
+				<% if(enquiry.user_id == current_user.id) %>
+				
+					<button type="submit" class="btn btn-default custom-btn sent-mail-btn fnone">Reply</button>
+					
+				<% else %>
+					
+					<% if enquiry.replied_as=="Requested" && enquiry.equipment.try(:availble_for).present? && enquiry.equipment.try(:availble_for) >= Date.today %>
+						<%= f.submit 'Accept', class: "btn btn-default custom-btn sent-mail-btn fnone" %>
+						<%= f.submit 'Reject', class: "btn btn-default custom-btn sent-mail-btn fnone reject-btn" %>
+					<% else %>
+						<button type="submit" class="btn btn-default custom-btn sent-mail-btn fnone">Reply</button>
+					<% end %>
+				
+				<% end %>
+				
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  <% end %>
+	<% end %>
+		    
   <% end %>
   <script type="text/javascript">
     $("#new_enquiry_response").validate({

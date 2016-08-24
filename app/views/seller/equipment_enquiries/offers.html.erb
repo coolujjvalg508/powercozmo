@@ -22,24 +22,28 @@
                 <table class="table no-margin">
                   <thead>
                     <tr>
-                      <th width="5%">S. No</th>
-                      <th width="30%" class="txtlft">Equipment Name</th>
-                      <th width="15%">Offered by Name</th>
-                      <th width="15%" style="text-align:center;">Offered Price</th>
-                      <th width="14%" style="text-align:center;">Approved Deal</th>
-                      <th width="10%" style="text-align:center;">Country</th>
-                      <th style="text-align:center;">Action</th>
+						<th width="5%">S. No</th>
+						<th class="txtlft">Equipment SN.</th>
+						<th class="txtlft">Equipment Name</th>
+						<th>Seller</th>
+						<th>Buyer</th>
+						<th style="text-align:center;">Offered Price</th>
+						<th style="text-align:center;">Approved Deal</th>
+						<th style="text-align:center;">Action</th>                     
                     </tr>
                   </thead>
                   <tbody>
                     <% @offers.each_with_index do |offer, index| %>
                       <tr style="<%='font-weight: bold;' unless offer.is_read? %>">
                         <th><%= index+1 %></th>
+                        <td class="txtlft"><%= offer.equipment.identifier %></td>
                         <td class="txtlft"><%= offer.equipment.name %></td>
-                        <td><%= offer.name %></td>
-                        <td align="center"><%= offer.bidding_price || offer.equipment.price %></td>
+                        
+                        <td><%=offer.try(:equipment).try(:name)%>, <%=offer.try(:equipment).try(:country).try(:name)%></td>
+                        <td><%=offer.try(:name)%>, <%=offer.try(:country).try(:name)%></td>
+                        
+                        <td align="center"><%= raw(offer.try(:equipment).try(:currency)) %><%= offer.bidding_price || offer.equipment.price %></td>
                         <td align="center"><%= offer.replied_as == "Requested" ? "Requested": offer.replied_as == "Accepted" ? "Yes" : "No"%></td>
-                        <td align="center"><%= offer.try(:country).try(:name) %></td>
                         <td align="center" class="table-links">
                           <%= link_to seller_offer_path(offer) do %>
                             <i class="fa fa-file-text-o"></i><span> Detail</span>
