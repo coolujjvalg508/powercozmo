@@ -54,6 +54,9 @@ end %>
                             
                             <% if params[:action] == 'my_buying_request_list' %>
 								<%= link_to 'More Info', seller_my_buying_request_path(br)%>
+								
+								<%= link_to '<i class="fa fa-pencil-square-o"></i> Edit'.html_safe, edit_buying_request_path(br) %>
+								
 								<%= link_to '<i class="fa fa-trash-o"></i> Delete'.html_safe, seller_buying_request_path(br),method: :delete,data: { confirm: 'Are you sure?' } %>
                             
                             <% else %>

@@ -214,6 +214,16 @@ class Seller::EquipmentController < Seller::BaseController
     end
     new_params
   end
+  
+  def favorites
+	@equipments = Favorite.all.joins(:equipment).where('equipment.status != "0" AND favorites.user_id = ?', current_user.id).order('created_at desc').page(params[:page]).per(10)
+  end
+  
+  def remove_favorite
+		Favorite.delete(params[:id])
+		flash[:notice] = "Equipment successfully removed from favorite."
+		redirect_to seller_favorites_path
+  end
 
   private
 

@@ -336,7 +336,7 @@ ul.avlble-cnt li { padding: 0 17px; float: left; width: auto; font-size: 14px; c
 .dtl-blc h2 span a { color: #757575; font-size: 16px; }
 .dtl-blc h2 span a:hover { color: #028ccc; }
 .dtl-blc h2 span .fa-share-alt { border-right: 1px solid #757575; padding-right: 9px; }
-.dtl-blc h2 span .fa-print { border-right: 1px solid #757575; padding-right: 9px; }
+.dtl-blc h2 span .fa-print, .dtl-blc h2 span .fa-save { border-right: 1px solid #757575; padding-right: 9px; }
 .dtl-blc-slider { border: 1px solid #e5e5e5; padding: 9px; margin: 25px 0; }
 .dtl-blc-slider .carousel-indicators { display: none; }
 .dtl-blc h3 { font-size: 18px; color: #222222; width: 100%; display: inline-block; margin-bottom: 30px; }

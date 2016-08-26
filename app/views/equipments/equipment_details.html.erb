@@ -65,7 +65,18 @@
             <li><a href="https://www.linkedin.com/shareArticle?mini=true&url=<%= request.original_url%>&title=<%=URI.encode(@equipment.name)%>&summary=<%=truncate(@equipment.description, length: 600)%>&source=PowerCozmo.com" onclick="return !window.open(this.href, 'LinkedIn', 'width=520,height=570')"><i class="fa fa-linkedin share-icon"></i></a></li>
 
             <li><a href="javascript:window.print()"><i class="fa fa-print"></i></a></li>
+            
             <li><%= link_to "<i class='fa fa-save'></i>".html_safe, equipment_details_path(@equipment, format: :pdf) %></li>
+            
+            <li><a href="javascript:void(0);">
+					<% if @favorite_data %>
+						<i class="fa fa-heart" title="Remove from favorite"></i>
+					<% else %>
+						<i class="fa fa-heart-o" title="Add to favorite"></i>
+					<% end %>
+				</a>
+			</li>
+            
             </ul>
             </span>
           </h2>
@@ -287,4 +298,28 @@ window.fbAsyncInit = function() {
   js.src = "//connect.facebook.net/en_US/sdk.js";
   ref.parentNode.insertBefore(js, ref);
 }(document));
+
+$(document).on('click', '.fa-heart-o', function () {
+	
+	$(this).removeClass('fa-heart-o');
+	$(this).addClass('fa-heart');
+	$(this).attr('title', 'Remove from favorite');
+	$.getJSON("/add_favorite",{equipment_id: '<%= @equipment.id %>', ajax: 'true'}, function(response){
+		alert(response.message);
+	})
+	
+});
+
+$(document).on('click', '.fa-heart', function () {
+	
+	$(this).removeClass('fa-heart');
+	$(this).addClass('fa-heart-o');
+	$(this).attr('title', 'Add to favorite');
+	
+	$.getJSON("/remove_favorite",{equipment_id: '<%= @equipment.id %>', ajax: 'true'}, function(response){
+		alert(response.message);
+	})
+	
+});
+
 </script>

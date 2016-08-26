@@ -8,6 +8,9 @@ class EquipmentsController < ApplicationController
 		@top_bar_ad = Advertisement.where(:active => 1).find_by_page_reference('listing details top horizontal').try(:image).try(:image).try(:ad_horizontal).try(:url)
 		@side_panel_ad = Advertisement.where(:active => 1).find_by_page_reference('listing details right panel').try(:image).try(:image).try(:ad_square).try(:url)
 		@equipment = Equipment.not_inactive.includes(:country, :manufacturer, :category, :user).find_by_id(params[:id])
+		
+		@favorite_data = Favorite.where('favorites.user_id = ? AND favorites.equipment_id = ?', current_user.id, @equipment.id).first
+		
 		if @equipment
 			['sub_sub_category_id', 'sub_category_id', 'category_id'].each do |attribute|
 				value = @equipment.send(attribute)
@@ -55,6 +58,26 @@ class EquipmentsController < ApplicationController
 			@equipments = @search_result.not_inactive.order('created_at desc').page(params[:page])
 		end
 		render :index
+	end
+	
+	def add_favorite
+	
+		favorite_data = Favorite.where('favorites.user_id = ? AND favorites.equipment_id = ?', params[:user_id], params[:equipment_id]).first
+	
+		if favorite_data
+			render json: {message: 'Already in favorite !', status: '201'}
+		else
+			Favorite.create(user_id: current_user.id, equipment_id: params[:equipment_id])
+			
+			render json: {message: 'Equipment successfully added in favorite.', status: '200'}
+			
+		end
+	
+	end
+	
+	def remove_favorite
+		Favorite.where(user_id: current_user.id, equipment_id: params[:equipment_id]).delete_all
+		render json: {message: 'Equipment successfully removed from favorite.', status: '200'}
 	end
 
 	private

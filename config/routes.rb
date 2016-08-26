@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   get 'equipment_details/:id' => 'equipments#equipment_details', as: "equipment_details"
   get 'listings' => 'equipments#index'
   get 'listings/filter' => 'equipments#filter', as: "listing_filter"
+  get 'add_favorite' => 'equipments#add_favorite'
+  get 'remove_favorite' => 'equipments#remove_favorite'
 
   authenticate :user do
     namespace :seller do
@@ -82,6 +84,8 @@ Rails.application.routes.draw do
       get 'update_shipping/:id' => 'order#update_shipping', as: "update_shipping"
       post 'save_shipping/:id' => 'order#save_shipping', as: "save_shipping"
       get 'order_invoice/:id' => 'order#download_invoice', as: "order_invoice"
+      get 'favorites' => 'equipment#favorites', as: "favorites"
+      delete 'remove_favorite/:id' => 'equipment#remove_favorite', as: "remove_favorite"
       
     end
         
