@@ -7,6 +7,7 @@ class Seller::ProfileController < Seller::BaseController
   end
 
   def update
+        
   	params[:user] ||= {'submit'=> true}
   	if params[:user] == {'submit'=> true}
 	  	flash[:error] = "Image can't be blank."
@@ -27,6 +28,16 @@ class Seller::ProfileController < Seller::BaseController
 	     end
 	      render 'edit'
 	    end
+	
+	elsif (params[:is_digital_signature].present? && params[:is_digital_signature] == '1') 
+	
+		@user = Profile.find_by(id: params[:user][:profile_attributes][:id])
+		@user.update(digital_signature: params[:profile][:digital_signature])
+		
+		flash[:notice] = "Digital signature successfully updated."
+	    redirect_to edit_seller_profile_path(current_user)
+	
+	    
   	else
 	  	if @user.update_attributes(user_params)
 	  		if params[:commit] == "Done"
@@ -49,6 +60,6 @@ class Seller::ProfileController < Seller::BaseController
 
   private
 	def user_params
-	 params.require(:user).permit(:email, :password, :password_confirmation,:current_password, :user_type, :profile_attributes => [ :first_name, :last_name, :company_name, :website, :phone_number, :country_id ], :image_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image])
+	 params.require(:user).permit(:email, :password, :password_confirmation,:current_password, :user_type, :profile_attributes => [ :first_name, :last_name, :company_name, :website, :phone_number, :country_id, :digital_signature ], :image_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image])
 	end
 end

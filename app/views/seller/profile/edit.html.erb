@@ -1,3 +1,5 @@
+  <%= stylesheet_link_tag    'signature-pad', media: 'all'%>
+  
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -17,6 +19,9 @@
           <div class="mp-form-box">
             <%= form_for(@user, url: seller_profile_path(@user), html: { method: :put , :id => "edit_profile_form"}) do |f| %>
               <%= f.fields_for :profile do |profile_form| %>
+              
+              <%= hidden_field_tag "user[profile_attributes][digital_signature]", current_user.profile.digital_signature %>
+              
                 <div class="form-group">
                   <label for="fname">First Name*</label>
                   <%= profile_form.text_field :first_name, class: 'form-control', id: 'fname', placeholder: 'Enter First Name' %>
@@ -108,6 +113,58 @@
               </div>
             <% end %>
           </div>
+          
+          
+          
+          <div class="mp-form-box paddingB50">
+			  
+			<label for="description">Digital Signature*</label>
+			
+			<% if current_user.profile.digital_signature %>  
+				<div><img src="<%= current_user.profile.digital_signature %>" /></div> 
+			<% end %>
+			
+            <%= form_for(@user, url: seller_profile_path(@user), html: { method: :put , :id => "digital_signature_form"}) do |f| %>
+              <%= f.fields_for :profile do |profile_form| %>
+              
+				<%= hidden_field_tag "profile[digital_signature]" %>
+				<%= hidden_field_tag "is_digital_signature", '1'  %>
+				  <div class="form-group">
+					
+						<div id="signature-pad" class="m-signature-pad col-md-12">
+							
+							<div class="m-signature-pad--body">
+								<canvas></canvas>
+							</div>
+							
+							<div class="col-md-12"><label class="error" id="signature_err"></label></div>
+							
+							
+							<div class="form-group mrg-btm-zero m-signature-pad--footer col-md-12">
+																
+								<div class="col-md-4">
+									<button type="button" class="btn btn-default custom-btn button clear pull-left" data-action="clear">Clear</button>
+								</div>
+								
+								<div class="description col-md-4">Sign above</div>
+								
+								<div class="col-md-4">
+									<button type="button" class="btn btn-default custom-btn button save pull-right" data-action="save">Save</button>
+								</div>
+								
+							</div>
+							
+						</div>
+						
+					
+				  </div>
+				  
+				  
+				<% end %>
+            <% end %>
+          </div>
+          
+          
         </div>
       </div>
       <!-- /.row -->
@@ -285,3 +342,6 @@
     margin-left: 265px;
   }
 </style>
+
+<%= javascript_include_tag 'signature_pad' %>
+<%= javascript_include_tag 'signature_app' %>

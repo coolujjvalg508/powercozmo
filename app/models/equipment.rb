@@ -6,7 +6,7 @@ class Equipment < ActiveRecord::Base
   #below fetching active and in progress equipmnts as per current enum
   scope :available_for_purchase, -> { where(status: [1, 4]) }
 	########### Default per page  value for pagination ####
-	paginates_per 7
+	paginates_per 12
 	############# Associations ########################
 	belongs_to :country
 	belongs_to :manufacturer

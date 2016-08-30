@@ -416,6 +416,14 @@
 					</div>	
 				</div>	
 				<% end %>
+				
+				<% if current_user.profile.digital_signature %>
+					<div class="detail-list-row pull-right text-center">
+						<img style="width: 200px;" src="<%= current_user.profile.digital_signature %>" />
+						<br />
+						<%= current_user.profile.first_name + ' ' + current_user.profile.last_name %>
+					</div>
+				<% end %>
 			  		
            <% else %>
 				<div class="new-msg-form-box">

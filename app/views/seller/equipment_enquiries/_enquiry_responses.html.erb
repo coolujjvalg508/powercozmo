@@ -102,21 +102,46 @@
 		    
   <% end %>
   <script type="text/javascript">
-    $("#new_enquiry_response").validate({
-      debug: true,
+	
+$(document).ready(function(){  
+	$.validator.addMethod("regexEmail", function(value, element, regexpr) {
+   
+		if(regexpr.test(value)){
+			return false;
+		}else{
+			return true;
+		}
+	}, "Please remove email from message");
+  
+	$.validator.addMethod("regexPhone", function(value, element, regexpr) {
+
+		if(regexpr.test(value)){	
+			return false;
+		}else{
+			return true;
+		}
+	}, "Please remove phone number from message");
+	  
+	
+	var validator = $("#new_enquiry_response").validate({
+      //debug: true,
       errorElement: 'div',
       errorClass: 'error-msg',
       ignore: "",
       rules: {    
         'enquiry_response[message]': {
           required: true,
-          maxlength: 3000
+          maxlength: 3000,
+          regexPhone: /[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
+          regexEmail: /(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/
         }
       },
       messages:{    
         'enquiry_response[message]': {
           required: "Message can't be blank",
-          maxlength: "Please enter maximum 3000 characters"
+          maxlength: "Please enter maximum 3000 characters",
+          regexEmail: "Please remove email from message",
+          regexPhone: "Please remove phone number from message"
         }
       }, 
       errorPlacement: function(error, element) {
@@ -128,6 +153,7 @@
           form.submit(); 
         return false; // prevent normal form posting
       }
-    })
+    });
+ });   
   </script>
 <% end %>

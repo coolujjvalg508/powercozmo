@@ -258,17 +258,30 @@
 							<% end %>
 						<% end %>
 						
-						
-						<h3 style="margin-bottom: 10px;"><em style="font-size: 20px;">Terms</em></h3>
-						<div class="prdct-avlbl" style="margin-top: 0; padding: 10px; width: 100%;">
-							
-							<% if current_user.id == @order.equipment.user_id %>				
-								<%= @order.seller_remark %>						
-							<% else %>
-								<%= @order.buyer_remark %>
+						<% if current_user.id == @order.equipment.user_id %>
+							<% if @order.seller_remark %>
+								<h3 style="margin-bottom: 10px;"><em style="font-size: 20px;">Terms</em></h3>
+								<div class="prdct-avlbl" style="margin-top: 0; padding: 10px; width: 100%;">
+									<%= @order.seller_remark %>
+								</div>
 							<% end %>
-							
-						</div>
+						<% else %>
+							<% if @order.buyer_remark %>
+								<h3 style="margin-bottom: 10px;"><em style="font-size: 20px;">Terms</em></h3>
+								<div class="prdct-avlbl" style="margin-top: 0; padding: 10px; width: 100%;">
+									<%= @order.buyer_remark %>
+								</div>
+							<% end %>
+						<% end %>
+						
+						<% if current_user.profile.digital_signature %>
+							<div style="text-align: center; float: right;">
+								<img style="width: 200px;" src="<%= current_user.profile.digital_signature %>" />
+								<br />
+								<%= current_user.profile.first_name + ' ' + current_user.profile.last_name %>
+							</div>
+						<% end %>
+						
 					
 						<div class="dtl-blc-adrs">
 							<div class="hd-graylft">
@@ -276,6 +289,7 @@
 							</div>
 						</div>	
 					</div>
+					
 					
 					<% else %>
 						<div class="prdct-avlbl" style="margin-top: 10; padding: 10px; width: 100%;">
