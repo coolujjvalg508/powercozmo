@@ -54,7 +54,26 @@ class Equipment < ActiveRecord::Base
   after_initialize :next_identifier, unless: :persisted?
   around_save :check_moderation_status
   after_create :send_equipment_mail_to_seller
-
+  
+  ######## Solr search Start ########
+    
+	searchable do
+		text :name, :identifier, :description
+		integer :id
+		integer :manufacture_year
+		integer :manufacturer_id
+		integer :country_id
+		integer :category_id
+		integer :sub_category_id
+		integer :sub_sub_category_id
+		
+		integer :status
+		time :created_at
+		
+	end
+  
+  ######## Solr search End ##########
+  
   def check_moderation_status
     moderation_required = self.require_moderation
     changed_status = self.status

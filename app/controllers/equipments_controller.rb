@@ -1,7 +1,16 @@
 class EquipmentsController < ApplicationController
 	before_action :find_associated_data, only: [:index, :filter]
 	def index
-		@equipments = Equipment.not_inactive.order('created_at desc').page params[:page]
+		#@equipments = Equipment.not_inactive.order('created_at desc').page params[:page]
+		
+		search = Equipment.solr_search do
+			without :status, 0
+			paginate :page => params[:page], :per_page => 12
+			order_by :created_at, :desc
+		end
+		
+		@equipments = search.results
+		
 	end
 
 	def equipment_details

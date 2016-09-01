@@ -83,3 +83,6 @@ gem 'aes', '~> 0.5.0'
 #active admin datetime picker
 #see equipment model available_for in activeadmin for use
 gem "just-datetime-picker"
+
+gem 'sunspot_rails'
+gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in development

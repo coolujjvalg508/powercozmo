@@ -27,3 +27,8 @@ log/*
 # /Gemfile.lock
 
 /public/uploads/*
+
+# Ignore solr data files
+/solr/default/data
+/solr/development/data
+/solr/test/data
