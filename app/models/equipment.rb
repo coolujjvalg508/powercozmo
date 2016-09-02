@@ -55,10 +55,14 @@ class Equipment < ActiveRecord::Base
   around_save :check_moderation_status
   after_create :send_equipment_mail_to_seller
   
+  
   ######## Solr search Start ########
     
 	searchable do
-		text :name, :identifier, :description
+			 
+		text :name
+		text :identifier
+		text :description
 		integer :id
 		integer :manufacture_year
 		integer :manufacturer_id
@@ -70,10 +74,17 @@ class Equipment < ActiveRecord::Base
 		integer :status
 		time :created_at
 		
+		join(:name, :prefix => "country", :target => Country, :type => :text, :join => { :from => :id, :to => :country_id })
+		join(:name, :prefix => "manufacturer", :target => Manufacturer, :type => :text, :join => { :from => :id, :to => :manufacturer_id })
+		
+		join(:name, :prefix => "category", :target => Category, :type => :text, :join => { :from => :id, :to => :category_id })
+		join(:name, :prefix => "sub_category", :target => Category, :type => :text, :join => { :from => :id, :to => :sub_category_id })
+		join(:name, :prefix => "sub_sub_category", :target => Category, :type => :text, :join => { :from => :id, :to => :sub_sub_category_id })
+		
 	end
   
   ######## Solr search End ##########
-  
+
   def check_moderation_status
     moderation_required = self.require_moderation
     changed_status = self.status
@@ -117,7 +128,7 @@ class Equipment < ActiveRecord::Base
   def send_post_expired_email_to_seller
     EquipmentMailer.delay.send_post_expired_email_to_seller(self) if active? && expired?
   end
-
+  
   private
 
   def update_manufacture_year

@@ -2,15 +2,19 @@ class EquipmentsController < ApplicationController
 	before_action :find_associated_data, only: [:index, :filter]
 	def index
 		#@equipments = Equipment.not_inactive.order('created_at desc').page params[:page]
-		
 		search = Equipment.solr_search do
-			without :status, 0
-			paginate :page => params[:page], :per_page => 12
-			order_by :created_at, :desc
+		
+			 #without :status, 0
+			 			 
+			 paginate :page => params[:page], :per_page => 12
+			 order_by :created_at, :desc
 		end
 		
-		@equipments = search.results
 		
+		
+		@equipments = search.results
+						
+		#abort(@equipments.to_json)
 	end
 
 	def equipment_details
@@ -46,26 +50,47 @@ class EquipmentsController < ApplicationController
 	end
 
 	def filter
-		if params[:q].present?
-			@search = Equipment.not_inactive.search(params[:q])
-			@search.sorts = 'created_at desc' if @search.sorts.empty?
-			@search_result = @search.result
-		else
-			@search_result = "Equipment".constantize
-		end
-		condition = []
-		if params[:filter]
-			attributes = filter_params
-			attributes.delete_if {|k,v| v.blank?}
-			attributes.each do |attribute, value|
-				condition << "#{attribute.to_s} = ?"
+	
+	#abort(filter_params.to_json)
+	
+		search = Equipment.solr_search do
+			
+			#without(:status, 0)
+			
+			if params[:filter]
+				attributes = filter_params
+				attributes.delete_if {|k,v| v.blank?}
+				attributes.each do |attribute, value|
+					with attribute.to_s, value
+				end
 			end
+			
+			if params[:q]
+				attributes_q = params[:q]
+				attributes_q.delete_if {|k,v| v.blank?}
+				attributes_q.each do |attribute_q, value_q|
+					any do
+						fulltext value_q, :fields => :name
+						fulltext value_q, :fields => :identifier
+						fulltext value_q, :fields => :country_name
+						fulltext value_q, :fields => :description
+						fulltext value_q, :fields => :manufacturer_name
+						fulltext value_q, :fields => :category_name
+						fulltext value_q, :fields => :sub_category_name
+						fulltext value_q, :fields => :sub_sub_category_name
+					end
+				end
+			end
+				
+			paginate :page => params[:page], :per_page => 12
+			order_by :created_at, :desc
 		end
-		if condition.length > 0
-			@equipments = @search_result.not_inactive.where([condition.join(' AND '), *attributes.values]).order('created_at desc').page params[:page]
-		else
-			@equipments = @search_result.not_inactive.order('created_at desc').page(params[:page])
-		end
+			
+		
+		@equipments = search.results
+		
+		#abort(@equipments.to_json)
+		
 		render :index
 	end
 	
