@@ -4,7 +4,7 @@ class EquipmentsController < ApplicationController
 		#@equipments = Equipment.not_inactive.order('created_at desc').page params[:page]
 		search = Equipment.solr_search do
 		
-			 without :status, 0
+			 #without :status, 0
 			 			 
 			 paginate :page => params[:page], :per_page => 12
 			 order_by :created_at, :desc
@@ -55,7 +55,7 @@ class EquipmentsController < ApplicationController
 	
 		search = Equipment.solr_search do
 			
-			without(:status, 0)
+			#without(:status, 0)
 			
 			if params[:filter]
 				attributes = filter_params
