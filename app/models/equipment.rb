@@ -57,21 +57,18 @@ class Equipment < ActiveRecord::Base
   
   
   ######## Solr search Start ########
-    
+        
 	searchable do
-			 
-		text :name
-		text :identifier
-		text :description
+		 
+		text :name, :identifier, :description
 		integer :id
+		integer :status
 		integer :manufacture_year
 		integer :manufacturer_id
 		integer :country_id
 		integer :category_id
 		integer :sub_category_id
 		integer :sub_sub_category_id
-		
-		integer :status
 		time :created_at
 		
 		join(:name, :prefix => "country", :target => Country, :type => :text, :join => { :from => :id, :to => :country_id })

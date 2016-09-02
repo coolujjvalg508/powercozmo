@@ -2,15 +2,13 @@ class EquipmentsController < ApplicationController
 	before_action :find_associated_data, only: [:index, :filter]
 	def index
 		#@equipments = Equipment.not_inactive.order('created_at desc').page params[:page]
-		search = Equipment.solr_search do
+		search = Equipment.solr_search do 
 		
 			 #without :status, 0
 			 			 
 			 paginate :page => params[:page], :per_page => 12
 			 order_by :created_at, :desc
 		end
-		
-		
 		
 		@equipments = search.results
 						
@@ -69,6 +67,7 @@ class EquipmentsController < ApplicationController
 				attributes_q = params[:q]
 				attributes_q.delete_if {|k,v| v.blank?}
 				attributes_q.each do |attribute_q, value_q|
+								
 					any do
 						fulltext value_q, :fields => :name
 						fulltext value_q, :fields => :identifier

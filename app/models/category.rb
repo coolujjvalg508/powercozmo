@@ -12,6 +12,16 @@ class Category < ActiveRecord::Base
 	validate :category_level
 
 	scope :active, -> { where(status: 1) }
+	
+	######## Solr search Start ########
+  
+	searchable do
+		text :name
+		integer :id
+		integer :status
+	end
+  
+    ######## Solr search End ##########
 
 	def category_level
 		parent = Category.find_by_id(parent_id)
