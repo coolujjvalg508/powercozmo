@@ -18,8 +18,8 @@
 		<% @equipment_result.each_with_index do |equipment,index| %>
 		
 			<tr>
-				<td style="padding: 5px 5px 15px 5px;"><%= link_to equipment.identifier, equipment_details_url(equipment) %></td>	
-				<td style="padding: 5px 5px 15px 5px;"><%= link_to equipment.name, equipment_details_url(equipment) %></td>	
+				<td style="padding: 5px 5px 15px 5px;"><%= link_to equipment.identifier, equipment_details_url(equipment), style: 'color:#666666;' %></td>	
+				<td style="padding: 5px 5px 15px 5px;"><%= link_to equipment.name, equipment_details_url(equipment), style: 'color:#666666;' %></td>	
 				<td style="padding: 5px 5px 15px 5px;"><%=truncate(equipment.description, :length => 50) %></td>	
 				<td style="padding: 5px 5px 15px 5px; text-align:center;">
 					<% if equipment.images.present? %>
