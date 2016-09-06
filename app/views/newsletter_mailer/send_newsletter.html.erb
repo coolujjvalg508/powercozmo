@@ -2,10 +2,10 @@
 
 <p>From your recent serch you may interest in below equipments:<p>
 
-<table cellspacing="0" cellpadding="0" style="width: 100%; border: 1px solid #e3e6e8;">
+<table cellspacing="0" cellpadding="0" style="width: 100%; border: 1px solid #e3e6e8; font-size:14px; color: #666666;">
 	
 	<thead>
-		<tr style="border-bottom: 1px solid #e3e6e8;">
+		<tr>
 			<th style="padding: 5px 5px 15px 5px; text-align:left;">Identifier</th>	
 			<th style="padding: 5px 5px 15px 5px; text-align:left;">Name</th>	
 			<th style="padding: 5px 5px 15px 5px; text-align:left;">Description</th>	
@@ -17,7 +17,7 @@
 		
 		<% @equipment_result.each_with_index do |equipment,index| %>
 		
-			<tr style="border-bottom: 1px solid #e3e6e8;">
+			<tr>
 				<td style="padding: 5px 5px 15px 5px;"><%= link_to equipment.identifier, equipment_details_url(equipment) %></td>	
 				<td style="padding: 5px 5px 15px 5px;"><%= link_to equipment.name, equipment_details_url(equipment) %></td>	
 				<td style="padding: 5px 5px 15px 5px;"><%=truncate(equipment.description, :length => 50) %></td>	
