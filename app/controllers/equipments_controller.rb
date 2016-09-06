@@ -20,9 +20,10 @@ class EquipmentsController < ApplicationController
 		@side_panel_ad = Advertisement.where(:active => 1).find_by_page_reference('listing details right panel').try(:image).try(:image).try(:ad_square).try(:url)
 		@equipment = Equipment.not_inactive.includes(:country, :manufacturer, :category, :user).find_by_id(params[:id])
 		
-		@favorite_data = Favorite.where('favorites.user_id = ? AND favorites.equipment_id = ?', current_user.id, @equipment.id).first
-		
 		if @equipment
+		
+			@favorite_data = Favorite.where('favorites.user_id = ? AND favorites.equipment_id = ?', current_user.id, @equipment.id).first
+		
 			['sub_sub_category_id', 'sub_category_id', 'category_id'].each do |attribute|
 				value = @equipment.send(attribute)
 				if value.present?
