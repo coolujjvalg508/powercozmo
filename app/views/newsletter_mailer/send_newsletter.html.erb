@@ -2,14 +2,14 @@
 
 <p>From your recent serch you may interest in below equipments:<p>
 
-<table cellspacing="0" cellpadding="0" style="width: 100%;">
+<table cellspacing="0" cellpadding="0" style="width: 100%; border: 1px solid #e3e6e8;">
 	
 	<thead>
-		<tr>
-			<th style="padding: 5px; text-align:left;">Identifier</th>	
-			<th style="padding: 5px; text-align:left;">Name</th>	
-			<th style="padding: 5px; text-align:left;">Description</th>	
-			<th>Image</th>	
+		<tr style="border-bottom: 1px solid #e3e6e8;">
+			<th style="padding: 5px 5px 15px 5px; text-align:left;">Identifier</th>	
+			<th style="padding: 5px 5px 15px 5px; text-align:left;">Name</th>	
+			<th style="padding: 5px 5px 15px 5px; text-align:left;">Description</th>	
+			<th style="padding: 5px 5px 15px 5px; text-align:center;">Image</th>	
 		</tr>
 	</thead>
 	
@@ -17,11 +17,11 @@
 		
 		<% @equipment_result.each_with_index do |equipment,index| %>
 		
-			<tr>
-				<td style="padding: 5px;"><%= link_to equipment.identifier, equipment_details_url(equipment) %></td>	
-				<td style="padding: 5px;"><%= link_to equipment.name, equipment_details_url(equipment) %></td>	
-				<td style="padding: 5px;"><%=truncate(equipment.description, :length => 50) %></td>	
-				<td style="padding: 5px; text-align:center;">
+			<tr style="border-bottom: 1px solid #e3e6e8;">
+				<td style="padding: 5px 5px 15px 5px;"><%= link_to equipment.identifier, equipment_details_url(equipment) %></td>	
+				<td style="padding: 5px 5px 15px 5px;"><%= link_to equipment.name, equipment_details_url(equipment) %></td>	
+				<td style="padding: 5px 5px 15px 5px;"><%=truncate(equipment.description, :length => 50) %></td>	
+				<td style="padding: 5px 5px 15px 5px; text-align:center;">
 					<% if equipment.images.present? %>
 					  <%= image_tag(equipment.images.first.try(:image), width: '50', height: '50', alt: equipment.name) %>
 					<% end %>
