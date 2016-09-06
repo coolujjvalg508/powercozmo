@@ -68,14 +68,16 @@
             
             <li><%= link_to "<i class='fa fa-save'></i>".html_safe, equipment_details_path(@equipment, format: :pdf) %></li>
             
-            <li><a href="javascript:void(0);">
-					<% if @favorite_data %>
-						<i class="fa fa-heart" title="Remove from favorite"></i>
-					<% else %>
-						<i class="fa fa-heart-o" title="Add to favorite"></i>
-					<% end %>
-				</a>
-			</li>
+            <% if current_user %>
+				<li><a href="javascript:void(0);">
+						<% if @favorite_data %>
+							<i class="fa fa-heart" title="Remove from favorite"></i>
+						<% else %>
+							<i class="fa fa-heart-o" title="Add to favorite"></i>
+						<% end %>
+					</a>
+				</li>
+			<% end %>
             
             </ul>
             </span>
