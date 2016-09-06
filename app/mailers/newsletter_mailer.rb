@@ -7,7 +7,8 @@ class NewsletterMailer < ApplicationMailer
 		
 		@user_data = user_data
 		@equipment_result = equipment_result
-		mail(to: 'user_data.email', subject: 'Powercozmo: Equipment you may interested')
+				
+		mail(to: @user_data.email, subject: 'Powercozmo: Equipment you may interested')
 	
 	end
 	

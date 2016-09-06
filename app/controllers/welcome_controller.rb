@@ -167,7 +167,7 @@ class WelcomeController < ApplicationController
 					user_data = User.find_by_id(user_id)
         
 					a = NewsletterMailer.send_newsletter(user_data, equipment_result).deliver_now
-					abort(a.to_json)
+					#abort(a.to_json)
 				
 					SentNewsletter.create(user_id: user_id)
 										
