@@ -78,7 +78,7 @@ class WelcomeController < ApplicationController
 	
 	def send_newsletter
 	
-	abort('here')
+	
 		search_history = SearchHistory.where('search_histories.search != ""')
 		
 		if search_history
@@ -159,7 +159,7 @@ class WelcomeController < ApplicationController
 				#abort(search_arr.to_json)
 				
 				equipment_result = Equipment.available_for_purchase.joins(:country, :manufacturer, :category, :user).where('equipment.user_id != ? AND equipment.created_at > ? AND ' + search_query, user_id, last_search_time)
-				#abort(equipment_result.to_json)
+				abort(equipment_result.to_json)
 				if !equipment_result.empty?
 				
 					# Tell the NewsletterMailer to send a email
