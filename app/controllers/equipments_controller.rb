@@ -11,7 +11,7 @@ class EquipmentsController < ApplicationController
 		end
 		
 		@equipments = search.results
-						
+		
 		#abort(@equipments.to_json)
 	end
 
@@ -51,6 +51,8 @@ class EquipmentsController < ApplicationController
 	
 	#abort(filter_params.to_json)
 	
+		search_qry = {}
+	
 		search = Equipment.solr_search do
 			
 			#without(:status, 0)
@@ -60,6 +62,8 @@ class EquipmentsController < ApplicationController
 				attributes.delete_if {|k,v| v.blank?}
 				attributes.each do |attribute, value|
 					with attribute.to_s, value
+					
+					search_qry[attribute] = value
 				end
 			end
 			
@@ -78,6 +82,9 @@ class EquipmentsController < ApplicationController
 						fulltext value_q, :fields => :sub_category_name
 						fulltext value_q, :fields => :sub_sub_category_name
 					end
+					
+					search_qry['search'] = value_q
+					
 				end
 			end
 				
@@ -88,6 +95,21 @@ class EquipmentsController < ApplicationController
 		
 		@equipments = search.results
 		
+		if current_user
+			if !search_qry.empty?
+				
+				history_data = SearchHistory.where('search_histories.user_id = ? AND search_histories.search = ?', current_user.id, search_qry.to_json).first	
+				
+				if !history_data		
+				
+					SearchHistory.create(user_id: current_user.id, search: search_qry.to_json)
+				
+				end
+				
+			end
+		end
+		
+		#abort(search_qry.to_json)
 		#abort(@equipments.to_json)
 		
 		render :index
@@ -95,7 +117,7 @@ class EquipmentsController < ApplicationController
 	
 	def add_favorite
 	
-		favorite_data = Favorite.where('favorites.user_id = ? AND favorites.equipment_id = ?', params[:user_id], params[:equipment_id]).first
+		favorite_data = Favorite.where('favorites.user_id = ? AND favorites.equipment_id = ?', current_user.id, params[:equipment_id]).first
 	
 		if favorite_data
 			render json: {message: 'Already in favorite !', status: '201'}
