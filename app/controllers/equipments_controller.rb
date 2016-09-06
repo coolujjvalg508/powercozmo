@@ -22,6 +22,8 @@ class EquipmentsController < ApplicationController
 		
 		if @equipment
 		
+			abort(current_user.id)
+		
 			@favorite_data = Favorite.where('favorites.user_id = ? AND favorites.equipment_id = ?', current_user.id, @equipment.id).first
 		
 			['sub_sub_category_id', 'sub_category_id', 'category_id'].each do |attribute|
