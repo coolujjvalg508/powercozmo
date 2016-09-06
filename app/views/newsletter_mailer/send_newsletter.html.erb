@@ -23,7 +23,7 @@
 				<td style="padding: 5px 5px 15px 5px;"><%=truncate(equipment.description, :length => 50) %></td>	
 				<td style="padding: 5px 5px 15px 5px; text-align:center;">
 					<% if equipment.images.present? %>
-					  <%= image_tag(equipment.images.first.try(:image), width: '50', height: '50', alt: equipment.name) %>
+					  <%= image_tag(equipment.images.first.try(:image), width: '50', alt: equipment.name) %>
 					<% end %>
 				</td>
 			</tr>
