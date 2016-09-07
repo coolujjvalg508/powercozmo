@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
-  get "send_newsletter" => 'welcome#send_newsletter'
   get "/contacts/new" => 'welcome#new_contact'
   post "/contacts" => 'welcome#create_contact'
   get 'faq' => 'welcome#faq'

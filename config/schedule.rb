@@ -20,5 +20,10 @@ every 1.day, :at => '12:01 am' do
 	rake "expire_notification:buying_request:to_seller"
 end
 
+#every 1.day, :at => '09:00 am' do
+every 10.minutes do
+	rake "newsletter:equipment_suggestion:to_user"
+end
+
 
 # Learn more: http://github.com/javan/whenever

@@ -78,7 +78,6 @@ class WelcomeController < ApplicationController
 	
 	def send_newsletter
 	
-	
 		search_history = SearchHistory.where('search_histories.search != ""')
 		
 		if search_history
