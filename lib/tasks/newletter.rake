@@ -74,7 +74,7 @@ namespace :newsletter do
 					j = j + 1
 				end
 				
-				equipment_result = Equipment.available_for_purchase.joins(:country, :manufacturer, :category, :user).where('equipment.user_id != ? AND equipment.created_at > ? AND ' + search_query, user_id, last_search_time)
+				equipment_result = Equipment.available_for_purchase.joins(:country, :manufacturer, :category, :user).where('equipment.user_id != ? AND equipment.created_at > ? AND (' + search_query + ')', user_id, last_search_time)
 				
 				if !equipment_result.empty?
 				
