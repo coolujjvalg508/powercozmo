@@ -170,7 +170,7 @@ class WelcomeController < ApplicationController
 				#abort(search_query)
 				#abort(search_arr.to_json)
 				
-				equipment_result = Equipment.available_for_purchase.joins(:country, :manufacturer, :category, :user).where('equipment.user_id != ? AND equipment.created_at > ? AND ' + search_query, user_id, last_search_time)
+				equipment_result = Equipment.available_for_purchase.joins(:country, :manufacturer, :category, :user).where('equipment.user_id != ? AND equipment.created_at > ' + last_search_time + ' AND ' + search_query, user_id)
 				abort(equipment_result.to_json)
 				if !equipment_result.empty?
 				
