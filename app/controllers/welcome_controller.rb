@@ -117,17 +117,17 @@ class WelcomeController < ApplicationController
 				if last_sent_newsletters
 				
 					last_search_time = last_sent_newsletters.created_at.to_s
-					abort('12')				
+							
 				else
 				
 					last_search = SearchHistory.where('search_histories.search != "" AND search_histories.user_id = ?', user_id).order("id DESC").first
 					
 					last_search_time = last_search.created_at.to_s
-					abort('34')
+					
 				end
 				
 				last_search_time = Date.parse(last_search_time).strftime('%Y-%m-%d %H:%M:%S')
-								
+					abort(last_search_time)				
 				search_arr = value.slice(0)
 				
 				#abort(search_arr.to_json)
