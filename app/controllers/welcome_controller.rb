@@ -98,13 +98,13 @@ class WelcomeController < ApplicationController
 			##################	
 			#abort(last_sent_newsletters.created_at.to_s)	
 						
-			last_search_time = last_sent_newsletters.created_at.to_s
-			last_search_time = Date.parse(last_search_time).strftime('%Y-%m-%d %H')			
+			#last_search_time = last_sent_newsletters.created_at.to_s
+			#last_search_time = Date.parse(last_search_time).strftime('%Y-%m-%d %H')			
 				#abort(last_search_time)		
 				
-				equipment_result = Equipment.available_for_purchase.where('equipment.created_at > ?', last_search_time)
+				#equipment_result = Equipment.available_for_purchase.where('equipment.created_at > ?', last_search_time)
 				
-				abort(equipment_result.to_json)		
+				#abort(equipment_result.to_json)		
 				
 			############################			
 						
