@@ -76,7 +76,7 @@ ActiveAdmin.register GoodToKnow do
     f.inputs "Good To Know" do
       f.input :question, :rows => 15, :cols => 15
       li do
-        insert_tag(Arbre::HTML::Label, "Answer") { content_tag(:abbr, "*", title: "required") }
+        insert_tag(Arbre::HTML::Label, "Answer", class: "label") { content_tag(:abbr, "*", title: "required") }
         f.bootsy_area :answer, :rows => 15, :cols => 15, editor_options: { html: true }
       end
       f.input :active

@@ -10,9 +10,11 @@
 // Active Admin's got SASS!
 @import "active_admin/mixins";
 @import "active_admin/base";
-@import "wigu/active_admin_theme";
+//@import "wigu/active_admin_theme";
 @import "bootstrap.css";
 @import "bootsy";
+@import "active_admin_flat_skin";
+@import "font-awesome";
 
 $skinMainFirstColor: #A5A7AA!default;
 $skinMainSecondColor: #0066CC!default;
@@ -276,3 +278,92 @@ body.active_admin .input.just_datetime_picker input.just-datetime-picker-time-mi
   margin-left: 1ex;
 }
 .bootsy-upload-form.form-inline .input-group-btn input.btn-default { font-size: 12px; }
+
+/* ************ CUSTOM CSS *************/
+#active_admin_content {
+  float: right;
+  margin-bottom: 30px;
+  width: 84% !important;
+}
+#header.header .header-item.tabs {
+  overflow-x: hidden;
+}
+#header.header #tabs.header-item.tabs li a {
+  color: #aeb3b5 !important;
+  font-size: 14px;
+  height: 31px;
+  line-height: 25px;
+  transition: all 0.3s ease 0s;
+}
+#header.header #tabs.header-item.tabs li {
+  display: block;
+  margin-bottom: 10px !important;
+}
+html #header ul.tabs > li {
+  font-size: 12px;
+  margin: 0;
+}
+html #header ul.tabs > li:hover > a, html #header ul.tabs > li.current > a {
+  background: #e73c3c none repeat scroll 0 0;
+  border-radius: 5px !important;
+  color: white;
+  display: block;
+  margin-bottom: -10px;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0 !important;
+}
+html #header ul.tabs > li {
+  font-size: 12px;
+  margin: 0;
+  min-height: 34px !important;
+}
+#filters_sidebar_section {
+  display: none;
+  position: fixed;
+  right: 42%;
+  top: 5%;
+  width: 18%;
+  z-index: 2000;
+}
+.label {
+  border-radius: 0.25em;
+  color: #fff;
+  display: inline;
+  font-size: 85%;
+  font-weight: bold;
+  line-height: 1;
+  padding: 0.2em 0.6em 0.3em;
+  text-align: center;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+#filters_sidebar_section{
+	max-height: 90%;
+	overflow-y: auto;
+	width: 30% !important; 
+	right:32% !important;
+	overflow-x:hidden;
+}
+html input[type="text"], html input[type="password"], html input[type="email"], html input[type="date"], html input[type="tel"], html input[type="number"], html button {
+	height: 30px !important;
+}
+.panel h3, .sidebar_section.panel h3 { color:#fff !important; font-weight:400 !important; padding:10px 15px !important; font-size:18px !important;}
+.panel .panel_contents { padding:5px 5px 15px !important; line-height:26px !important;}
+.panel .panel_contents a{ color:#e73c3c; font-weight: 600; text-decoration: none;}
+.panel_contents ul li span.dash_left{ font-weight:normal;}
+html #footer { z-index:999; padding:10px 30px; height:auto;}
+#footer p { padding-top:5px !important; font-size:12px;}
+#footer #utility_nav a{ color:#888; text-decoration:none; font-size:12px;}
+html #utility_nav ul { float:left; margin:0 5px; color:#888 !important;}
+html #utility_nav li:hover a{ color:#888 !important;}
+.filter_form .panel .panel_contents{ padding:15px 25px !important;}
+form.filter_form .filter_form_field { text-align:center !important;}
+
+html .sidebar_section.panel form .buttons { text-align:center;}
+
+#edit_equipment input[type="radio"], #edit_equipment input[type="checkbox"] { margin:0 0 0 -23px !important;}
+#header #tabs { height: 85vh;}
+
+
+

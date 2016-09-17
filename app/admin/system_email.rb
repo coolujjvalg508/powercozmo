@@ -64,7 +64,7 @@ ActiveAdmin.register SystemEmail do
     	f.input :title, :input_html => { :disabled => true }
     	f.input :subject
       li do
-        insert_tag(Arbre::HTML::Label, "Content") { content_tag(:abbr, "*", title: "required") }
+        insert_tag(Arbre::HTML::Label, "Content", class: "label") { content_tag(:abbr, "*", title: "required") }
         f.bootsy_area :content, :rows => 15, :cols => 15, editor_options: { html: true }
       end
       # f.input :footer, :as => :ckeditor

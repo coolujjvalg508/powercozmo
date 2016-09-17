@@ -3,7 +3,7 @@
     <%= hidden_field_tag :message_id, message.id %>  
     <%= f.inputs "Reply Message" do %>
       <li>            
-        <label>Message<abbr title="required">*</abbr></label>
+        <label class="label">Message<abbr title="required">*</abbr></label>
         <%= f.bootsy_area :body, :rows => 15, :cols => 100, editor_options: { image: false, html: true } %>
       </li>
       <%= f.input :attachment, as: :file %>

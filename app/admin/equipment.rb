@@ -1,6 +1,6 @@
 ActiveAdmin.register Equipment do
   menu label: 'Equipments', if: proc{ (current_admin_user.has_permission('equipment_read') || current_admin_user.has_permission('equipment_write') || current_admin_user.has_permission('equipment_delete'))}
-	permit_params :name, :equipment_model, :condition, :owner_name, :manufacturer_id, :category_id, :sub_category_id, :sub_sub_category_id, :city, :country_id, :price, :currency, :rating, :description, :status, :availble_for,:availble_for_date, :availble_for_time_hour, :availble_for_time_minute, :manufacture_year, :user_id,:availble_for, :power_plant_age, :power_plant_type, :turbine_model, :turbine_manufacturer_name, :equipment_type, :images_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image,:image_cache]
+	permit_params :name, :equipment_model, :condition, :owner_name, :manufacturer_id, :category_id, :sub_category_id, :sub_sub_category_id, :city, :country_id, :price, :currency, :rating, :description, :status, :availble_for,:availble_for_date, :availble_for_time_hour, :availble_for_time_minute, :manufacture_year, :user_id,:availble_for, :power_plant_age, :power_plant_type, :turbine_model, :turbine_manufacturer_name, :equipment_type, :faults, :images_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image,:image_cache]
 
   batch_action "Update 'Status' for", form: { status: Equipment.statuses.map{|status, value| [status.to_s.humanize, status.to_s] } } do |ids, inputs|
     # Equipment.where(id: ids).update_all(status: inputs[:status])
@@ -119,6 +119,7 @@ ActiveAdmin.register Equipment do
       f.input :city
       f.input :country_id, as: :select, collection: @countries = Hash[Country.active.pluck(:id, :name)].map{|id,name| [name,id] }, include_blank: 'Select Country', label: 'Country<abbr title="required">*</abbr>'.html_safe
       f.input :description
+      f.input :faults
       f.input :availble_for, label: 'Expiration Date', as: :just_datetime_picker#:string, input_html: {:class => "hasDatetimePicker"}
       f.input :manufacture_year, as: :select, collection: (1950..Date.today.year).to_a.reverse, include_blank: 'Select Year'
       f.input :price
@@ -272,6 +273,7 @@ ActiveAdmin.register Equipment do
         name = equipment.user.email if name.blank?
         link_to name, admin_seller_path(equipment.user)
       end
+      row :faults
       row :status do
         equipment.status.to_s.humanize
       end

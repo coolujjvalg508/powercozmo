@@ -8,6 +8,7 @@
 //= require jquery-ui-timepicker-addon
 //= require jstz.min
 //= require time_zone_detection
+//= require active_admin_flat_skin
 
 $(document).ready(function() {
 

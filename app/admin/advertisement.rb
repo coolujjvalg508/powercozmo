@@ -56,7 +56,7 @@ ActiveAdmin.register Advertisement do
       f.input :page_reference, :label => 'Page Location', :as => :string, :input_html => { :disabled => true }
       f.input :active
     end
-    f.inputs "Advertisement Image", for: :image do |img|      
+    f.inputs "Advertisement Image", for: :image do |img|
       img.input :image, :as => :file, :hint => image_tag(img.object.try(:image).try(:thumb).try(:url))
     end
     f.actions

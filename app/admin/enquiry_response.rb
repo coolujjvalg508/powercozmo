@@ -41,7 +41,7 @@ ActiveAdmin.register EnquiryResponse do
   form title: 'Edit Response' do |f|
     f.inputs do    	
       li do
-        insert_tag(Arbre::HTML::Label, "Message") { content_tag(:abbr, "*", title: "required") }
+        insert_tag(Arbre::HTML::Label, "Message", class: "label") { content_tag(:abbr, "*", title: "required") }
         f.bootsy_area :message, :rows => 15, :cols => 15, editor_options: { html: true, image: false }
       end      
     end  	
