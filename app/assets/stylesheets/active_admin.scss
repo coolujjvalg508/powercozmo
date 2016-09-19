@@ -365,5 +365,21 @@ html .sidebar_section.panel form .buttons { text-align:center;}
 #edit_equipment input[type="radio"], #edit_equipment input[type="checkbox"] { margin:0 0 0 -23px !important;}
 #header #tabs { height: 85vh;}
 
-
+/* Color Code Replace Css */
+#diplay-filter{ background-color:#ff4c00; border-color:#ff2400;}
+html #header ul.tabs > li:hover > a, html #header ul.tabs > li.current > a { background:#ff4c00;}
+#header.header .site_title { background:#fff;}
+#header h1 img { top:-6px;}
+#title_bar.title_bar { padding:0 30px !important;}
+.panel .panel_contents a { color:#ff4c00; font-weight:normal;}
+html #title_bar .action_items a { background:#ff4c00 !important;}
+html #active_admin_content a.table_tools_button:hover { background:#ff4c00 !important;}
+html #header ul.tabs > li.has_nested.current a{background:#ff4c00 !important;}
+#active_admin_content #main_content .table_actions .delete_link { background-color:#ff4c00 !important;}
+html #title_bar .action_items a:hover { background:#ff2400 !important;}
+html .pagination span.page.current, html .pagination a:hover:not(.disabled) { background:#ff4c00 !important;}
+html table.index_table td a:hover, html table.index_table td a:link:hover, html table.index_table td a:visited:hover { background:#ff4c00 !important;}
+#title_bar h2 { font-size:2em !important;}
+html form input[type="submit"], html a.button, html a.button:link, html a.button:visited { background:#ff4c00 !important;}
+html .download_links a { color:#ff4c00;}
 
