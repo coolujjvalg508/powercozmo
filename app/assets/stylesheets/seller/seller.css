@@ -9,5 +9,9 @@
 *= require seller/dashboard.css
 *= require bootstrap-datetimepicker
 *= require bootsy
+*= require seller/plugins/c3
+*= require seller/plugins/waves
+*= require seller/plugins/perfect-scrollbar
+*= require seller/main.min
 *= require_self
 */

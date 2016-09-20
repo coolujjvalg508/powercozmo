@@ -34,8 +34,8 @@
 .pagination { width: 100%; }
 .pagination li { list-style: none; float: left; margin-left: 5px; }
 .pagination li a { min-width: 34px; min-height: 34px; line-height: 34px; text-align: center; border: 1px solid #e5e5e5; display: inline-block; font-size: 14px; color: #757575; }
-.pagination li a:hover { background: #36ace3; border: 1px solid #36ace3; color: #fff; }
-.pagination li a.active { background: #36ace3; border: 1px solid #36ace3; color: #fff; }
+.pagination li a:hover { background: #3f51b5; border: 1px solid #3f51b5; color: #fff; }
+.pagination li a.active { background: #3f51b5; border: 1px solid #3f51b5; color: #fff; }
 
 .ui-autocomplete {
   position: absolute;
@@ -159,4 +159,15 @@ p.response-msg { word-wrap: break-word; }
 .long-descp { height: 290px; overflow: hidden; overflow-y: auto; }
 .shipping-detail-edit {float: left !important; width: 22% !important; margin-right: 10px !important;}
 .paddingB50{ padding-bottom:70px !important;}
+
+
+/* New design css */
+.nav-head .site-logo span img{width: 150px;}
+.no-result{text-align: center; margin-top: 8px; font-size: 16px;}
+.text-white{color: #fff !important;}
+.unread-msg-top{max-height: 200px; overflow-y: auto;}
+.unread-msg-top img{width: 40px;}
+
+
+
 

@@ -1,20 +1,37 @@
-<% if conversations.present? %>
-	<% conversations.each do |conversation| %>
-		<li>
-			<% sender = conversation.receipts.sentbox.where.not("receiver_id = ? AND receiver_type = ?",current_user.id,current_user.class.name).last.try(:receiver) %>
-			<%= link_to(seller_message_path(conversation)) do %>
-				<div class="pull-left">
-					<% if sender.try(:image).present? %>
-						<%= image_tag(sender.try(:image).try(:image).try(:thumb).try(:url),class: "img-circle",alt: "") %>
-					<% else %>
-						<%= image_tag("profile-noimage.jpg",class: "img-circle",alt: "") %>
+<div class="tab-pane unread-msg-top">
+	<div class="chat-tab tab clearfix">
+		<% if conversations.present? %>
+			<% conversations.each do |conversation| %>
+
+					<% sender = conversation.receipts.sentbox.where.not("receiver_id = ? AND receiver_type = ?",current_user.id,current_user.class.name).last.try(:receiver) %>
+					<%= link_to(seller_message_path(conversation)) do %>
+						
+						<div class="user-container mb15">
+							<div class="col-md-3">
+								<% if sender.try(:image).present? %>
+									<%= image_tag(sender.try(:image).try(:image).try(:thumb).try(:url),class: "img-circle img-responsive", alt: "") %>
+								<% else %>
+									<%= image_tag("profile-noimage.jpg",class: "img-circle",alt: "") %>
+								<% end %>
+							</div>
+							
+							<div class="col-md-9">
+								<p class="mb0"><%= sender.try(:name).to_s %></p>
+								<p class="xsmall mb0"><%= conversation.subject %></p>
+								<p class="xsmall">
+									<span class="right mt5"><%= time_ago_in_words(conversation.updated_at) %></span>
+									<span class="fa fa-clock-o right mr5"></span>
+																		
+								</p>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						
 					<% end %>
-				</div>
-				<h4><%= sender.try(:name).to_s %> <small><i class="fa fa-clock-o"></i><%= time_ago_in_words(conversation.updated_at) %></small> </h4>
-				<p><%= conversation.subject %></p>
+					
 			<% end %>
-    </li>        
-	<% end %>
-<% else %>
-	<li>No messages</li>
-<% end %>
+		<% else %>
+			No messages
+		<% end %>
+	</div>
+</div>
