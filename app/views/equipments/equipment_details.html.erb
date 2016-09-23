@@ -71,9 +71,9 @@
             <% if current_user %>
 				<li><a href="javascript:void(0);">
 						<% if @favorite_data %>
-							<i class="fa fa-heart" title="Remove from favorite"></i>
+							<i class="fa fa-heart" title="Remove from favourite"></i>
 						<% else %>
-							<i class="fa fa-heart-o" title="Add to favorite"></i>
+							<i class="fa fa-heart-o" title="Add to favourite"></i>
 						<% end %>
 					</a>
 				</li>
@@ -305,8 +305,8 @@ $(document).on('click', '.fa-heart-o', function () {
 	
 	$(this).removeClass('fa-heart-o');
 	$(this).addClass('fa-heart');
-	$(this).attr('title', 'Remove from favorite');
-	$.getJSON("/add_favorite",{equipment_id: '<%= @equipment.id %>', ajax: 'true'}, function(response){
+	$(this).attr('title', 'Remove from favourite');
+	$.getJSON("/add_favourite",{equipment_id: '<%= @equipment.id %>', ajax: 'true'}, function(response){
 		alert(response.message);
 	})
 	
@@ -316,9 +316,9 @@ $(document).on('click', '.fa-heart', function () {
 	
 	$(this).removeClass('fa-heart');
 	$(this).addClass('fa-heart-o');
-	$(this).attr('title', 'Add to favorite');
+	$(this).attr('title', 'Add to favourite');
 	
-	$.getJSON("/remove_favorite",{equipment_id: '<%= @equipment.id %>', ajax: 'true'}, function(response){
+	$.getJSON("/remove_favourite",{equipment_id: '<%= @equipment.id %>', ajax: 'true'}, function(response){
 		alert(response.message);
 	})
 	

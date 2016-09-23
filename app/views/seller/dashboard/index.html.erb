@@ -183,10 +183,10 @@
 										<th>Identifier</th>
 										<th>Name</th>
 										<th>Description</th>
-										<th>Image</th>
+										<th class="text-center">Image</th>
 										<th>Valid Till</th>
-										<th>Status</th>
-										<th>Action</th>
+										<th class="text-center">Status</th>
+										<th class="text-center">Action</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -195,7 +195,7 @@
 											<td><%= equipment.identifier %></td>
 											<td><%= equipment.name %></td>
 											<td><%=truncate(equipment.description, :length => 50) %></td>
-											<td align="center">
+											<td class="text-center">
 												<% if equipment.images.present? %>
 												  <%= image_tag(equipment.images.first.try(:image), width: '50', alt: equipment.name) %>
 												<% else %>
@@ -203,13 +203,13 @@
 												<% end %>
 											</td>
 											<td><%= equipment.availble_for.strftime("%d-%b-%Y %H:%M %p") if equipment.availble_for.present? %></td>
-											<td>
+											<td class="text-center">
 												<label class="label label-<%= ['closed','sold','inactive'].include?(equipment.status.to_s) ? 'danger' : 'success' %> mr5"><%= equipment.status.humanize %></label>
 												
 											</td>
-											<td>
-												<%= link_to '<i class="ion-ios-compose"></i>'.html_safe, edit_seller_equipment_path(equipment) %>
-												<%= link_to '<i class="ion-ios-trash"></i>'.html_safe, seller_equipment_path(equipment),method: :delete,data: { confirm: 'Are you sure?' } %>
+											<td class="text-center">
+												<%= link_to '<i class="ion-ios-compose"></i>'.html_safe, edit_seller_equipment_path(equipment), title: "Edit Equipment" %>
+												<%= link_to '<i class="ion-ios-trash"></i>'.html_safe, seller_equipment_path(equipment),method: :delete,data: { confirm: 'Are you sure?' }, title: "Delete Equipment" %>
 											</td>
 										</tr>
 									<% end %>

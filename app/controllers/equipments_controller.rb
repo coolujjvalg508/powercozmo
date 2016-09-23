@@ -118,24 +118,24 @@ class EquipmentsController < ApplicationController
 		render :index
 	end
 	
-	def add_favorite
+	def add_favourite
 	
 		favorite_data = Favorite.where('favorites.user_id = ? AND favorites.equipment_id = ?', current_user.id, params[:equipment_id]).first
 	
 		if favorite_data
-			render json: {message: 'Already in favorite !', status: '201'}
+			render json: {message: 'Already in favourite !', status: '201'}
 		else
 			Favorite.create(user_id: current_user.id, equipment_id: params[:equipment_id])
 			
-			render json: {message: 'Equipment successfully added in favorite.', status: '200'}
+			render json: {message: 'Equipment successfully added in favourite.', status: '200'}
 			
 		end
 	
 	end
 	
-	def remove_favorite
+	def remove_favourite
 		Favorite.where(user_id: current_user.id, equipment_id: params[:equipment_id]).delete_all
-		render json: {message: 'Equipment successfully removed from favorite.', status: '200'}
+		render json: {message: 'Equipment successfully removed from favourite.', status: '200'}
 	end
 
 	private

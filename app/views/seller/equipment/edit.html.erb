@@ -1,19 +1,26 @@
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <h1> Edit <span id='header_name_edit'>Equipment</span> </h1>
-    <ol class="breadcrumb">
-      <li><a href="<%= seller_dashboard_path %>">Home</a></li>
-      <li><a href="<%= seller_equipment_index_path %>">Equipment</a></li>
-      <li class="active">Edit</li>
-    </ol>
-  </section>
-
-  <!-- Main content -->
-  <section class="content equipment-content">
-  	<%= render partial: "form" %>
-  </section>
-  <!-- /.content -->
+<div class="page page-forms-elements page-dashboard">
+	<ol class="breadcrumb breadcrumb-small">
+		<li><a href="<%= seller_dashboard_path %>">Home</a></li>
+		 <li><a href="<%= seller_equipment_index_path %>">Equipment</a></li>
+		<li class="active">Edit</li>
+	</ol>
+	
+	<div class="page-wrap">
+		
+		<div class="row">
+			<!-- dashboard header -->
+			<div class="col-md-12">
+				<div class="dash-head clearfix mb20">
+					<div class="left">
+						<h4 class="mb5 text-light">Edit <span id='header_name_edit'>Equipment</span></h4>
+					</div>
+				</div>
+			</div>
+		</div> <!-- #end row -->
+		
+		<!-- row -->
+		<div class="row">
+			<%= render partial: "form" %>
+		</div>
+	</div>
 </div>
-<!-- /.content-wrapper -->

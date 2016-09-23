@@ -156,7 +156,7 @@
 	        
 	        <li class="<%= 'active' if edit_seller_profile_path(current_user) == url_for(only_path: true) %>"> <a href="<%= edit_seller_profile_path(current_user)%>" title="My Profile"> <i class="fa fa-user"></i> <span>My Profile</span> </a></li>
 	        
-	        <li class="<%= 'active' if seller_favorites_path == url_for(only_path: true) %>"> <a href="<%= seller_favorites_path%>" title="My Favorites"> <i class="fa fa-heart"></i> <span>My Favorites</span> </a></li>
+	        <li class="<%= 'active' if seller_favourites_path == url_for(only_path: true) %>"> <a href="<%= seller_favourites_path%>" title="My Favourites"> <i class="fa fa-heart"></i> <span>My Favourites</span> </a></li>
 	        
 	        <li class="<%= 'active' if seller_equipment_index_path == url_for(only_path: true) %>"><%= link_to "<i class='fa fa-list'></i> <span>My Listed Equipments</span>".html_safe, seller_equipment_index_path, { :title => "My Listed Equipments" } %></li>
 	        

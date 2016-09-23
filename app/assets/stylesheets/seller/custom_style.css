@@ -167,6 +167,21 @@ p.response-msg { word-wrap: break-word; }
 .text-white{color: #fff !important;}
 .unread-msg-top{max-height: 200px; overflow-y: auto;}
 .unread-msg-top img{width: 40px;}
+.equipment-content .eqp-form-box .upload-image{margin-right: 10px; width: 45% !important;}
+
+.btn-primary{background-color: #3f51b5 !important; border-color: #3f51b5 !important;}
+.equipment-content .eqp-form-box .tips-for-imgupload{width: 110px !important;}
+.img-add{position: relative !important; top: 40% !important;}
+.equipment-content .eqp-form-box .upload-image{margin-top: 20px;}
+.content{padding: 0px !important;}
+.equipment-content .eqp-form-box, .myprofile-content .mp-form-box, .new-msg-content .new-msg-form-box{margin-bottom: 0px!important;} 
+
+.myprofile-content .mp-form-box{border: none!important; margin-bottom: 0px!important; float: none !important; padding: 0px!important;}
+
+.mb50{margin-bottom: 50px;}
+.mb60{margin-bottom: 60px;}
+.mt155{margin-top: 155px;}
+.bootsy-height{height: 300px !important;}
 
 
 

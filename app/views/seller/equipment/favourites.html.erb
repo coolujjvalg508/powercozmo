@@ -1,7 +1,7 @@
 <div class="page page-ui-tables page-dashboard">
 	<ol class="breadcrumb breadcrumb-small">
 		<li><a href="<%= seller_dashboard_path %>">Home</a></li>
-		<li class="active">My Listed Equipments</li>
+		<li class="active">My Favourites</li>
 	</ol>
 	
 	<div class="page-wrap">
@@ -11,7 +11,7 @@
 			<div class="col-md-12">
 				<div class="dash-head clearfix mb20">
 					<div class="left">
-						<h4 class="mb5 text-light">My Listed Equipments</h4>
+						<h4 class="mb5 text-light">My Favourites</h4>
 					</div>
 				</div>
 			</div>
@@ -38,26 +38,26 @@
 									</tr>
 								</thead>
 								<tbody>
-									<% @equipments.each_with_index do |equipment,index| %>
+									<% @equipments.each_with_index do |favourite,index| %>
 										<tr>
-											<td><%= equipment.identifier %></td>
-											<td><%= equipment.name %></td>
-											<td><%=truncate(equipment.description, :length => 50) %></td>
+											<td><%= favourite.equipment.identifier %></td>
+											<td><%= favourite.equipment.name %></td>
+											<td><%=truncate(favourite.equipment.description, :length => 50) %></td>
 											<td class="text-center">
-												<% if equipment.images.present? %>
-												  <%= image_tag(equipment.images.first.try(:image), width: '50', alt: equipment.name) %>
+												<% if favourite.equipment.images.present? %>
+												  <%= image_tag(favourite.equipment.images.first.try(:image), width: '50', alt: favourite.equipment.name) %>
 												<% else %>
 												  <i class="fa fa-file-image-o"></i>
 												<% end %>
 											</td>
-											<td><%= equipment.availble_for.strftime("%d-%b-%Y %H:%M") if equipment.availble_for.present? %></td>
+											<td><%= favourite.equipment.availble_for.strftime("%d-%b-%Y %H:%M") if favourite.equipment.availble_for.present? %></td>
 											<td class="text-center">
-												<label class="label label-<%= ['closed','sold','inactive'].include?(equipment.status.to_s) ? 'danger' : 'success' %> mr5"><%= equipment.status.humanize %></label>
+												<label class="label label-<%= ['closed','sold','inactive'].include?(favourite.equipment.status.to_s) ? 'danger' : 'success' %> mr5"><%= favourite.equipment.status.humanize %></label>
 												
 											</td>
 											<td class="text-center">
-												<%= link_to '<i class="ion-ios-compose"></i>'.html_safe, edit_seller_equipment_path(equipment), title: "Edit Equipment" %>
-												<%= link_to '<i class="ion-ios-trash"></i>'.html_safe, seller_equipment_path(equipment), method: :delete, data: { confirm: 'Are you sure?' }, title: "Delete Equipment" %>
+												<%= link_to '<i class="ion-eye"></i>'.html_safe, equipment_details_path(favourite.equipment), title: "View" %>
+												<%= link_to '<i class="ion-ios-trash"></i>'.html_safe, seller_remove_favourite_path(favourite), method: :delete, data: { confirm: 'Are you sure?' }, title: "Remove from favourites" %>
 											</td>
 																						
 										</tr>
@@ -66,7 +66,7 @@
 							</table>
 							<%= paginate @equipments, :theme => 'listing_page_theme' %>
 						 <% else %>
-							<p class="no-result">No Equipments Found</p>
+							<p class="no-result">No Favourite Equipments Found</p>
 						 <% end %>	
 					</div>
 				</div>

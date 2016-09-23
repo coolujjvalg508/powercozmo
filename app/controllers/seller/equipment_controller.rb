@@ -1,7 +1,9 @@
 class Seller::EquipmentController < Seller::BaseController
   before_action :find_equipment, only: [:edit,:update,:show,:destroy]
   before_action :get_equipment_form_data, only: [:new, :create,:edit,:update]
-
+  
+  layout 'user'
+  
   def index
   	@equipments = current_user.equipment.all.order('created_at desc').page(params[:page]).per(10)
   end
@@ -22,6 +24,7 @@ class Seller::EquipmentController < Seller::BaseController
   end
 
   def create
+    
     if params[:equipment][:images_attributes].present?
       params[:equipment][:images_attributes].each do |index,img|
         unless params[:equipment][:images_attributes][index][:image].present?
@@ -215,14 +218,15 @@ class Seller::EquipmentController < Seller::BaseController
     new_params
   end
   
-  def favorites
+  def favourites
 	@equipments = Favorite.all.joins(:equipment).where('equipment.status != "0" AND favorites.user_id = ?', current_user.id).order('created_at desc').page(params[:page]).per(10)
+		
   end
   
-  def remove_favorite
+  def remove_favourite
 		Favorite.delete(params[:id])
-		flash[:notice] = "Equipment successfully removed from favorite."
-		redirect_to seller_favorites_path
+		flash[:notice] = "Equipment successfully removed from favourites."
+		redirect_to seller_favourites_path
   end
 
   private
