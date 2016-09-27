@@ -67,7 +67,8 @@ body {
   
 /*Custom*/  
 .m-signature-pad--body canvas {
-	position: relative !important;
+	/*position: relative !important;*/
+	position: absolute !important;
 } 
 
 @media screen and (max-width: 1024px) {

@@ -1,177 +1,263 @@
-  <%= stylesheet_link_tag    'signature-pad', media: 'all'%>
-  
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>My Profile</h1>
-      <ol class="breadcrumb">
-        <li><a href="<%= seller_dashboard_path%>">Home</a></li>
-        <li class="active">My Profile</li>
-      </ol>
-    </section>
+<%= stylesheet_link_tag 'signature-pad', media: 'all'%>
 
-    <!-- Main content -->
-    <section class="content myprofile-content">
-      <!-- /.row -->
-      <div class="row">
-        <div class="col-lg-6 col-xs-12 myprofile-left">
-          <div class="mp-form-box">
-            <%= form_for(@user, url: seller_profile_path(@user), html: { method: :put , :id => "edit_profile_form"}) do |f| %>
-              <%= f.fields_for :profile do |profile_form| %>
-              
-              <%= hidden_field_tag "user[profile_attributes][digital_signature]", current_user.profile.digital_signature %>
-              
-                <div class="form-group">
-                  <label for="fname">First Name*</label>
-                  <%= profile_form.text_field :first_name, class: 'form-control', id: 'fname', placeholder: 'Enter First Name' %>
-                  <%= error_message(@user.profile, :first_name)%>
-                </div>
-                <div class="form-group">
-                  <label for="lname">Last Name*</label>
-                  <%= profile_form.text_field :last_name, class: 'form-control', id: 'lname', placeholder: 'Enter Last Name' %>
-                  <%= error_message(@user.profile,:last_name) %>
-                </div>
-                <div class="form-group">
-                  <label for="cmpname">Company/Organization Name*</label>
-                  <%= profile_form.text_field :company_name, class: 'form-control', id: 'cmpname', placeholder: 'Enter Company/Organization Name' %>
-                  <%= error_message(@user.profile,:company_name) %>
-                </div>
-                <div class="form-group">
-                  <label for="cmpname">Company website </label>
-                  <%= profile_form.text_field :website, class: 'form-control', id: 'webname', placeholder: 'Enter Company website' %>
-                  <%= error_message(@user.profile,:website) %>
-                </div>
-                <div class="form-group">
-                  <label for="emailid">Email Id*</label>
-                  <%= f.text_field :email, class: 'form-control', id: 'emailid', placeholder: 'Enter Email Id' %>
-                  <%= error_message(@user,:email) %>
-                </div>
-                <div class="form-group">
-                  <label for="mobnumber">Mobile Number*</label>
-                  <%= profile_form.text_field :phone_number, class: 'form-control', id: 'mobnumber', placeholder: 'Enter Mobile Number' %>
-                  <%= error_message(@user.profile,:phone_number) %>
-                </div>
-                <!--<div class="form-group">
-                  <label for="user-type">I am*</label>
-                  <%= f.select(:user_type, options_for_select((User::USERTYPE),selected: @user.user_type, :prompt => "I am"))  %>
-                  <span class="err-msg"><%= error_message(@user, :user_type)%></span>
-                </div>-->
-                <div class="form-group">
-                  <label for="select">Country*</label>
-                  <%= profile_form.select(:country_id, options_for_select(Country.pluck(:name, :id), :selected => @user.profile.country_id), :prompt => "Select Country") %>
-                  <%= error_message(@user.profile,:country_id) %>
-                </div>
-                <div class="form-group pull-left mrg-btm-zero ">
-                  <%= f.submit "Done", class: "btn btn-default custom-btn" %>
-                </div>
-              <% end %>
-            <% end %>
-          </div>
-        </div>
-        <div class="col-lg-6 col-xs-12 myprofile-right">
-          <div class="mp-form-box">
-            <div class="upload-image">
-              <%= form_for(@user, url: seller_profile_path(@user), html: { method: :put, id: 'image_form' }) do |f| %>
-                <%= f.fields_for :image do |image_form| %>
-                  <div class="form-group mrg-btm-zero">
-                    <label for="description">Profile Photo*</label>
-                    <% if @user.image.image.present? %>
-                      <div class="upload-image-input" style="background: url(<%= @user.image.image.event_small.url %>) no-repeat center center; background-size: 150px auto;">
-                    <% else %>
-                      <div class="upload-image-input">
-                    <% end %>
-                      <%= image_form.file_field(:image,class: "required", title: " ")%>
-                      <%= error_message(@user.image,:image) %>
-                    </div>
-                  </div>
-                  <div class="form-group pull-left upload-profile-btn mrg-btm-zero">
-                    <%= f.submit "Update Profile", class: "btn btn-default custom-btn" %>
-                  </div>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-          <div class="mp-form-box">
-            <%= form_for(@user, url: seller_profile_path(@user), html: { method: :patch, :id => "change_password_form" }) do |f| %>
-              <div class="form-group">
-                <label for="password">Old Password* </label>
-                <%= f.password_field :current_password, autocomplete: "off", class: 'form-control', id: 'oldpassword', placeholder: 'Enter Old Password ' %>
-                <label class="error"><%= @old_error_msg%></label>
-              </div>
-              <div class="form-group">
-                <label for="password">New Password* </label>
-                <%= f.password_field :password, class: 'form-control', id: 'newpassword', placeholder: 'Enter New Password' %>
-              </div>
-              <div class="form-group">
-                <label for="password">Confirm Password*</label>
-                <%= f.password_field :password_confirmation, class: 'form-control', id: 'cnfpassword', placeholder: 'Enter Confirm Password' %>
-                <label class="error"><%= @new_error_msg %></label>
-              </div>
-              <div class="form-group pull-left mrg-btm-zero">
-                <%= f.submit "Change Password", class: "btn btn-default custom-btn" %>
-              </div>
-            <% end %>
-          </div>
-          
-          
-          
-          <div class="mp-form-box paddingB50">
-			  
-			<label for="description">Digital Signature*</label>
-			
-			<% if current_user.profile.digital_signature %>  
-				<div><img src="<%= current_user.profile.digital_signature %>" /></div> 
-			<% end %>
-			
-            <%= form_for(@user, url: seller_profile_path(@user), html: { method: :put , :id => "digital_signature_form"}) do |f| %>
-              <%= f.fields_for :profile do |profile_form| %>
-              
-				<%= hidden_field_tag "profile[digital_signature]" %>
-				<%= hidden_field_tag "is_digital_signature", '1'  %>
-				  <div class="form-group">
-					
-						<div id="signature-pad" class="m-signature-pad col-md-12">
+<div class="page page-forms-elements page-dashboard">
+	<ol class="breadcrumb breadcrumb-small">
+		<li><a href="<%= seller_dashboard_path %>">Home</a></li>
+		<li class="active">My Profile</li>
+	</ol>
+	
+	<div class="page-wrap">
+		
+		<div class="row">
+			<!-- dashboard header -->
+			<div class="col-md-12">
+				<div class="dash-head clearfix mb20">
+					<div class="left">
+						<h4 class="mb5 text-light">My Profile</h4>
+					</div>
+				</div>
+			</div>
+		</div> <!-- #end row -->
+		
+		<!-- row -->
+		<div class="row">
+			<section class="content myprofile-content">
+
+<!-- user detail form start -->			
+<%= form_for(@user, url: seller_profile_path(@user), html: { method: :put , :id => "edit_profile_form"}) do |f| %>
+	<%= f.fields_for :profile do |profile_form| %>
+		<%= hidden_field_tag "user[profile_attributes][digital_signature]", current_user.profile.digital_signature %>
+				
+				<div class="col-sm-12 col-md-6">	
+					<div class="panel panel-default panel-hovered panel-stacked mb30">
+						<div class="panel-body">
 							
-							<div class="m-signature-pad--body">
-								<canvas></canvas>
+							<div class="form-group">
+								<label class="col-md-12 control-label">First Name<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= profile_form.text_field :first_name, class: 'form-control', id: 'fname', placeholder: 'Enter First Name' %>
+									<%= error_message(@user.profile, :first_name)%>
+								</div>
 							</div>
 							
-							<div class="col-md-12"><label class="error" id="signature_err"></label></div>
+							<div class="clearfix"></div>
 							
-							
-							<div class="form-group mrg-btm-zero m-signature-pad--footer col-md-12">
-																
-								<div class="col-md-4">
-									<button type="button" class="btn btn-default custom-btn button clear pull-left" data-action="clear">Clear</button>
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label">Last Name<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= profile_form.text_field :last_name, class: 'form-control', id: 'lname', placeholder: 'Enter Last Name' %>
+									<%= error_message(@user.profile,:last_name) %>
 								</div>
-								
-								<div class="description col-md-4">Sign above</div>
-								
-								<div class="col-md-4">
-									<button type="button" class="btn btn-default custom-btn button save pull-right" data-action="save">Save</button>
-								</div>
-								
 							</div>
 							
-						</div>
-						
-					
-				  </div>
-				  
-				  
-				<% end %>
-            <% end %>
-          </div>
-          
-          
-        </div>
-      </div>
-      <!-- /.row -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label">Company/Organization Name<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= profile_form.text_field :company_name, class: 'form-control', id: 'cmpname', placeholder: 'Enter Company/Organization Name' %>
+									<%= error_message(@user.profile,:company_name) %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label">Company website</label>
+								<div class="col-md-12">
+									<%= profile_form.text_field :website, class: 'form-control', id: 'webname', placeholder: 'Enter Company website' %>
+									<%= error_message(@user.profile,:website) %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label">Email Id<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= f.text_field :email, class: 'form-control', id: 'emailid', placeholder: 'Enter Email Id' %>
+									<%= error_message(@user,:email) %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label">Mobile Number<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= profile_form.text_field :phone_number, class: 'form-control', id: 'mobnumber', placeholder: 'Enter Mobile Number' %>
+									<%= error_message(@user.profile,:phone_number) %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label">Country<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= profile_form.select(:country_id, options_for_select(Country.pluck(:name, :id), :selected => @user.profile.country_id), :prompt => "Select Country") %>
+									<%= error_message(@user.profile,:country_id) %>
+								</div>
+							</div>
+							
+							<div class="clearfix mt20 right">
+							   <button type="submit" class="btn btn-primary mr5" value="Done" name="commit">Done</button>
+							</div>
+										
+						</div>	
+					</div>	
+				</div>
+	<% end %>
+<% end %>
+<!-- user detail form end -->
+
+<!-- update photo form start -->
+
+<%= form_for(@user, url: seller_profile_path(@user), html: { method: :put, id: 'image_form' }) do |f| %>
+	<%= f.fields_for :image do |image_form| %>
+
+		<div class="col-sm-12 col-md-6">	
+					<div class="panel panel-default panel-hovered panel-stacked mb30">
+						<div class="panel-body">
+							<div class="mp-form-box">
+								<div class="upload-image">   
+									<div class="form-group">
+										  <label class="col-md-12 control-label">Profile Photo<sup>*</sup></label>
+											
+											<% if @user.image.image.present? %>
+												<div class="upload-image-input" style="background: url(<%= @user.image.image.event_small.url %>) no-repeat center center; background-size: 150px auto;">
+											<% else %>
+												<div class="upload-image-input">
+											<% end %>
+												<%= image_form.file_field(:image,class: "required", title: " ")%>
+												<%= error_message(@user.image,:image) %>
+											</div>
+									</div>
+								</div>
+							</div>
+									  							
+							
+							<div class="clearfix mt20 right">
+							   <button type="submit" class="btn btn-primary mr5" value="Update Profile" name="commit">Update Profile</button>
+							</div>
+										
+						</div>	
+					</div>	
+				</div>
+
+	<% end %>
+<% end %>
+<!-- update photo form end -->
+
+<!-- update password form start -->
+<%= form_for(@user, url: seller_profile_path(@user), html: { method: :patch, :id => "change_password_form" }) do |f| %>
+				
+				<div class="col-sm-12 col-md-6">	
+					<div class="panel panel-default panel-hovered panel-stacked mb30">
+						<div class="panel-body">
+							
+							<div class="form-group">
+								<label class="col-md-12 control-label">Old Password<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= f.password_field :current_password, autocomplete: "off", class: 'form-control', id: 'oldpassword', placeholder: 'Enter Old Password ' %>
+									<label class="error"><%= @old_error_msg%></label>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label">New Password<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= f.password_field :password, class: 'form-control', id: 'newpassword', placeholder: 'Enter New Password' %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label">Confirm Password<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= f.password_field :password_confirmation, class: 'form-control', id: 'cnfpassword', placeholder: 'Enter Confirm Password' %>
+									<label class="error"><%= @new_error_msg %></label>
+								</div>
+							</div>
+							
+							<div class="clearfix mt20 right">
+							   <button type="submit" class="btn btn-primary mr5" value="Change Password" name="commit">Change Password</button>
+							</div>
+										
+						</div>	
+					</div>	
+				</div>
+				
+<% end %>				
+<!-- update password form end -->
+
+				<div class="clearfix"></div>
+
+<!-- digital signature form start -->				
+				<div class="col-sm-12 col-md-6">	
+					<div class="panel panel-default panel-hovered panel-stacked mb30">
+						<div class="panel-body">
+							
+<%= form_for(@user, url: seller_profile_path(@user), html: { method: :put , :id => "digital_signature_form"}) do |f| %>
+	<%= f.fields_for :profile do |profile_form| %>
+		<%= hidden_field_tag "profile[digital_signature]" %>
+		<%= hidden_field_tag "is_digital_signature", '1'  %>
+							
+							<div class="form-group">
+								<label class="col-md-12 control-label">Digital Signature<sup>*</sup></label>
+								
+								<% if current_user.profile.digital_signature %>  
+									<div class="col-md-12">
+										<img src="<%= current_user.profile.digital_signature %>" />
+									</div> 
+								<% end %>
+								
+								<div class="col-md-12 mb60">
+									
+									<div id="signature-pad" class="m-signature-pad col-md-12">
+							
+										<div class="m-signature-pad--body">
+											<canvas></canvas>
+										</div>
+										<div class="clearfix mt155"></div>
+										
+										<div class="col-md-12"><label class="error" id="signature_err"></label></div>
+										
+										<div class="m-signature-pad--footer col-md-12">
+																			
+											<div class="col-md-4">
+												<button type="button" class="btn btn-primary mr5 clear left" data-action="clear">Clear</button>
+											</div>
+											
+											<div class="description col-md-4">Sign above</div>
+											
+											<div class="col-md-4">
+												<button type="button" class="btn btn-primary mr5 save right" data-action="save">Save</button>
+											</div>
+											
+										</div>
+										
+									</div>
+																		
+								</div>
+							</div>
+							
+	<% end %>
+<% end %>							
+										
+						</div>	
+					</div>	
+				</div>
+<!-- digital signature form end -->				
+				
+			</section>
+		</div>
+	</div>
+</div>
+
 
 <script type="text/javascript">
   // Profile form validation
@@ -336,10 +422,6 @@
   .error-msg, label.error {
     color: #cc0000 !important;
     font-size: 12px !important;
-  }
-  div.error, div.notice {
-    text-align: center;
-    margin-left: 265px;
   }
 </style>
 

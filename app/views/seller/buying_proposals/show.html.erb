@@ -4,93 +4,104 @@
 	<% title = 'Buying Proposal Details' %>
 <% end %>
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <h1><%= title %></h1>
-    <ol class="breadcrumb">
-      <li><a href="<%= seller_dashboard_path%>">Home</a></li>
-      <li class="active"><%= title %></li>
-    </ol>
-  </section>
-
-  <!-- Main content -->
-  <section class="content myprofile-content buy-req-more">
-      <!-- /.row -->
-      <div class="row">
-        <div class="col-lg-7 col-xs-12 myprofile-left">
-          <div class="mp-form-box">
-            <div class="form-group">
-              <label for="fname">Buying request SNO</label>
-              <%=@buying_proposal.try(:buying_request).try(:identifier) %>
-            </div>
-
-            <div class="form-group">
-              
-              <% if params[:action] == 'received_proposals_show'  %>
-					<label for="fname">Proposal sender name</label>
-					<%= @buying_proposal.try(:user).try(:profile).try(:first_name) + ' ' + @buying_proposal.try(:user).try(:profile).try(:last_name) %>
-			  <% else %> 
-					<label for="fname">Buying request name</label>
-					<%=@buying_proposal.try(:buying_request).try(:name)%>
-			  <% end %>
-              
-              
-            </div>
-
-            <div class="form-group">
-              <label for="select">Price</label>
-              <%=number_to_currency(@buying_proposal.price, unit: raw(@buying_proposal.currency.symbol)) %>
-            </div>
-
-            <div class="form-group">
-              <label for="select">Currency</label>
-              <%= @buying_proposal.currency.name %>
-            </div>
-
-            <div class="form-group">
-              <label for="select">Delivery time</label>
-              <%= @buying_proposal.delivery_time.to_s %>
-            </div>
-
-            <div class="form-group">
-              <label for="select">Proposal</label>
-               <%= @buying_proposal.proposal.to_s.html_safe %>
-            </div>
-
-            <div class="form-group">
-              <label for="select">Sent At</label>
-              <%= @buying_proposal.created_at%>
-            </div>
-
-            <% if @buying_proposal.attachment.present? %>
-              <div class="form-group">
-                <label for="fname">Attachment</label>
-                <% if @buying_proposal.attachment.file.extension.downcase == 'pdf' %>
-                  <%= link_to @buying_proposal.attachment.url, target: "blank" do %>
-                    <i class="fa fa-paperclip"></i> <%= @buying_proposal.attachment.file.filename%>
-                  <% end %>
-                <% else %>
-                  <%= image_tag @buying_proposal.attachment.url, height: 50, width: 50 %>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-          <div class="form-group">
-			  
-				<% if params[:action] == 'received_buying_request_proposals_show'  %>
-					<%=link_to "back", seller_received_proposals_path, class: "btn btn-default custom-btn fnone" %>
-				<% else %> 
-					<%=link_to "back", seller_buying_proposals_path, class: "btn btn-default custom-btn fnone" %>
-				<% end %>
-				
-          </div>
-        </div>        
-      </div>
-
-    <!-- /.row -->
-  </section>
-  <!-- /.content -->
+<div class="page page-dashboard">
+	<ol class="breadcrumb breadcrumb-small">
+		<li><a href="<%= seller_dashboard_path %>">Home</a></li>
+		<li class="active"><%= title %></li>
+	</ol>
+	
+	<div class="page-wrap">
+		
+		<div class="row">
+			<!-- dashboard header -->
+			<div class="col-md-12">
+				<div class="dash-head clearfix mb20">
+					<div class="left">
+						<h4 class="mb5 text-light"><%= title %></h4>
+					</div>
+				</div>
+			</div>
+		</div> <!-- #end row -->
+		
+		<!-- row -->
+		<div class="row">
+			<!-- Basic Table -->
+			<div class="table-responsive col-md-12">
+				<div class="panel-lined panel-hovered">
+					
+					<table class="table table-bordered table-striped">
+								
+						<tbody>
+							<tr>
+								<th class="text-nowrap" scope="row" style="width: 40%;">Buying Request S.NO.</th>
+								<td><%=@buying_proposal.try(:buying_request).try(:identifier) %></td>
+							</tr>
+							
+							<tr>
+								<% if params[:action] == 'received_proposals_show'  %>
+									<th class="text-nowrap" scope="row">Proposal Sender Name</th>
+									<td><%= @buying_proposal.try(:user).try(:profile).try(:first_name) + ' ' + @buying_proposal.try(:user).try(:profile).try(:last_name) %></td>
+								<% else %> 
+									<th class="text-nowrap" scope="row">Buying Request Name</th>
+									<td><%=@buying_proposal.try(:buying_request).try(:name)%></td>
+								<% end %>
+							</tr>
+							
+							<tr>
+								<th class="text-nowrap" scope="row">Price</th>
+								<td><%=number_to_currency(@buying_proposal.price, unit: raw(@buying_proposal.currency.symbol)) %></td>
+							</tr>
+							
+							<tr>
+								<th class="text-nowrap" scope="row">Currency</th>
+								<td><%= @buying_proposal.currency.name %></td>
+							</tr>
+							
+							<tr>
+								<th class="text-nowrap" scope="row">Delivery Time</th>
+								<td><%= @buying_proposal.delivery_time.to_s %></td>
+							</tr>
+							
+							<tr>
+								<th class="text-nowrap" scope="row">Proposal</th>
+								<td><%= @buying_proposal.proposal.to_s.html_safe %></td>
+							</tr>
+							
+							<tr>
+								<th class="text-nowrap" scope="row">Sent At</th>
+								<td><%= @buying_proposal.created_at%></td>
+							</tr>
+							
+							<% if @buying_proposal.attachment.present? %>
+								<tr>
+									<th class="text-nowrap" scope="row">Attachment</th>
+									<td>
+										<% if @buying_proposal.attachment.file.extension.downcase == 'pdf' %>
+											<%= link_to @buying_proposal.attachment.url, target: "blank" do %>
+												<i class="fa fa-paperclip"></i> <%= @buying_proposal.attachment.file.filename%>
+											<% end %>
+										<% else %>
+											<%= image_tag @buying_proposal.attachment.url, height: 50, width: 50 %>
+										<% end %>
+									</td>
+								</tr>
+							<% end %>
+							
+							<tr>
+								<td colspan="2" class="text-right">
+									<% if params[:action] == 'received_buying_request_proposals_show'  %>
+										<%=link_to "Back", seller_received_proposals_path, class: "btn btn-primary mr5" %>
+									<% else %> 
+										<%=link_to "Back", seller_buying_proposals_path, class: "btn btn-primary mr5" %>
+									<% end %>
+								</td>
+							</tr>
+							
+						</tbody>
+					</table>
+					
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-<!-- /.content-wrapper -->

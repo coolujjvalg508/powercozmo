@@ -196,6 +196,14 @@ p.response-msg { word-wrap: break-word; }
 	white-space: nowrap;
 }
 
+.error-msg, label.error {
+    color: #cc0000 !important;
+    font-size: 12px !important;
+ }
+ 
+ .height200{ height: 200px !important; }
+ 
+ .file-upload input[type="file"] {width: auto !important;}
 
 
 
