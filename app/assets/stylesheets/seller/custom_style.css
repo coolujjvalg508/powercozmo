@@ -169,7 +169,7 @@ p.response-msg { word-wrap: break-word; }
 .unread-msg-top img{width: 40px;}
 .equipment-content .eqp-form-box .upload-image{margin-right: 10px; width: 45% !important;}
 
-.btn-primary{background-color: #3f51b5 !important; border-color: #3f51b5 !important;}
+.btn-primary{background-color: #2196f3 !important; border-color: #2196f3 !important;}
 .equipment-content .eqp-form-box .tips-for-imgupload{width: 110px !important;}
 .img-add{position: relative !important; top: 40% !important;}
 .equipment-content .eqp-form-box .upload-image{margin-top: 20px;}
@@ -195,15 +195,15 @@ p.response-msg { word-wrap: break-word; }
 	vertical-align: baseline;
 	white-space: nowrap;
 }
-
 .error-msg, label.error {
     color: #cc0000 !important;
     font-size: 12px !important;
  }
- 
- .height200{ height: 200px !important; }
- 
- .file-upload input[type="file"] {width: auto !important;}
+.height200{ height: 200px !important; }
+.file-upload input[type="file"] {width: auto !important;}
+.site-head{background: #03a9f4 !important;}
+.app.theme-four .site-head{background: #03a9f4 !important;}
+.main-container .nav-wrap .nav-head{background: #0288d1 !important;}
 
 
 
