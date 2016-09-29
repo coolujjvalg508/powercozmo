@@ -52,7 +52,7 @@
 											</td>
 											<td><%= equipment.availble_for.strftime("%d-%b-%Y %H:%M") if equipment.availble_for.present? %></td>
 											<td class="text-center">
-												<label class="label label-<%= ['closed','sold','inactive'].include?(equipment.status.to_s) ? 'danger' : 'success' %> mr5"><%= equipment.status.humanize %></label>
+												<label class="label label-<%= ['closed','sold','inactive'].include?(equipment.status.to_s) ? 'danger' : 'success' %>"><%= equipment.status.humanize %></label>
 												
 											</td>
 											<td class="text-center">

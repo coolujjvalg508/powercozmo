@@ -1,9 +1,7 @@
 class Seller::EquipmentController < Seller::BaseController
   before_action :find_equipment, only: [:edit,:update,:show,:destroy]
   before_action :get_equipment_form_data, only: [:new, :create,:edit,:update]
-  
-  layout 'user'
-  
+    
   def index
   	@equipments = current_user.equipment.all.order('created_at desc').page(params[:page]).per(10)
   end

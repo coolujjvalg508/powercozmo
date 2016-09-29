@@ -1,68 +1,80 @@
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <h1>Order Details </h1>
-    <ol class="breadcrumb">
-      <li><%= link_to "Home", seller_dashboard_path %></li>
-      <li class="active">Order Details</li>
-    </ol>
-  </section>
-
-  <!-- Main content -->
-  <section class="content new-msg-content">
-      <!-- /.row -->
-      <div class="row">
-        <div class="col-lg-12 msg-info-area">
-			
-			<% if @order.present? %>
-			
-			<%= link_to "<i class='fa fa-download'></i> Download PDF".html_safe, seller_order_path(@order, format: :pdf), class: "pull-right" %>	 	
-			
-			<% if current_user.id == @order.user_id %>
-			
-				<%= link_to "<i class='fa fa-download'></i> Download Invoice".html_safe, seller_order_invoice_path(@order, format: :pdf), class: "pull-right", style: "margin-right: 25px;" %>
-			
-			<% end %>
-			
-			<div class="new-msg-form-box">
-				
-				<div class="detail-list-row">
-					<div class="detail-list-l text-bold">Order Status</div>
-					<div class="detail-list-r"><%= @order.status %></div>
-					<div class="clearfix"></div>
-				</div>
-				
-				<% if current_user.id == @order.user_id && @order.status == 'Seller Confirmed' %>
-				
-					<%= form_for(@order, url: seller_orders_update_path(@order), html: { method: :put, :id => "update_status" }) do |f| %>
-				
-						<%= f.submit 'Accept', class: "btn btn-default custom-btn sent-mail-btn fnone" %>
-						<%= f.submit 'Reject', class: "btn btn-default custom-btn sent-mail-btn fnone reject-btn" %>
+<div class="page page-forms-elements page-dashboard">
+	<ol class="breadcrumb breadcrumb-small">
+		<li><a href="<%= seller_dashboard_path %>">Home</a></li>
+		<li><a href="<%= seller_orders_path %>">Orders</a></li>
+		<li class="active">Order Details</li>
+	</ol>
+	
+	<div class="page-wrap">
+		
+		<div class="row">
+			<!-- dashboard header -->
+			<div class="col-md-12">
+				<div class="dash-head clearfix mb20">
+					<div class="left">
+						<h4 class="mb5 text-light">Order Details</h4>
+					</div>
+					<%= link_to "<i class='fa fa-download'></i> Download PDF".html_safe, seller_order_path(@order, format: :pdf), class: "pull-right" %>	
 					
+					<% if current_user.id == @order.user_id %>
+						<%= link_to "<i class='fa fa-download'></i> Download Invoice".html_safe, seller_order_invoice_path(@order, format: :pdf), class: "pull-right", style: "margin-right: 25px;" %>
 					<% end %>
-				
-				<% end %>
-				
-			</div>
-			
-			
-			<div class="new-msg-form-box">
-				<div class="detail-list-row">
-					<div class="detail-list-l text-bold">Contacts</div>
-					<div class="clearfix"></div>
 				</div>
+			</div>
+		</div> <!-- #end row -->
+		
+		<!-- row -->
+		<div class="row">
+			<section class="content myprofile-content">
+	
+<!-- Status start -->								
+				<div class="col-sm-12 col-md-6">	
+					<div class="panel panel-default panel-hovered panel-stacked mb30">
+						<div class="panel-body">
+							
+							<div class="form-group">
+								<label class="col-md-6 control-label text-bold">Order Status</label>
+								<div class="col-md-6">
+									<%= @order.status %>
+								</div>
+							</div>
+							
+							<div class="clearfix mt20 right">
+								
+								<% if current_user.id == @order.user_id && @order.status == 'Seller Confirmed' %>
 				
-				<% if current_user.id == @order.equipment.user_id %>
-					<!-- If order page opened at seller end shown seller details -->
-					<%= form_for(@order.seller, url: seller_orders_update_path(@order), html: { method: :put, :id => "update_profile" }) do |f| %>
+									<%= form_for(@order, url: seller_orders_update_path(@order), html: { method: :put, :id => "update_status" }) do |f| %>
+								
+										<button type="submit" class="btn btn-success mr5" value="Accept" name="commit">Accept</button>
+										<button type="submit" class="btn btn-danger mr5" value="Reject" name="commit">Reject</button>
+									<% end %>
+								
+								<% end %>
+								
+							</div>
+										
+						</div>	
+					</div>	
+				</div>			
+<!-- Status end -->				
+				
+				<div class="clearfix"></div>
+<!-- Contacts start -->			
+
+				<div class="col-sm-12 col-md-12">	
+					<div class="panel panel-default panel-hovered panel-stacked mb30">
+						<div class="panel-body">
+							
+							<div class="col-sm-12 col-md-12 text-bold mb20">Contacts :</div>
+							
+<% if current_user.id == @order.equipment.user_id %>
+	<!-- If order page opened at seller end shown seller details -->
+	<%= form_for(@order.seller, url: seller_orders_update_path(@order), html: { method: :put, :id => "update_profile" }) do |f| %>
+		<%= f.fields_for :profile do |profile_form| %>
 					
-						<%= f.fields_for :profile do |profile_form| %>
-						
-							<div class="detail-list-row">
-								<div class="detail-list-l">Contact Name</div>
-								<div class="detail-list-r">
-									
+							<div class="form-group">
+								<label class="col-md-4 control-label text-bold">Contact Name<sup>*</sup></label>
+								<div class="col-md-8">
 									<%= profile_form.text_field :first_name, autocomplete: "off", class: 'form-control', style: '    float: left; width: 45%; margin-right: 10px;', id: 'firstname', placeholder: 'Enter First Name' %>
 									
 									<%= profile_form.text_field :last_name, autocomplete: "off", class: 'form-control', style: '    float: left; width: 45%;', id: 'lastname', placeholder: 'Enter Last Name' %>
@@ -70,50 +82,46 @@
 									<% if @user %>
 										<div class="clearfix"></div>
 										<div style="float: left; width: 45%; margin-right: 10px;">
-											<%= @user.errors[:first_name].first if @user.errors.any? %>
+											<label class="error"><%= @user.errors[:first_name].first if @user.errors.any? %></label>
 										</div>
 										<div style="float: left; width: 45%;">
-											<%= @user.errors[:last_name].first if @user.errors.any? %>
+											<label class="error"><%= @user.errors[:last_name].first if @user.errors.any? %></label>
 										</div>
 									<% end %>
-																	
 								</div>
-								<div class="clearfix"></div>
 							</div>
 							
-							<div class="detail-list-row">
-								<div class="detail-list-l">Company Name</div>
-								<div class="detail-list-r">
-																	
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Company Name<sup>*</sup></label>
+								<div class="col-md-8">
 									<%= profile_form.text_field :company_name, autocomplete: "off", class: 'form-control', id: 'companyname', placeholder: 'Enter Company Name' %>
 									
 									<% if @user %>
 										<div class="clearfix"></div>
 										<div>
-											<%= @user.errors[:company_name].first if @user.errors.any? %>
+											<label class="error"><%= @user.errors[:company_name].first if @user.errors.any? %></label>
 										</div>
 									<% end %>
-									
 								</div>
-								<div class="clearfix"></div>
 							</div>
-					
-							<div class="form-group pull-left mrg-btm-zero">
-								<%= f.submit "Update", class: "btn btn-default custom-btn" %>
-							</div>	
-						<% end %>
-					<% end %>
+							
+							<div class="clearfix mt20 right">
+							   <button type="submit" class="btn btn-primary mr5" value="Update" name="commit">Update</button>
+							</div>
+							
+		<% end %>
+	<% end %>
 								
-				<% else %>
-					
-					<!-- If order page opened at buyer end shown buyer details -->			
-					<%= form_for(@order.user, url: seller_orders_update_path(@order), html: { method: :put, :id => "update_profile" }) do |f| %>
-						<%= f.fields_for :profile do |profile_form| %>
-						
-							<div class="detail-list-row">
-								<div class="detail-list-l">Contact Name</div>
-								<div class="detail-list-r">
-									
+<% else %>
+	<!-- If order page opened at buyer end shown buyer details -->			
+	<%= form_for(@order.user, url: seller_orders_update_path(@order), html: { method: :put, :id => "update_profile" }) do |f| %>
+		<%= f.fields_for :profile do |profile_form| %>
+		
+							<div class="form-group">
+								<label class="col-md-4 control-label text-bold">Contact Name<sup>*</sup></label>
+								<div class="col-md-8">
 									<%= profile_form.text_field :first_name, autocomplete: "off", class: 'form-control', style: 'float: left; width: 45%; margin-right: 10px;', id: 'firstname', placeholder: 'Enter First Name' %>
 									
 									<%= profile_form.text_field :last_name, autocomplete: "off", class: 'form-control', style: ' float: left; width: 45%;', id: 'lastname', placeholder: 'Enter Last Name' %>
@@ -121,321 +129,375 @@
 									<% if @user %>
 										<div class="clearfix"></div>
 										<div style="float: left; width: 45%; margin-right: 10px;">
-											<%= @user.errors[:first_name].first if @user.errors.any? %>
+											<label class="error"><%= @user.errors[:first_name].first if @user.errors.any? %></label>
 										</div>
 										<div style="float: left; width: 45%;">
-											<%= @user.errors[:last_name].first if @user.errors.any? %>
+											<label class="error"><%= @user.errors[:last_name].first if @user.errors.any? %></label>
 										</div>
 									<% end %>
-																	
 								</div>
-								<div class="clearfix"></div>
 							</div>
 							
-							<div class="detail-list-row">
-								<div class="detail-list-l">Company Name</div>
-								<div class="detail-list-r">
-																	
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Company Name<sup>*</sup></label>
+								<div class="col-md-8">
 									<%= profile_form.text_field :company_name, autocomplete: "off", class: 'form-control', id: 'companyname', placeholder: 'Enter Company Name' %>
 									
 									<% if @user %>
 										<div class="clearfix"></div>
 										<div>
-											<%= @user.errors[:company_name].first if @user.errors.any? %>
+											<label class="error"><%= @user.errors[:company_name].first if @user.errors.any? %></label>
 										</div>
 									<% end %>
-									
 								</div>
-								<div class="clearfix"></div>
 							</div>
-					
-							<div class="form-group pull-left mrg-btm-zero">
-								<%= f.submit "Update", class: "btn btn-default custom-btn" %>
-							</div>	
-						<% end %>
-					<% end %>
-				
-				<% end %>	
-				
-			</div>
-			
-			
-			
-			<div class="new-msg-form-box">
-				<div class="detail-list-row">
-					<div class="detail-list-l text-bold">Equipment</div>
-					<div class="clearfix"></div>
-				</div>
-				
-				<div class="detail-list-row">
-					<div class="detail-list-l">Equipment Name</div>
-					<div class="detail-list-r"><%= @order.equipment.name %></div>
-					<div class="clearfix"></div>
-				</div>
-				
-				<div class="detail-list-row">
-					<div class="detail-list-l">Equipment SN</div>
-					<div class="detail-list-r"><%= @order.equipment.identifier %></div>
-					<div class="clearfix"></div>
-				</div>
-				
-				<div class="detail-list-row">
-					<div class="detail-list-l">Equipment Condition</div>
-					<div class="detail-list-r"><%= @order.equipment.condition %></div>
-					<div class="clearfix"></div>
-				</div>
-				
-				<div class="detail-list-row">
-					<div class="detail-list-l">Equipment Link On Site</div>
-					<div class="detail-list-r"><%= link_to equipment_details_url(@order.equipment.id), equipment_details_path(@order.equipment.id) %></div>
-					<div class="clearfix"></div>
-				</div>
-				
-				<div class="detail-list-row">
-					<div class="detail-list-l">Description</div>
-					<div class="detail-list-r"><%= @order.equipment.description %></div>
-					<div class="clearfix"></div>
-				</div>
-				
-			</div>
-			
-			
-			<div class="new-msg-form-box">
-				<div class="detail-list-row">
-					<div class="detail-list-l text-bold">Price</div>
-					<div class="clearfix"></div>
-				</div>
-				
-				<div class="detail-list-row">
-					<div class="detail-list-l">Amount Will Be Paid From Buyer</div>
-					<div class="detail-list-r"><%= raw(@order.equipment.currency) + @order.price.to_s %></div>
-					<div class="clearfix"></div>
-				</div>
-				
-				<div class="detail-list-row">
-					<div class="detail-list-l">Power Cozmo Commission</div>
-					<div class="detail-list-r">
-						<% commission = (@order.price * @order.commission) / 100 %>
-						<%= raw(@order.equipment.currency) + commission.to_s %>
-					</div>
-					<div class="clearfix"></div>
-				</div>
-				
-				<div class="detail-list-row">
-					<div class="detail-list-l">Amount Will Be Paid To Seller</div>
-					<div class="detail-list-r">
-						<% seller_amount = @order.price - commission %>
-						<%= raw(@order.equipment.currency) + seller_amount.to_s %>
-					</div>
-					<div class="clearfix"></div>
-				</div>
-				
-			</div>
-			
-			
-			<div class="row">
-					<div class="col-lg-12 msg-info-area">
-					  <div>
-						<div class="pull-left"><h3>Shipping Details</h3></div>
-						<div class="pull-right" style="margin-top: 20px;"><%= link_to "<i class='fa fa-edit'></i>Update Shipping".html_safe, seller_update_shipping_path(@order) %></div>        
-					  </div>
-					  <div class="new-msg-form-box">
-					  
-					   <div class="detail-list-row">
-						  <div class="detail-list-l">Number Of Packages</div>
-						  <div class="detail-list-r big-msg"><%= @order.no_of_packages %></div>
-						  <div class="clearfix"></div>
-						</div>
-					  
-						<div class="detail-list-row">
-						  <div class="detail-list-l">Shipping Method</div>
-						  <div class="detail-list-r big-msg"><%= @order.shipping_method %></div>
-						  <div class="clearfix"></div>
-						</div>
-												
-					  </div>
-					</div>
-				</div>
-				
-				
-				<div class="new-msg-form-box">
-					<div class="detail-list-row">
-						<div class="detail-list-l text-bold">Packages Dimensions :</div>						
-						<div class="clearfix"></div>
-					</div>
-					
-					<div class="detail-list-row">
-						<div class="detail-list-l">&nbsp;</div>
-						<div class="detail-list-r text-bold">
-							<span class="shipping-detail-edit">Length</span>
-							<span class="shipping-detail-edit">Width</span>
-							<span class="shipping-detail-edit">Height</span>
-							<span class="shipping-detail-edit">Weight</span>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					
-					<% i = 0 %>
-					
-					<% @order.shipping_package.each_with_index do |s_package,index| %>
-				
-						<% i = i + 1 %>
-						<div class="detail-list-row" >
-							<div class="detail-list-l">Package <%= i %></div> 
-							<div class="detail-list-r">
-								<span class="shipping-detail-edit"><%= s_package.length %></span>
-								<span class="shipping-detail-edit"><%= s_package.width %></span>
-								<span class="shipping-detail-edit"><%= s_package.height %></span>
-								<span class="shipping-detail-edit"><%= s_package.weight %></span>		
+							
+							<div class="clearfix mt20 right">
+							   <button type="submit" class="btn btn-primary mr5" value="Update" name="commit">Update</button>
 							</div>
+							
+									
+		<% end %>
+	<% end %>
+				
+<% end %>				
+							
+										
+						</div>	
+					</div>	
+				</div>
+	
+<!-- Contacts end -->	
+
+				<div class="clearfix"></div>
+<!-- Equipment Details start -->			
+
+				<div class="col-sm-12 col-md-12">	
+					<div class="panel panel-default panel-hovered panel-stacked mb30">
+						<div class="panel-body">
+														
+							<div class="form-group">
+								<label class="col-md-4 control-label text-bold">Equipment Name</label>
+								<div class="col-md-8"><%= @order.equipment.name %></div>
+							</div>
+							
 							<div class="clearfix"></div>
-						</div>
-					<% end %>
-				</div>
-			  
-			  
-				<div class="new-msg-form-box">
-					<div class="detail-list-row">
-						<div class="detail-list-l text-bold">Pickup Location</div>
-						<div class="clearfix"></div>
-					</div>
-					
-					<div class="detail-list-row">
-						<div class="detail-list-l">Country</div>
-						<div class="detail-list-r">
-							<% if @order.pickup_country %>
-								<%= @order.pickup_country.name %>
-							<% end %>
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Equipment S.NO.</label>
+								<div class="col-md-8"><%= @order.equipment.identifier %></div>
+							</div>	
+							
+							<div class="clearfix"></div>
+														
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Equipment Condition</label>
+								<div class="col-md-8"><%= @order.equipment.condition %></div>
 							</div>
-						<div class="clearfix"></div>
-					</div>
+							
+							<div class="clearfix"></div>	
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Equipment Link On Site</label>
+								<div class="col-md-8"><%= link_to equipment_details_url(@order.equipment.id), equipment_details_path(@order.equipment.id) %></div>
+							</div>	
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Equipment Description</label>
+								<div class="col-md-8"><%= @order.equipment.description %></div>
+							</div>		
 					
-					<div class="detail-list-row">
-						<div class="detail-list-l">City</div>
-						<div class="detail-list-r"><%= @order.pickup_city %></div>
-						<div class="clearfix"></div>
-					</div>
-					
-					<div class="detail-list-row">
-						<div class="detail-list-l">Port</div>
-						<div class="detail-list-r"><%= @order.pickup_port %></div>
-						<div class="clearfix"></div>
-					</div>
+						</div>	
+					</div>	
 				</div>
+	
+<!-- Equipment Details end -->
+
+				<div class="clearfix"></div>
+<!-- Price Details start -->			
+
+				<div class="col-sm-12 col-md-12">	
+					<div class="panel panel-default panel-hovered panel-stacked mb30">
+						<div class="panel-body">
+												
+							<div class="col-sm-12 col-md-12 text-bold mb20">Price :</div>					
+														
+							<div class="form-group">
+								<label class="col-md-4 control-label text-bold">Amount Will Be Paid From Buyer</label>
+								<div class="col-md-8"><%= raw(@order.equipment.currency) + @order.price.to_s %></div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Power Cozmo Commission</label>
+								<div class="col-md-8">
+									<% commission = (@order.price * @order.commission) / 100 %>
+									<%= raw(@order.equipment.currency) + commission.to_s %>
+								</div>
+							</div>	
+							
+							<div class="clearfix"></div>
+														
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Amount Will Be Paid To Seller</label>
+								<div class="col-md-8">
+									<% seller_amount = @order.price - commission %>
+									<%= raw(@order.equipment.currency) + seller_amount.to_s %>
+								</div>
+							</div>
+							
+						</div>	
+					</div>	
+				</div>
+	
+<!-- Price Details end -->	
 				
-				<div class="new-msg-form-box">
-					<div class="detail-list-row">
-						<div class="detail-list-l text-bold">Delivery Location</div>
-						<div class="clearfix"></div>
-					</div>
-					
-					<div class="detail-list-row">
-						<div class="detail-list-l">Country</div>
-						<div class="detail-list-r">
-							<% if @order.delivery_country %>
-								<%= @order.delivery_country.name %>
-							<% end %>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					
-					<div class="detail-list-row">
-						<div class="detail-list-l">City</div>
-						<div class="detail-list-r"><%= @order.delivery_city %></div>
-						<div class="clearfix"></div>
-					</div>
-					
-					<div class="detail-list-row">
-						<div class="detail-list-l">Port</div>
-						<div class="detail-list-r"><%= @order.delivery_port %></div>
-						<div class="clearfix"></div>
-					</div>
-				</div>		
-			
-			  <% if @enquiry %>
-				  <% @enquiry.responses.each_with_index do |enquiry_response,index| %>    
-					  <div class="row">
-						<div class="col-lg-12 msg-info-area">
-						  <%= "<h3>Responses</h3>".html_safe if index==0%>          
-						  <div class="new-msg-form-box">
-						  
-						   <div class="detail-list-row">
-							  <div class="detail-list-l">From</div>
-							  <div class="detail-list-r big-msg">
-								<%= enquiry_response.user.profile.first_name + ' ' + enquiry_response.user.profile.last_name %>
-							  </div>
-							  <div class="clearfix"></div>
+				<div class="clearfix"></div>
+				
+				<div class="col-sm-12 col-md-12 mb10">	
+					<span class="text-bold">Shipping Details</span>  
+					<%= link_to "<i class='fa fa-edit'></i>Update Shipping".html_safe, seller_update_shipping_path(@order), class: 'right' %>
+				</div>	
+				
+				<div class="clearfix"></div>
+<!-- Shipping Details start -->			
+
+				<div class="col-sm-12 col-md-12">	
+					<div class="panel panel-default panel-hovered panel-stacked mb30">
+						<div class="panel-body">				
+														
+							<div class="form-group">
+								<label class="col-md-4 control-label text-bold">Number Of Packages</label>
+								<div class="col-md-8">
+									<% if @order.no_of_packages != 0 %>
+										<%= @order.no_of_packages %>
+									<% end %>
+								</div>
 							</div>
-						  
-							<div class="detail-list-row">
-							  <div class="detail-list-l">Message</div>
-							  <div class="detail-list-r big-msg">
-								<%= enquiry_response.message.to_s.html_safe %>
-							  </div>
-							  <div class="clearfix"></div>
-							</div>
-							<div class="detail-list-row">
-							  <div class="detail-list-l">Date</div>
-								<div class="detail-list-r"><%=format_time(enquiry_response.created_at)%><!-- 10/03/2016 --></div>
-								<div class="clearfix"></div>
-							</div>
-						  </div>
-						</div>
-					  </div>
-				  <% end %>
-			  <% end %>
-			  
-			  			  
-			  <%= form_for(@order, url: seller_orders_update_path(@order), html: { method: :put, :id => "update_remark" }) do |f| %>
-			  <div class="new-msg-form-box">
-				  
-					<div class="detail-list-row">
-						<div class="detail-list-l text-bold">Terms</div>
-						<div class="clearfix"></div>
-					</div>
-				  
-					<div class="detail-list-row">
-						<div class="detail-list">
-								
-							<% if current_user.id == @order.equipment.user_id %>	
-											
-								<%= f.text_area :seller_remark, autocomplete: "off", class: 'form-control', id: 'seller_remark', placeholder: 'Enter Remarks' %>
-															
-							<% else %>
 							
-								<%= f.text_area :buyer_remark, autocomplete: "off", class: 'form-control', id: 'buyer_remark', placeholder: 'Enter Remarks' %>
-								
-							<% end %>	
+							<div class="clearfix"></div>
 							
-						</div>
-						<div class="clearfix"></div>
-					</div>
-			
-					<div class="form-group pull-left mrg-btm-zero">
-						<%= f.submit "Submit", class: "btn btn-default custom-btn" %>
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Shipping Method</label>
+								<div class="col-md-8"><%= @order.shipping_method %></div>
+							</div>	
+							
+						</div>	
+					</div>	
+				</div>
+
+<!-- Packages Dimensions start -->	
+				
+				<div class="col-sm-12 col-md-12">	
+					<div class="panel panel-default panel-hovered panel-stacked mb30 basic-table">
+						
+						<div class="panel-body">				
+									
+							<div class="col-sm-12 col-md-12 text-bold mb20">Packages Dimensions :</div>	
+							
+							<table class="table">
+								<thead>
+									<tr>
+										<th></th>
+										<th>Length</th>
+										<th>Width</th>
+										<th>Height</th>
+										<th>Weight</th>										
+									</tr>
+								</thead>
+								
+								<tbody>
+									<% i = 0 %>
+									<% @order.shipping_package.each_with_index do |s_package,index| %>
+										<% i = i + 1 %>
+										<tr>
+											<td>Package <%= i %></td>
+											<td><%= s_package.length %></td>
+											<td><%= s_package.width %></td>
+											<td><%= s_package.height %></td>
+											<td><%= s_package.weight %></td>				
+										</tr>
+									<% end %>
+								</tbody>
+							</table>		
+						</div>	
+					</div>	
+				</div>
+<!-- Packages Dimensions end -->
+
+				<div class="clearfix"></div>
+<!-- Pickup Details start -->			
+
+				<div class="col-sm-12 col-md-6">	
+					<div class="panel panel-default panel-hovered panel-stacked mb30">
+						<div class="panel-body">				
+												
+							<div class="col-sm-12 col-md-12 text-bold mb20">Pickup Location :</div>						
+														
+							<div class="form-group">
+								<label class="col-md-4 control-label text-bold">Country</label>
+								<div class="col-md-8">
+									<% if @order.pickup_country %>
+										<%= @order.pickup_country.name %>
+									<% end %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">City</label>
+								<div class="col-md-8"><%= @order.pickup_city %></div>
+							</div>	
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Port</label>
+								<div class="col-md-8"><%= @order.pickup_port %></div>
+							</div>	
+							
+						</div>	
 					</div>	
 				</div>	
-				<% end %>
+<!-- Pickup Details end -->		
+
+<!-- Delivery Details start -->			
+
+				<div class="col-sm-12 col-md-6">	
+					<div class="panel panel-default panel-hovered panel-stacked mb30">
+						<div class="panel-body">				
+												
+							<div class="col-sm-12 col-md-12 text-bold mb20">Delivery Location :</div>						
+														
+							<div class="form-group">
+								<label class="col-md-4 control-label text-bold">Country</label>
+								<div class="col-md-8">
+									<% if @order.delivery_country %>
+										<%= @order.delivery_country.name %>
+									<% end %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">City</label>
+								<div class="col-md-8"><%= @order.delivery_city %></div>
+							</div>	
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Port</label>
+								<div class="col-md-8"><%= @order.delivery_port %></div>
+							</div>	
+							
+						</div>	
+					</div>	
+				</div>	
+<!-- Delivery Details end -->
+	
+<!-- Shipping Details end -->
+
+<!-- enquiry start -->
+
+<% if @enquiry %>
+				<div class="clearfix"></div>
 				
-				<% if current_user.profile.digital_signature %>
-					<div class="detail-list-row pull-right text-center">
+				<div class="col-sm-12 col-md-12 mb10 text-bold">Responses</div>		
+	<% @enquiry.responses.each_with_index do |enquiry_response,index| %>
+		
+				<div class="col-sm-12 col-md-12">	
+					<div class="panel panel-default panel-hovered panel-stacked mb30">
+						<div class="panel-body">									
+														
+							<div class="form-group">
+								<label class="col-md-4 control-label text-bold">From</label>
+								<div class="col-md-8">
+									<%= enquiry_response.user.profile.first_name + ' ' + enquiry_response.user.profile.last_name %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Date</label>
+								<div class="col-md-8"><%=format_time(enquiry_response.created_at)%><!-- 10/03/2016 --></div>
+							</div>	
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Message</label>
+								<div class="col-md-8"><%= enquiry_response.message.to_s.html_safe %></div>
+							</div>	
+							
+						</div>	
+					</div>	
+				</div>	
+				<div class="clearfix"></div>
+		
+	<% end %>
+<% end %> 
+<!-- enquiry end -->
+				<div class="clearfix"></div>	
+<!-- Remarks start -->
+<%= form_for(@order, url: seller_orders_update_path(@order), html: { method: :put, :id => "update_remark" }) do |f| %>
+
+				<div class="col-sm-12 col-md-12">	
+					<div class="panel panel-default panel-hovered panel-stacked mb30">
+						<div class="panel-body">									
+														
+							<div class="form-group">
+								<label class="col-md-4 control-label text-bold">Terms</label>
+								<div class="col-md-8">
+									<% if current_user.id == @order.equipment.user_id %>	
+											
+										<%= f.text_area :seller_remark, autocomplete: "off", class: 'form-control height200', id: 'seller_remark', placeholder: 'Enter Remarks' %>
+																	
+									<% else %>
+									
+										<%= f.text_area :buyer_remark, autocomplete: "off", class: 'form-control height200', id: 'buyer_remark', placeholder: 'Enter Remarks' %>
+										
+									<% end %>	
+								</div>
+							</div>
+							
+							<div class="clearfix mt20 right">
+							   <button type="submit" class="btn btn-primary mr5" value="Submit" name="commit">Submit</button>
+							</div>
+							
+						</div>	
+					</div>	
+				</div>
+
+<% end %>	
+<!-- Remarks end -->
+
+<!-- Signature start -->
+
+<% if current_user.profile.digital_signature %>
+			
+				<div class="clearfix"></div>
+				
+				<div class="col-sm-12 col-md-12 mb20">															
+					<div class="pull-right text-center">
 						<img style="width: 200px;" src="<%= current_user.profile.digital_signature %>" />
 						<br />
 						<%= current_user.profile.first_name + ' ' + current_user.profile.last_name %>
 					</div>
-				<% end %>
-			  		
-           <% else %>
-				<div class="new-msg-form-box">
-					<p style="text-align:center;margin-top: 8px;font-size:16px;">No order found.</p>
 				</div>	
-          <% end %>
-          
-        </div>
-      </div>
-    <!-- /.row -->
-   
-  </section>
-  <!-- /.content -->
+			
+<% end %>
+<!-- Signature end -->
+
+			</section>
+		</div>
+	</div>
 </div>
-<!-- /.content-wrapper -->

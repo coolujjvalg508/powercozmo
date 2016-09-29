@@ -1,7 +1,5 @@
 class Seller::BuyingProposalsController < Seller::BaseController
 	
-	layout 'user'
-	
 	def index
 		@proposals = current_user.buying_proposals.includes(:buying_request).order('created_at desc').page(params[:page])
 	end

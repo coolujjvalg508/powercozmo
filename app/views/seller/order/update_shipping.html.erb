@@ -1,213 +1,208 @@
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <h1>Update Shipping(<%= @order.equipment.name %>) </h1>
-    <ol class="breadcrumb">
-      <li><%= link_to "Home", seller_dashboard_path %></li>
-      <li><%= link_to "Order Details", seller_order_path(@order) %></li>
-      <li class="active">Update Shipping</li>
-    </ol>
-  </section>
+<div class="page page-forms-elements page-dashboard">
+	<ol class="breadcrumb breadcrumb-small">
+		<li><a href="<%= seller_dashboard_path %>">Home</a></li>
+		<li><%= link_to "Order Details", seller_order_path(@order) %></li>
+		<li class="active">Update Shipping</li>
+	</ol>
+	
+	<div class="page-wrap">
+		
+		<div class="row">
+			<!-- dashboard header -->
+			<div class="col-md-12">
+				<div class="dash-head clearfix mb20">
+					<div class="left">
+						<h4 class="mb5 text-light">Update Shipping : <%= @order.equipment.name %></h4>
+					</div>
+				</div>
+			</div>
+		</div> <!-- #end row -->
+		
+		<!-- row -->
+		<div class="row">
+			<section class="content myprofile-content">
 
-  <!-- Main content -->
-  <section class="content new-msg-content">
-      <!-- /.row -->
-      <div class="row">
-        <div class="col-lg-12 msg-info-area">
-			
-			<% if @order.present? %>
-			
-				<% if current_user.id == @order.equipment.user_id %>
-				
-					<%= form_for(@order, url: seller_save_shipping_path(@order), html: { method: :post, :id => "update_shipping" }) do |f| %>
-					
-					<%= hidden_field_tag "order[update_type]", 'seller' %>
-				
-					<div class="new-msg-form-box">
-					
-						<div class="detail-list-row">
-							<div class="detail-list-l">Pickup Country</div>
-							<div class="detail-list-r">
-								
-								<%= f.select :pickup_country_id, @countries.map{|id,name| [name,id] }, {prompt: 'Select Country'} %>
-																
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						
-						
-						<div class="detail-list-row">
-							<div class="detail-list-l">Pickup City</div>
-							<div class="detail-list-r">
-								
-								<%= f.text_field :pickup_city, autocomplete: "off", class: 'form-control', id: 'pickup_city', placeholder: 'Enter Pickup City' %>
-																								
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						
-						<div class="detail-list-row">
-							<div class="detail-list-l">Pickup Port</div>
-							<div class="detail-list-r">
-								
-								<%= f.text_field :pickup_port, autocomplete: "off", class: 'form-control', id: 'pickup_port', placeholder: 'Enter Pickup port' %>
-																
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						
-						
-						
-						<div class="detail-list-row">
-							<div class="detail-list-l text-bold">Packages Detail :</div>
-							<div class="detail-list-r"><%= link_to 'javascript:void(0);', class: "pull-right add-package", title: "Add More Packages"  do %>
-											<i class="fa fa-plus"></i><span> Add More</span>
-										<% end %>
-							</div>
+<% if current_user.id == @order.equipment.user_id %>		
+	<%= form_for(@order, url: seller_save_shipping_path(@order), html: { method: :post, :id => "update_shipping" }) do |f| %>
+		<%= hidden_field_tag "order[update_type]", 'seller' %>
+		
+				<div class="col-sm-12 col-md-12">	
+					<div class="panel panel-default panel-hovered panel-stacked mb30">
+						<div class="panel-body">
 							
-							<div class="clearfix"></div>
-						</div>
-						
-						<div class="detail-list-row">
-							<div class="detail-list text-bold">
-								<span class="shipping-detail-edit">Length</span>
-								<span class="shipping-detail-edit">Width</span>
-								<span class="shipping-detail-edit">Height</span>
-								<span class="shipping-detail-edit">Weight</span>
-																														
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						
-						
-						<% i = 0 %>
-						<%= f.fields_for :shipping_package do |s| %>
-						
-							<div id="package-list">	
-							<% @order.shipping_package.each_with_index do |s_package,index| %>
-						
-						        <% i = index + 1 %>
-								<div class="detail-list-row" id="package-list-<%= index %>">
-									<div class="detail-list">	
-										<%= s.text_field :length, autocomplete: "off", class: 'form-control shipping-detail-edit', id: 'length' + index.to_s, placeholder: 'Enter Length', value: s_package.length, name: 'order[shipping_package][' + index.to_s + '][length]' %>
-										
-										<%= s.text_field :width, autocomplete: "off", class: 'form-control shipping-detail-edit', id: 'width' + index.to_s, placeholder: 'Enter Width', value: s_package.width, name: 'order[shipping_package][' + index.to_s + '][width]' %>
-										
-										<%= s.text_field :height, autocomplete: "off", class: 'form-control shipping-detail-edit', id: 'height' + index.to_s, placeholder: 'Enter Height', value: s_package.height, name: 'order[shipping_package][' + index.to_s + '][height]' %>
-										
-										<%= s.text_field :weight, autocomplete: "off", class: 'form-control shipping-detail-edit', id: 'weight' + index.to_s, placeholder: 'Enter Weight', value: s_package.weight, name: 'order[shipping_package][' + index.to_s + '][weight]' %>
-										
-										<%= link_to 'javascript:void(0);', class: "pull-right remove-package", title: "Remove Package", data_reference: 'package-list-' + index.to_s  do %>
-											<i class="fa fa-remove"></i>
-										<% end %>
-																																
-									</div>
-									<div class="clearfix"></div>
+							<div class="form-group">
+								<label class="col-md-4 control-label text-bold">Pickup Country</label>
+								<div class="col-md-8">
+									<%= f.select :pickup_country_id, @countries.map{|id,name| [name,id] }, {prompt: 'Select Country'} %>
 								</div>
-							<% end %>
 							</div>
 							
-						<% end %>
-						
-						<input type="hidden" id="package-counter" value="<%= i %>">
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Pickup City</label>
+								<div class="col-md-8">
+									<%= f.text_field :pickup_city, autocomplete: "off", class: 'form-control', id: 'pickup_city', placeholder: 'Enter Pickup City' %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Pickup Port</label>
+								<div class="col-md-8">
+									<%= f.text_field :pickup_port, autocomplete: "off", class: 'form-control', id: 'pickup_port', placeholder: 'Enter Pickup port' %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt30">
+								<div class="col-md-12">
+									<label class="control-label text-bold">Packages Detail :</label>
+									<%= link_to 'javascript:void(0);', class: "pull-right add-package", title: "Add More Packages"  do %>
+												<i class="fa fa-plus"></i><span> Add More</span>
+											<% end %>
+								</div>
+								<div class="col-md-12 basic-table">
+									
+									<table class="table">
+										<thead>
+											<tr>
+												<th>Length</th>
+												<th>Width</th>
+												<th>Height</th>
+												<th>Weight</th>										
+												<th></th>	
+											</tr>
+										</thead>
+										
+										<tbody id="package-list">
 											
-						<div class="form-group pull-left mrg-btm-zero">
-							<%= f.submit "Update", class: "btn btn-default custom-btn pull-left" %>
-							<%=link_to "back", seller_order_path(@order), class: "btn btn-default custom-btn fnone pull-left", style: "margin-left: 20px;" %>
-						</div>
+											<% i = 0 %>
+											<%= f.fields_for :shipping_package do |s| %>
+											
+												<% @order.shipping_package.each_with_index do |s_package,index| %>
+													<% i = index + 1 %>
+													
+													<tr id="package-list-<%= index %>">
+													
+														<td>
+															<%= s.text_field :length, autocomplete: "off", class: 'form-control', id: 'length' + index.to_s, placeholder: 'Enter Length', value: s_package.length, name: 'order[shipping_package][' + index.to_s + '][length]' %>
+														</td>
+														
+														<td>
+															<%= s.text_field :width, autocomplete: "off", class: 'form-control', id: 'width' + index.to_s, placeholder: 'Enter Width', value: s_package.width, name: 'order[shipping_package][' + index.to_s + '][width]' %>
+														</td>
+														
+														<td>
+															<%= s.text_field :height, autocomplete: "off", class: 'form-control', id: 'height' + index.to_s, placeholder: 'Enter Height', value: s_package.height, name: 'order[shipping_package][' + index.to_s + '][height]' %>
+														</td>
+										
+														<td>
+															<%= s.text_field :weight, autocomplete: "off", class: 'form-control', id: 'weight' + index.to_s, placeholder: 'Enter Weight', value: s_package.weight, name: 'order[shipping_package][' + index.to_s + '][weight]' %>
+														</td>
+														<td>
+															<%= link_to 'javascript:void(0);', class: "pull-right remove-package", title: "Remove Package", data_reference: 'package-list-' + index.to_s  do %>
+																<i class="fa fa-remove"></i>
+															<% end %>
+														</td>
+													
+													</tr>
+													
+												<% end %>	
+											<% end %>
 						
-					
-					</div>
-					<% end %>
-				
-				<% else %>
-				
-				
-					<%= form_for(@order, url: seller_save_shipping_path(@order), html: { method: :post, :id => "update_shipping" }) do |f| %>
-					
-					<%= hidden_field_tag "order[update_type]", 'buyer' %>
-				
-					<div class="new-msg-form-box">
-					
-						<div class="detail-list-row">
-							<div class="detail-list-l">Shipping Method</div>
-							<div class="detail-list-r">
-								
-								<%= f.select :shipping_method, options_for_select(Order::SHIPPING_METHOD), {prompt: 'Select Shipping Method'} %>
-								<%= form_error_msg_for(@order,:shipping_method, 'Country') %>
-																
-								<% if @user %>
-									<div class="clearfix"></div>
-									<%= @user.errors[:shipping_method].first if @user.errors.any? %>
-								<% end %>
-																
+											<input type="hidden" id="package-counter" value="<%= i %>">
+											
+										</tbody>
+									</table>
+									
+								</div>
 							</div>
-							<div class="clearfix"></div>
-						</div>
-						
-						<div class="detail-list-row">
-							<div class="detail-list-l">Delivery Country</div>
-							<div class="detail-list-r">
-								
-								<%= f.select :delivery_country_id, @countries.map{|id,name| [name,id] }, {prompt: 'Select Country'} %>
-																
+							
+							<div class="clearfix mt20 right">
+							   <button type="submit" class="btn btn-success mr5" value="Update" name="commit">Update</button>
+							   <%=link_to "back", seller_order_path(@order), class: "btn btn-primary mr5", style: "margin-left: 20px;" %>
+							</div>	
+										
+						</div>	
+					</div>	
+				</div>
+	<% end %>	
+<% else %>
+	<%= form_for(@order, url: seller_save_shipping_path(@order), html: { method: :post, :id => "update_shipping" }) do |f| %>
+		<%= hidden_field_tag "order[update_type]", 'buyer' %>
+
+				<div class="col-sm-12 col-md-12">	
+					<div class="panel panel-default panel-hovered panel-stacked mb30">
+						<div class="panel-body">
+							
+							<div class="form-group">
+								<label class="col-md-4 control-label text-bold">Shipping Method</label>
+								<div class="col-md-8">
+									<%= f.select :shipping_method, options_for_select(Order::SHIPPING_METHOD), {prompt: 'Select Shipping Method'} %>
+									<%= form_error_msg_for(@order,:shipping_method, 'Country') %>
+																	
+									<% if @user %>
+										<div class="clearfix"></div>
+										<label class="error"><%= @user.errors[:shipping_method].first if @user.errors.any? %></label>
+									<% end %>
+									
+								</div>
 							</div>
+							
 							<div class="clearfix"></div>
-						</div>
-						
-						
-						<div class="detail-list-row">
-							<div class="detail-list-l">Delivery City</div>
-							<div class="detail-list-r">
-								
-								<%= f.text_field :delivery_city, autocomplete: "off", class: 'form-control', id: 'delivery_city', placeholder: 'Enter Delivery City' %>
-																								
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Delivery Country</label>
+								<div class="col-md-8">
+									<%= f.select :delivery_country_id, @countries.map{|id,name| [name,id] }, {prompt: 'Select Country'} %>
+								</div>
 							</div>
+							
 							<div class="clearfix"></div>
-						</div>
-						
-						<div class="detail-list-row">
-							<div class="detail-list-l">Delivery Port</div>
-							<div class="detail-list-r">
-								
-								<%= f.text_field :delivery_port, autocomplete: "off", class: 'form-control', id: 'delivery_port', placeholder: 'Enter Delivery port' %>
-																								
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Delivery City</label>
+								<div class="col-md-8">
+									<%= f.text_field :delivery_city, autocomplete: "off", class: 'form-control', id: 'delivery_city', placeholder: 'Enter Delivery City' %>
+								</div>
 							</div>
+							
 							<div class="clearfix"></div>
-						</div>
-						
-						<div class="form-group pull-left mrg-btm-zero">
-							<%= f.submit "Update", class: "btn btn-default custom-btn pull-left" %>
-							<%=link_to "back", seller_order_path(@order), class: "btn btn-default custom-btn fnone", style: "margin-left: 20px;" %>
-						</div>
-					
-					</div>
-					<% end %>
-					
-				<% end %>
-			
-           <% else %>
-				<div class="new-msg-form-box">
-					<p style="text-align:center;margin-top: 8px;font-size:16px;">No order found.</p>
-				</div>	
-          <% end %>
-          
-        </div>
-      </div>
-    <!-- /.row -->
-   
-  </section>
-  <!-- /.content -->
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Delivery Port</label>
+								<div class="col-md-8">
+									<%= f.text_field :delivery_port, autocomplete: "off", class: 'form-control', id: 'delivery_port', placeholder: 'Enter Delivery port' %>
+								</div>
+							</div>
+							
+							<div class="clearfix mt20 right">
+							   <button type="submit" class="btn btn-success mr5" value="Update" name="commit">Update</button>
+							   <%=link_to "back", seller_order_path(@order), class: "btn btn-primary mr5", style: "margin-left: 20px;" %>
+							</div>	
+										
+						</div>	
+					</div>	
+				</div>
+		
+	<% end %>
+<% end %>						
+				
+			</section>
+		</div>
+	</div>
 </div>
-<!-- /.content-wrapper -->
+
 
 <script type="text/javascript">
     $(document).ready(function(){
                
         $('.add-package').click(function () {
             var i = $('#package-counter').val();
-            var html_data = '<div class="detail-list-row" id="package-list-' + i + '"><div class="detail-list"><input autocomplete="off" class="form-control shipping-detail-edit" id="length' + i + '" placeholder="Enter Length"  name="order[shipping_package][' + i + '][length]" type="text"><input autocomplete="off" class="form-control shipping-detail-edit" id="width' + i + '" placeholder="Enter Width" name="order[shipping_package][' + i + '][width]" type="text"><input autocomplete="off" class="form-control shipping-detail-edit" id="height' + i + '" placeholder="Enter Height" name="order[shipping_package][' + i + '][height]" type="text"><input autocomplete="off" class="form-control shipping-detail-edit" id="weight' + i + '" placeholder="Enter Weight" name="order[shipping_package][' + i + '][weight]" type="text"><a class="pull-right remove-package" title="Remove Package" data_reference="package-list-' + i + '" href="javascript:void(0);"><i class="fa fa-remove"></i></a></div><div class="clearfix"></div></div>';
+            var html_data = '<tr id="package-list-' + i + '"><td><input autocomplete="off" class="form-control" id="length' + i + '" placeholder="Enter Length"  name="order[shipping_package][' + i + '][length]" type="text"></td><td><input autocomplete="off" class="form-control" id="width' + i + '" placeholder="Enter Width" name="order[shipping_package][' + i + '][width]" type="text"></td><td><input autocomplete="off" class="form-control" id="height' + i + '" placeholder="Enter Height" name="order[shipping_package][' + i + '][height]" type="text"></td><td><input autocomplete="off" class="form-control" id="weight' + i + '" placeholder="Enter Weight" name="order[shipping_package][' + i + '][weight]" type="text"></td><td><a class="pull-right remove-package" title="Remove Package" data_reference="package-list-' + i + '" href="javascript:void(0);"><i class="fa fa-remove"></i></a></td></tr>';
             
             $("#package-list").append(html_data);
             

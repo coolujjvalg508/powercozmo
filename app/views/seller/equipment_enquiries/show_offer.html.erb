@@ -1,72 +1,88 @@
 <% if @offer.equipment.availble_for < Date.today %>
-  <% unless (@offer.response.present? || @offer.response_status.present?) %>
-    <div class="alert alert-danger">
-      <div>You can't respond to this enquiry as this equipment is expired.</div>
-    </div>
-  <% end %>
+	<% unless (@offer.response.present? || @offer.response_status.present?) %>
+		<div class="col-sm-12 col-md-12 alert alert-danger">
+			<div>You can't respond to this enquiry as this equipment is expired.</div>
+		</div>
+	<% end %>
 <% end %>
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <h1>Equipment Offers List Detail </h1>
-    <ol class="breadcrumb">
-      <li><%= link_to "Home", seller_dashboard_path %></li>
-      <li class="active">Equipment Offers List Detail</li>
-    </ol>
-  </section>
+<div class="page page-forms-elements page-dashboard">
+	<ol class="breadcrumb breadcrumb-small">
+		<li><a href="<%= seller_dashboard_path %>">Home</a></li>
+		<li class="active">Equipment Offers List Detail</li>
+	</ol>
+	
+	<div class="page-wrap">
+		
+		<div class="row">
+			<!-- dashboard header -->
+			<div class="col-md-12">
+				<div class="dash-head clearfix mb20">
+					<div class="left">
+						<h4 class="mb5 text-light">Equipment Offers List Detail</h4>
+					</div>
+				</div>
+			</div>
+		</div> <!-- #end row -->
+		
+		<!-- row -->
+		<div class="row">
+			<section class="content myprofile-content">
+				
+				<div class="col-sm-12 col-md-12">	
+					<div class="panel panel-default panel-hovered panel-stacked mb30">
+						<div class="panel-body">				
+														
+							<div class="form-group">
+								<label class="col-md-4 control-label text-bold">Offer Provider Name</label>
+								<div class="col-md-8"><%= @offer.name %></div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Offer Provider Location</label>
+								<div class="col-md-8"><%= @offer.country.name %></div>
+							</div>	
+							
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Offered Price</label>
+								<div class="col-md-8"><%= raw(@offer.try(:equipment).try(:currency)) %><%= @offer.bidding_price || @offer.equipment.price %></div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Message</label>
+								<div class="col-md-8"><%= @offer.message %></div>
+							</div>
+							
+							<% if (@offer.response.present? || @offer.response_status.present?) %>
+							
+								<div class="clearfix"></div>
+								
+								<div class="form-group mt20">
+									<% if(@offer.user_id == current_user.id) %>
+										<label class="col-md-4 control-label text-bold">Seller Response</label>
+										<div class="col-md-8"><%= "Seller have #{@offer.replied_as.downcase} this offer."%></div>
+									<% else %>
+										<label class="col-md-4 control-label text-bold">Your Response</label>
+										<div class="col-md-8"><%= "You have #{@offer.replied_as.downcase} this offer."%></div>
+									<% end %>
+								</div>						
+							
+							<% end %>
+														
+						</div>	
+					</div>	
+				</div>
+				
+				<%= render partial: "enquiry_responses", locals: {enquiry: @offer} %>				
 
-  <!-- Main content -->
-  <section class="content new-msg-content">
-      <!-- /.row -->
-      <div class="row">
-        <div class="col-lg-12 msg-info-area">
-          <div class="new-msg-form-box">
-          <% if @offer.present? %>
-         	  <div class="detail-list-row">
-            	<div class="detail-list-l">Offer Provider Name</div>
-              <div class="detail-list-r"><%= @offer.name %></div>
-              <div class="clearfix"></div>
-            </div>
-            <div class="detail-list-row">
-            	<div class="detail-list-l">Offer Provider Location</div>
-              <div class="detail-list-r"><%= @offer.country.name %></div>
-              <div class="clearfix"></div>
-            </div>
-            <div class="detail-list-row">
-            	<div class="detail-list-l">Offered Price</div>
-              <div class="detail-list-r"><%= raw(@offer.try(:equipment).try(:currency)) %><%= @offer.bidding_price || @offer.equipment.price %></div>
-              <div class="clearfix"></div>
-            </div>
-            <div class="detail-list-row">
-            	<div class="detail-list-l">Message</div>
-              <div class="detail-list-r"><%= @offer.message %></div>
-              <div class="clearfix"></div>
-            </div>
-            <% if (@offer.response.present? || @offer.response_status.present?) %>
-              <div class="detail-list-row">
-				
-				<% if(@offer.user_id == current_user.id) %>
-					<div class="detail-list-l">Seller Response</div>
-					<div class="detail-list-r"><b><%= "Seller have #{@offer.replied_as.downcase} this offer."%></b></div>
-				<% else %>
-					<div class="detail-list-l">Your Response</div>
-					<div class="detail-list-r"><b><%= "You have #{@offer.replied_as.downcase} this offer."%></b></div>
-				<% end %>
-				
-                <div class="clearfix"></div>
-              </div>
-            <% end %>
-          <% else %>
-            <p style="text-align:center;margin-top: 8px;font-size:16px;">No offer found.</p>
-          <% end %>
-          </div>
-        </div>
-      </div>
-    <!-- /.row -->
-    <%= render partial: "enquiry_responses", locals: {enquiry: @offer} %>
-  </section>
-  <!-- /.content -->
+			</section>
+		</div>
+	</div>
 </div>
-<!-- /.content-wrapper -->

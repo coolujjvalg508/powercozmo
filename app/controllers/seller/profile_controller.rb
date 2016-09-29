@@ -1,7 +1,5 @@
 class Seller::ProfileController < Seller::BaseController
 
-  layout 'user'	
-
   def edit
   	@user = current_user
   	unless @user.image.present?

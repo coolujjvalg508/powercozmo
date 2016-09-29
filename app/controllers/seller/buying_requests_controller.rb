@@ -1,7 +1,5 @@
 class Seller::BuyingRequestsController < Seller::BaseController
 
-	layout 'user'
-
 	def index
 		if current_user.present?
 			@buying_requests = BuyingRequest.approved.order("created_at DESC").search(params[:q]).page(params[:page])

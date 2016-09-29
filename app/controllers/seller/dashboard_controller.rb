@@ -1,5 +1,5 @@
 class Seller::DashboardController < Seller::BaseController
-	layout 'user'
+	
 	def index
 		@equipments = current_user.equipment.all.order('created_at desc').page(params[:page]).per(10)
 		@buying_requests = BuyingRequest.approved

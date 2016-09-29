@@ -3,7 +3,7 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 	# def index
 	# 	@enquiries = EquipmentEnquiry.joins(:equipment).where("equipment.user_id = ?", current_user.id);
 	# end
-
+	
 	def questions
 		@questions = EquipmentEnquiry.joins(:equipment).where("equipment_enquiries.enquiry_type = ? AND (equipment.user_id = ? OR equipment_enquiries.user_id = ?)", 1, current_user.id, current_user.id).approved.order("created_at DESC").page(params[:page])
 	end
