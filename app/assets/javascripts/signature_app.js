@@ -18,7 +18,12 @@ function resizeCanvas() {
 }
 
 window.onresize = resizeCanvas;
-resizeCanvas();
+//resizeCanvas();
+
+setTimeout(function() {
+   resizeCanvas();
+}, 1000);
+
 
 signaturePad = new SignaturePad(canvas);
 
