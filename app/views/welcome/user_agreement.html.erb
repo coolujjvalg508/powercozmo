@@ -1,6 +1,7 @@
-<header id="hd" class="rlatv list-bnr">
-  <div class="hd-srch">
-    <h2><%= @user_agreement.first.title %></h2>
-  </div>
-</header>
+<section class="innerbanner clearfix">
+	<div class="container">
+		<h2 class="text-center text-uppercase"><%= @user_agreement.first.title %></h2>
+	</div>
+</section>
+
 <%= @user_agreement.first.content.to_s.html_safe %> 

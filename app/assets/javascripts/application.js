@@ -17,9 +17,11 @@
 //= require custom_script
 //= require bootstrap
 //= require bootsy
+
 //= require jquery.selectric
 //= require classie
 //= require cbpAnimatedHeader
+
 //= require owl.carousel
 //= require responsive-carousel
 //= require customize-controls
@@ -30,6 +32,7 @@
 //= require jquery_nested_form
 //= require jstz.min
 //= require time_zone_detection
+
 // require_directory .
 
 $(document).ready(function(){

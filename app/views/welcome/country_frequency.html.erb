@@ -1,8 +1,10 @@
-<header id="hd" class="rlatv list-bnr">
-  <div class="hd-srch">
-    <h2><%= @country_frquency.first.title %></h2>
-  </div>
-</header>
+<!-- Inner Banner Start -->
+<section class="innerbanner clearfix">
+	<div class="container">
+		<h2 class="text-center text-uppercase"><%= @country_frquency.first.title %></h2>
+	</div>
+</section>
+
 <div class="frequency-table">
 	<%= @country_frquency.first.content.html_safe%>
 </div>

@@ -1,9 +1,11 @@
-<header id="hd" class="rlatv list-bnr">
-  <div class="hd-srch">
-    <h2><%= @our_service.first.title %></h2>
-  </div>
-</header>
+<section class="innerbanner clearfix">
+	<div class="container">
+		<h2 class="text-center text-uppercase"><%= @our_service.first.title %></h2>
+	</div>
+</section>
+
 <%= @our_service.first.content.to_s.html_safe %>
+
 <script type="text/javascript">
   $(document).ready(function($) {
     var ele = $('#_' + window.location.hash.replace('#', ''));

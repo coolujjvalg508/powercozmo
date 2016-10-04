@@ -24,7 +24,7 @@ $(document).ready(function(){
 
 });
 
-$(function() {
+/*$(function() {
       $('select, .select').selectric();
 
       $('.customOptions').selectric({
@@ -38,4 +38,4 @@ $(function() {
           return '<strong><em>' + currItem.text + '</em></strong>';
         }
       });
-    });
+    });*/

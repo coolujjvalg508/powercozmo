@@ -1,8 +1,9 @@
-<header id="hd" class="rlatv list-bnr">
-  <div class="hd-srch">
-    <h2><%= @terms_and_conditions.first.title %></h2>
-  </div>
-</header>
+<section class="innerbanner clearfix">
+	<div class="container">
+		<h2 class="text-center text-uppercase"><%= @terms_and_conditions.first.title %></h2></h2>
+	</div>
+</section>
+
 <%= @terms_and_conditions.first.content.to_s.html_safe %> 
 <script>
   $(document).ready(function($) {

@@ -1,10 +1,12 @@
 class WelcomeController < ApplicationController
 
+	layout 'application_new'
+
 	def index
 		@categories = Category.active.roots
-		@latest_ads = Equipment.where("created_at > ? ", 30.days.ago).active.order('created_at DESC').limit(12)
-		@popular_ads = Equipment.popular.limit(12)
-		@random_ads = Equipment.random.limit(12)
+		@latest_ads = Equipment.where("created_at > ? ", 30.days.ago).active.order('created_at DESC').limit(3)
+		@popular_ads = Equipment.popular.limit(3)
+		@random_ads = Equipment.random.limit(3)
 		@banner_url = Banner.where(:status => 1).limit(1).order('created_at DESC').first.try(:image).try(:image)
 		@banner_url = 'assets/banner-bg.jpg' unless @banner_url
 		@commissions = Commission.all.order("percent desc")		

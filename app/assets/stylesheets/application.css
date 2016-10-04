@@ -11,10 +11,12 @@
  * file per style scope.
  *
  *= require bootstrap.css
- * require checkbox.css
+ *= require checkbox.css
  *= require font-awesome.css
  *= require jquery-ui.css
+ * 
  *=	require menu-left.css
+ * 
  *= require owl.carousel.css
  *= require reset.css
  *= require responsive-carousel.slide.css
@@ -24,5 +26,8 @@
  *= require bootstrap-datetimepicker
  *= require bootsy
  *= require TimeCircles
+ * 
+ require styles_new
+ * 
  *= require_self
  */
