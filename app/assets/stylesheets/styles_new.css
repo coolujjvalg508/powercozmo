@@ -118,7 +118,7 @@ header .navbar-nav > li .cd-dropdown { pointer-events: none; }
 header .navbar-nav > li:hover .dropdown-menu { display: block; }
 /* Banner */
 .banner { background: url(/assets/bannerbg.jpg) center top no-repeat; height: 550px; width: 100%; position: relative; }
-.banner h2 { font-size: 72px; color: #fff; line-height: normal; padding: 60px 0 0; }
+.banner h2 { font-size: 55px; color: #fff; line-height: normal; padding: 60px 0 0; }
 .banner .banner-txt { font-size: 20px; color: #fff; line-height: normal; margin-bottom: 45px; }
 .banner .cd-dropdown-wrapper { position: relative; width: 100%; margin: 0 auto; padding: 0; background: #fff; border-left: 5px solid #fff; cursor: pointer; outline: none; height: 70px; border-radius: 6px 0 0 6px; font-size: 18px; font-weight: 300;}
 .banner .cd-dropdown-trigger {/*url(/assets/list-icon.png) 16px 30px no-repeat */ background: #fff; color: #222; font-size: 16px; padding:0; }
