@@ -15,9 +15,8 @@
 						<div class="cd-dropdown-wrapper"> 
 							
 							<div class="cd-dropdown-trigger clearfix">
-							  <%#= select_tag "filter[category_id]", options_from_collection_for_select(@categories, "id", "name"), include_blank: "Select Category" %>
 							  
-							  <%= select_tag "filter[category_id]", options_from_collection_for_select(@categories, "id", "name"), include_blank: 'Select Category*', class: 'custom-select' %>
+							  <%= select_tag "filter[category_id]", options_from_collection_for_select(@categories, "id", "name"), include_blank: 'Select Category', class: 'custom-select' %>
 							  
 							</div>
           
