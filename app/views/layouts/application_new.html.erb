@@ -36,18 +36,18 @@
 							
 								<% unread_inbox_count = current_user.try(:unread_inbox_count).to_i %>
 								<% if unread_inbox_count > 0 %>
-									<span><%= link_to "<i class='fa fa-envelope-o'></i> <span class='label label-warning'>#{unread_inbox_count}</span>".html_safe, seller_dashboard_path(message_notification: :true) %>
+									<span><%= link_to "<i class='fa fa-envelope-o'></i> <span class='label label-warning'>#{unread_inbox_count}</span>".html_safe, seller_dashboard_path(message_notification: :true) %></span>
 								<% else %>
-									<span><%= link_to "<i class='fa fa-envelope-o'></i>".html_safe, seller_dashboard_path, class: "dropdown-toggle" %>
+									<span><%= link_to "<i class='fa fa-envelope-o'></i>".html_safe, seller_dashboard_path, class: "dropdown-toggle" %></span>
 								<% end %>
-
-									<% unread_notifications_count = current_user.try(:unread_notifications_count).to_i %>
+								
+								<% unread_notifications_count = current_user.try(:unread_notifications_count).to_i %>
 								<% if unread_notifications_count > 0 %>
 									<span><%= link_to "<i class='fa fa-bell-o'></i> <span class='label label-warning'>#{unread_notifications_count}</span>".html_safe, seller_dashboard_path %></span>
 								<% else %>
 									<span><%= link_to "<i class='fa fa-bell-o'></i>".html_safe, seller_dashboard_path, class: "dropdown-toggle" %></span>
 								<% end %>
-							
+															
 								<span><%= link_to('<i class="fa fa-table"></i> Dashboard'.html_safe, seller_dashboard_path) %></span>
 								<span><%= link_to "<i class='fa fa-heart'></i> My Favourites".html_safe, seller_favourites_path %></span>
 								<span><%= link_to('<i class="fa fa-user"></i> My Profile'.html_safe, edit_seller_profile_path(current_user)) %></span>

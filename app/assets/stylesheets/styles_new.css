@@ -514,3 +514,16 @@ footer .footer-company { padding: 22px 0; color: #959595; font-size: 12px; }
 .profile-img-list{width:55px; height: 55px;}
 .profile-img-detail{width:80px; height: 80px;}
 .detail-txt-color{color: #323232;}
+
+.topright > span a { position: relative; }
+.topright > span a span.label-warning { background-color:#ff4f4b !important; border-radius:50%;}
+.topright > span a span.label {
+  width: 14px !important;
+  height: 14px !important;
+  line-height: 14px;
+  font-size: 11px;
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  text-align: center;
+}
