@@ -78,8 +78,13 @@
                   <%=text_field_tag "enquiry[mobile]",'',placeholder: "Mobile*",class: "form-control"%>
                   <div id="mobile-error" class="error-text"></div>
               </div>
-              <div class="form-group">
-                <%=select_tag("enquiry[country_id]",options_for_select([["Select Country*",""]]+@countries.collect{ |c| [c.name, c.id] }))%>
+              <div class="form-group clearfix selectcustom">
+                <%=select_tag("enquiry[country_id]",options_for_select([["Select Country*",""]]+@countries.collect{ |c| [c.name, c.id] }), class: "custom-select ")%>
+                
+                
+                
+                
+                
                 <span id="country-error"></span>
               </div>
               <div class="form-group">
@@ -251,7 +256,7 @@ $(document).ready(function(){
 
   $('#myModal').on('show.bs.modal', function (modal) {
     $('#equipment_enquiry_form')[0].reset();
-    $('#enquiry_country_id').selectric();
+    //$('#enquiry_country_id').selectric();
     $("#myModal .success-message").hide();
     $("#myModal .modal-content").show();
     var enquiry_type = $(modal.relatedTarget).data('enquiry-type');

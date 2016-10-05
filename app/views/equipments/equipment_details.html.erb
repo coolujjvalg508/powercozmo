@@ -4,7 +4,10 @@
 	else 
 		data_target = '#myModalNotLogin'
 	end		
- %>
+%>
+ 
+<% available = get_available_for(@equipment.availble_for) %>
+<% (@equipment.status == 'closed' || available[:status] == 'closed' || @equipment.status == 'sold' || (current_user && current_user.id == @equipment.user_id)) ? button_disabled = true : button_disabled = false %> 
 
 <% content_for :head do %>
   <meta property="og:type" content="article" />
@@ -16,255 +19,213 @@
   <meta property="og:url" content="<%= request.original_url %>" />
   <meta property="og:image" content="<%=image_url(@equipment.try(:images).try(:first).try(:image).try(:url))%>" />
 <% end %>
-<header id="hd" class="rlatv list-bnr">
-  <div class="hd-srch">
-    <h2><%= @equipment.name %></h2>
-  </div>
-</header>
-<section id="md" class="lst-midd-cnt">
-  <div class="wht-bg PT40 PB20 hide-block-area">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12 add-bnr"><a href="#">
-          <% @top_bar_ad ||= "lstadd-bnr.jpg" %>
-          <%= image_tag @top_bar_ad,class: "img-responsive" %>
-        </a></div>
-      </div>
-    </div>
-  </div>
-  <div class="wht-bg hide-block-area">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="btm-addbnr">
-            <h3>Are you ready to post your ad with us ?</h3>
-            <%= link_to 'Get started', new_user_registration_path, class: "started-btn" %> </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="wht-bg dtl-blc MT40">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 dtl-blc-lt">
-          <h2><strong><em><%= "#{@equipment.name} - #{@equipment.identifier}" %></em></strong> <span>
-            <ul class="share-links">
-            <!-- <li><a href="javascript:void(0)" id="social-share"><i class="fa fa-share-alt"></i></a>
-              <div class="share-menu"><ul></ul></div>
-            </li> -->
-            <!-- Facebook share -->
-            <li><a class="btnShare" href="javascript:void(0)" data-url='<%= request.original_url%>' data-image="<%=image_url(@equipment.try(:images).try(:first).try(:image).try(:url))%>" data-title='<%=@equipment.name%>' data-desc="<%= truncate(@equipment.description, length: 600) %>"><i class="fa fa-facebook share-icon"></i></a></li>
 
-            <!-- Twitter share -->
-            <li><a href='https://twitter.com/intent/tweet?text=<%=@equipment.name%>&url=<%= request.original_url%>' onclick="return !window.open(this.href, 'Twitter', 'width=640,height=580')"><i class="fa fa-twitter share-icon"></i></a></li>
+<!-- Inner Banner Start -->
+<section class="innerbanner clearfix">
+	<div class="container">
+		<h2 class="text-center text-uppercase"><%= @equipment.name %></h2>
+	</div>
+</section>
 
-            <!-- Google Plus share -->
-            <li><a href="https://plus.google.com/share?url=<%= request.original_url%>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><i class="fa fa-google-plus share-icon"></i></a></li>
+<div class="clearfix postadwrap">
+	<div class="container"> <i class="fa fa-pencil-square-o paddinT10" aria-hidden="true"></i> Are you ready to post your ad with us ? <%= link_to 'Get started', new_user_registration_path, class: "pull-right text-uppercase" %> </div>
+</div>
 
-            <!-- LinkedIn share -->
-            <li><a href="https://www.linkedin.com/shareArticle?mini=true&url=<%= request.original_url%>&title=<%=URI.encode(@equipment.name)%>&summary=<%=truncate(@equipment.description, length: 600)%>&source=PowerCozmo.com" onclick="return !window.open(this.href, 'LinkedIn', 'width=520,height=570')"><i class="fa fa-linkedin share-icon"></i></a></li>
-
-            <li><a href="javascript:window.print()"><i class="fa fa-print"></i></a></li>
-            
-            <li><%= link_to "<i class='fa fa-save'></i>".html_safe, equipment_details_path(@equipment, format: :pdf) %></li>
-            
-            <% if current_user %>
-				<li><a href="javascript:void(0);">
-						<% if @favorite_data %>
-							<i class="fa fa-heart" title="Remove from favourite"></i>
-						<% else %>
-							<i class="fa fa-heart-o" title="Add to favourite"></i>
+<!-- Welcome to Power Cozmo -->
+<section class="clearfix innerwrap">
+	<div class="container">
+		<div class="marginB30"> 
+			<a href="#">
+				<% @top_bar_ad ||= "google-ad.jpg" %>
+				<%= image_tag @top_bar_ad,class: "img-responsive" %>
+			</a>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-8 col-sm-12 col-xs-12 ListingdetailsWrap">
+				<div class="row marginB15">
+					<div class="col-md-6 col-sm-6 col-xs-12 product-title">
+						<%= "#{@equipment.name} - #{@equipment.identifier}" %>
+					</div>
+					
+					<div class="col-md-6 col-sm-6 col-xs-12 product-social"> 
+						
+						<!-- FB share -->
+						<a class="btnShare" href="javascript:void(0)" data-url='<%= request.original_url%>' data-image="<%=image_url(@equipment.try(:images).try(:first).try(:image).try(:url))%>" data-title='<%=@equipment.name%>' data-desc="<%= truncate(@equipment.description, length: 600) %>"><i class="fa fa-facebook" aria-hidden="true"></i></a> 
+						
+						<!-- Twitter share -->						
+						<a href='https://twitter.com/intent/tweet?text=<%=@equipment.name%>&url=<%= request.original_url%>' onclick="return !window.open(this.href, 'Twitter', 'width=640,height=580')"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+						
+						<!-- Google Plus share -->
+						<a href="https://plus.google.com/share?url=<%= request.original_url%>" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+						
+						<!-- LinkedIn share -->						
+						<a href="https://www.linkedin.com/shareArticle?mini=true&url=<%= request.original_url%>&title=<%=URI.encode(@equipment.name)%>&summary=<%=truncate(@equipment.description, length: 600)%>&source=PowerCozmo.com" onclick="return !window.open(this.href, 'LinkedIn', 'width=520,height=570')"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+						
+						<!-- Print -->					
+						<a href="javascript:window.print()"><i class="fa fa-print" aria-hidden="true"></i></a>
+						<%= link_to '<i class="fa fa-floppy-o" aria-hidden="true"></i>'.html_safe, equipment_details_path(@equipment, format: :pdf) %>
+						
+						<% if current_user %>
+							<a href="javascript:void(0);">
+								<% if @favorite_data %>
+									<i class="fa fa-heart" title="Remove from favourite"></i>
+								<% else %>
+									<i class="fa fa-heart-o" title="Add to favourite"></i>
+								<% end %>
+							</a>
 						<% end %>
-					</a>
-				</li>
-			<% end %>
-            
-            </ul>
-            </span>
-          </h2>
-          <div class="slider dtl-blc-slider" id="home">
-            <div class="container-fluid">
-              <div class="row">
-                <div id="carouselHacked" class="carousel slide carousel-fade" data-ride="carousel">
-                  <div class="header-backup"></div>
-                  <div class="carousel-inner" role="listbox">
-                  <% if @equipment.images.length > 0 %>
-                    <% @equipment.images.each_with_index do |image,index| %>
-                      <div class="item <%='active' if index == 0%>"> <%= image_tag image.image.try(:equipment_image).try(:url) %></div>
-                    <% end %>
-                  <% else %>
-                    <div class="item active"> <%= image_tag "detail-noimage.png" %></div>
-                  <% end %>
-                  </div>
-                  <a class="left carousel-control" href="#carouselHacked" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a> <a class="right carousel-control" href="#carouselHacked" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span> </a> </div>
-              </div>
-            </div>
-          </div>
-          <% available = get_available_for(@equipment.availble_for) %>
-          <% (@equipment.status == 'closed' || available[:status] == 'closed' || @equipment.status == 'sold' || (current_user && current_user.id == @equipment.user_id)) ? button_disabled = true : button_disabled = false %>
-          <h3><span>
-          <a href="javascript:void(0)" class="cont-sellbtn" data-toggle="modal" data-target="<%= data_target %>" data-enquiry-type="question" data-equipment='{"id": <%=@equipment.id%>, "identifier": "<%=@equipment.identifier%>", "location": "<%=@equipment.try(:country).try(:name)%>", "price": "<%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %>", "name": "<%=@equipment.name%>"}' <%= 'disabled' if button_disabled%>>Contact Seller for Question</a>
-          <a href="javascript:void(0)" class="bidnow-btn"  data-toggle="modal" data-target="<%= data_target %>" data-enquiry-type="bid" data-equipment='{"id": <%=@equipment.id%>, "identifier": "<%=@equipment.identifier%>", "location": "<%=@equipment.try(:country).try(:name)%>", "price": "<%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %>", "name": "<%=@equipment.name%>"}' <%= 'disabled' if button_disabled%>>Bid now</a>
-            </span><em>Description</em></h3>
-          <p><%= @equipment.description %></p>
-                    
-          <% if @equipment.faults %>
-			  <h3><em>Faults</em></h3>
-			  <p><%= @equipment.faults %></p>
-		  <% end %>	  
-          
-          <div class="dtl-blc-adrs">
-            <div class="hd-graylft"><i class="fa fa-phone"></i> Phone : <em><%= SiteSetting.last.try(:header_phone) || '+(646) 45321069' %></em> <span class="email"><i class="fa fa-envelope"></i> Email : <a href="mailto:<%= SiteSetting.last.try(:header_email) || 'info@powercozmo.com'%>"><%= SiteSetting.last.try(:header_email) || 'info@powercozmo.com'%> </a></span></div>
-          </div>
-        </div>
-        <div class="col-lg-4 dtl-blc-rt pull-right">
-          <h2>Product Available For Next</h2>
-          <div class="prdct-avlbl">
-            <% if ((@equipment.status == 'active' || @equipment.status == 'in_progress') && available[:status] == 'active') %>
-              <div class="available_for_detail" data-date="<%=@equipment.availble_for.strftime("%Y-%m-%d %H:%M:%S")%>" data-total-duration="<%=(@equipment.availble_for - @equipment.created_at).to_i%>"></div>
-            <% elsif (@equipment.status == 'closed' || available[:status] == 'closed') %>
-              <div class="avlble-close"><a href="#">
-                <%= image_tag "close-btn.png" %>
-              </a></div>
-            <% elsif @equipment.status == 'sold' %>
-              <div class="avlble-close sold-arrow-btn"><a href="#"><%= image_tag "sold-arrow-btn.png" %></a></div>
-            <% end %>
-            <div class="dtl-rt-prfl">
-              <div class="dtl-rt-prfl-lt"><% if @equipment.try(:user).try(:image).try(:image) %>
-                        <%= image_tag @equipment.try(:user).try(:image).try(:image)%>
-                        <% else %>
-                        <%= image_tag "seller/myprofile-placeholder-img.png" %></span>
-                        <% end %></div>
-              <div class="dtl-rt-prfl-rt"> <span><%= @equipment.user.name %></span> </div>
-            </div>
-            <div class="ad-gray-info">
-              <div class="ad-gray-l"><i class="fa fa-map-marker"></i> <span><%= @equipment.try(:country).try(:name) %></span> <br>
-                <% if @equipment.equipment_type == "equipment"%>
-                  Brand : <span><%= truncate(@equipment.try(:manufacturer).try(:name), length: 15)%></span>
-                <% else %>
-                  Turbine Brand : <span><%= truncate(@equipment.turbine_manufacturer_name, length: 12)%></span>
-                <% end %>
-              </div>
-              <% if @equipment.equipment_type == "equipment"%>
-                <div class="ad-gray-m" style="text-align: right;">Manufacturing : <span><%= @equipment.manufacture_year%></span> <br>
-              <% else %>
-                <div class="ad-gray-m" style="text-align: right;">Power Plant Age : <span><%= @equipment.power_plant_age%></span> <br>
-              <% end %>
-              Rating : <span><a class="<%='active' if @equipment.try(:rating).to_i >= 1 %>" href="#"><i class="fa fa-star"></i></a><a class="<%='active' if @equipment.try(:rating).to_i >= 2 %>" href="#"><i class="fa fa-star"></i></a><a class="<%='active' if @equipment.try(:rating).to_i >= 3 %>" href="#"><i class="fa fa-star"></i></a><a href="#" class="<%='active' if @equipment.try(:rating).to_i >= 4 %>"><i class="fa fa-star"></i></a><a href="#" class="<%='active' if @equipment.try(:rating).to_i >= 5 %>"><i class="fa fa-star"></i></a></span>
-              </div>
-              <div class="clr"></div>
-            </div>
-            <div class="price-info"><span>Price :<em><%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %></em></span>
-             <a href="javascript:void(0)" data-toggle="modal" data-target="<%= data_target %>" class="buynow-btn" data-enquiry-type="buy" data-equipment='{"id": <%=@equipment.id%>, "identifier": "<%=@equipment.identifier%>", "location": "<%=@equipment.try(:country).try(:name)%>", "price": "<%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %>", "name": "<%=@equipment.name%>"}' <%='disabled' if button_disabled == true %> >Buy now</a>
-             </div>
-          </div>
-          <div class="dtl-blc-add hide-block-area"><a href="#">
-            <% @side_panel_ad ||= "dtl-blc-add.jpg"%>
-            <%= image_tag @side_panel_ad %>
-          </a></div>
-        </div>
-      </div>
-    </div>
-  </div>
-   <div class="wht-bg MT40 MB40 hide-block-area">
-            <div class="container">
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="btm-addbnr">
-                    <h3>Can't find what you are looking for, post your buying request now</h3>
-                     <%= link_to 'Get started', new_buying_request_path, class: "started-btn" %> </div>
-                </div>
-              </div>
-            </div>
-          </div>
-  <div class="lghtgry-bg PT50 PB50">
-    <div class="container">
-      <div class="row ltestpost-cnt">
-        <div class="col-lg-12">
-          <h2 class="page-hd txtctr">Browse For <span>Similar Products</span></h2>
-          <h3 class="page-hd txtctr"> Our Goal at Power Cozmo for Engineering & Investment is to Provide our Customer the Highest Quality</h3>
-        </div>
-        <div class="col-lg-12">
-          <div id="myTabContent2" class="tab-content">
-            <div class="tab-pane fade active in" id="post-one">
-              <div id="owl-example" class="owl-carousel">
-              <% max_carousal = (@similar_products.length/4.0).ceil %>
-                <% (1..max_carousal).each do |n| %>
-                  <div class="item">
-                    <% @similar_products[(n-1)*4, 4].each do |post| %>
-                    <div class="col-lg-6 col-md-6 post-equip">
-                      <div class="post-equip-cnt">
-                        <div class="PD10">
-                          <div class="post-equip-l"><% if post.try(:images).try(:first).try(:image) %>
-                              <%= image_tag post.try(:images).try(:first).try(:image).try(:card_image).try(:url) %>
-                            <% else %>
-                              <%= image_tag "equipment-noimage.png" %>
-                            <% end %></div>
-                          <div class="post-equip-r">
-                            <h3><%= "#{truncate(post.name, length: 20)} - #{post.identifier}" %></h3>
-                            <p><%= truncate(post.description, length: 140) %></p>
-                            <div class="price-info"><%= number_to_currency(post.price, unit: raw(post.currency)) %><%= link_to 'MORE INFO', equipment_details_path(post) %></div>
-                          </div>
-                          <div class="clr"></div>
-                        </div>
-                        <div class="ad-gray-info ad-gray-info-big">
-                          <div class="ad-gray-l"><i class="fa fa-map-marker"></i> Location : <span><%= truncate(post.country.name, length: 25)%></span>
-
-                              <% if post.equipment_type == "equipment"%>
-                            <div class="">Manufacturing : <span><%= post.manufacture_year%></span></div>
-                          <% else %>
-                            <div class="">Power Plant Age : <span><%= post.power_plant_age%></span></div>
-                          <% end %>
-                          </div>
-
-
-                          <div class="ad-gray-r">
-                          <% if post.equipment_type == "equipment"%>
-                            <div class="">Brand : <span><%= truncate(post.try(:manufacturer).try(:name), length: 15)%></span></div>
-                          <% else %>
-                            <div class="">Turbine Brand : <span><%= truncate(post.turbine_manufacturer_name, length: 12)%></span></div>
-                          <% end %>
-                          Rating : <span><a class="<%='active' if post.try(:rating).to_i >= 1 %>" href="#"><i class="fa fa-star"></i></a><a class="<%='active' if post.try(:rating).to_i >= 2 %>" href="#"><i class="fa fa-star"></i></a><a class="<%='active' if post.try(:rating).to_i >= 3 %>" href="#"><i class="fa fa-star"></i></a><a href="#" class="<%='active' if post.try(:rating).to_i >= 4 %>"><i class="fa fa-star"></i></a><a href="#" class="<%='active' if post.try(:rating).to_i >= 5 %>"><i class="fa fa-star"></i></a></span></div>
-                          <div class="clr"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <% end %>
-                  </div>
-              <% end %>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="fb-root"></div> <!-- for facebook sdk initialisation-->
+						
+					</div>
+				</div>
+					
+				<div class="clearfix marginB30">
+					<div class="slider product-slider">
+						
+<% if @equipment.images.length > 0 %>
+	<% @equipment.images.each_with_index do |image,index| %>
+						<div><%= image_tag image.image.try(:equipment_image).try(:url), class: "img-responsive img-thumbnail" %></div>
+	<% end %>
+<% else %>
+						<div><%= image_tag "detail-noimage.png", class: "img-responsive img-thumbnail" %></div>
+<% end %>
+					</div>
+				</div>
+				
+				<div class="clearfix ListingContent">
+					<div class="ListingButton"> 
+						
+						<a href="javascript:void(0)" class="default-btn text-uppercase" data-toggle="modal" data-target="<%= data_target %>" data-enquiry-type="question" data-equipment='{"id": <%=@equipment.id%>, "identifier": "<%=@equipment.identifier%>", "location": "<%=@equipment.try(:country).try(:name)%>", "price": "<%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %>", "name": "<%=@equipment.name%>"}' <%= 'disabled' if button_disabled%>>Contact Seller for Question</a>
+						
+						<a href="javascript:void(0)" class="btn-orange text-uppercase"  data-toggle="modal" data-target="<%= data_target %>" data-enquiry-type="bid" data-equipment='{"id": <%=@equipment.id%>, "identifier": "<%=@equipment.identifier%>", "location": "<%=@equipment.try(:country).try(:name)%>", "price": "<%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %>", "name": "<%=@equipment.name%>"}' <%= 'disabled' if button_disabled%>>Bid now</a>
+						
+					</div>
+					
+					<ul class="nav nav-tabs">
+						<li class="active"><a data-toggle="tab" href="#Description">Description</a></li>
+						
+						<% if @equipment.faults %>
+							<li><a data-toggle="tab" href="#Faults">Faults </a></li>
+						<% end %>
+					</ul>
+										
+					<div class="tab-content">
+						<div id="Description" class="tab-pane fade in active">
+							<p><%= @equipment.description %></p>
+						</div>
+						
+						<% if @equipment.faults %>
+							<div id="Faults" class="tab-pane fade">
+								<p><%= @equipment.faults %></p>
+							</div>
+						<% end %>
+					</div>
+				</div>
+				
+				<div class="clearfix ListingCall">
+					<div class="panel panel-default">
+						<div class="panel-body row">
+							<div class="col-md-4 col-sm-5 col-xs-12"><span class="call-icon"><i class="fa fa-mobile fa-lg" aria-hidden="true"></i></span> <%= SiteSetting.last.try(:header_phone) || '+(646) 45321069' %></div>
+							<div class="col-md-8 col-sm-7 col-xs-12"><span class="call-icon"><i class="fa fa-envelope-o fa-lg" aria-hidden="true"></i></span> <a href="mailto:<%= SiteSetting.last.try(:header_email) || 'info@powercozmo.com'%>" class="detail-txt-color"><%= SiteSetting.last.try(:header_email) || 'info@powercozmo.com'%> </a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-4 col-sm-12 col-xs-12 ListingRightPanel">
+				
+				<h2 class="marginB15">Product Available For Next</h2>
+					<div class="panel panel-default marginB15">
+						<div class="panel-body">
+							<div class="ListingDetailsTimer clearfix">
+								
+<% if ((@equipment.status == 'active' || @equipment.status == 'in_progress') && available[:status] == 'active') %>
+								<div class="available_for_detail" data-date="<%=@equipment.availble_for.strftime("%Y-%m-%d %H:%M:%S")%>" data-total-duration="<%=(@equipment.availble_for - @equipment.created_at).to_i%>"></div>
+<% elsif (@equipment.status == 'closed' || available[:status] == 'closed') %>
+								<div class="close-deal">
+									<span><%= image_tag "close.png" %></span>
+								</div>
+<% elsif @equipment.status == 'sold' %>
+								<div class="avlble-close sold-arrow-btn"><%= image_tag "sold-arrow-btn.png" %></div>
+<% end %>
+								
+							</div>
+							<div class="clearfix ListingProfile">
+								<% if @equipment.try(:user).try(:image).try(:image) %>
+									<%= image_tag @equipment.try(:user).try(:image).try(:image), class: "img-circle img-thumbnail profile-img-detail" %>
+								<% else %>
+									<%= image_tag "seller/myprofile-placeholder-img.png", class: "img-circle img-thumbnail profile-img-detail" %></span>
+								<% end %>
+								<%= @equipment.user.name %>
+							</div>
+								
+							<div class="clearfix ListingAddress">
+								<ul>
+									<li class="col-md-6 col-sm-6 col-xs-6"><img src="/assets/location-icon.jpg" alt="Location" class="marginR5"> <%= @equipment.try(:country).try(:name) %></li>
+									<li class="col-md-6 col-sm-6 col-xs-6"><img src="/assets/brand-icon.jpg" class="marginR5" alt="Brand">
+										<% if @equipment.equipment_type == "equipment"%>
+										  <%= truncate(@equipment.try(:manufacturer).try(:name), length: 15)%>
+										<% else %>
+										  <%= truncate(@equipment.turbine_manufacturer_name, length: 12)%>
+										<% end %>
+									</li>
+									<li class="col-md-6 col-sm-6 col-xs-6"><img src="/assets/manufacturing-icon.jpg" class="marginR5" alt="2010"> 
+										<% if @equipment.equipment_type == "equipment"%>
+											<%= @equipment.manufacture_year%>
+										  <% else %>
+											<%= @equipment.power_plant_age%>
+										  <% end %>
+									</li>
+									<li class="col-md-6 col-sm-6 col-xs-6 paddingT15">Rating 
+											
+										<img src="<%= @equipment.try(:rating).to_i >= 1 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="1">
+										<img src="<%= @equipment.try(:rating).to_i >= 2 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="2">
+										<img src="<%= @equipment.try(:rating).to_i >= 3 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="3">
+										<img src="<%= @equipment.try(:rating).to_i >= 4 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="4">
+										<img src="<%= @equipment.try(:rating).to_i >= 5 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="5">
+									
+									</li>
+									
+								</ul>
+							</div>
+							
+							<div class="clearfix PriceDetailswrap">
+								<div class="col-md-6 col-sm-6 col-xs-6 PriceDetails">Price : <span class="gray-color"><%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %></span></div>
+								
+								<div class="col-md-6 col-sm-6 col-xs-6">
+									<a href="javascript:void(0)" data-toggle="modal" data-target="<%= data_target %>" class="btn-orange text-uppercase buynow-btn" data-enquiry-type="buy" data-equipment='{"id": <%=@equipment.id%>, "identifier": "<%=@equipment.identifier%>", "location": "<%=@equipment.try(:country).try(:name)%>", "price": "<%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %>", "name": "<%=@equipment.name%>"}' <%='disabled' if button_disabled == true %> >Buy Now</a>
+								</div>
+								
+							</div>
+						</div>
+        
+					</div>
+			<div class="clearfix">		  
+				<a href="#">
+					<% @side_panel_ad ||= "power-ad1.jpg"%>
+					<%= image_tag @side_panel_ad, class: "img-responsive" %>
+				</a> 
+			</div>	
+		</div>
+    
+		<div class="col-md-12 col-sm-12 col-xs-12 GetStarted hidden-xs hidden-sm">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="tab-progress btn-breadcrumb clearfix text-center">
+						<div class="arrow-nav col-xs-10 text-left">Can't find what you are looking for, post your buying request now</div>
+							<%= link_to 'GET STARTED', new_buying_request_path, class: "active-arrow arrow-nav col-xs-2 text-center" %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 
 <%=render :partial => 'equipment_questions_modal'%>
 
 <style>@media print{a[href]:after{content:none}}</style>
 <script>
-$(document).ready(function($) {
-	$("#owl-example").owlCarousel({
-		loop:true,
-		margin:0,
-		nav:true,
-		autoplay:true,
-		autoplayHoverPause:true,
-		items : 1
-	});
-
-	$("#pr-category").owlCarousel({
-		loop:true,
-		margin:0,
-		nav:true,
-		autoplay:true,
-		autoplayHoverPause:true,
-		items : 1,
-	});
-})
 
 function postToFeed(title, desc, url, image){
   var obj = {method: 'feed',link: url, picture: image,name: title,description: desc};
@@ -322,6 +283,14 @@ $(document).on('click', '.fa-heart', function () {
 		alert(response.message);
 	})
 	
+});
+
+// Listing Details Slider
+$('.product-slider').slick({
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 2000,
 });
 
 </script>

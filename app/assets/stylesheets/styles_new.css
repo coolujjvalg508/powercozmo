@@ -471,7 +471,7 @@ footer .footer-company { padding: 22px 0; color: #959595; font-size: 12px; }
 .postadwrap{ background:#092f46; padding:10px 0; font-size:20px; color:#9cc7de; font-weight:300; line-height:40px;} 
 .postadwrap a{ line-height:22px; font-size:18px; border-radius:3px; border:1px solid #9cc7de; color:#9cc7de; padding:8px 35px;}
 .postadwrap a:hover{ background:#9cc7de; color:#092f46;}
-.ListingdetailsWrap .product-title{ font-size:24px; color:#2d2d2d;}
+.ListingdetailsWrap .product-title{ font-size:24px; color:#2d2d2d; line-height: 30px;}
 .ListingdetailsWrap .product-social{ text-align:right;}
 .ListingdetailsWrap .product-social a{ margin:0 4px; color:#2d2d2d; font-size:20px;}
 .ListingdetailsWrap .slick-prev.slick-arrow{ background:url(/assets/slick-prev-arrow.png) left top no-repeat; width:49px; height:49px; position:absolute; top:45%; left:15px; font-size:0px;}
