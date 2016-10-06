@@ -1,72 +1,84 @@
-<header id="hd" class="rlatv list-bnr postbuy-banner">
-  <div class="hd-srch">
-    <h2>Post buying request</h2>
-  </div>
-</header>
-<section id="md" class="lst-midd-cnt post-buy-midd-cnt">
-  <div class="wht-bg MT60">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 border-right" id="tab-panel">
-          <div class="tellus-tab">
-            <ul id="myTab">
-              <li class="active"><a href="#tellus-one" data-toggle="tab"><span>1</span>What you want</a></li>
-              <li class=""><a href="#tellus-two" data-toggle="tab"><span>2</span>Who you are</a></li>
-            </ul>
-            <div class="clr"></div>
-          </div>
-
-          <!-- BUYER REQUEST FORM BEGINs -->
-          <%= render partial: 'form'%>
-          <!-- BUYER REQUEST FORM ENDs -->
-
-          <div class="rules-bx">
-            <h2><img src="/assets/rules-bulb.png" alt="">Rules</h2>
-            <ul>
-              <li><span>1</span>
-                <div class="rules-cont">Your Buying Request should be specific and clear.</div>
-              </li>
-              <li><span>2</span>
-                <div class="rules-cont">You shall not post the same buying request repeatedly at one time.</div>
-              </li>
-              <li><span>3</span>
-                <div class="rules-cont">You shall not post any materials that are untrue, inaccurate, unlawful, invalid</div>
-              </li>
-              <li><span>4</span>
-                <div class="rules-cont">You undertake that you shall not publish any information or conduct any act whatsoever that infringe the rights of any third party, including but not limited to any intellectual property rights, rights of publicity, rights of personality, rights of privacy, and any other rights of third parties not specifically identified in this clause.</div>
-              </li>
-              <li><span>5</span>
-                <div class="rules-cont">System generated emails will be sent to you to facilitate notifications of Buying Request status and quotation updates pursuant to your request</div>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <h2 class="page-hd txtctr">How it <span>work?</span></h2>
-          <div class="post-work-cont">
-            <div class="post-work-step">
-              <div class="work-step-img"><img src="/assets/stepimg1.png" alt=""></div>
-              <h2>Step 1</h2>
-              <p>Submits a Buying Request specifying their requirements within 5 minutes</p>
-              <img src="/assets/step-arrow.png" alt="" class="img-responsive"> </div>
-            <div class="post-work-step">
-              <div class="work-step-img"><img src="/assets/stepimg2.png" alt=""></div>
-              <h2>Step 2</h2>
-              <p>Power Cozmo match your request with verified seller and suppliers</p>
-              <img src="/assets/step-arrow.png" alt="" class="img-responsive"> </div>
-            <div class="post-work-step">
-              <div class="work-step-img"><img src="/assets/stepimg3.png" alt=""></div>
-              <h2>Step 3</h2>
-              <p>Quotations and offers reviewedby power cozmo</p>
-              <img src="/assets/step-arrow.png" alt="" class="img-responsive"> </div>
-            <div class="post-work-step">
-              <div class="work-step-img"><img src="/assets/stepimg4.png" alt=""></div>
-              <h2>Step 4</h2>
-              <p>Select the most suitable offer and works towards finalizing the deal.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<!-- Inner Banner Start -->
+<section class="innerbanner clearfix">
+  <div class="container">
+    <h2 class="text-center text-uppercase">POST BUYING REQUEST</h2>
   </div>
 </section>
+
+<!-- Welcome to Power Cozmo -->
+<section class="clearfix innerwrap">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-7 col-sm-12 col-xs-12">
+				<div class="clearfix buyingwrap">
+					<ul class="nav nav-tabs text-uppercase">
+						<li class="active"><a data-toggle="tab" href="#WhatYouWant">What you want</a></li>
+						<li><a data-toggle="tab" href="#WhoYouAre" id="WhoYouAreLink">Who you are</a></li>
+					</ul>
+					
+					<!-- BUYER REQUEST FORM BEGINs -->
+					<%= render partial: 'form'%>
+					<!-- BUYER REQUEST FORM ENDs -->
+						
+				</div>
+			</div>
+		</div>
+      
+		<div class="col-md-5 col-sm-12 col-xs-12 ruleswrap">
+			<div class="panel panel-default">
+				<div class="panel-heading"><img src="images/light-icon.png" alt="Light" class="marginR5"> Rules</div>
+					<div class="panel-body">
+						<ol>
+							<li>Your Buying Request should be specific and clear.</li>
+							<li>You shall not post the same buying request repeatedly at one time.</li>
+							<li>You shall not post any materials that are untrue, inaccurate, unlawful, invalid</li>
+							<li>You undertake that you shall not publish any information or conduct any act whatsoever that infringe the rights of any third party, including but not limited to any intellectual property rights, rights of publicity, rights of personality, rights of privacy, and any other rights of third parties not specifically identified in this clause.</li>
+							<li>System generated emails will be sent to you to facilitate notifications of Buying Request status and quotation updates pursuant to your request</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+</section>
+
+<!--How we Work start -->
+<section class="clearfix howweworkwrap">
+	<div class="container text-center">
+		<h2>HOW IT WORK?</h2>
+		<ul class="hwitwk-buying">
+			<li>
+				<div class="sprites hwitwk-ico1 MB20"></div>
+				<h4 class="text-uppercase">Step 1</h4>
+				<p>First find the plant or the equipment you are interested in on our web site. </p>
+			</li>
+			<li>
+				<div class="sprites hwitwk-ico2 MB20"></div>
+				<h4 class="text-uppercase">Step 2</h4>
+				<p>Once you get all your questions answered click in "Make an offer button". </p>
+			</li>
+			<li>
+				<div class="sprites hwitwk-ico3 MB20"></div>
+				<h4 class="text-uppercase">Step 3</h4>
+				<p>When an offer is accepted and the price agreed, a seller/buyer agreement. </p>
+			</li>
+			<li>
+				<div class="sprites hwitwk-ico9 MB20"></div>
+				<h4 class="text-uppercase">Step 4</h4>
+				<p>While the payment is clearing the bank you will be sent the seller/buyer contract. </p>
+			</li>
+		</ul>    
+	</div>
+</section>
+
+<%= javascript_include_tag 'bootstrap-filestyle.min'%>
+<script type="text/javascript">
+	
+	$("#nxt-btn").click(function(){
+		$("#WhoYouAreLink").trigger( "click" );
+		var offset = $('#WhoYouAreLink').offset();
+		var scrollto = offset.top - $('.navbar').outerHeight();
+		$('html, body').animate({scrollTop:scrollto}, 0);
+	});
+	
+</script>

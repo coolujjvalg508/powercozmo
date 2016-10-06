@@ -1,5 +1,8 @@
 class BuyingRequestsController < ApplicationController
 	before_action :find_associated_data, only: [:index, :filter, :edit]
+	
+	layout 'application_new'
+	
 	def index
 		@buying_requests = BuyingRequest.approved.order("created_at DESC").search(params[:q]).page(params[:page])
 	end

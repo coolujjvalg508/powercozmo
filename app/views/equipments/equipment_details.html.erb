@@ -7,7 +7,7 @@
 %>
  
 <% available = get_available_for(@equipment.availble_for) %>
-<% (@equipment.status == 'closed' || available[:status] == 'closed' || @equipment.status == 'sold' || (current_user && current_user.id == @equipment.user_id)) ? button_disabled = true : button_disabled = false %> 
+<% (@equipment.status == 'closed' || available[:status] == 'closed' || @equipment.status == 'sold' || (current_user && current_user.id == @equipment.user_id) || !user_signed_in?) ? button_disabled = true : button_disabled = false %> 
 
 <% content_for :head do %>
   <meta property="og:type" content="article" />
@@ -104,7 +104,7 @@
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#Description">Description</a></li>
 						
-						<% if @equipment.faults %>
+						<% if @equipment.faults && @equipment.faults != '' %>
 							<li><a data-toggle="tab" href="#Faults">Faults </a></li>
 						<% end %>
 					</ul>
@@ -114,7 +114,7 @@
 							<p><%= @equipment.description %></p>
 						</div>
 						
-						<% if @equipment.faults %>
+						<% if @equipment.faults && @equipment.faults != '' %>
 							<div id="Faults" class="tab-pane fade">
 								<p><%= @equipment.faults %></p>
 							</div>
@@ -222,7 +222,10 @@
 	</div>
 </section>
 
-<%=render :partial => 'equipment_questions_modal'%>
+<% if !button_disabled %>
+	<%=render :partial => 'equipment_questions_modal'%>
+<% end %>
+
 
 <style>@media print{a[href]:after{content:none}}</style>
 <script>

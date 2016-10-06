@@ -5,161 +5,209 @@
 		user_id = current_user.id %>
 		
 	<% end %>
-	<%= hidden_field_tag "buying_request[user_id]", user_id %>
-
-  <div id="myTabContent" class="tab-content">
-    <div class="tab-pane fade active in" id="tellus-one">
-      <p>Use 5 minutes to fill out a Buying Request and match your requested quotes to our Verified Suppliers.</p>
-      <div class="post-buy-form">
-        <div class="post-buy-form-l">
-          <div class="form-group">
-            <%= f.text_field :title, placeholder: 'Equipment, part, system or service name*'%>
-            <%= error_message(@buying_request, :title)%>
-          </div>
-          <div class="form-group">
-            <%= f.text_field :origin, placeholder: 'Origin' %>
-            <%= error_message(@buying_request, :origin)%>
-          </div>
-          <div class="form-group">
-            <% brand_id = f.object.brand_id %>
-            <%= f.select :brand_id, options_for_select(Manufacturer.pluck(:name, :id)+[['Other', 0]], brand_id), prompt: 'Select Manufacturer'%>
-            <%= text_field_tag "other[manufacturer_name]", params[:other].present? ? params[:other][:manufacturer_name] : "",class: 'br-other-field', placeholder: 'Manufacturer name', style: "display:none;" %>
-            <span class="error-mess">If you don’t find the right manufacturer, click on Other to write it. </span>
-            <%= error_message(@buying_request, :brand_id)%>
-          </div>
-          <div class="form-group">
-            <% category_id = f.object.category_id %>
-            <%= f.select :category_id, options_for_select(Category.active.pluck(:name, :id)+[['Other', 0]], category_id), prompt: 'Select Category*'%>
-            <%= f.text_field :category_name, class: 'br-other-field', placeholder: 'Category name*', style: "display:none;" %>
-            <span class="error-mess">If you don’t find the right category, click on Other to write it. </span>
-            <%= error_message(@buying_request, :category_id)%>
-            <%= error_message(@buying_request, :category_name)%>
-          </div>
-          <div class="form-group">
-            <% lead_type = f.object.lead_type %>
-            <%= f.select :lead_type, options_for_select(BuyingRequest::LEAD_TYPES, lead_type), prompt: 'Select Lead Type*'%>
-            <%= error_message(@buying_request, :lead_type)%>
-          </div>
-          <div class="form-group">
-            <% condition = f.object.condition %>
-            <%= f.select :condition, options_for_select(BuyingRequest::CONDITIONS, condition), prompt: 'Select Condition*'%>
-            <%= error_message(@buying_request, :condition)%>
-          </div>
-          <div class="form-group">
-            <div class="file-upload">
-              <%= f.file_field :attachment, accept: 'application/pdf'%>
-              <%= f.hidden_field :attachment_cache %>
-              <input type="text" id="attachment_name" placeholder="Attach pdf file" name="2" value="<%=@buying_request.attachment? ? @buying_request.attachment.filename : "" %>" />
-              <input type="submit" value="UPLOAD" name="3" />
-            </div>
-            <%= error_message(@buying_request, :attachment)%>
-          </div>
-          <div class="form-group">
-            <div class='input-group date' id='datetimepicker1'>
-              <%= f.text_field :expiration_date, placeholder: 'Expiration Date*', readonly: true %>
-              <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-              </span>
-            </div>
-            <span class="error-mess">Select the closing date of this request. </span>
-            <%= error_message(@buying_request, :expiration_date)%>
-          </div>
-          <div class="form-group">
-            <%= f.text_field :end_user, placeholder: 'End user' %>
-          </div>
-          <div class="form-group">
-            <%= f.text_field :city, placeholder: 'City' %>
-            <%= error_message(@buying_request, :city)%>
-          </div>
-          <div class="form-group">
-            <% location_id = f.object.location_id %>
-            <%= f.select :location_id, options_for_select(Country.active.pluck(:name, :id), location_id), prompt: 'Select Country'%>
-          </div>
-        </div>
-        <div class="post-buy-form-r eqp-upload-img">
-          <div class="form-group">
-            <%= f.text_area :description, placeholder: 'Description*'%>
-            <%= error_message(@buying_request, :description)%>
-          </div>
-          <div>Photo</div>
-          <%
-          @tmp_images ||= {}
-          nested_form_count = 1
-        %>
-        <%= f.fields_for :images do |img| %>
-            <div class="form-group mrg-btm-zero">
-              <div class="upload-image-input">
-                <%
-                  img_src = img.object.image.present? ? img.object.image : @tmp_images[img.index.to_s]
-                  tmp_image_src = @tmp_images[img.index.to_s]
-                  nested_form_count += 1
-                %>
-                <%= img.hidden_field :tmp_image, value: tmp_image_src %>
-                <%= img.hidden_field :id %>
-                <%= img.link_to_remove "<i class='fa fa-close'></i>".html_safe %>
-                <%= image_tag img_src, class: 'buying_request_preview_image', id: "buying_request_images_attributes_"+img.index.to_s+"_preview", style: img_src.present? ? "height:90  %;width:100%" : '' %>
-                  <%= img.file_field :image, class: 'form-control upload-photo-input', accept: 'image/*' %></div>
-                  <%= img.hidden_field :image_cache %>
-            </div>
-        <% end %>
-          <%= f.link_to_add "<div class='tips-for-imgupload'><div class='add-new-img' title='Add one more image'><i class='fa fa-plus'></i></div></div>".html_safe, :images, style: nested_form_count >= 4 ? "display:none" : "" %>
-        </div>
-        <div class="form-group MT20 MB20"> <a class="log-btn" href="javascript:void(0)" onclick="change_form_pane()">Next</a> </div>
-      </div>
-    </div>
-
-    <div class="tab-pane fade" id="tellus-two">
-      <p>Please describe about yourself which help us for further communications.</p>
-      <div class="post-buy-form">
-          <div class="post-buy-form-l">
-            <div class="form-group">
-              <%= f.text_field :name, placeholder: 'Name*' %>
-              <%= error_message(@buying_request, :name)%>
-            </div>
-            <div class="form-group">
+	<%= hidden_field_tag "buying_request[user_id]", user_id %>					
+					
+	<div class="tab-content">
+		<div id="WhatYouWant" class="tab-pane fade in active">
+			<div class="buyindent clearfix">
+				<div class="buy-txt marginB15">Use 5 minutes to fill out a Buying Request and match your requested quotes to our Verified Suppliers.</div>
 				
-				<% if current_user
-						email = current_user.email %>
-						<%= f.text_field :email, placeholder: 'Email*', value: email, readonly: true %>
-				<% else %>
-						<%= f.text_field :email, placeholder: 'Email*' %>
-				<% end %>
-				
-              <%= error_message(@buying_request, :email)%>
-            </div>
-            <div class="form-group">
-              <%= f.text_field :mobile, placeholder: 'Mobile*' %>
-              <%= error_message(@buying_request, :mobile)%>
-            </div>
-            <div class="form-group">
-              <% country_id = f.object.country_id %>
-              <%= f.select :country_id, options_for_select(Country.active.pluck(:name, :id), country_id), prompt: 'Select Country*'%>
-              <%= error_message(@buying_request, :country_id)%>
-            </div>
-          </div>
-          <div class="post-buy-form-r">
-            <div class="form-group">
-              <%= f.text_field :company_name, placeholder: 'Company Name*' %>
-              <%= error_message(@buying_request, :company_name)%>
-            </div>
-            <div class="form-group">
-              <%= f.text_field :company_website, placeholder: 'Company Website*' %>
-              <%= error_message(@buying_request, :company_website)%>
-            </div>
-            <div class="form-group">
-              <%= f.text_area :address, placeholder: 'Address*', class: 'textarea-height'%>
-              <%= error_message(@buying_request, :address)%>
-            </div>
-          </div>
-        <div class="form-group MT20 MB20">
-          <!--<a class="log-btn" href="javascript:void(0)" onclick="$('#new_buying_request').submit()">Submit</a>-->
-          
-          <a class="log-btn" href="javascript:void(0)" onclick="$('#new_buying_request, .edit_buying_request').submit()">Submit</a>
-          
-        </div>
-      </div>
-    </div>
-  </div>
+				<div class="row">
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						<%= f.text_field :title, placeholder: 'Equipment, part, system or service name*', class: "form-control" %>
+						<%= error_message(@buying_request, :title)%>
+					</div>
+					
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						<%= f.text_field :origin, placeholder: 'Origin', class: "form-control" %>
+						<%= error_message(@buying_request, :origin)%>
+					</div>
+					
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						
+						<% brand_id = f.object.brand_id %>
+						
+						<%= f.select :brand_id, options_for_select(Manufacturer.pluck(:name, :id)+[['Other', 0]], brand_id), {prompt: 'Select Manufacturer'}, { :class => 'custom-select' } %>
+						
+						<div class="clearfix"></div>
+						<%= text_field_tag "other[manufacturer_name]", params[:other].present? ? params[:other][:manufacturer_name] : "", class: 'br-other-field form-control marginT10', placeholder: 'Manufacturer name', style: "display:none;" %>
+						
+						<div class="select-txt">If you don’t find the right manufacturer, click on Other to write it. </div>
+						<%= error_message(@buying_request, :brand_id)%>
+						
+					</div>
+					
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						
+						<% category_id = f.object.category_id %>
+						
+						<%= f.select :category_id, options_for_select(Category.active.pluck(:name, :id)+[['Other', 0]], category_id), {prompt: 'Select Category*'}, { :class => 'custom-select' } %>
+						
+						<div class="clearfix"></div>
+						<%= f.text_field :category_name, class: 'br-other-field form-control marginT10', placeholder: 'Category name*', style: "display:none;" %>
+						
+						<div class="select-txt">If you don’t find the right category, click on Other to write it. </div>
+						<%= error_message(@buying_request, :category_id)%>
+						<%= error_message(@buying_request, :category_name)%>
+						
+					</div>
+					
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						
+						<% lead_type = f.object.lead_type %>
+						<%= f.select :lead_type, options_for_select(BuyingRequest::LEAD_TYPES, lead_type), {prompt: 'Select Lead Type*'}, { :class => 'custom-select' } %>
+						<%= error_message(@buying_request, :lead_type)%>
+						
+					</div>
+					
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						
+						<% condition = f.object.condition %>
+						<%= f.select :condition, options_for_select(BuyingRequest::CONDITIONS, condition), {prompt: 'Select Condition*'}, { :class => 'custom-select' } %>
+						<%= error_message(@buying_request, :condition)%>
+						
+					</div>
+					
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">										
+						<%= f.file_field :attachment, accept: 'application/pdf', class: "filestyle", "data-buttonName" => "btn-primary" %>
+						<%= f.hidden_field :attachment_cache %>
+						<%= error_message(@buying_request, :attachment)%>
+					</div>					
+					
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						
+						<div class='input-group date' id='datetimepicker1'>
+							<div class="calc"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+							<%= f.text_field :expiration_date, placeholder: 'Expiration Date*', readonly: true, class: "form-control" %>
+							<span class="input-group-addon">
+								<i class="fa fa-calendar" aria-hidden="true"></i>
+							</span>
+						
+						</div>
+						<%= error_message(@buying_request, :expiration_date)%>
+						
+					</div>								
+					
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						<%= f.text_field :end_user, placeholder: 'End user', class: "form-control" %>
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						<%= f.text_field :city, placeholder: 'City', class: "form-control" %>
+						<%= error_message(@buying_request, :city)%>
+					</div>
+
+					<div class="form-group col-md-12 col-sm-12 col-xs-12 countrywrap">
+						
+						<% location_id = f.object.location_id %>
+						<%= f.select :location_id, options_for_select(Country.active.pluck(:name, :id), location_id), {prompt: 'Select Country'}, { :class => 'custom-select' } %>
+						
+					</div>
+
+					<div class="form-group col-md-12 col-sm-12 col-xs-12">
+						<label>Photo</label>
+						<div class="clearfix  eqp-upload-img">
+					
+	<%
+	  @tmp_images ||= {}
+	  nested_form_count = 1
+	%>
+	<%= f.fields_for :images do |img| %>
+							<div class="form-group mrg-btm-zero">
+								<div class="upload-image-input">
+									<%
+									img_src = img.object.image.present? ? img.object.image : @tmp_images[img.index.to_s]
+									tmp_image_src = @tmp_images[img.index.to_s]
+									nested_form_count += 1
+									%>
+									<%= img.hidden_field :tmp_image, value: tmp_image_src %>
+									<%= img.hidden_field :id %>
+									<%= img.link_to_remove "<i class='fa fa-times-circle'></i>".html_safe, class: "btn-close-new" %>
+									<%= image_tag img_src, class: 'buying_request_preview_image', id: "buying_request_images_attributes_"+img.index.to_s+"_preview", style: img_src.present? ? "height:90  %;width:100%" : '' %>
+									<%= img.file_field :image, class: 'form-control upload-photo-input', accept: 'image/*' %>
+								</div>
+								<%= img.hidden_field :image_cache %>
+							</div>
+<% end %>
+							<%= f.link_to_add '<div class="photo"><center><img src="/assets/plus-photo.png" class="img-responsive" alt="Photo"></center></div>'.html_safe, :images, style: nested_form_count >= 4 ? "display:none" : "" %>
+
+						</div>
+					</div>
+					
+					<div class="form-group col-md-12 col-sm-12 col-xs-12">
+						<%= f.text_area :description, placeholder: 'Description*', class: "form-control message" %>
+						<%= error_message(@buying_request, :description)%>
+					</div>
+					
+					<div class="form-group col-md-12 col-sm-12 col-xs-12">
+						<button type="button" class="btn-orange text-uppercase" id="nxt-btn">next</button>
+					</div>
+					
+				</div>
+												
+			</div>
+		</div>
+
+		<div id="WhoYouAre" class="tab-pane fade">
+			<div class="buyindent clearfix">
+				<div class="buy-txt marginB15">Please describe about yourself which help us for further communications.</div>
+	
+	
+				<div class="row">
+					
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						<%= f.text_field :name, placeholder: 'Name*', class: "form-control" %>
+						<%= error_message(@buying_request, :name)%>
+					</div>
+					
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						<%= f.text_field :company_name, placeholder: 'Company Name*', class: "form-control" %>
+						<%= error_message(@buying_request, :company_name)%>
+					</div>
+					
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						
+						<% if current_user
+								email = current_user.email %>
+								<%= f.text_field :email, placeholder: 'Email*', value: email, readonly: true, class: "form-control" %>
+						<% else %>
+								<%= f.text_field :email, placeholder: 'Email*', class: "form-control" %>
+						<% end %>
+						
+						<%= error_message(@buying_request, :email)%>
+						
+					</div>
+					
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						<%= f.text_field :mobile, placeholder: 'Mobile*', class: "form-control" %>
+						<%= error_message(@buying_request, :mobile)%>
+					</div>
+		
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						  <%= f.text_field :company_website, placeholder: 'Company Website*', class: "form-control" %>
+						  <%= error_message(@buying_request, :company_website)%>
+					</div>	
+						
+					
+					<div class="form-group col-md-6 col-sm-6 col-xs-12 countrywrap">
+						
+						<% country_id = f.object.country_id %>
+						<%= f.select :country_id, options_for_select(Country.active.pluck(:name, :id), country_id), {prompt: 'Select Country*'}, { :class => 'custom-select' } %>
+						<%= error_message(@buying_request, :country_id) %>
+																										
+					</div>
+									
+					<div class="form-group col-md-12 col-sm-12 col-xs-12">
+						<%= f.text_area :address, placeholder: 'Address*', class: "form-control message" %>
+						<%= error_message(@buying_request, :address)%>
+					</div>
+					
+					<div class="form-group col-md-12 col-sm-12 col-xs-12">
+						<button type="button" class="btn-orange text-uppercase" onclick="$('#new_buying_request, .edit_buying_request').submit()">Submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
 <% end %>
 
 <script type="text/javascript">
@@ -227,4 +275,12 @@ function readURL (input) {
   .error-mess {
     font-size: 11px;
   }
+  
+  
+  .eqp-upload-img .remove_nested_fields{z-index: 1;}
+  a .photo{margin-top: 10px !important; margin-right: 0px !important;}
+  .upload-image-input input{height: 85px !important; position: relative !important;}
+  .btn-close-new {color: #424242; font-size: 20px;}
+  .eqp-upload-img .fields{margin: 10px 20px 10px 0px !important;}
+  
 </style>
