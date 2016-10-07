@@ -23,10 +23,7 @@ a:active, a:focus, a:hover, input[type="image"], select:focus, input, input[type
 .container { position: relative; }
 label { font-weight: normal; }
 .w100{width: 100% !important;}
-.marginB{margin-bottom: 0px !important;}
-.marginT5{margin-top: 5px !important;}
-.marginT10{margin-top: 10px !important;}
-.marginR30{margin-right: 30px !important;}
+
 /* Select Box Css */
 .select-wrapper { float: left; display: inline-block; background: url("/assets/dropdown.png") no-repeat 96% center; cursor: pointer; box-shadow: none; border-radius: 3px; height: 45px; border: 1px solid #d0d0d0; line-height: 45px; font-size: 16px; font-weight: 300; }
 .select-wrapper, .select-wrapper select { width: 200px; height: 45px; line-height: 45px; }
@@ -47,13 +44,18 @@ label { font-weight: normal; }
 .checkbox-btn input[type="checkbox"]:disabled+label::after, .checkbox-btn input[type="radio"]:disabled+label::after, .radio-btn input[type="checkbox"]:disabled+label::after, .radio-btn input[type="radio"]:disabled+label::after { border: 1px solid #ff4c00; background-color: #ff4c00 }
 .checkbox-btn input[type="checkbox"]:disabled+label::before, .checkbox-btn input[type="radio"]:disabled+label::before, .radio-btn input[type="checkbox"]:disabled+label::before, /* Common Css */ .padding { padding: 0px !important; }
 .margin { margin: 0px !important }
+.marginB{margin-bottom: 0px !important;}
+.marginT5{margin-top: 5px !important;}
+.marginT10{margin-top: 10px !important;}
+.marginT20{margin-top: 20px !important;}
 .marginR5 { margin-right: 5px !important; }
-.marginL5 { margin-left: 5px !important; }
+.marginR30{margin-right: 30px !important;}
 .marginB5 { margin-bottom: 5px !important; }
 .marginB10 { margin-bottom: 10px !important; }
 .marginB15 { margin-bottom: 15px !important; }
 .marginB30 { margin-bottom: 30px !important; }
 .marginB40 { margin-bottom: 40px !important; }
+.marginL5 { margin-left: 5px !important; }
 .paddinT5 { padding-top: 5px !important; }
 .paddinT8 { padding-top: 8px !important; }
 .paddinT10 { padding-top: 10px !important; }
@@ -98,8 +100,8 @@ header .dropdown-menu a:hover { color: #ff4c00; }
 header .nav .open > a, header .nav .open > a:hover, header .nav .open > a:focus { background: #f9f9f9; color: #ff4c00; }
 header .search-header { position: relative; }
 header .search-header .search-icon { position: absolute; color: #ff4c00; left: 12px; top: 10px; font-size: 18px; }
-header .search-header .form-control { width: 40px; height: 40px; border: 2px solid #ff4c00; border-radius: 50%; transition: all 0.6s ease-in-out 0s; box-shadow: none; margin-top: 20px; background: url(/assets/searchicon.png) 8px 8px no-repeat; }
-header .search-header .form-control:focus { width: 180px; border-radius: 50px; padding-left: 40px; }
+header .search-header .form-control { width: 40px; height: 40px; border: 2px solid #ff4c00; border-radius: 50%; transition: all 0.6s ease-in-out 0s; box-shadow: none; margin-top: 20px; background: url(/assets/searchicon.png) 8px 8px no-repeat; color: transparent;}
+header .search-header .form-control:focus { width: 180px; border-radius: 50px; padding-left: 40px; color: #555;}
 header .cd-dropdown-wrapper { margin: 0px; }
 header .cd-dropdown-trigger { background: none; }
 header .cd-dropdown { top: 87px; }
@@ -367,6 +369,7 @@ footer .footer-company { padding: 22px 0; color: #959595; font-size: 12px; }
 #login .modal-header h4::before { border-bottom: double #222 4px; line-height: 30px; bottom: 0; content: ""; height: 1px; left: 0; margin: auto; position: absolute; right: 0; width: 150px; }
 #login .modal-content { background: #fff url(/assets/loginbg.png) center bottom no-repeat; }
 #login label { color: #7b7979; font-weight: 300; font-size: 16px; }
+#login label.error { color: #cc0000; font-size: 12px; }
 #login .form-control { border-radius: 2px; box-shadow: none; height: 45px; }
 #login .form-group, #login .checkbox { margin-bottom: 25px; }
 #login .forgot-txt { color: #ff4c00; font-size: 16px; font-weight: 300; padding-top: 2px; }
@@ -526,4 +529,13 @@ footer .footer-company { padding: 22px 0; color: #959595; font-size: 12px; }
   top: -2px;
   right: -2px;
   text-align: center;
+}
+.field-height {min-height: 64px;}
+.signin-alert { background-color: #f2dede;
+    color: #a94442;
+    font-size: 12px;
+    margin-bottom: 20px;
+    padding: 10px;
+    text-align: center;
+    display: none;
 }

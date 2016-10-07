@@ -1,7 +1,5 @@
 class WelcomeController < ApplicationController
 
-	layout 'application_new'
-
 	def index
 		@categories = Category.active.roots
 		@latest_ads = Equipment.where("created_at > ? ", 30.days.ago).active.order('created_at DESC').limit(3)

@@ -201,9 +201,9 @@ p.response-msg { word-wrap: break-word; }
  }
 .height200{ height: 200px !important; }
 .file-upload input[type="file"] {width: auto !important;}
+
+/* Custom style to change main theme style start */
 .site-head{background: #03a9f4 !important;}
 .app.theme-four .site-head{background: #03a9f4 !important;}
 .main-container .nav-wrap .nav-head{background: /*#0288d1*/ #03a9f4 !important;}
-
-
-
+/* Custom style to change main theme style end */

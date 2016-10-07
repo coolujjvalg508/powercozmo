@@ -18,9 +18,9 @@
 //= require bootstrap
 //= require bootsy
 
-//= require jquery.selectric
-//= require classie
-//= require cbpAnimatedHeader
+// require jquery.selectric
+// require classie
+// require cbpAnimatedHeader
 
 //= require owl.carousel
 //= require responsive-carousel
@@ -32,6 +32,15 @@
 //= require jquery_nested_form
 //= require jstz.min
 //= require time_zone_detection
+
+// New design js
+
+//= require modernizr.custom.79639
+//= require wow.min
+//= require slick
+//= require jquery.menu-aim
+//= require main
+//= require custom
 
 // require_directory .
 

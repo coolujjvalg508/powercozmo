@@ -402,7 +402,7 @@ table.tbllist tr.tbllistt-pd td { padding: 0 !important; }
 /** CSS ADDED ON 29-04-2016 FOR MODAL POPUP BOXES**/
 .modal-backdrop.in { opacity: 0.8; }
 .mrg-btm-zero { margin-bottom: 0px; }
-.bid-popup .modal-dialog { width: 970px; display: table; margin: 0 auto; }
+.bid-popup .modal-dialog { width: 970px; display: table; margin: 30 auto; }
 .bid-popup .modal-content { width: 100%; float: left; padding: 20px; background: #fff; border-radius: 0px; border: 1px solid #ebe9e9; box-shadow: none; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; }
 .bid-popup .modal-content .close, .bid-popup .login-restrict-message .close { color: #757575; opacity: 1; font-size: 28px; width: 46px; height: 46px; border-radius: 50%; border: 1px solid #e6e6e6; }
 
@@ -532,7 +532,7 @@ color:#757575 !important;
 .close:hover .popup-close { background-position: 0 -14px; }
 .close:hover { background: #36ace3; border: 1px solid #36ace3; }
 .modal-open .modal { display: table !important; height: 100%; margin: auto !important; width: 100%; }
-.modal-dialog { display: table-cell !important; vertical-align: middle; margin: auto !important; }
+/*.modal-dialog { display: table-cell !important; vertical-align: middle; margin: auto !important; }*/
 .modal-content { display: inline-block; vertical-align: middle; margin: auto !important; }
 .tooltip-ico { position: relative; }
 .tooltip-ico .tooltip-info { position: absolute; top: -15px; left: -35px; z-index: 99; }

@@ -22,7 +22,7 @@
           <em style="font-size: 20px;">Description</em>
           <p><%= @equipment.description %></p>
           
-          <% if @equipment.faults %>
+          <% if @equipment.faults && @equipment.faults != '' %>
 			  <em style="font-size: 20px;">Faults</em>
 			  <p><%= @equipment.faults %></p>
           <% end %>	  

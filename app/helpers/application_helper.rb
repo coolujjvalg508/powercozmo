@@ -130,5 +130,17 @@ module ApplicationHelper
 	  base64 = Base64.encode64(asset.to_s).gsub(/\s+/, "")
 	  "data:#{asset.content_type};base64,#{Rack::Utils.escape(base64)}"
 	end
+	
+	def resource_name
+		:user
+	end
+
+	def resource
+		@resource ||= User.new
+	end
+
+	def devise_mapping
+		@devise_mapping ||= Devise.mappings[:user]
+	end
 
 end

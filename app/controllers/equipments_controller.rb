@@ -1,8 +1,6 @@
 class EquipmentsController < ApplicationController
 	before_action :find_associated_data, only: [:index, :filter]
-	
-	layout 'application_new'
-	
+		
 	def index
 		@equipments = Equipment.not_inactive.order('created_at desc').page params[:page]		
 	end
@@ -58,6 +56,7 @@ class EquipmentsController < ApplicationController
 	end
 	
 	def filter
+	
 		if params[:q].present?
 			@search = Equipment.not_inactive.search(params[:q])
 			@search.sorts = 'created_at desc' if @search.sorts.empty?
