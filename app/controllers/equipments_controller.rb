@@ -4,10 +4,7 @@ class EquipmentsController < ApplicationController
 	layout 'application_new'
 	
 	def index
-		@equipments = Equipment.not_inactive.order('created_at desc').page params[:page]
-		
-		@equipments = search.results
-		
+		@equipments = Equipment.not_inactive.order('created_at desc').page params[:page]		
 	end
 	
 	def index_solr_backup
