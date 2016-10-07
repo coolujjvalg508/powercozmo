@@ -58,7 +58,7 @@ class Equipment < ActiveRecord::Base
   
   ######## Solr search Start ########
         
-	searchable do
+	/searchable do
 		 
 		text :name, :identifier, :description
 		integer :id
@@ -78,7 +78,7 @@ class Equipment < ActiveRecord::Base
 		join(:name, :prefix => "sub_category", :target => Category, :type => :text, :join => { :from => :id, :to => :sub_category_id })
 		join(:name, :prefix => "sub_sub_category", :target => Category, :type => :text, :join => { :from => :id, :to => :sub_sub_category_id })
 		
-	end
+	end/
   
   ######## Solr search End ##########
 

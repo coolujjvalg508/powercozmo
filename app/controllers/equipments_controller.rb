@@ -4,6 +4,13 @@ class EquipmentsController < ApplicationController
 	layout 'application_new'
 	
 	def index
+		@equipments = Equipment.not_inactive.order('created_at desc').page params[:page]
+		
+		@equipments = search.results
+		
+	end
+	
+	def index_solr_backup
 		#@equipments = Equipment.not_inactive.order('created_at desc').page params[:page]
 		search = Equipment.solr_search do 
 		
@@ -52,10 +59,32 @@ class EquipmentsController < ApplicationController
       end
     end
 	end
-
-	def filter
 	
-	#abort(filter_params.to_json)
+	def filter
+		if params[:q].present?
+			@search = Equipment.not_inactive.search(params[:q])
+			@search.sorts = 'created_at desc' if @search.sorts.empty?
+			@search_result = @search.result
+		else
+			@search_result = "Equipment".constantize
+		end
+		condition = []
+		if params[:filter]
+			attributes = filter_params
+			attributes.delete_if {|k,v| v.blank?}
+			attributes.each do |attribute, value|
+				condition << "#{attribute.to_s} = ?"
+			end
+		end
+		if condition.length > 0
+			@equipments = @search_result.not_inactive.where([condition.join(' AND '), *attributes.values]).order('created_at desc').page params[:page]
+		else
+			@equipments = @search_result.not_inactive.order('created_at desc').page(params[:page])
+		end
+		render :index
+	end
+
+	def filter_solr_backup
 	
 		search_qry = {}
 	
