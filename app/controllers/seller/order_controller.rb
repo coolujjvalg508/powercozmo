@@ -5,6 +5,13 @@ class Seller::OrderController < Seller::BaseController
   	@orders = Order.all.order('created_at desc').joins(:equipment).where('equipment.user_id = ? OR orders.user_id = ? ', current_user, current_user).page(params[:page]).per(10)
   	#abort(@orders.to_json)
   end
+  
+  def invoices  	
+  	#@orders = current_user.orders.all.order('created_at desc').page(params[:page]).per(10)
+  	@orders = Order.all.order('created_at desc').joins(:equipment).where('orders.user_id = ? ', current_user).page(params[:page]).per(10)
+  	#abort(@orders.to_json)
+  	  	
+  end
 
   def show
     

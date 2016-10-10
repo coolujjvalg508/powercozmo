@@ -38,10 +38,10 @@
 	<header class="site-head" id="site-head">
 		<ul class="list-unstyled left-elems">
 			<!-- nav trigger/collapse -->
-			<!-- <li>
-				<a href="javascript:;" class="nav-trigger ion ion-drag"></a>
-			</li>-->
-			<!-- #end nav-trigger -->
+			 <li>
+				<a href="javascript:;" class="nav-trigger ion ion-drag" id="nav-resize-btn"></a>
+			</li>
+			<!-- #end nav-trigger 
 
 			<!-- Search box -->
 			<li>
@@ -224,46 +224,23 @@
 						</a>
 					</li>
 					
-					<li class="<%= 'active' if edit_seller_profile_path(current_user) == url_for(only_path: true) %>">
-						<a href="<%= edit_seller_profile_path(current_user)%>" title="My Profile">
+					<li class="<%= 'open' if edit_seller_profile_path(current_user) == url_for(only_path: true) || seller_favourites_path == url_for(only_path: true) %>">
+						<a href="javascript:;">
 							<i class="ion ion-person"></i>
-							<span class="text">My Profile</span> 
+							<span class="text">My power Cozmo</span>
+							<i class="arrow ion-chevron-left"></i>
 						</a>
-					</li>
-					
-					<li class="<%= 'active' if seller_favourites_path == url_for(only_path: true) %>"> 
-						<a href="<%= seller_favourites_path%>" title="My Favourites"> 
-							<i class="ion ion-heart"></i> 
-							<span class="text">My Favourites</span> 
-						</a>
-					</li>
-					
-					<li class="<%= 'active' if seller_equipment_index_path == url_for(only_path: true) %>">
-						<%= link_to '<i class="ion ion-navicon-round"></i> <span class="text">My Equipments</span>'.html_safe, seller_equipment_index_path, { :title => "My Listed Equipments" } %>
-					</li>
-					
-					<li class="<%= 'active' if new_seller_equipment_path == url_for(only_path: true) %>">
-						<%= link_to '<i class="ion ion-plus-circled"></i> <span class="text">Add New Post</span>'.html_safe, new_seller_equipment_path, { :title => "Add New Post" } %>
-					</li>
-					
-					<li class="<%= 'active' if seller_offers_path == url_for(only_path: true) %>">
-						<%= link_to seller_offers_path do %>
-						
-							<i class="ion ion-pricetags"></i>
-							<span class="text" title="My Offers">My Offers</span>
-							<span class="badge badge-xs badge-danger" title="<%= unresponded_offers%>"><%= (unresponded_offers > 99) ? "99+" : unresponded_offers %></span>
-												
-						<% end %>
-					</li>
-										
-					<li class="<%= 'active' if seller_questions_path == url_for(only_path: true) %>">
-						<%= link_to seller_questions_path do %>
-						
-							<i class="ion ion-help-circled"></i>
-							<span class="text" title="Questions List">Questions</span>
-							<span class="badge badge-xs badge-danger" title="<%= unresponded_questions%>"><%= (unresponded_questions > 99) ? "99+" : unresponded_questions %></span>
-					
-						<% end %>
+						<ul class="inner-drop list-unstyled">
+							
+							<li class="<%= 'active' if edit_seller_profile_path(current_user) == url_for(only_path: true) %>">
+								<a href="<%= edit_seller_profile_path(current_user) %>" title="My Profile">Profile</a>
+							</li>
+							
+							<li class="<%= 'active' if seller_favourites_path == url_for(only_path: true) %>">
+								<a href="<%= seller_favourites_path %>" title="My Favourites">My Favourites</a>
+							</li>
+							
+						</ul>
 					</li>
 					
 					<%
@@ -297,39 +274,43 @@
 						</ul>
 					</li>
 					
-					<li class="<%= 'open' if new_buying_request_path == url_for(only_path: true) || seller_buying_requests_path == url_for(only_path: true) || seller_my_buying_request_list_path == url_for(only_path: true) %>">
+					<li class="<%= 'open' if seller_questions_path == url_for(only_path: true) || seller_offers_path == url_for(only_path: true) %>">
 						<a href="javascript:;">
-							<i class="ion ion-clipboard"></i>
-							<span class="text">Buying Requests</span>
+							<i class="ion ion-pricetags"></i>
+							<span class="text">Question & Offer</span>
 							<i class="arrow ion-chevron-left"></i>
 						</a>
 						<ul class="inner-drop list-unstyled">
 							
-							<li class="<%= 'active' if new_buying_request_path == url_for(only_path: true) %>">
-								<a href="<%= new_buying_request_path %>" title="Post Buying Request">Post Buying Request</a>
+							<li class="<%= 'active' if seller_questions_path == url_for(only_path: true) %>">
+								<a href="<%= seller_questions_path %>" title="My Questions">Question</a>
 							</li>
 							
-							<li class="<%= 'active' if seller_buying_requests_path == url_for(only_path: true) %>">
-								<a href="<%= seller_buying_requests_path %>" title="Buying Requests List">Buying Requests List</a>
-							</li>
-							
-							<li class="<%= 'active' if seller_my_buying_request_list_path == url_for(only_path: true) %>">
-								<a href="<%= seller_my_buying_request_list_path %>" title="My Buying Requests List">My Buying Requests</a>
+							<li class="<%= 'active' if seller_offers_path == url_for(only_path: true) %>">
+								<a href="<%= seller_offers_path %>" title="My Offers">Offers</a>
 							</li>
 							
 						</ul>
 					</li>
-										
-					<li class="<%= 'open' if seller_received_proposals_path == url_for(only_path: true) || seller_buying_proposals_path == url_for(only_path: true) %>">
+					
+					<li class="<%= 'open' if new_seller_equipment_path == url_for(only_path: true) || seller_equipment_index_path == url_for(only_path: true) || seller_buying_requests_path == url_for(only_path: true) || seller_buying_proposals_path == url_for(only_path: true) %>">
 						<a href="javascript:;">
-							<i class="ion ion-ios-book"></i>
-							<span class="text">Proposals</span>
+							<i class="ion ion-navicon-round"></i>
+							<span class="text">For Sellers</span>
 							<i class="arrow ion-chevron-left"></i>
 						</a>
 						<ul class="inner-drop list-unstyled">
 							
-							<li class="<%= 'active' if seller_received_proposals_path == url_for(only_path: true) %>">
-								<a href="<%= seller_received_proposals_path %>" title="Received Proposals">Received Proposals</a>
+							<li class="<%= 'active' if new_seller_equipment_path == url_for(only_path: true) %>">
+								<a href="<%= new_seller_equipment_path %>" title="Add New Post">Add New Post</a>
+							</li>
+							
+							<li class="<%= 'active' if seller_equipment_index_path == url_for(only_path: true) %>">
+								<a href="<%= seller_equipment_index_path %>" title="Post list">Post list</a>
+							</li>
+							
+							<li class="<%= 'active' if seller_buying_requests_path == url_for(only_path: true) %>">
+								<a href="<%= seller_buying_requests_path %>" title="Buying Requests List">Buying Requests List</a>
 							</li>
 							
 							<li class="<%= 'active' if seller_buying_proposals_path == url_for(only_path: true) %>">
@@ -338,13 +319,44 @@
 							
 						</ul>
 					</li>
+					
+					<li class="<%= 'open' if new_buying_request_path == url_for(only_path: true) || seller_my_buying_request_list_path == url_for(only_path: true) || seller_invoices_path == url_for(only_path: true) || seller_received_proposals_path == url_for(only_path: true) %>">
+						<a href="javascript:;">
+							<i class="ion ion-navicon-round"></i>
+							<span class="text">For Buyers</span>
+							<i class="arrow ion-chevron-left"></i>
+						</a>
+						<ul class="inner-drop list-unstyled">
+							
+							<li class="<%= 'active' if new_buying_request_path == url_for(only_path: true) %>">
+								<a href="<%= new_buying_request_path %>" title="Post Buying Request">Post Buying Request</a>
+							</li>
+							
+							<li class="<%= 'active' if seller_my_buying_request_list_path == url_for(only_path: true) %>">
+								<a href="<%= seller_my_buying_request_list_path %>" title="Manage My Buying Requests List">My Buying Requests List</a>
+							</li>
+							
+							<li class="<%= 'active' if seller_invoices_path == url_for(only_path: true) %>">
+								<a href="<%= seller_invoices_path %>" title="Invoices">Invoices</a>
+							</li>
+							
+							<li class="<%= 'active' if seller_received_proposals_path == url_for(only_path: true) %>">
+								<a href="<%= seller_received_proposals_path %>" title="Received Proposals">Received Proposals</a>
+							</li>
+														
+						</ul>
+					</li>
+				
 									
 					<li class="<%= 'active' if seller_orders_path == url_for(only_path: true) %>"> 
-						<a href="<%= seller_orders_path%>"  title="My Orders"> 
+						<a href="<%= seller_orders_path%>"  title="Manage Orders"> 
 							<i class="ion ion-briefcase"></i> 
-							<span>My Orders</span> 
+							<span class="text">Manage Orders</span> 
 						</a>
 					</li>
+					
+					
+					
           
 				</ul> <!-- #end navigation -->
 			</nav>
