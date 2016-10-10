@@ -9,11 +9,11 @@ class Manufacturer < ActiveRecord::Base
 	
 	######## Solr search Start ########
   
-	searchable do
+	/searchable do
 		text :name
 		integer :id
 		integer :status
-	end
+	end/
   
     ######## Solr search End ##########
 	

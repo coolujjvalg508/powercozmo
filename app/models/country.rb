@@ -9,12 +9,12 @@ class Country < ActiveRecord::Base
 		
 	######## Solr search Start ########
   
-	searchable do
+	/searchable do
 		text :name
 		text :code
 		integer :id
 		integer :status
-	end
+	end/
   
     ######## Solr search End ##########
 	
