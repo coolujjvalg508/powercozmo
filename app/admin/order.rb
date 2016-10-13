@@ -3,8 +3,8 @@ ActiveAdmin.register Order do
 
   actions :all, except: [:new, :destroy]
 
-  permit_params :price, :name, :email, :mobile, :country_id, :company_name, :company_website, :commission, :status
-
+  permit_params :price, :name, :email, :mobile, :country_id, :company_name, :company_website, :commission, :status, :shipping_method, :pickup_country_id, :pickup_city, :pickup_port, :delivery_country_id, :delivery_city, :delivery_port, :seller_remark, :buyer_remark
+    
   action_item :back, only: :show do
     link_to "Back", collection_path, method: :get
   end
@@ -85,6 +85,22 @@ ActiveAdmin.register Order do
       f.input :company_name, label: 'Buyer Comapny Name'
       f.input :company_website, label: 'Buyer Company Website'
     end
+    
+    f.inputs "Shipping Details" do
+	  f.input :shipping_method, label: 'Shipping Method', as: :select, collection: (Order::SHIPPING_METHOD), include_blank: 'Select Shipping Method'
+	  f.input :pickup_country_id, label: 'Pickup Country', as: :select, collection: Country.active.pluck(:name, :id), include_blank: 'Select Country'	
+	  f.input :pickup_city, label: 'Pickup City'
+	  f.input :pickup_port, label: 'Pickup Port'
+	  f.input :delivery_country_id, label: 'Delivery Country', as: :select, collection: Country.active.pluck(:name, :id), include_blank: 'Select Country'	
+	  f.input :delivery_city, label: 'Delivery City'
+	  f.input :delivery_port, label: 'Delivery Port'
+    end
+    
+    f.inputs "Terms" do
+	  f.input :seller_remark, label: 'Seller Terms'
+	  f.input :buyer_remark, label: 'Buyer Terms'
+    end
+     
     f.actions
   end
 
@@ -120,5 +136,109 @@ ActiveAdmin.register Order do
         row('Seller Company Website'){ |r| r.seller.profile.website }
       end
     end
+    
+    panel "Shipping Details" do
+      attributes_table_for order do
+        row('Number Of Packages'){ |r| (r.no_of_packages != 0) ? r.no_of_packages : '-' }
+        row('Shipping Method'){ |r| r.shipping_method }
+        row('Pickup Country'){ |r| r.pickup_country.name }
+        row('Pickup City'){ |r| r.pickup_city }
+        row('Pickup Port'){ |r| r.pickup_port }
+        row('Delivery Country'){ |r| r.delivery_country.name }
+        row('Delivery City'){ |r| r.delivery_city }
+        row('Delivery Port'){ |r| r.delivery_port }
+      end
+    end
+    
+    
+	panel "Packages Dimensions" do
+		attributes_table_for order do
+			columns do
+				column do
+					span "&nbsp;".html_safe
+				end
+				column do
+					strong "Length"
+				end
+				column do
+					strong "Width"
+				end
+				column do
+					strong "Height"
+				end
+				column do
+					strong "Weight"
+				end
+			end
+		
+		if order.shipping_package.present?
+			i = 1;
+			order.shipping_package.each do |p|
+				columns do
+					column do
+						span "Package " + i.to_s
+					end
+					column do
+						span p.length
+					end
+					column do
+						span p.width
+					end
+					column do
+						span p.height
+					end
+					column do
+						span p.weight
+					end
+				end
+				i = i + 1
+			end
+		else
+			columns do
+				column do
+					span "Packages dimensions details not available" 
+				end
+			end
+		end
+
+      end
+    end
+    
+    panel "Terms" do
+      attributes_table_for order do
+        row('Seller Terms'){ |r| r.seller_remark }
+        row('Buyer Terms'){ |r| r.buyer_remark }
+      end
+    end
+    
+    enquiry = EquipmentEnquiry.find_by_id order.equipment_enquiry_id
+    
+    if enquiry.responses.present?
+		panel "Enquiry Responses" do
+			enquiry.responses.each do |res|
+				attributes_table_for res do
+					row('From'){ |res| res.user.profile.first_name + ' ' + res.user.profile.last_name }
+					row('Date'){ |res| format_time(res.created_at) }
+					row('Message'){ |res| res.message.to_s.html_safe }	
+				end
+			end
+		end
+    end
+    
+    panel "Signature" do
+      attributes_table_for order do
+        row :Seller do |r|
+			if(r.seller.profile.digital_signature != '')
+				image_tag(r.seller.profile.digital_signature, width: '200') + '<br/>'.html_safe + r.seller.profile.name
+			end
+		end
+		row :Buyer do |r|
+			if(r.user.profile.digital_signature != '')
+				image_tag(r.user.profile.digital_signature, width: '200') + '<br/>'.html_safe + r.name
+			end
+		end
+      end
+    end
+        
   end
 end

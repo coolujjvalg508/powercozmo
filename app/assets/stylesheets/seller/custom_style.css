@@ -177,7 +177,7 @@ p.response-msg { word-wrap: break-word; }
 .equipment-content .eqp-form-box, .myprofile-content .mp-form-box, .new-msg-content .new-msg-form-box{margin-bottom: 0px!important;} 
 
 .myprofile-content .mp-form-box{border: none!important; margin-bottom: 0px!important; float: none !important; padding: 0px!important;}
-
+.pos-rel{ postion:relative;}
 .padding{padding: 0px !important;}
 .padding10{ padding: 10px !important; } 
 .paddingL15{ padding-left: 15px !important; } 
@@ -197,6 +197,10 @@ p.response-msg { word-wrap: break-word; }
 .marginB10{margin-bottom: 10px !important;}
 .marginB15{margin-bottom: 15px !important;}
 .marginB20{margin-bottom: 20px !important;}
+.marginL5{margin-left: 5px !important;}
+.marginL10{margin-left: 10px !important;}
+.marginL15{margin-left: 15px !important;}
+.marginL20{margin-left: 20px !important;}
 .mb50{margin-bottom: 50px !important;}
 .mb60{margin-bottom: 60px !important;}
 .mb180{margin-bottom: 180px !important;}
@@ -229,10 +233,22 @@ p.response-msg { word-wrap: break-word; }
 
 .my-msg{background-color: #f9f6dc;}
 .response-msg{/*background-color: #f9f6dc;*/}
-.conversation-section{padding-left: 15px; padding-right: 15px; min-width: 80%;}
+.conversation-section{padding-left: 15px; padding-right: 15px; min-width: 70%;}
 
 /* Custom style to change main theme style start */
 .site-head{background: #03a9f4 !important;}
 .app.theme-four .site-head{background: #03a9f4 !important;}
 .main-container .nav-wrap .nav-head{background: /*#0288d1*/ #03a9f4 !important;}
 /* Custom style to change main theme style end */
+.RightArrow { position: absolute; right: -9px; top: -8px; color:#ddd;}
+.RightArrow  .fa{ font-size:22px;}
+
+.LeftArrow { position: absolute; left: -9px; top: -8px; color:#ddd;}
+.LeftArrow  .fa{ font-size:22px;}
+
+
+.conversation-section .panel-lined, .conversation-section .panel-default, .conversation-section .panel-primary, .conversation-section .panel-success, .panel-info, .conversation-section .panel-warning, .conversation-section .panel-danger{ box-shadow:none;}
+.theme-text{color: #333 !important;}
+
+
+

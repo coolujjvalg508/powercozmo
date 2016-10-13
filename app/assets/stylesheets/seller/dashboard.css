@@ -4,10 +4,10 @@
 @font-face { font-family: 'PoppinsMedium'; src: url('/assets/PoppinsMedium.eot'); src: url('/assets/PoppinsMedium.eot') format('embedded-opentype'),  url('/assets/PoppinsMedium.woff2') format('woff2'),  url('/assets/PoppinsMedium.woff') format('woff'),  url('/assets/PoppinsMedium.ttf') format('truetype'),  url('/assets/PoppinsMedium.svg#PoppinsMedium') format('svg'); }
 @font-face { font-family: 'PoppinsSemiBold'; src: url('/assets/PoppinsSemiBold.eot'); src: url('/assets/PoppinsSemiBold.eot') format('embedded-opentype'),  url('/assets/PoppinsSemiBold.woff2') format('woff2'),  url('/assets/PoppinsSemiBold.woff') format('woff'),  url('/assets/PoppinsSemiBold.ttf') format('truetype'),  url('/assets/PoppinsSemiBold.svg#PoppinsSemiBold') format('svg'); }
 @font-face { font-family: 'PoppinsBold'; src: url('/assets/PoppinsBold.eot'); src: url('/assets/PoppinsBold.eot') format('embedded-opentype'),  url('/assets/PoppinsBold.woff2') format('woff2'),  url('/assets/PoppinsBold.woff') format('woff'),  url('/assets/PoppinsBold.ttf') format('truetype'),  url('/assets/PoppinsBold.svg#PoppinsBold') format('svg'); }
-body { font-family: 'PoppinsRegular'; font-size: 14px; color: #757575; }
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {font-family: 'PoppinsRegular';}
+body { font-family: 'PoppinsRegular'; font-size: 14px; color: #333; }
+/*h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {font-family: 'PoppinsRegular';}*/
 td, th { vertical-align: middle !important; }
-strong { font-weight: normal; font-family: 'PoppinsBold'; }
+strong { font-weight: bold; /*font-family: 'PoppinsBold';*/ }
 select { border: 1px solid #e9e8e8; background:  #fff; padding:  6px; }
 .clr { clear:  both;  }
 .fr { float:  right !important;  }

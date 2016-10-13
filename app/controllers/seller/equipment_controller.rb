@@ -218,7 +218,9 @@ class Seller::EquipmentController < Seller::BaseController
   
   def favourites
 	@equipments = Favorite.all.joins(:equipment).where('equipment.status != "0" AND favorites.user_id = ?', current_user.id).order('created_at desc').page(params[:page]).per(10)
-		
+	
+	@categories = Category.active.order(name: :asc).roots.joins("LEFT JOIN preferences ON (preferences.category_id = categories.id AND preferences.user_id = #{current_user.id})").select('categories.*, preferences.user_id, preferences.category_id')
+				
   end
   
   def remove_favourite
@@ -226,6 +228,27 @@ class Seller::EquipmentController < Seller::BaseController
 		flash[:notice] = "Equipment successfully removed from favourites."
 		redirect_to seller_favourites_path
   end
+  
+  def add_preference
+	
+		preference_data = Preference.where('preferences.user_id = ? AND preferences.category_id = ?', current_user.id, params[:category_id]).first
+	
+		if preference_data
+			render json: {message: 'Already in preferences !', status: '201'}
+		else
+			Preference.create(user_id: current_user.id, category_id: params[:category_id])
+			
+			render json: {message: 'Category successfully added in preferences.', status: '200'}
+			
+		end
+	
+  end
+	
+  def remove_preference
+		Preference.where(user_id: current_user.id, category_id: params[:category_id]).delete_all
+		render json: {message: 'Category successfully removed from preferences.', status: '200'}
+  end
+  
 
   private
 

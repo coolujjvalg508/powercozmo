@@ -164,9 +164,149 @@
 				</div>
 			</div>
 						
-			
 			<!-- #end mini boxes -->
 		</div> <!-- #end row -->
+		
+		
+		<!-- row -->
+		<div class="row">
+
+			<!-- profile -->
+			<div class="col-md-4 col-sm-6">
+				<div class="panel panel-default mb20 panel-hovered profile-widget">
+					<div class="panel-body">
+						<div class="clearfix">
+							<div class="left-side">
+								<h3 class="text-light mt0"><%= current_user.name.to_s.titleize %></h3>
+								<p><strong>Email:&nbsp;</strong><%= current_user.email %></p>
+								<p><strong>Company:&nbsp;</strong><%= current_user.profile.company_name.to_s.titleize %></p>
+								<p><strong>Website:&nbsp;</strong><%= current_user.profile.website %></p>
+								<p><strong>Mobile:&nbsp;</strong><%= current_user.profile.phone_number %></p>
+								<p><strong>Country:&nbsp;</strong><%= current_user.profile.country.name %></p>
+								<p>
+									<strong>I am: </strong>
+									<% if current_user.user_type == 'Seller' || current_user.user_type == 'Both' %>
+										<label class="label label-pink">Seller</label>
+									<% end %>
+									<% if current_user.user_type == 'Buyer' || current_user.user_type == 'Both' %>
+										<label class="label label-pink">Buyer</label>
+									<% end %>
+									
+								</p>
+							</div>
+							<div class="right-side">
+								<% if (current_user.image.blank? || current_user.image.try(:image).blank?)%>
+									<img src="/assets/seller/myprofile-placeholder-img.png" alt="User">
+								<% else %>
+									<%= image_tag(current_user.image.try(:image).try(:thumb).try(:url), alt: "User Image") %>
+								<% end %>
+							</div>
+						</div>
+						
+						<ul class="user-badges list-unstyled row">
+							<li class="col-xs-12 col-md-12">
+								<a href="<%= edit_seller_profile_path(current_user)%>" class="btn btn-primary btn-xs pull-right">Profile</a>
+							</li>
+						</ul>
+					</div> <!-- #end panel-body -->
+				</div>
+			</div>
+
+			<!-- list widgets -->
+			<div class="col-md-4 col-sm-12">
+				<div class="panel panel-default mb20 list-widget">
+					<ul class="list-unstyled clearfix">
+						<li>
+							<i class="fa fa-file-o"></i>
+							<span class="text">My Equipments</span>
+							<span class="badge badge-xs badge-primary right"><%= (@equipments.count > 9999) ? "9999+" : @equipments.count %></span>
+						</li>
+						<li>
+							<i class="fa fa-comments-o"></i>
+							<span class="text">Messages</span>
+							<span class="badge badge-xs badge-info right"><%= (@received_messages.count > 9999) ? "9999+" : @received_messages.count %></span>
+						</li>
+						<li>
+							<i class="fa fa-building-o"></i>
+							<span class="text">My Proposals</span>
+							<span class="badge badge-xs badge-success right"><%= (@proposals.count > 9999) ? "9999+" : @proposals.count %></span>
+						</li>
+						<li>
+							<i class="fa fa-bullhorn"></i>
+							<span class="text"> Notifications</span>
+							<span class="badge badge-xs badge-primary right">
+								<% unread_notifications_count = current_user.try(:unread_notifications_count).to_i %>
+								<%= (unread_notifications_count > 9999) ? "9999+" : unread_notifications_count %>
+							</span>
+						</li>
+						<li>
+							<i class="fa fa-tag"></i>
+							<span class="text">Offers</span>
+							<span class="badge badge-xs badge-danger right"><%= (@offers.count > 9999) ? "9999+" : @offers.count %></span>
+						</li>
+						<li>
+							<i class="fa fa-question"></i>
+							<span class="text">Questions</span>
+							<span class="badge badge-xs badge-info circle right"><%= (@questions.count > 9999) ? "9999+" : @questions.count %></span>
+						</li>
+						<li>
+							<i class="fa fa-suitcase"></i>
+							<span class="text">My Orders</span>
+							<span class="badge badge-xs circle badge-danger right"><%= (@orders.count > 9999) ? "9999+" : @orders.count %></span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<!-- recent activities -->
+			<div class="col-md-4">
+				<div class="panel panel-default mb20 activities">
+					<div class="panel-heading">Recent Offers</div>
+					<div class="panel-body">
+						<ul class="list-unstyled">
+							
+							<% if(@offers.count > 0) %>
+							
+								<% @offers.each_with_index do |offer, index| %>
+									<% if index <= 3 %>
+									
+										<% list_class = 'primary' %>
+										<% if index == 0 %>
+											<% list_class = 'primary' %>
+										<% elsif index == 1 %>
+											<% list_class = 'success' %>
+										<% elsif index == 2 %>
+											<% list_class = 'info' %>
+										<% elsif index == 3 %>
+											<% list_class = 'warning' %>	
+										<% end %>
+										
+										<li class="<%= list_class %>">
+											<span class="point"></span>
+											<span class="time small text-muted"><%= offer.created_at.strftime("%d-%b-%Y %H:%M %p") %></span>
+											<p><%=link_to offer.equipment.name, seller_offer_path(offer), title: 'View', class: 'theme-text' %> <span class="time small text-muted">(Offered Price: <%= raw(offer.try(:equipment).try(:currency)) %><%= offer.bidding_price || offer.equipment.price %>)</span></p>
+										</li>
+									<% else 
+										break
+									%>
+									<% end %>
+								<% end %>
+								
+							<% else %>
+								<li class="warning">
+									<span class="point"></span>
+									<p>Offers not available.</p>
+								</li>
+							<% end %>
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- #end recent activities -->
+			
+		</div>
+		<!-- #end row -->
 
 		
 		<!-- row -->
@@ -180,7 +320,7 @@
 							<table class="table">
 								<thead>
 									<tr>
-										<th>Identifier</th>
+										<th>S.No.</th>
 										<th>Name</th>
 										<th>Description</th>
 										<th class="text-center">Image</th>

@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900);
 /** Shared **/
 html,
 body {
@@ -5,8 +6,9 @@ body {
   min-height: 100%;
 }
 body {
-  letter-spacing: .5px;
+  /*letter-spacing: .5px;*/
   background: #efefef;
+   font-family: 'Roboto', sans-serif; 
 }
 *:focus {
   outline: none!important;
@@ -5101,6 +5103,9 @@ fieldset[disabled] .btn-youtube.active {
   background: #e91e63;
   border-color: #e91e63;
 }
+.page-dashboard .profile-widget, .page-dashboard .activities {
+  min-height: 333px;
+}
 .page-dashboard .profile-widget .top-info {
   border-bottom: 1px solid #eeeeee;
   padding-bottom: 15px;
@@ -5113,6 +5118,7 @@ fieldset[disabled] .btn-youtube.active {
 .page-dashboard .profile-widget .left-side {
   width: 75%;
   padding-right: 15px;
+  overflow-wrap:break-word;
 }
 .page-dashboard .profile-widget .right-side {
   width: 25%;

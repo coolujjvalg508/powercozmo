@@ -88,6 +88,8 @@ Rails.application.routes.draw do
       get 'order_invoice/:id' => 'order#download_invoice', as: "order_invoice"
       get 'favourites' => 'equipment#favourites', as: "favourites"
       delete 'remove_favourite/:id' => 'equipment#remove_favourite', as: "remove_favourite"
+      get 'add_preference' => 'equipment#add_preference'
+      get 'remove_preference' => 'equipment#remove_preference'
       
     end
         

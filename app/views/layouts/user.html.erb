@@ -257,7 +257,7 @@
 					<li class="<%= 'open' if inbox_seller_messages_path == url_for(only_path: true) || message_detail_type.to_s=='inbox' || sentbox_seller_messages_path == url_for(only_path: true) || message_detail_type.to_s=='sendbox' || new_seller_message_path == url_for(only_path: true) %>">
 						<a href="javascript:;">
 							<i class="ion ion-email"></i>
-							<span class="text">Message</span>
+							<span class="text">Message Center</span>
 							<span class="badge badge-xs badge-danger" title="<%= current_user.try(:unread_inbox_count).to_i %>"><%= current_user.try(:unread_inbox_count).to_i > 99 ? "99+" : current_user.try(:unread_inbox_count).to_i %></span>
 							<i class="arrow ion-chevron-left"></i>
 						</a>
@@ -277,13 +277,13 @@
 					<li class="<%= 'open' if seller_questions_path == url_for(only_path: true) || seller_offers_path == url_for(only_path: true) %>">
 						<a href="javascript:;">
 							<i class="ion ion-pricetags"></i>
-							<span class="text">Question & Offer</span>
+							<span class="text">Questions & Offers</span>
 							<i class="arrow ion-chevron-left"></i>
 						</a>
 						<ul class="inner-drop list-unstyled">
 							
 							<li class="<%= 'active' if seller_questions_path == url_for(only_path: true) %>">
-								<a href="<%= seller_questions_path %>" title="My Questions">Question</a>
+								<a href="<%= seller_questions_path %>" title="My Questions">Questions</a>
 							</li>
 							
 							<li class="<%= 'active' if seller_offers_path == url_for(only_path: true) %>">

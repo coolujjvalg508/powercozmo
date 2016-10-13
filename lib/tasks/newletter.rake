@@ -4,7 +4,77 @@ namespace :newsletter do
     desc "Newsletter to user of newly added equipment according recent search in everyday at 09:00 AM"
     task to_user: :environment do
       
-      search_history = SearchHistory.where('search_histories.search != ""')
+      #Newsletter for user preference
+		preferences_data = Preference.all
+	
+		if preferences_data
+			
+			users = {}
+	
+			preferences_data.each do |v|		
+				
+				if !users[v.user_id]
+					users[v.user_id] = Array.new
+				end
+				users[v.user_id].push(v.category_id)
+			end
+			
+			last_sent_newsletters = SentNewsletter.order("id DESC").where("newsletter_type = 'preference'").first			
+			
+			users.each_with_index do |value, key|
+		
+				search_query = ''
+				
+				user_id = value.shift.to_s
+								
+				if last_sent_newsletters
+				
+					last_search_time = last_sent_newsletters.created_at.to_s		
+				else
+								
+					last_preference = Preference.where('preferences.user_id = ?', user_id).order("id ASC").first
+					
+					last_search_time = last_preference.created_at.to_s
+					
+				end
+				
+				last_search_time = Date.parse(last_search_time).strftime('%Y-%m-%d %H:%M:%S')
+								
+				search_arr = value.slice(0)
+				
+				j = 0
+				search_arr.each do |v|
+								
+					if j > 0
+						search_query =	search_query + ' OR '
+					end
+					
+					search_query =	search_query + ' (equipment.category_id = ' + v.to_s + ')'
+				
+					j = j + 1
+				end
+								
+				equipment_result = Equipment.available_for_purchase.joins(:country, :manufacturer, :category, :user).where('equipment.user_id != ? AND equipment.created_at > ? AND (' + search_query + ')', user_id, last_search_time)
+								
+				if !equipment_result.empty?
+				
+					# Tell the NewsletterMailer to send a email
+					user_data = User.find_by_id(user_id)
+        
+					NewsletterMailer.send_newsletter(user_data, equipment_result).deliver_now
+					
+					SentNewsletter.create(user_id: user_id, newsletter_type: 'preference')
+										
+				end
+			
+			end
+						
+		end
+		
+		
+		#Newsletter for recent search of user
+		
+		search_history = SearchHistory.where('search_histories.search != ""')
 		
 		if search_history
 		
@@ -18,7 +88,7 @@ namespace :newsletter do
 				users[v.user_id].push(v.search.to_s)
 			end
 		
-			last_sent_newsletters = SentNewsletter.order("id DESC").first
+			last_sent_newsletters = SentNewsletter.order("id DESC").where("newsletter_type = 'search'").first
 						
 			users.each_with_index do |value, key|
 		
@@ -83,12 +153,11 @@ namespace :newsletter do
         
 					NewsletterMailer.send_newsletter(user_data, equipment_result).deliver_now
 					
-					SentNewsletter.create(user_id: user_id)
+					SentNewsletter.create(user_id: user_id, newsletter_type: 'search')
 										
 				end
 			
 			end
-			
 			
 		end
       
