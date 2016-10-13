@@ -176,7 +176,7 @@
 			<div class="clearfix"></div>
 			
 			<div class="form-group mt20" id="sub_category_select">
-				<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Sub Category<sup>*</sup></label>
+				<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Sub Category</label>
 				<div class="col-md-12">
 					<%= f.select :sub_category_id, @sub_categories.map{|id,name| [name,id] }+[['Other', 0]], {include_blank: 'Select Sub Category'}, {disabled: @equipment.require_moderation == 1} %>
 					<%= text_field_tag "other[sub_category_name]", params[:other].present? ? params[:other][:sub_category_name] : "",class: 'form-control equipment-other-field', placeholder: 'Sub Category name', style: "display:none;" %>
@@ -187,7 +187,7 @@
 			<div class="clearfix"></div>
 			
 			<div class="form-group mt20 eq_total" id="sub_sub_category_select">
-				<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Sub Sub Category<sup>*</sup></label>
+				<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Sub Sub Category</label>
 				<div class="col-md-12">
 					<%= f.select :sub_sub_category_id, @child_categories.map{|id,name| [name,id] }+[['Other', 0]], {include_blank: 'Select Sub Sub Category'}, {disabled: @equipment.require_moderation == 1} %>
 					<%= text_field_tag "other[sub_sub_category_name]", params[:other].present? ? params[:other][:sub_sub_category_name] : "",class: 'form-control equipment-other-field', placeholder: 'Sub Sub Category name', style: "display:none;" %>
