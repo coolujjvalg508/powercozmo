@@ -21,7 +21,7 @@ class Order < ActiveRecord::Base
 	validates :company_website, length: { maximum: 255, message: "Website can not be more that 255 character"}
 	validates :commission, presence: {message: "Commission can't be blank"}
 	validates :status, presence: {message: "Status can't be blank"}
-	validates :no_of_packages, numericality: { only_integer: true }
+	#validates :no_of_packages, numericality: { only_integer: true }
 
 	############################# Constants #######################
 	SHIPPING_METHOD = ["Air fright", "Sea freight", "Land transportation"]

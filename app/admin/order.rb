@@ -135,16 +135,17 @@ ActiveAdmin.register Order do
         row('Seller Comapny Name'){ |r| r.seller.profile.company_name }
         row('Seller Company Website'){ |r| r.seller.profile.website }
       end
+            
     end
     
     panel "Shipping Details" do
       attributes_table_for order do
         row('Number Of Packages'){ |r| (r.no_of_packages != 0) ? r.no_of_packages : '-' }
         row('Shipping Method'){ |r| r.shipping_method }
-        row('Pickup Country'){ |r| r.pickup_country.name }
+        row('Pickup Country'){ |r| r.try(:pickup_country).try(:name) }
         row('Pickup City'){ |r| r.pickup_city }
         row('Pickup Port'){ |r| r.pickup_port }
-        row('Delivery Country'){ |r| r.delivery_country.name }
+        row('Delivery Country'){ |r| r.try(:delivery_country).try(:name) }
         row('Delivery City'){ |r| r.delivery_city }
         row('Delivery Port'){ |r| r.delivery_port }
       end
@@ -213,7 +214,9 @@ ActiveAdmin.register Order do
     
     enquiry = EquipmentEnquiry.find_by_id order.equipment_enquiry_id
     
-    if enquiry.responses.present?
+    #abort(enquiry.responses.to_json)
+    
+    if enquiry.try(:responses).present?
 		panel "Enquiry Responses" do
 			enquiry.responses.each do |res|
 				attributes_table_for res do
@@ -228,13 +231,13 @@ ActiveAdmin.register Order do
     panel "Signature" do
       attributes_table_for order do
         row :Seller do |r|
-			if(r.seller.profile.digital_signature != '')
-				image_tag(r.seller.profile.digital_signature, width: '200') + '<br/>'.html_safe + r.seller.profile.name
+			if(r.try(:seller).try(:profile).try(:digital_signature))
+				image_tag(r.try(:seller).try(:profile).try(:digital_signature), width: '200') + '<br/>'.html_safe + r.try(:seller).try(:profile).try(:name)
 			end
 		end
 		row :Buyer do |r|
-			if(r.user.profile.digital_signature != '')
-				image_tag(r.user.profile.digital_signature, width: '200') + '<br/>'.html_safe + r.name
+			if(r.try(:user).try(:profile).try(:digital_signature))
+				image_tag(r.try(:user).try(:profile).try(:digital_signature), width: '200') + '<br/>'.html_safe + r.try(:name)
 			end
 		end
       end

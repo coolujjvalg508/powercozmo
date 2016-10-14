@@ -5104,7 +5104,7 @@ fieldset[disabled] .btn-youtube.active {
   border-color: #e91e63;
 }
 .page-dashboard .profile-widget, .page-dashboard .activities {
-  min-height: 333px;
+  min-height: 334px;
 }
 .page-dashboard .profile-widget .top-info {
   border-bottom: 1px solid #eeeeee;
