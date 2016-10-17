@@ -22,6 +22,14 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 
 	def respond_to_offer
 		@offer = find_enquiry
+		
+		#abort(@offer.to_json)
+		#abort(@offer.equipment.to_json)
+		#abort(@offer.equipment.shipping_package.to_json)
+		
+		#no_of_package = @offer.equipment.shipping_package.count
+		
+		#abort(no_of_package.to_s)
 				
 		if @offer.present?
 			response = @offer.responses.new(user_id: current_user.id, message: enquiry_response_params[:message])
@@ -41,15 +49,27 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 							order_params[:commission] = Commission.order("max_price DESC").first.percent.to_f
 						end
 						
+						no_of_package = @offer.equipment.shipping_package.count
 						order_params[:user_id] = @offer.user_id
 						order_params[:equipment_enquiry_id] = @offer.id
-						order_params[:no_of_packages] = 0
-						
+						order_params[:no_of_packages] = no_of_package
+						order_params[:shipping_method] = @offer.shipping_method
+						order_params[:pickup_country_id] = @offer.equipment.country_id
+						order_params[:pickup_city] = @offer.equipment.city
+						order_params[:pickup_port] = @offer.equipment.pickup_port
+						order_params[:delivery_country_id] = @offer.country_id
+						order_params[:delivery_city] = @offer.delivery_city
+						order_params[:delivery_port] = @offer.delivery_port
+								
 						order = Order.new(order_params)
 						if order.save
 							eq = @offer.equipment
 							eq.status = 'sold'
 							eq.save
+							
+							if no_of_package > 0								
+								ShippingPackage.where(equipment_id: @offer.equipment_id).update_all(order_id: order.id)
+							end
 						end
 					end
 					flash[:notice] = "Offer #{response_type.downcase} successfully"

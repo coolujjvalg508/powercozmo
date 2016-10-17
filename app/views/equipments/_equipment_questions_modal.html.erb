@@ -56,9 +56,19 @@
                 <%= text_field_tag "enquiry[bidding_price]",'',placeholder: "Your Bidding Price*",class: "form-control" %>
                 <div id="bidding_price-error" class="error-text"></div>
               </div>
+		  
               <div class="form-group">
-              <%=text_area_tag "enquiry[message]",'',placeholder: "Message to Seller*",class: "form-control",style: "min-height:207px;"%>
+              <%=text_area_tag "enquiry[message]",'',placeholder: "Message to Seller*",class: "form-control"%>
               <div id="message-error" class="error-text"></div>
+              </div>
+              
+              <div class="form-group">
+                  <%=text_field_tag "enquiry[delivery_city]",'',placeholder: "Delivery City",class: "form-control"%>
+                  <div id="delivery_city_error" class="error-text"></div>
+              </div>
+              <div class="form-group">
+                  <%=text_field_tag "enquiry[delivery_port]",'',placeholder: "Delivery Port",class: "form-control"%>
+                  <div id="delivery_port_error" class="error-text"></div>
               </div>
 
             </div>
@@ -78,25 +88,32 @@
                   <%=text_field_tag "enquiry[mobile]",'',placeholder: "Mobile*",class: "form-control"%>
                   <div id="mobile-error" class="error-text"></div>
               </div>
-              <div class="form-group clearfix selectcustom">
-                <%=select_tag("enquiry[country_id]",options_for_select([["Select Country*",""]]+@countries.collect{ |c| [c.name, c.id] }), class: "custom-select ")%>
-                
-                
-                
-                
-                
-                <span id="country-error"></span>
-              </div>
+              
+              
               <div class="form-group">
-                <i class="fa fa-building"></i>
-                  <%=text_field_tag "enquiry[company_name]",'',placeholder: "Company Name*",class: "form-control"%>
-                  <div id="company_name-error" class="error-text"></div>
-              </div>
-              <div class="form-group mrg-btm-zero">
+				  <i class="fa fa-building"></i>
+				  <%=text_field_tag "enquiry[company_name]",'',placeholder: "Company Name*",class: "form-control"%>
+				  <div id="company_name-error" class="error-text"></div>
+			  </div>
+              
+              <div class="form-group">
                 <i class="fa fa-globe"></i>
                   <%=text_field_tag "enquiry[company_website]",'',placeholder: "Company Website*",class: "form-control"%>
                   <div id="company_website_error" class="error-text"></div>
               </div>
+              
+              <div class="form-group clearfix selectcustom">
+                <%=select_tag("enquiry[country_id]",options_for_select([["Select Country*",""]]+@countries.collect{ |c| [c.name, c.id] }), class: "custom-select ")%>
+                <span id="country-error"></span>
+              </div>
+              
+               <div class="form-group clearfix selectcustom">
+                <%=select_tag("enquiry[shipping_method]",options_for_select([["Select Shipping Method",""]]+Order::SHIPPING_METHOD), class: "custom-select")%>
+                                
+                <span id="shipping_method_error"></span>
+              </div>
+              
+              
             </div>
             <div class="custom-submit-btn">
               <%=submit_tag "Submit",class: "btn btn-default success-modal", id: "query_submit_button"%>
@@ -272,7 +289,7 @@ $(document).ready(function(){
     }
     else{
       $('#bidding_price_field').hide();
-      $('#enquiry_message').css('min-height', '207px');
+      $('#enquiry_message').css('min-height', '175px');
       if(enquiry_type == 'buy'){
         $('#success_type').text("Your buying request sent")
         $('#title_first').text('BUY ').append(cache);

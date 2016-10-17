@@ -103,19 +103,87 @@
 					
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#Description">Description</a></li>
+						<li><a data-toggle="tab" href="#Shipping">Shipping</a></li>
 						
 						<% if @equipment.faults && @equipment.faults != '' %>
 							<li><a data-toggle="tab" href="#Faults">Faults </a></li>
 						<% end %>
+						
 					</ul>
 										
 					<div class="tab-content">
-						<div id="Description" class="tab-pane fade in active">
+						<div id="Description" class="text-overflow-wrap clearfix tab-pane fade in active">
 							<p><%= @equipment.description %></p>
 						</div>
 						
+						<div id="Shipping" class="text-overflow-wrap clearfix tab-pane fade">
+							<div class="col-md-6 marginB10 padding">
+								<span class="col-md-5 paddingR">Pickup Port</span>
+								<span class="col-md-1">:</span>
+								<span class="col-md-5 padding"><%= @equipment.pickup_port %></span>
+							</div>
+							<div class="col-md-6 marginB10 padding">
+								<span class="col-md-5 paddingR">Pickup City</span>
+								<span class="col-md-1">:</span>
+								<span class="col-md-5 padding"><%= @equipment.city %></span>
+							</div>
+							<div class="clearfix"></div>
+							<div class="col-md-6 marginB10 padding">
+								<span class="col-md-5 paddingR">Pickup Country</span>
+								<span class="col-md-1">:</span>
+								<span class="col-md-5 padding"><%= @equipment.try(:country).try(:name) %></span>
+							</div>
+							
+							<% no_of_package = @equipment.shipping_package.count %>
+							
+							<% if no_of_package > 0 %>
+								<div class="col-md-6 marginB10 padding">
+									<span class="col-md-5 paddingR">No Of Packages</span>
+									<span class="col-md-1">:</span>
+									<span class="col-md-5 padding"><%= no_of_package %></span>
+								</div>
+								
+								<div class="col-sm-12 col-md-12 marginT10 marginB5 padding">Packages Dimensions :</div>	
+								<div class="col-sm-12 col-md-12 padding">
+										
+									<div class="panel panel-default panel-hovered panel-stacked mb30 basic-table">
+										
+										<div class="panel-body">				
+													
+											<table class="table">
+												<thead>
+													<tr>
+														<th></th>
+														<th>Length</th>
+														<th>Width</th>
+														<th>Height</th>
+														<th>Weight</th>										
+													</tr>
+												</thead>
+												
+												<tbody>
+													<% i = 0 %>
+													<% @equipment.shipping_package.each_with_index do |s_package,index| %>
+														<% i = i + 1 %>
+														<tr>
+															<td>Package <%= i %></td>
+															<td><%= s_package.length %></td>
+															<td><%= s_package.width %></td>
+															<td><%= s_package.height %></td>
+															<td><%= s_package.weight %></td>				
+														</tr>
+													<% end %>
+												</tbody>
+											</table>		
+										</div>	
+									</div>	
+								</div>
+							<% end %>
+							
+						</div>
+						
 						<% if @equipment.faults && @equipment.faults != '' %>
-							<div id="Faults" class="tab-pane fade">
+							<div id="Faults" class="text-overflow-wrap clearfix tab-pane fade">
 								<p><%= @equipment.faults %></p>
 							</div>
 						<% end %>

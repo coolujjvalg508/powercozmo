@@ -1,6 +1,6 @@
 ActiveAdmin.register Equipment do
   menu label: 'Equipments', if: proc{ (current_admin_user.has_permission('equipment_read') || current_admin_user.has_permission('equipment_write') || current_admin_user.has_permission('equipment_delete'))}
-	permit_params :name, :equipment_model, :condition, :owner_name, :manufacturer_id, :category_id, :sub_category_id, :sub_sub_category_id, :city, :country_id, :price, :currency, :rating, :description, :status, :availble_for,:availble_for_date, :availble_for_time_hour, :availble_for_time_minute, :manufacture_year, :user_id,:availble_for, :power_plant_age, :power_plant_type, :turbine_model, :turbine_manufacturer_name, :equipment_type, :faults, :images_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image,:image_cache]
+	permit_params :name, :equipment_model, :condition, :owner_name, :manufacturer_id, :category_id, :sub_category_id, :sub_sub_category_id, :city, :country_id, :price, :currency, :rating, :description, :status, :availble_for,:availble_for_date, :availble_for_time_hour, :availble_for_time_minute, :manufacture_year, :user_id,:availble_for, :power_plant_age, :power_plant_type, :turbine_model, :turbine_manufacturer_name, :equipment_type, :faults, :pickup_port, :images_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image,:image_cache]
 
   batch_action "Update 'Status' for", form: { status: Equipment.statuses.map{|status, value| [status.to_s.humanize, status.to_s] } } do |ids, inputs|
     # Equipment.where(id: ids).update_all(status: inputs[:status])
@@ -116,6 +116,7 @@ ActiveAdmin.register Equipment do
       f.input :sub_cat_id, :as => :hidden
       f.input :sub_category_id, as: :select, collection: @sub_categories.map{|id,name| [name,id] }, include_blank: 'Select Sub Category'
       f.input :sub_sub_category_id, as: :select, collection: @child_categories.map{|id,name| [name,id] }, include_blank: 'Select Sub Sub Category'
+      f.input :pickup_port
       f.input :city
       f.input :country_id, as: :select, collection: @countries = Hash[Country.active.pluck(:id, :name)].map{|id,name| [name,id] }, include_blank: 'Select Country', label: 'Country<abbr title="required">*</abbr>'.html_safe
       f.input :description
@@ -255,6 +256,7 @@ ActiveAdmin.register Equipment do
       if equipment.equipment_type == "equipment"
         row :sub_sub_category_id
       end
+      row :pickup_port
       row :city
       row :country_id
       row 'Price' do
@@ -289,6 +291,61 @@ ActiveAdmin.register Equipment do
         end
       end
     end
+    
+	panel "Packages Dimensions" do
+		attributes_table_for equipment do
+			columns do
+				column do
+					span "&nbsp;".html_safe
+				end
+				column do
+					strong "Length"
+				end
+				column do
+					strong "Width"
+				end
+				column do
+					strong "Height"
+				end
+				column do
+					strong "Weight"
+				end
+			end
+		
+		if equipment.shipping_package.present?
+			i = 1;
+			equipment.shipping_package.each do |p|
+				columns do
+					column do
+						span "Package " + i.to_s
+					end
+					column do
+						span p.length
+					end
+					column do
+						span p.width
+					end
+					column do
+						span p.height
+					end
+					column do
+						span p.weight
+					end
+				end
+				i = i + 1
+			end
+		else
+			columns do
+				column do
+					span "Packages dimensions details not available" 
+				end
+			end
+		end
+
+      end
+    end
+    
+    
   end
 
 end

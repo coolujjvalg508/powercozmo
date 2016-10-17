@@ -25,7 +25,56 @@
           <% if @equipment.faults && @equipment.faults != '' %>
 			  <em style="font-size: 20px;">Faults</em>
 			  <p><%= @equipment.faults %></p>
-          <% end %>	  
+          <% end %>	
+          
+          
+          <em style="font-size: 20px;">Shipping</em>
+		  <div>Pickup Port : <%= @equipment.pickup_port %></div>
+		  <div style="clear:both"></div>	
+		  <div>Pickup City : <%= @equipment.city %></div>
+		  <div style="clear:both"></div>	
+		  <div>Pickup Country : <%= @equipment.try(:country).try(:name) %></div>
+		  <% no_of_package = @equipment.shipping_package.count %>
+		  
+		  <% if no_of_package > 0 %>
+		  <div style="clear:both"></div>	
+		  <div>No Of Packages : <%= no_of_package %></div>
+		  <div style="clear:both"></div>	
+		  <div style="padding: 10px 0px 5px 0px;">Packages Dimensions :</div>
+				
+			<div style="width:100%;">		
+				<table style="width:100%; border: 1px solid #757575;">
+					<thead>
+						<tr>
+							<th style="padding: 15px;"></th>
+							<th style="padding: 15px;">Length</th>
+							<th style="padding: 15px;">Width</th>
+							<th style="padding: 15px;">Height</th>
+							<th style="padding: 15px;">Weight</th>										
+						</tr>
+					</thead>
+					
+					<tbody>
+						<% i = 0 %>
+						<% @equipment.shipping_package.each_with_index do |s_package,index| %>
+							<% i = i + 1 %>
+							<tr style="border-top: 1px solid #757575;">
+								<td style="padding: 15px 15px 15px 15px;">Package <%= i %></td>
+								<td style="padding: 15px 15px 15px 15px;"><%= s_package.length %></td>
+								<td style="padding: 15px 15px 15px 15px;"><%= s_package.width %></td>
+								<td style="padding: 15px 15px 15px 15px;"><%= s_package.height %></td>
+								<td style="padding: 15px 15px 15px 15px;"><%= s_package.weight %></td>				
+							</tr>
+						<% end %>
+					</tbody>
+				</table>		
+			</div>	
+			<% end %>
+			
+          
+          
+          
+            
           
         </div>
         <div class="col-lg-4 dtl-blc-rt pull-right" style="position: absolute; width: 100%; margin-left: -15px">

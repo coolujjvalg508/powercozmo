@@ -22,6 +22,8 @@ class Seller::EquipmentController < Seller::BaseController
   end
 
   def create
+      
+    #abort(params[:equipment][:shipping_package].to_json)
     
     if params[:equipment][:images_attributes].present?
       params[:equipment][:images_attributes].each do |index,img|
@@ -56,6 +58,7 @@ class Seller::EquipmentController < Seller::BaseController
       end
     end
     if @equipment.save
+    
       @tmp_images.each do |key, tmp_image|
         img_path = Rails.root.to_s + '/public' + tmp_image
         if File.exists?(img_path)
@@ -67,10 +70,34 @@ class Seller::EquipmentController < Seller::BaseController
       if @new_category_name.present?
         EquipmentMailer.delay.new_category_notification(@field.gsub('_',' '),@new_category_name)
       end
+      
+      
+      #######package detail start #####
+      
+		shipping_package = params[:equipment][:shipping_package]
+
+		if shipping_package
+					
+			shipping_package.each_with_index do |s_package, index| 
+				
+				length = s_package[1][:length]
+				width = s_package[1][:width]
+				height = s_package[1][:height]
+				weight = s_package[1][:weight]
+				
+				if length != '' || width != '' || height != '' || weight != ''
+					ShippingPackage.create(equipment_id: @equipment.id, order_id: 0, length: length, width: width, height: height, weight: weight)
+				end
+			 end
+		 end
+	     
+      
+      #######package detail end ####
+            
       flash[:notice] = "Equipment was successfully created."
       redirect_to seller_equipment_index_path
     else
-      @tmp_images.each do |key, tmp_image|
+        @tmp_images.each do |key, tmp_image|
         img_path = Rails.root.to_s + '/public' + tmp_image
         if File.exists?(img_path)
           equipment_image = @equipment.images.new
@@ -82,6 +109,7 @@ class Seller::EquipmentController < Seller::BaseController
   		@sub_categories = Hash[category.children.active.pluck(:id, :name)] if category.present?
       sub_category = Category.active.where(id: @equipment.sub_category_id).first
   		@child_categories = Hash[sub_category.children.active.pluck(:id, :name)] if sub_category.present?
+  		
       render 'new'
   	end
   end
@@ -137,6 +165,48 @@ class Seller::EquipmentController < Seller::BaseController
       if @new_category_name.present?
         EquipmentMailer.delay.new_category_notification(@field.gsub('_',' '),@new_category_name)
       end
+      
+      #######package detail start #####
+      
+		i = 0
+		shipping_package = params[:equipment][:shipping_package]
+
+		if shipping_package
+			
+			@order = Order.find_by(equipment_id: @equipment.id)
+      		  
+			if @order
+				order_id = @order.id
+			else
+				order_id = 0
+			end
+		
+			shipping_package.each_with_index do |s_package, index| 
+				
+				length = s_package[1][:length]
+				width = s_package[1][:width]
+				height = s_package[1][:height]
+				weight = s_package[1][:weight]
+				
+				if length != '' || width != '' || height != '' || weight != ''
+					if i == 0
+						ShippingPackage.where(equipment_id: @equipment.id).delete_all
+					end
+					ShippingPackage.create(equipment_id: @equipment.id, order_id: order_id, length: length, width: width, height: height, weight: weight)
+					i = i + 1
+				end
+			 end
+			 if i == 0
+				ShippingPackage.where(equipment_id: @equipment.id).delete_all
+			 end
+			 if @order
+				@order.update(no_of_packages: i)
+			 end
+		 end
+	     
+      
+      #######package detail end ####      
+      
       flash[:notice] = "Equipment was successfully updated."
       redirect_to seller_equipment_index_path
     else
@@ -253,9 +323,9 @@ class Seller::EquipmentController < Seller::BaseController
   private
 
 	def equipment_params
-	 params.require(:equipment).permit(:name, :equipment_model, :condition, :owner_name, :manufacturer_id, :category_id, :sub_category_id, :sub_sub_category_id, :city, :country_id, :price, :currency, :rating, :description, :status, :manufacture_year, :user_id, :availble_for, :power_plant_age, :power_plant_type, :turbine_model, :turbine_manufacturer_name, :require_moderation, :equipment_type, :faults, :images_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image,:image_cache])
+	 params.require(:equipment).permit(:name, :equipment_model, :condition, :owner_name, :manufacturer_id, :category_id, :sub_category_id, :sub_sub_category_id, :city, :country_id, :price, :currency, :rating, :description, :status, :manufacture_year, :user_id, :availble_for, :power_plant_age, :power_plant_type, :turbine_model, :turbine_manufacturer_name, :require_moderation, :equipment_type, :faults, :pickup_port, :images_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image,:image_cache])
 	end
-
+	
   def find_equipment
     @equipment = current_user.equipment.find(params[:id])
     rescue ActiveRecord::RecordNotFound

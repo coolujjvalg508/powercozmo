@@ -2,7 +2,7 @@ ActiveAdmin.register EquipmentEnquiry do
 	config.sort_order = 'read_by_admin_asc_and_updated_at_desc' #more detail in multiple column sort initializer
 	menu label: 'Manage Enquiries', if: proc{ (current_admin_user.has_permission('equipmentenquiry_read') || current_admin_user.has_permission('equipmentenquiry_write') || current_admin_user.has_permission('equipmentenquiry_delete'))}
 
-	permit_params :name, :email, :mobile, :country_id, :enquiry_type, :equipment_id, :company_name, :company_website, :message, :bidding_price, :status, :replied_as, :response
+	permit_params :name, :email, :mobile, :country_id, :enquiry_type, :equipment_id, :company_name, :company_website, :message, :bidding_price, :status, :replied_as, :delivery_city, :delivery_port, :shipping_method, :response
 
 	action_item :back, only: :show do
 		links = ""
@@ -115,6 +115,16 @@ ActiveAdmin.register EquipmentEnquiry do
 			row :buyer_company_website do |ee|
 				ee.company_website
 			end
+			row :buyer_city do |ee|
+				ee.delivery_city
+			end
+			row :buyer_port do |ee|
+				ee.delivery_port
+			end
+			row :shipping_method do |ee|
+				ee.shipping_method
+			end
+			
 			row "Admin Approved" do |ee|
 			(ee.status == "Disapproved" || ee.status == "New") ? "No" : "Yes"
 		end

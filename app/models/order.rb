@@ -15,7 +15,7 @@ class Order < ActiveRecord::Base
 	validates_format_of :email, :with  => /\A[^@\s]+@[^@\s]+\z/, :message => 'Please enter a valid email'
 	validates :mobile, presence: {message: "Mobile number can't be blank"}
 	validates :mobile, :numericality => {:only_integer => true}
-	validates_length_of :mobile, :minimum => 10, :maximum => 11, too_short: "Must have at least %{count} digits", too_long: "Must have at most %{count} digits"
+	validates_length_of :mobile, :minimum => 10, :maximum => 18, too_short: "Must have at least %{count} digits", too_long: "Must have at most %{count} digits"
 	validates :country_id, presence: {message: "Country can't be blank"}
 	validates :company_website, presence: {message: "Company Website can't be blank"}
 	validates :company_website, length: { maximum: 255, message: "Website can not be more that 255 character"}
@@ -24,7 +24,7 @@ class Order < ActiveRecord::Base
 	#validates :no_of_packages, numericality: { only_integer: true }
 
 	############################# Constants #######################
-	SHIPPING_METHOD = ["Air fright", "Sea freight", "Land transportation"]
+	SHIPPING_METHOD = ["Air Fright", "Sea Freight", "Land Transportation"]
 	STATUS = ["Seller Confirmed", "Request For Shipping", "Shipped To Buyer", "Buyer Confirmed", "Payment Done", "Completed", "Closed", "Order Cancelled"]
 	
 	############ Order Status #############

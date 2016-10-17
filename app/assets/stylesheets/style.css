@@ -422,7 +422,7 @@ table.tbllist tr.tbllistt-pd td { padding: 0 !important; }
 .bid-popup .ask-quents-form .custom-checkbox { margin-top: 22px; }
 .bid-popup .ask-quents-form .custom-checkbox label { font-size: 14px; color: #757575; font-family: "PoppinsRegular"; }
 .bid-popup .ask-quents-form .custom-checkbox .checkbox { margin-top: 2px; }
-.bid-popup .ask-quents-form .custom-submit-btn { width: 100%; float: left; margin: 25px 0px 15px; text-align: center; }
+.bid-popup .ask-quents-form .custom-submit-btn { width: 100%; float: left; margin: 0px 0px 15px; text-align: center; }
 .bid-popup .ask-quents-form .custom-submit-btn .btn-default { display: inline-block; background: #36ace3; font-size: 18px; color: #fff; font-family: 'PoppinsMedium'; line-height: 30px; height: 40px; min-width: 300px; text-align: center; text-transform: uppercase; border: none; border-radius: 0px; box-shadow: none; outline: none !important; }
 .bid-popup .ask-quents-form .custom-submit-btn .btn-default:hover { background: #e74a3f; }
 .bid-popup .ask-quents-form i { display: inline-block; position: absolute; left: 13px; top: 13px; font-size: 14px; color: #77b4dd; z-index: 99; }
@@ -561,7 +561,7 @@ ul.welcome-lst li { list-style-type: disc; margin-bottom: 10px; }
 input.itm-no { width: 100px; float: left; margin-right: 15px; }
 input.itm-name { width: 68%; float: left; }
 .ask-quents-form-lft input { padding-left: 15px !important; }
-.ask-quents-form-lft textarea { padding-left: 15px !important; height: 152px !important; }
+.ask-quents-form-lft textarea { padding-left: 15px !important; height: 126px !important; }
 .bid-popup.in { z-index: 99999 !important; }
 .price-area { width: 48%; float: left; }
 .commission-cnt { width: 865px; margin: auto; }

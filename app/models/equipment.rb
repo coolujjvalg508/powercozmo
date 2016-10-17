@@ -12,11 +12,13 @@ class Equipment < ActiveRecord::Base
 	belongs_to :manufacturer
 	belongs_to :category
 	belongs_to :sub_category, :class_name => "Category", :foreign_key => "sub_category_id"
-  belongs_to :sub_sub_category, :class_name => "Category", :foreign_key => "sub_sub_category_id"
-  belongs_to :user
-  has_many :equipment_enquiries, dependent: :destroy
-  has_many :orders, dependent: :destroy
-  has_many :images, as: :imageable, dependent: :destroy
+	belongs_to :sub_sub_category, :class_name => "Category", :foreign_key => "sub_sub_category_id"
+	belongs_to :user
+	has_many :equipment_enquiries, dependent: :destroy
+	has_many :orders, dependent: :destroy
+	has_many :images, as: :imageable, dependent: :destroy
+	has_many :shipping_package
+  
   accepts_nested_attributes_for :images, reject_if: proc { |attributes| attributes['image'].blank? || attributes['image'].nil? }, allow_destroy: true
 
   def sub_cat_id

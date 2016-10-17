@@ -56,6 +56,12 @@ label { font-weight: normal; }
 .marginB30 { margin-bottom: 30px !important; }
 .marginB40 { margin-bottom: 40px !important; }
 .marginL5 { margin-left: 5px !important; }
+
+.padding{ padding: 0px !important; }
+.paddingT{ padding-top: 0px !important; }
+.paddingR{ padding-right: 0px !important; }
+.paddingB{ padding-bottom: 0px !important; }
+.paddingL{ padding-left: 0px !important; }
 .paddinT5 { padding-top: 5px !important; }
 .paddinT8 { padding-top: 8px !important; }
 .paddinT10 { padding-top: 10px !important; }
@@ -63,8 +69,8 @@ label { font-weight: normal; }
 .padding10 { padding: 10px !important; }
 .padding20 { padding: 20px !important; }
 .paddingT15 { padding-top: 15px !important; }
-.paddingR { padding-right: 0px !important; }
-.paddingL { padding-left: 0px !important; }
+.paddingL40 { padding-left: 40px !important; }
+
 /* Font Text */
 .txt12 { font-size: 12px !important; }
 .txt13 { font-size: 13px !important; }
@@ -539,3 +545,4 @@ footer .footer-company { padding: 22px 0; color: #959595; font-size: 12px; }
     text-align: center;
     display: none;
 }
+.text-overflow-wrap{ overflow-wrap: break-word;}

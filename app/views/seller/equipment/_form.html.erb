@@ -198,6 +198,16 @@
 			<div class="clearfix"></div>
 			
 			<div class="form-group mt20">
+				<label class="col-md-12 control-label">Pickup Port</label>
+				<div class="col-md-12">
+					<%= f.text_field :pickup_port, class: 'form-control', placeholder: 'Enter Pickup Port' %>
+					<%= form_error_msg_for(@equipment,:pickup_port) %>
+				</div>
+			</div>
+			
+			<div class="clearfix"></div>
+			
+			<div class="form-group mt20">
 				<label class="col-md-12 control-label">Location City<sup>*</sup></label>
 				<div class="col-md-12">
 					<%= f.text_field :city, class: 'form-control', placeholder: 'Enter City' %>
@@ -335,6 +345,85 @@
 	</div>	
 </div>
 
+
+<div class="col-sm-12 col-md-12">	
+	<div class="panel panel-default panel-hovered panel-stacked mb30">
+		<div class="panel-body">
+						
+			<div class="form-group">
+				<div class="col-md-12">
+					<label class="control-label text-bold">Packages Detail :</label>
+					<%= link_to 'javascript:void(0);', class: "pull-right add-package", title: "Add More Packages"  do %>
+								<i class="fa fa-plus"></i><span> Add More</span>
+							<% end %>
+				</div>
+				<div class="col-md-12 basic-table">
+					
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Length</th>
+								<th>Width</th>
+								<th>Height</th>
+								<th>Weight</th>										
+								<th></th>	
+							</tr>
+						</thead>
+						
+						<tbody id="package-list">
+							
+							<% i = 0 %>
+							<%= f.fields_for :shipping_package do |s| %>
+							
+								<% @equipment.shipping_package.each_with_index do |s_package,index| %>
+									<% i = index + 1 %>
+									
+									<tr id="package-list-<%= index %>">
+									
+										<td>
+											<%= s.text_field :length, autocomplete: "off", class: 'form-control', id: 'length' + index.to_s, placeholder: 'Enter Length', value: s_package.length, name: 'equipment[shipping_package][' + index.to_s + '][length]' %>
+										</td>
+										
+										<td>
+											<%= s.text_field :width, autocomplete: "off", class: 'form-control', id: 'width' + index.to_s, placeholder: 'Enter Width', value: s_package.width, name: 'equipment[shipping_package][' + index.to_s + '][width]' %>
+										</td>
+										
+										<td>
+											<%= s.text_field :height, autocomplete: "off", class: 'form-control', id: 'height' + index.to_s, placeholder: 'Enter Height', value: s_package.height, name: 'equipment[shipping_package][' + index.to_s + '][height]' %>
+										</td>
+						
+										<td>
+											<%= s.text_field :weight, autocomplete: "off", class: 'form-control', id: 'weight' + index.to_s, placeholder: 'Enter Weight', value: s_package.weight, name: 'equipment[shipping_package][' + index.to_s + '][weight]' %>
+										</td>
+										<td>
+											<%= link_to 'javascript:void(0);', class: "pull-right remove-package", title: "Remove Package", data_reference: 'package-list-' + index.to_s  do %>
+												<i class="fa fa-remove"></i>
+											<% end %>
+										</td>
+									
+									</tr>
+									
+								<% end %>	
+							<% end %>
+		
+							<input type="hidden" id="package-counter" value="<%= i %>">
+							
+						</tbody>
+					</table>
+					
+				</div>
+			</div>
+													
+		</div>	
+	</div>	
+</div>
+
+
+
+
+
+
+
 <div class="clearfix"></div>
 
 <div class="col-sm-12 col-md-12">	
@@ -356,3 +445,26 @@
 <% end %>
 </section>
 <%= javascript_include_tag "seller/equipment" %>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+               
+        $('.add-package').click(function () {
+            var i = $('#package-counter').val();
+            var html_data = '<tr id="package-list-' + i + '"><td><input autocomplete="off" class="form-control" id="length' + i + '" placeholder="Enter Length"  name="equipment[shipping_package][' + i + '][length]" type="text"></td><td><input autocomplete="off" class="form-control" id="width' + i + '" placeholder="Enter Width" name="equipment[shipping_package][' + i + '][width]" type="text"></td><td><input autocomplete="off" class="form-control" id="height' + i + '" placeholder="Enter Height" name="equipment[shipping_package][' + i + '][height]" type="text"></td><td><input autocomplete="off" class="form-control" id="weight' + i + '" placeholder="Enter Weight" name="equipment[shipping_package][' + i + '][weight]" type="text"></td><td><a class="pull-right remove-package" title="Remove Package" data_reference="package-list-' + i + '" href="javascript:void(0);"><i class="fa fa-remove"></i></a></td></tr>';
+            
+            $("#package-list").append(html_data);
+            
+            i++;
+            $('#package-counter').val(i);
+            
+        });
+        
+    });
+    
+     $(document).on('click', '.remove-package', function () {
+            var ref = $(this).attr('data_reference');
+            $("#" + ref).remove();
+      });
+</script>

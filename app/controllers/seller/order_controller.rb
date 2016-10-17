@@ -169,7 +169,7 @@ class Seller::OrderController < Seller::BaseController
 						if i == 0
 							ShippingPackage.where(order_id: params[:id]).delete_all
 						end
-						ShippingPackage.create(order_id: params[:id], length: length, width: width, height: height, weight: weight)
+						ShippingPackage.create(equipment_id: @user.equipment_id, order_id: params[:id], length: length, width: width, height: height, weight: weight)
 						i = i + 1
 					end
 				 end
