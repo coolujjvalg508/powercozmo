@@ -5,21 +5,36 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # GET /resource/sign_up
   
   def new
+  
+    @page_content_data = PageContentManagement.where(:page_url => "sign_up")
+	@content_data = {}
+	@page_content_data.each do |v|		
+		@content_data[v.page_section] = v.content		
+	end
+  
     build_resource({})
     resource.build_profile
     respond_with self.resource
+        
   end
 
   # POST /resource
   def create
     build_resource(sign_up_params)
-      params[:user][:profile] = sign_up_params["profile_attributes"]
+		params[:user][:profile] = sign_up_params["profile_attributes"]
            
     if simple_captcha_valid?
-      super
+		super
     else
-      @captcha_error = "Please enter correct captcha"
-      render action: 'new'
+		@captcha_error = "Please enter correct captcha"
+      
+		@page_content_data = PageContentManagement.where(:page_url => "sign_up")
+		@content_data = {}
+		@page_content_data.each do |v|		
+			@content_data[v.page_section] = v.content		
+		end	
+      
+		render action: 'new'
     end
   end
 

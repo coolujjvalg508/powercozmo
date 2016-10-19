@@ -7,7 +7,15 @@ class WelcomeController < ApplicationController
 		@random_ads = Equipment.random.limit(3)
 		@banner_url = Banner.where(:status => 1).limit(1).order('created_at DESC').first.try(:image).try(:image)
 		@banner_url = 'assets/banner-bg.jpg' unless @banner_url
-		@commissions = Commission.all.order("percent desc")		
+		@commissions = Commission.all.order("percent desc")
+		
+		@page_content_data = PageContentManagement.where(:page_url => "home")
+		@content_data = {}
+		@page_content_data.each do |v|		
+			@content_data[v.page_section] = v.content		
+		end	
+		#abort(@content_data['what_is_powercozmo'].to_s)
+					
 	end
 
 	def new_contact
@@ -34,8 +42,17 @@ class WelcomeController < ApplicationController
 	end
 
 	def about_us
+	
+		@about_us = StaticPage.where(:url => "about_us")
 		#@our_team = OurTeam.joins("LEFT JOIN images ON images.imageable_id = our_teams.id AND images.imageable_type = 'OurTeam'").where(active: true).select('our_teams.*', 'images.image')
 		@our_team = OurTeam.joins(:image).where(active: true).select('our_teams.*', 'images.image')
+		
+		@page_content_data = PageContentManagement.where(:page_url => "about_us")
+		@content_data = {}
+		@page_content_data.each do |v|		
+			@content_data[v.page_section] = v.content		
+		end	
+		
 	end
 
 	def why_us

@@ -11,6 +11,16 @@ class ApplicationController < ActionController::Base
   around_filter :with_timezone
 
   def configure_permitted_parameters
+  
+	if params[:controller] == 'devise/passwords'
+	
+		@page_content_data = PageContentManagement.where(:page_url => "forgot_password")
+		@content_data = {}
+		@page_content_data.each do |v|		
+			@content_data[v.page_section] = v.content		
+		end
+	end
+	
     if params[:user].present? &&  params[:user][:profile].present?
       params[:user][:profile_attributes] = params[:user][:profile]
     end

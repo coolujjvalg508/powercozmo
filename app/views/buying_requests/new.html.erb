@@ -28,13 +28,20 @@
 			<div class="panel panel-default">
 				<div class="panel-heading"><img src="images/light-icon.png" alt="Light" class="marginR5"> Rules</div>
 					<div class="panel-body">
-						<ol>
-							<li>Your Buying Request should be specific and clear.</li>
-							<li>You shall not post the same buying request repeatedly at one time.</li>
-							<li>You shall not post any materials that are untrue, inaccurate, unlawful, invalid</li>
-							<li>You undertake that you shall not publish any information or conduct any act whatsoever that infringe the rights of any third party, including but not limited to any intellectual property rights, rights of publicity, rights of personality, rights of privacy, and any other rights of third parties not specifically identified in this clause.</li>
-							<li>System generated emails will be sent to you to facilitate notifications of Buying Request status and quotation updates pursuant to your request</li>
-						</ol>
+					
+						 <% if @content_data['rules'] %>
+							<%= @content_data['rules'].html_safe %>
+						<% else %>
+							 <ol>
+								<li>Your Buying Request should be specific and clear.</li>
+								<li>You shall not post the same buying request repeatedly at one time.</li>
+								<li>You shall not post any materials that are untrue, inaccurate, unlawful, invalid</li>
+								<li>You undertake that you shall not publish any information or conduct any act whatsoever that infringe the rights of any third party, including but not limited to any intellectual property rights, rights of publicity, rights of personality, rights of privacy, and any other rights of third parties not specifically identified in this clause.</li>
+								<li>System generated emails will be sent to you to facilitate notifications of Buying Request status and quotation updates pursuant to your request</li>
+							</ol>
+						<% end %>
+					
+						
 					</div>
 				</div>
 			</div>
@@ -49,23 +56,47 @@
 		<ul class="hwitwk-buying">
 			<li>
 				<div class="sprites hwitwk-ico1 MB20"></div>
-				<h4 class="text-uppercase">Step 1</h4>
-				<p>First find the plant or the equipment you are interested in on our web site. </p>
+				
+				<% if @content_data['how_it_work_step1'] %>
+					<%= @content_data['how_it_work_step1'].html_safe %>
+				<% else %>
+					<h4 class="text-uppercase">Step 1</h4>
+					<p>First find the plant or the equipment you are interested in on our web site. </p>
+				<% end %>
+				
 			</li>
 			<li>
 				<div class="sprites hwitwk-ico2 MB20"></div>
-				<h4 class="text-uppercase">Step 2</h4>
-				<p>Once you get all your questions answered click in "Make an offer button". </p>
+				
+				<% if @content_data['how_it_work_step2'] %>
+					<%= @content_data['how_it_work_step2'].html_safe %>
+				<% else %>
+					<h4 class="text-uppercase">Step 2</h4>
+					<p>Once you get all your questions answered click in "Make an offer button". </p>
+				<% end %>
+				
 			</li>
 			<li>
 				<div class="sprites hwitwk-ico3 MB20"></div>
-				<h4 class="text-uppercase">Step 3</h4>
-				<p>When an offer is accepted and the price agreed, a seller/buyer agreement. </p>
+				
+				<% if @content_data['how_it_work_step3'] %>
+					<%= @content_data['how_it_work_step3'].html_safe %>
+				<% else %>
+					<h4 class="text-uppercase">Step 3</h4>
+					<p>When an offer is accepted and the price agreed, a seller/buyer agreement. </p>
+				<% end %>
+				
 			</li>
 			<li>
 				<div class="sprites hwitwk-ico9 MB20"></div>
-				<h4 class="text-uppercase">Step 4</h4>
-				<p>While the payment is clearing the bank you will be sent the seller/buyer contract. </p>
+				
+				<% if @content_data['how_it_work_step4'] %>
+					<%= @content_data['how_it_work_step4'].html_safe %>
+				<% else %>
+					<h4 class="text-uppercase">Step 4</h4>
+					<p>While the payment is clearing the bank you will be sent the seller/buyer contract. </p>
+				<% end %>
+				
 			</li>
 		</ul>    
 	</div>

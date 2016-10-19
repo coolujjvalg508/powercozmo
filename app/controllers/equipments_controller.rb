@@ -2,10 +2,24 @@ class EquipmentsController < ApplicationController
 	before_action :find_associated_data, only: [:index, :filter]
 		
 	def index
-		@equipments = Equipment.not_inactive.order('created_at desc').page params[:page]		
+		@equipments = Equipment.not_inactive.order('created_at desc').page params[:page]
+		
+		@page_content_data = PageContentManagement.where(:page_url => "listings")
+		@content_data = {}
+		@page_content_data.each do |v|		
+			@content_data[v.page_section] = v.content		
+		end	
+				
 	end
 	
 	def index_solr_backup
+	
+		@page_content_data = PageContentManagement.where(:page_url => "listings")
+		@content_data = {}
+		@page_content_data.each do |v|		
+			@content_data[v.page_section] = v.content		
+		end
+	
 		#@equipments = Equipment.not_inactive.order('created_at desc').page params[:page]
 		search = Equipment.solr_search do 
 		
@@ -21,6 +35,13 @@ class EquipmentsController < ApplicationController
 	end
 
 	def equipment_details
+	
+		@page_content_data = PageContentManagement.where(:page_url => "equipment_details")
+		@content_data = {}
+		@page_content_data.each do |v|		
+			@content_data[v.page_section] = v.content		
+		end
+	
 		@top_bar_ad = Advertisement.where(:active => 1).find_by_page_reference('listing details top horizontal').try(:image).try(:image).try(:ad_horizontal).try(:url)
 		@side_panel_ad = Advertisement.where(:active => 1).find_by_page_reference('listing details right panel').try(:image).try(:image).try(:ad_square).try(:url)
 		@equipment = Equipment.not_inactive.includes(:country, :manufacturer, :category, :user).find_by_id(params[:id])
@@ -57,6 +78,12 @@ class EquipmentsController < ApplicationController
 	
 	def filter
 	
+		@page_content_data = PageContentManagement.where(:page_url => "listings")
+		@content_data = {}
+		@page_content_data.each do |v|		
+			@content_data[v.page_section] = v.content		
+		end
+	
 		if params[:q].present?
 			@search = Equipment.not_inactive.search(params[:q])
 			@search.sorts = 'created_at desc' if @search.sorts.empty?
@@ -81,6 +108,12 @@ class EquipmentsController < ApplicationController
 	end
 
 	def filter_solr_backup
+		
+		@page_content_data = PageContentManagement.where(:page_url => "listings")
+		@content_data = {}
+		@page_content_data.each do |v|		
+			@content_data[v.page_section] = v.content		
+		end
 	
 		search_qry = {}
 	

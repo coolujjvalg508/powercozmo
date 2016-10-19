@@ -53,10 +53,15 @@
 		<div class="row">
 				<div class="col-md-4 col-sm-12 col-xs-12" id="about_power_cozmo">
 					<div class="welcomeindent clearfix">
-						<h2 class="marginB10">WELCOME TO <span>POWER COZMO</span> TRADE PLATFORM</h2>
-						<h3 class="marginB5">What is power Cozmo?</h3>
-						<p>Power Cozmo is online automated platform works as market place for all power plants need, based on connecting sellers &amp; buyers together all over the world, You can...</p>
-      
+						
+						<% if @content_data['what_is_powercozmo'] %>
+							<%= @content_data['what_is_powercozmo'].html_safe %>
+						<% else %>
+							<h2 class="marginB10">WELCOME TO <span>POWER COZMO</span> TRADE PLATFORM</h2>
+							<h3 class="marginB5">What is power Cozmo?</h3>
+							<p>Power Cozmo is online automated platform works as market place for all power plants need, based on connecting sellers &amp; buyers together all over the world, You can...</p>
+						<% end %>
+						
 						<div class="marginB15 paddinT10">
 							<center><%= image_tag "welcom-img.jpg", width: '189', height: '179', alt: 'Welcome' %></center>
 						</div>
@@ -117,8 +122,14 @@
 											<div class="marginB15">
 												<center><%= image_tag "commission-icon.png", alt: 'commission' %></center>
 											</div>
-											<div class="commission-title marginB10">100% commission based structure</div>
-											<div class="commission-txt">if we don’t sell your equipment you pay Nothing.</div>
+											
+											<% if @content_data['why_sell_section1'] %>
+												<%= @content_data['why_sell_section1'].html_safe %>
+											<% else %>
+												<div class="commission-title marginB10">100% commission based structure</div>
+												<div class="commission-txt">if we don’t sell your equipment you pay Nothing.</div>
+											<% end %>
+											
 										</div>
 									</div>
 									
@@ -127,8 +138,15 @@
 											<div class="marginB15">
 												<center><%= image_tag "easy-icon.png", alt: 'Easy, painless processes' %></center>
 											</div>
-											<div class="commission-title marginB10">Easy, painless processes.</div>
-											<div class="commission-txt">Anyone can list equipment for sale, you just need to create a free account.</div>
+											
+											<% if @content_data['why_sell_section2'] %>
+												<%= @content_data['why_sell_section2'].html_safe %>
+											<% else %>
+												<div class="commission-title marginB10">Easy, painless processes.</div>
+												<div class="commission-txt">Anyone can list equipment for sale, you just need to create a free account.</div>
+											<% end %>
+											
+											
 										</div>
 									</div>
 									
@@ -137,8 +155,15 @@
 											<div class="marginB15">
 												<center><%= image_tag "global-icon.png", alt: 'Global Reach' %></center>
 											</div>
-											<div class="commission-title marginB10">Global Reach.</div>
-											<div class="commission-txt">We successfully market equipment worldwide on our filtered database promotion tools.</div>
+											
+											<% if @content_data['why_sell_section3'] %>
+												<%= @content_data['why_sell_section3'].html_safe %>
+											<% else %>
+												<div class="commission-title marginB10">Global Reach.</div>
+												<div class="commission-txt">We successfully market equipment worldwide on our filtered database promotion tools.</div>
+											<% end %>
+											
+											
 										</div>
 									</div>
 									
@@ -147,8 +172,14 @@
 											<div class="marginB15">
 												<center><%= image_tag "secure-icon.png", alt: 'Secure escrow process' %></center>
 											</div>
-											<div class="commission-title marginB10">Secure escrow process</div>
-											<div class="commission-txt">Seller does not release equipment until Power Cozmo has received full.</div>
+											
+											<% if @content_data['why_sell_section4'] %>
+												<%= @content_data['why_sell_section4'].html_safe %>
+											<% else %>
+												<div class="commission-title marginB10">Secure escrow process</div>
+												<div class="commission-txt">Seller does not release equipment until Power Cozmo has received full.</div>
+											<% end %>
+											
 										</div>
 									</div>
 									
@@ -165,8 +196,14 @@
 											<div class="marginB15">
 												<center><%= image_tag "limits-icon.png", alt: 'No limits' %></center>
 											</div>
-											<div class="commission-title marginB10">No limits</div>
-											<div class="commission-txt">No limit on the number of photos and information provided by sellers.</div>
+											
+											<% if @content_data['why_buy_section1'] %>
+												<%= @content_data['why_buy_section1'].html_safe %>
+											<% else %>
+												<div class="commission-title marginB10">No limits</div>
+												<div class="commission-txt">No limit on the number of photos and information provided by sellers.</div>
+											<% end %>
+											
 										</div>
 									</div>
 									
@@ -175,8 +212,14 @@
 											<div class="marginB15">
 												<center><%= image_tag "safe-icon.png", alt: 'Secure and safe processes' %></center>
 											</div>
-											<div class="commission-title marginB10">Secure and safe processes</div>
-											<div class="commission-txt">Your money is held by power cozmo and only released to the seller .</div>
+											
+											<% if @content_data['why_buy_section2'] %>
+												<%= @content_data['why_buy_section2'].html_safe %>
+											<% else %>
+												<div class="commission-title marginB10">Secure and safe processes</div>
+												<div class="commission-txt">Your money is held by power cozmo and only released to the seller .</div>
+											<% end %>
+											
 										</div>
 									</div>
 									
@@ -185,8 +228,14 @@
 											<div class="marginB15">
 												<center><%= image_tag "open-icon.png", alt: 'Open, transparent negotiations' %></center>
 											</div>
-											<div class="commission-title marginB10">Open, transparent negotiations</div>
-											<div class="commission-txt">Our Automated online negotiation system puts the fairness into private sale.</div>
+											
+											<% if @content_data['why_buy_section3'] %>
+												<%= @content_data['why_buy_section3'].html_safe %>
+											<% else %>
+												<div class="commission-title marginB10">Open, transparent negotiations</div>
+												<div class="commission-txt">Our Automated online negotiation system puts the fairness into private sale.</div>
+											<% end %>
+											
 										</div>
 									</div>
 									
@@ -195,8 +244,14 @@
 											<div class="marginB15">
 												<center><%= image_tag "convenient-icon.png", alt: 'Convenient services' %></center>
 											</div>
-											<div class="commission-title marginB10">Convenient services</div>
-											<div class="commission-txt">Buyers can take advantage of other power Cozmo services. inspection and other services.</div>
+											
+											<% if @content_data['why_buy_section4'] %>
+												<%= @content_data['why_buy_section4'].html_safe %>
+											<% else %>
+												<div class="commission-title marginB10">Convenient services</div>
+												<div class="commission-txt">Buyers can take advantage of other power Cozmo services. inspection and other services.</div>
+											<% end %>
+											
 										</div>
 									</div>
 									
@@ -213,7 +268,13 @@
 											<div class="marginB15">
 												<center><%= image_tag "trusted-icon.png", alt: 'Trusted costumer account service' %></center>
 											</div>
-											<div class="commission-title marginB10">Trusted costumer account service</div>
+											
+											<% if @content_data['how_we_protect_section1'] %>
+												<%= @content_data['how_we_protect_section1'].html_safe %>
+											<% else %>
+												<div class="commission-title marginB10">Trusted costumer account service</div>
+											<% end %>
+											
 										</div>
 									</div>
 									
@@ -222,7 +283,13 @@
 											<div class="marginB15">
 												<center><%= image_tag "party-icon.png", alt: 'Third party inspection' %></center>
 											</div>
-											<div class="commission-title marginB10">Third party inspection</div>
+											
+											<% if @content_data['how_we_protect_section2'] %>
+												<%= @content_data['how_we_protect_section2'].html_safe %>
+											<% else %>
+												<div class="commission-title marginB10">Third party inspection</div>
+											<% end %>
+											
 										</div>
 									</div>
 									
@@ -231,7 +298,13 @@
 											<div class="marginB15">
 												<center><%= image_tag "unlimited-icon.png", alt: 'Unlimited Q &amp; A' %></center>
 											</div>
-											<div class="commission-title marginB10">Unlimited Q &amp; A</div>
+											
+											<% if @content_data['how_we_protect_section3'] %>
+												<%= @content_data['how_we_protect_section3'].html_safe %>
+											<% else %>
+												<div class="commission-title marginB10">Unlimited Q &amp; A</div>
+											<% end %>
+											
 										</div>
 									</div>	
 									
@@ -240,7 +313,13 @@
 											<div class="marginB15">
 												<center><%= image_tag "videos-icon.png", alt: 'Unlimited photos &amp; videos' %></center>
 											</div>
-											<div class="commission-title marginB10">Unlimited photos &amp; videos</div>
+											
+											<% if @content_data['how_we_protect_section4'] %>
+												<%= @content_data['how_we_protect_section4'].html_safe %>
+											<% else %>
+												<div class="commission-title marginB10">Unlimited photos &amp; videos</div>
+											<% end %>
+											
 										</div>
 									</div>
 									<div class="text-center col-md-12 col-sm-12 col-xs-12">  
@@ -256,36 +335,60 @@
 											<div class="marginB15">
 												<center><%= image_tag "listings-icon.png", alt: 'Detailed listings on Powercozmo' %></center>
 											</div>	
-										<div class="commission-title marginB10">Detailed listings on Powercozmo</div>
-									</div>
-								</div>
-							
-								<div class="col-md-3 col-sm-6 col-xs-12">
-									<div class="commissionb  text-center">
-										<div class="marginB15">
-											<center><%= image_tag "email-icon.png", alt: 'Emails shot &amp; Direct mail' %></center>
+
+											<% if @content_data['how_we_market_section1'] %>
+												<%= @content_data['how_we_market_section1'].html_safe %>
+											<% else %>
+												<div class="commission-title marginB10">Detailed listings on Powercozmo</div>
+											<% end %>
+											</div>	
 										</div>
-										<div class="commission-title marginB10">Emails shot &amp; Direct mail</div>
 									</div>
-								</div>
 							
-								<div class="col-md-3 col-sm-6 col-xs-12">
-									<div class="commissionb  text-center">
-										<div class="marginB15">
-											<center><%= image_tag "print-icon.png", alt: 'Print &amp; Online Advertising' %></center>
+									<div class="col-md-3 col-sm-6 col-xs-12">
+										<div class="commissionb  text-center">
+											<div class="marginB15">
+												<center><%= image_tag "email-icon.png", alt: 'Emails shot &amp; Direct mail' %></center>
+											</div>
+											
+											<% if @content_data['how_we_market_section2'] %>
+												<%= @content_data['how_we_market_section2'].html_safe %>
+											<% else %>
+												<div class="commission-title marginB10">Emails shot &amp; Direct mail</div>
+											<% end %>
+											
 										</div>
-										<div class="commission-title marginB10">Print &amp; Online Advertising</div>
 									</div>
-								</div>
 							
-								<div class="col-md-3 col-sm-6 col-xs-12">
-									<div class="commissionb  text-center">
-										<div class="marginB15">
-											<center><%= image_tag "brochures-icon.png", alt: 'Full-color Brochures' %></center>
+									<div class="col-md-3 col-sm-6 col-xs-12">
+										<div class="commissionb  text-center">
+											<div class="marginB15">
+												<center><%= image_tag "print-icon.png", alt: 'Print &amp; Online Advertising' %></center>
+											</div>
+											
+											<% if @content_data['how_we_market_section3'] %>
+												<%= @content_data['how_we_market_section3'].html_safe %>
+											<% else %>
+												<div class="commission-title marginB10">Print &amp; Online Advertising</div>
+											<% end %>
+											
 										</div>
-										<div class="commission-title marginB10">Full-color Brochures</div>
 									</div>
-								</div>
+							
+									<div class="col-md-3 col-sm-6 col-xs-12">
+										<div class="commissionb  text-center">
+											<div class="marginB15">
+												<center><%= image_tag "brochures-icon.png", alt: 'Full-color Brochures' %></center>
+											</div>
+										
+											<% if @content_data['how_we_market_section4'] %>
+												<%= @content_data['how_we_market_section4'].html_safe %>
+											<% else %>
+												<div class="commission-title marginB10">Full-color Brochures</div>
+											<% end %>
+										
+										</div>
+									</div>
 						
 								<div class="text-center col-md-12 col-sm-12 col-xs-12">
 									<%= link_to 'Read More', why_us_path, class: "btn-orange text-uppercase" %>
@@ -493,8 +596,14 @@
 <section class="clearfix getstarthome">
 	<div class="container text-center">
 		<div class="edit-box"><%= image_tag "edit-icon.png", alt: 'Edit' %></div>
-		<div class="get-home-title">Are you ready for listing your product with "<span>PowerCozmo</span>"?</div>
-		<div class="get-home-txt">Register now to Power Cozmo and get in touch with thousands of buyers all over the world;  buy &amp; trade your used equipment or plants safely here.</div>
+		
+		<% if @content_data['get_started_text'] %>
+			<%= @content_data['get_started_text'].html_safe %>
+		<% else %>
+			<div class="get-home-title">Are you ready for listing your product with "<span>PowerCozmo</span>"?</div>
+			<div class="get-home-txt">Register now to Power Cozmo and get in touch with thousands of buyers all over the world;  buy &amp; trade your used equipment or plants safely here.</div>
+		<% end %>
+		
 		<%= link_to "Get Started", new_user_registration_path, class: "default-btn text-uppercase" %> 
 	</div>
 </section>
@@ -517,33 +626,63 @@
 				<ul class="hwitwk-process">
 					<li>
 						<div class="sprites hwitwk-ico1 MB20"></div>
-						<h4>Register on <br>
-						Power Cozmo</h4>
-						<p>You simply register in Power Cozmo, Then Go to your awesome dashboard.</p>
+						
+						<% if @content_data['how_we_work_tabs_sell_section1'] %>
+							<%= @content_data['how_we_work_tabs_sell_section1'].html_safe %>
+						<% else %>
+							<h4>Register on <br>
+							Power Cozmo</h4>
+							<p>You simply register in Power Cozmo, Then Go to your awesome dashboard.</p>
+						<% end %>
+						
 					</li>
 					<li>
 						<div class="sprites hwitwk-ico2 MB20"></div>
-						<h4>Start Receiving <br>
-						questions &amp; offers</h4>
-						<p>When an interested party see your Item. He may at this time ask any questions. </p>
+						
+						<% if @content_data['how_we_work_tabs_sell_section2'] %>
+							<%= @content_data['how_we_work_tabs_sell_section2'].html_safe %>
+						<% else %>
+							<h4>Start Receiving <br>
+							questions &amp; offers</h4>
+							<p>When an interested party see your Item. He may at this time ask any questions. </p>
+						<% end %>
+						
 					</li>
 					<li>
 						<div class="sprites hwitwk-ico3 MB20"></div>
-						<h4>Start Finalizing the deal <br>
-						-Signing agreements</h4>
-						<p>When the Potential Buyer is satisfied and the price is agreed, a seller/buyer. </p>
+						
+						<% if @content_data['how_we_work_tabs_sell_section3'] %>
+							<%= @content_data['how_we_work_tabs_sell_section3'].html_safe %>
+						<% else %>
+							<h4>Start Finalizing the deal <br>
+							-Signing agreements</h4>
+							<p>When the Potential Buyer is satisfied and the price is agreed, a seller/buyer. </p>
+						<% end %>
+						
 					</li>
 					<li>
 						<div class="sprites hwitwk-ico4 MB20"></div>
-						<h4>Prepare item for <br>
-						shipping</h4>
-						<p>While the payment is clearing the bank you will be sent the seller/buyer.</p>
+						
+						<% if @content_data['how_we_work_tabs_sell_section4'] %>
+							<%= @content_data['how_we_work_tabs_sell_section4'].html_safe %>
+						<% else %>
+							<h4>Prepare item for <br>
+							shipping</h4>
+							<p>While the payment is clearing the bank you will be sent the seller/buyer.</p>
+						<% end %>
+						
 					</li>
 					<li>
 						<div class="sprites hwitwk-ico5 MB20"></div>
-						<h4>Get your money <br>
-						in your account.</h4>
-						<p>Within 24 hours after the item is received by the buyer you will be sent pay.</p>
+						
+						<% if @content_data['how_we_work_tabs_sell_section5'] %>
+							<%= @content_data['how_we_work_tabs_sell_section5'].html_safe %>
+						<% else %>
+							<h4>Get your money <br>
+							in your account.</h4>
+							<p>Within 24 hours after the item is received by the buyer you will be sent pay.</p>
+						<% end %>
+						
 					</li>
 				</ul>
     
@@ -554,33 +693,63 @@
 				<ul class="hwitwk-process">
 					<li>
 						<div class="sprites hwitwk-ico6 MB20"></div>
-						<h4>Search &amp; find <br>
-						your equipment</h4>
-						<p>First find the plant or the equipment you are interested in on our web site. </p>
+						
+						<% if @content_data['how_we_work_tabs_buy_section1'] %>
+							<%= @content_data['how_we_work_tabs_buy_section1'].html_safe %>
+						<% else %>
+							<h4>Search &amp; find <br>
+							your equipment</h4>
+							<p>First find the plant or the equipment you are interested in on our web site. </p>
+						<% end %>
+						
 					</li>
 					<li>
 						<div class="sprites hwitwk-ico7 MB20"></div>
-						<h4>Make an <br>
-						offer</h4>
-						<p>Once you get all your questions answered click in "Make an offer button". </p>
+						
+						<% if @content_data['how_we_work_tabs_buy_section2'] %>
+							<%= @content_data['how_we_work_tabs_buy_section2'].html_safe %>
+						<% else %>
+							<h4>Make an <br>
+							offer</h4>
+							<p>Once you get all your questions answered click in "Make an offer button". </p>
+						<% end %>
+						
 					</li>
 					<li>
 						<div class="sprites hwitwk-ico8 MB20"></div>
-						<h4>Start Finalizing the <br>
-						deal&ndash;Sign agreements.</h4>
-						<p>When an offer is accepted and the price agreed, a seller/buyer agreement. </p>
+						
+						<% if @content_data['how_we_work_tabs_buy_section3'] %>
+							<%= @content_data['how_we_work_tabs_buy_section3'].html_safe %>
+						<% else %>
+							<h4>Start Finalizing the <br>
+							deal&ndash;Sign agreements.</h4>
+							<p>When an offer is accepted and the price agreed, a seller/buyer agreement. </p>
+						<% end %>
+						
 					</li>
 					<li>
 						<div class="sprites hwitwk-ico9 MB20"></div>
-						<h4>Prepare item <br>
-						for shipping</h4>
-						<p>While the payment is clearing the bank you will be sent the seller/buyer contract. </p>
+						
+						<% if @content_data['how_we_work_tabs_buy_section4'] %>
+							<%= @content_data['how_we_work_tabs_buy_section4'].html_safe %>
+						<% else %>
+							<h4>Prepare item <br>
+							for shipping</h4>
+							<p>While the payment is clearing the bank you will be sent the seller/buyer contract. </p>
+						<% end %>
+						
 					</li>
 					<li>
 						<div class="sprites hwitwk-ico10 MB20"></div>
-						<h4>Get your shipping doc. <br>
-						and receive the Item.</h4>
-						<p>Power Cozmo will send you shipping documents within materials expected arrival. </p>
+						
+						<% if @content_data['how_we_work_tabs_buy_section5'] %>
+							<%= @content_data['how_we_work_tabs_buy_section5'].html_safe %>
+						<% else %>
+							<h4>Get your shipping doc. <br>
+							and receive the Item.</h4>
+							<p>Power Cozmo will send you shipping documents within materials expected arrival. </p>
+						<% end %>
+						
 					</li>
 				</ul>
     
@@ -590,13 +759,25 @@
 				<ul class="hwitwk-process">
 					<li>
 						<div class="sprites hwitwk-ico11 MB20"></div>
-						<h4>T\T</h4>
-						<p>T\T cash transfer to our Trusted costumer account.</p>
+						
+						<% if @content_data['how_we_work_tabs_pay_section1'] %>
+							<%= @content_data['how_we_work_tabs_pay_section1'].html_safe %>
+						<% else %>
+							<h4>T\T</h4>
+							<p>T\T cash transfer to our Trusted costumer account.</p>
+						<% end %>
+						
 					</li>
 					<li>
 						<div class="sprites hwitwk-ico12 MB20"></div>
-						<h4>L\C</h4>
-						<p>Transferable Irrevocable Confirmed L\C for big projects.</p>
+						
+						<% if @content_data['how_we_work_tabs_pay_section2'] %>
+							<%= @content_data['how_we_work_tabs_pay_section2'].html_safe %>
+						<% else %>
+							<h4>L\C</h4>
+							<p>Transferable Irrevocable Confirmed L\C for big projects.</p>
+						<% end %>
+						
 					</li>
 				</ul>
 			</div>
@@ -606,37 +787,67 @@
 				<ul class="hwitwk-process">
 					<li>
 						<div class="sprites hwitwk-ico13 MB20"></div>
-						<h4>Commission rate</h4>
-						<!--<p>The commission due from you and payable by you to us shall be calculated by </p> -->
+						
+						<% if @content_data['how_we_work_tabs_commission_heading_text'] %>
+							<%= @content_data['how_we_work_tabs_commission_heading_text'].html_safe %>
+						<% else %>
+							<h4>Commission rate</h4>
+							<!--<p>The commission due from you and payable by you to us shall be calculated by </p> -->
+						<% end %>
+						
 					</li>
 				</ul>
     
 				<div class="clearfix">
 					<div class="col-md-3 col-sm-6 col-xs-12">
 						<div class="commission-rate clearfix">
-							<div class="commission-rate-l">10%</div>
-							<div class="commission-rate-r">$0 to $249,999</div>
+							
+							<% if @content_data['how_we_work_tabs_commission_section1'] %>
+								<%= @content_data['how_we_work_tabs_commission_section1'].html_safe %>
+							<% else %>
+								<div class="commission-rate-l">10%</div>
+								<div class="commission-rate-r">$0 to $249,999</div>
+							<% end %>
+							
 						</div>
 					</div>
 					
 					<div class="col-md-3 col-sm-6 col-xs-12">
 						<div class="commission-rate clearfix">
-							<div class="commission-rate-l">8%</div>
-							<div class="commission-rate-r">$250,000 to $499,999</div>
+							
+							<% if @content_data['how_we_work_tabs_commission_section2'] %>
+								<%= @content_data['how_we_work_tabs_commission_section2'].html_safe %>
+							<% else %>
+								<div class="commission-rate-l">8%</div>
+								<div class="commission-rate-r">$250,000 to $499,999</div>
+							<% end %>
+							
 						</div>
 					</div>
 				
 					<div class="col-md-3 col-sm-6 col-xs-12">
 						<div class="commission-rate clearfix">
-							<div class="commission-rate-l">6%</div>
-							<div class="commission-rate-r">$500,000 to $1,000,000</div>
+							
+							<% if @content_data['how_we_work_tabs_commission_section3'] %>
+								<%= @content_data['how_we_work_tabs_commission_section3'].html_safe %>
+							<% else %>
+								<div class="commission-rate-l">6%</div>
+								<div class="commission-rate-r">$500,000 to $1,000,000</div>
+							<% end %>
+							
 						</div>
 					</div>
 					
 					<div class="col-md-3 col-sm-6 col-xs-12">
 						<div class="commission-rate clearfix">
-							<div class="commission-rate-l">20%</div>
-							<div class="commission-rate-r">Discount for Exclusive Sellers</div>
+							
+							<% if @content_data['how_we_work_tabs_commission_section4'] %>
+								<%= @content_data['how_we_work_tabs_commission_section4'].html_safe %>
+							<% else %>
+								<div class="commission-rate-l">20%</div>
+								<div class="commission-rate-r">Discount for Exclusive Sellers</div>
+							<% end %>
+							
 						</div>
 					</div>
 				</div>
@@ -654,7 +865,15 @@
 <section class="categoriewrap clearfix" id="categories">
 	<div class="container">
 		<h2 class="text-center">Categories <i></i></h2>
-		<div class="cate-txt text-center">We are not only brokers we are service provider select your machine and find out what services we can do for you.</div>
+		<div class="cate-txt text-center">
+				
+			<% if @content_data['categories_text'] %>
+				<%= @content_data['categories_text'].html_safe %>
+			<% else %>
+				We are not only brokers we are service provider select your machine and find out what services we can do for you.
+			<% end %>
+
+		</div>
 		<div class="slider Categories owl-carousel" id="pr-category">
 						
 <% @categories.each do |category| %>			

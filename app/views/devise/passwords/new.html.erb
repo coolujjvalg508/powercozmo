@@ -3,10 +3,15 @@
     <div class="row">
       <div class="col-lg-6 log-lt">
         <div class="log-lt-cont">
-          <h2>Need to sell equipment?</h2>
-          <p>Whether your company is big or small, Power Cozmo. <br>
-            can sell your power equipment or plants quickly, <br>
-            easily, and for the best returns possible.</p>
+			<% if defined?(@content_data['left_panel_text']) && @content_data['left_panel_text'] %>
+				<%= @content_data['left_panel_text'].html_safe %>
+			<% else %>
+				<h2>Need to sell equipment?</h2>
+				 <p>Whether your company is big or small, Power Cozmo. <br>
+					can sell your power equipment or plants quickly, <br>
+					easily, and for the best returns possible.</p>
+			<% end %>
+			
         </div>
         <img src="/assets/log-img.jpg" alt="" class="img-responsive"> <span class="log-img-small"><img src="/assets/log-img-small.png" alt=""></span> </div>
       <div class="col-lg-6 log-rt">

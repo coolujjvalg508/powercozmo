@@ -388,7 +388,7 @@
 				
 				<div class="footer-company text-center">
 					<div class="container"> 
-						We aren't a dot-com company. Our company's founders &amp; CEO are electrical and mechanical engineers and business men.
+						<%= SiteSetting.last.try(:footer_text) || "We aren't a dot-com company. Our company's founders &amp; CEO are electrical and mechanical engineers and business men." %>
 					</div>
 				</div>
 			</footer>

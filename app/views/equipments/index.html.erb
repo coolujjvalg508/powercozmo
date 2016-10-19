@@ -2,7 +2,13 @@
 
 <section class="innerbanner clearfix">
   <div class="container">
-    <h2 class="text-center text-uppercase">LISTINGS</h2>
+    <h2 class="text-center text-uppercase">
+		<% if @content_data['page_title'] %>
+			<%= @content_data['page_title'].html_safe %>
+		<% else %>
+			LISTINGS
+		<% end %>
+	</h2>
   </div>
 </section>
 
@@ -232,7 +238,13 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<div class="tab-progress btn-breadcrumb clearfix text-center">
-							<div class="arrow-nav col-xs-10 text-left">Can't find what you are looking for, post your buying request now</div>
+							<div class="arrow-nav col-xs-10 text-left">
+								<% if @content_data['get_started_text_description'] %>
+									<%= @content_data['get_started_text_description'].html_safe %>
+								<% else %>
+									Can't find what you are looking for, post your buying request now
+								<% end %>
+							</div>
 							<%= link_to 'GET STARTED', new_buying_request_path, class: "active-arrow arrow-nav col-xs-2 text-center" %>
 						</div>
 					</div>

@@ -10,7 +10,14 @@
 	<div class="tab-content">
 		<div id="WhatYouWant" class="tab-pane fade in active">
 			<div class="buyindent clearfix">
-				<div class="buy-txt marginB15">Use 5 minutes to fill out a Buying Request and match your requested quotes to our Verified Suppliers.</div>
+				<div class="buy-txt marginB15">
+					<% if @content_data['what_you_want_description_text'] %>
+						<%= @content_data['what_you_want_description_text'].html_safe %>
+					<% else %>
+						 Use 5 minutes to fill out a Buying Request and match your requested quotes to our Verified Suppliers.
+					<% end %>
+				
+				</div>
 				
 				<div class="row">
 					<div class="form-group col-md-6 col-sm-6 col-xs-12">
@@ -150,8 +157,14 @@
 
 		<div id="WhoYouAre" class="tab-pane fade">
 			<div class="buyindent clearfix">
-				<div class="buy-txt marginB15">Please describe about yourself which help us for further communications.</div>
-	
+				<div class="buy-txt marginB15">
+					<% if @content_data['who_you_are_description_text'] %>
+						<%= @content_data['who_you_are_description_text'].html_safe %>
+					<% else %>
+						 Please describe about yourself which help us for further communications.
+					<% end %>
+				
+				</div>
 	
 				<div class="row">
 					

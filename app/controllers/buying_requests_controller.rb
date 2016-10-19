@@ -3,9 +3,23 @@ class BuyingRequestsController < ApplicationController
 		
 	def index
 		@buying_requests = BuyingRequest.approved.order("created_at DESC").search(params[:q]).page(params[:page])
+		
+		@page_content_data = PageContentManagement.where(:page_url => "buying_requests")
+		@content_data = {}
+		@page_content_data.each do |v|		
+			@content_data[v.page_section] = v.content		
+		end
+		
 	end
 
 	def filter
+	
+		@page_content_data = PageContentManagement.where(:page_url => "buying_requests")
+		@content_data = {}
+		@page_content_data.each do |v|		
+			@content_data[v.page_section] = v.content		
+		end
+	
 		condition = []
 		if params[:filter]
 			attributes = filter_params
@@ -25,16 +39,24 @@ class BuyingRequestsController < ApplicationController
 	def new
 		@buying_request = BuyingRequest.new
 		@buying_request.images.build
+		
+		@page_content_data = PageContentManagement.where(:page_url => "post_buying_requests")
+		@content_data = {}
+		@page_content_data.each do |v|		
+			@content_data[v.page_section] = v.content		
+		end
+		
 	end
 	
 	def create
+	
 		if params[:buying_request][:images_attributes].present?
-      params[:buying_request][:images_attributes].each do |index,img|
-        unless params[:buying_request][:images_attributes][index][:image].present?
-          params[:buying_request][:images_attributes][index][:image] = params[:buying_request][:images_attributes][index][:image_cache]
-        end
-      end
-    end
+			params[:buying_request][:images_attributes].each do |index,img|
+				unless params[:buying_request][:images_attributes][index][:image].present?
+					params[:buying_request][:images_attributes][index][:image] = params[:buying_request][:images_attributes][index][:image_cache]
+				end
+			end
+		end
 
     @tmp_images = {}
     temp_image_attributes = {}
@@ -91,12 +113,26 @@ class BuyingRequestsController < ApplicationController
         end
       end
       @buying_request.images.build if (@buying_request.images.count==0 && index < 4)
+      
+		@page_content_data = PageContentManagement.where(:page_url => "post_buying_requests")
+		@content_data = {}
+		@page_content_data.each do |v|		
+			@content_data[v.page_section] = v.content		
+		end
+      
       render 'new'
 		end
 	end
 	
 	def edit
 		@buying_request = BuyingRequest.find(params[:id])
+		
+		@page_content_data = PageContentManagement.where(:page_url => "post_buying_requests")
+		@content_data = {}
+		@page_content_data.each do |v|		
+			@content_data[v.page_section] = v.content		
+		end
+		
 		render 'new'
 	end
 	
@@ -168,7 +204,14 @@ class BuyingRequestsController < ApplicationController
 			end
 		  end
 		  @buying_request.images.build if (@buying_request.images.count==0 && index < 4)
-		  render 'edit'
+		  
+			@page_content_data = PageContentManagement.where(:page_url => "post_buying_requests")
+			@content_data = {}
+			@page_content_data.each do |v|		
+				@content_data[v.page_section] = v.content		
+			end
+		  
+		  render 'new'
 		end
 	end
 

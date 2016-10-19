@@ -12,8 +12,14 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 singup">
-				<h2 class="marginB15">EASY TO SELL, QUICK SIGN UP</h2>
-				<p>Register now to Power Cozmo and get in touch with thousands of buyers all over the world; advertise your equipment and plant.</p>
+				
+				<% if @content_data['text_top'] %>
+					<%= @content_data['text_top'].html_safe %>
+				<% else %>
+					<h2 class="marginB15">EASY TO SELL, QUICK SIGN UP</h2>
+					<p>Register now to Power Cozmo and get in touch with thousands of buyers all over the world; advertise your equipment and plant.</p>
+				<% end %>
+				
 				<div class="row">
 					<div class="col-md-5 col-sm-4">
 						<div class="register_img"><img src="/assets/register_img.jpg" alt="Register Img" class="img-responsive" /></div>

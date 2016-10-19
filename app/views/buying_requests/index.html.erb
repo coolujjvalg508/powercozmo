@@ -11,8 +11,14 @@
         <div class="row">
           <div class="col-lg-12 log-rt-buy log-rt-buy-new">
             <h2 class="page-hd MT20 log-rt-buy-bg">Looking for <span>requests</span></h2>
-            <p>Are you interested in responding to a customer’s Buying request? As a supplier registered on the Power Cozmo, you have access to online tools that make doing so easy and efficient. It's all done through power Cozmo.</p>
-            <p>Suppliers can respond to Buying Request post through power Cozmo e-mail or through Seller dashboard. Power Cozmo will give the priority for suppliers who’s verified and registered in out Platform </p>
+            
+            <% if @content_data['top_section_text'] %>
+				<%= @content_data['top_section_text'].html_safe %>
+			<% else %>
+				 <p>Are you interested in responding to a customer’s Buying request? As a supplier registered on the Power Cozmo, you have access to online tools that make doing so easy and efficient. It's all done through power Cozmo.</p>
+				<p>Suppliers can respond to Buying Request post through power Cozmo e-mail or through Seller dashboard. Power Cozmo will give the priority for suppliers who’s verified and registered in out Platform </p>
+			<% end %>
+                        
           </div>
         </div>
       </div>

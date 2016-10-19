@@ -28,7 +28,13 @@
 </section>
 
 <div class="clearfix postadwrap">
-	<div class="container"> <i class="fa fa-pencil-square-o paddinT10" aria-hidden="true"></i> Are you ready to post your ad with us ? <%= link_to 'Get started', new_user_registration_path, class: "pull-right text-uppercase" %> </div>
+	<div class="container"> <i class="fa fa-pencil-square-o paddinT10" aria-hidden="true"></i> 
+	<% if @content_data['get_started_top_text_description'] %>
+		<%= @content_data['get_started_top_text_description'].html_safe %>
+	<% else %>
+		Are you ready to post your ad with us ?
+	<% end %>
+	<%= link_to 'Get started', new_user_registration_path, class: "pull-right text-uppercase" %> </div>
 </div>
 
 <!-- Welcome to Power Cozmo -->
@@ -280,7 +286,15 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div class="tab-progress btn-breadcrumb clearfix text-center">
-						<div class="arrow-nav col-xs-10 text-left">Can't find what you are looking for, post your buying request now</div>
+						<div class="arrow-nav col-xs-10 text-left">
+							
+							<% if @content_data['get_started_bottom_text_description'] %>
+								<%= @content_data['get_started_bottom_text_description'].html_safe %>
+							<% else %>
+								Can't find what you are looking for, post your buying request now
+							<% end %>
+							
+						</div>
 							<%= link_to 'GET STARTED', new_buying_request_path, class: "active-arrow arrow-nav col-xs-2 text-center" %>
 						</div>
 					</div>
