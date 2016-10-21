@@ -10,4 +10,9 @@ class Seller::DashboardController < Seller::BaseController
 		@orders = Order.all.order('created_at desc').joins(:equipment).where('equipment.user_id = ? OR orders.user_id = ? ', current_user, current_user)
 		
 	end
+	
+	def ask_for_services
+		@ask_for_services = StaticPage.where(:url => "ask_for_services")
+	end
+	
 end

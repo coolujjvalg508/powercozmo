@@ -90,6 +90,7 @@ Rails.application.routes.draw do
       delete 'remove_favourite/:id' => 'equipment#remove_favourite', as: "remove_favourite"
       get 'add_preference' => 'equipment#add_preference'
       get 'remove_preference' => 'equipment#remove_preference'
+      get 'ask_for_services' => 'dashboard#ask_for_services'
       
     end
         
