@@ -1,7 +1,7 @@
 ActiveAdmin.register Category do
 	menu label: 'Categories', parent: 'Masters', if: proc{ (current_admin_user.has_permission('category_read') || current_admin_user.has_permission('category_write') || current_admin_user.has_permission('category_delete'))}
 
-	permit_params :name, :parent_id, :status, :lft, :rgt, :depth, :children_count, image_attributes: [:id, :image, :imageable_id, :imageable_type, :image_cache]
+	permit_params :name, :parent_id, :status, :lft, :rgt, :depth, :children_count, :category_type, image_attributes: [:id, :image, :imageable_id, :imageable_type, :image_cache]
 
   action_item :back, only: :show do
    link_to "Back", collection_path, method: :get
@@ -21,6 +21,9 @@ ActiveAdmin.register Category do
     column :parent do |cat|
       Category.find_by(id: cat.parent_id).try(:name)
     end
+    
+    column :category_type
+    
     column 'Image' do |user|
       image_tag user.try(:image).try(:image).try(:url, :thumb), height: 50, width: 50
     end
@@ -72,6 +75,9 @@ ActiveAdmin.register Category do
   # Filters
   filter :name
   filter :parent_id, as: :select, label: 'Parent Category', collection: -> { nested_set_options(Category.active, @category) {|i| "#{' -' * i.level} #{i.name}" } }
+  
+  filter :category_type, as: :select, collection: (Category::CATEGORY_TYPE)
+  
   filter :status, as: :select, collection: [['Active',1], ['InActive', 0]]
   filter :depth, as: :select, collection: [['Parent', 0], ['Sub categories', 1], ['sub sub categories', 2]], label: "Categories Level"
   filter :created_at
@@ -82,6 +88,9 @@ ActiveAdmin.register Category do
     f.inputs "Category" do
       # f.input :parent_id, as: :select, collection: Category.where("depth != 2 AND id != ?", category.id).pluck(:name, :id), include_blank: 'Select Parent'
       f.input :parent_id, :as => :select, :collection => nested_set_options(Category, category) {|i| "#{' -' * i.level} #{i.name}" },  :input_html => { :class => 'select2'}
+      
+      f.input :category_type, as: :select, collection: (Category::CATEGORY_TYPE), include_blank: 'Select Category Type',:input_html => { :class => 'select2'} 
+      
       f.input :name
       f.input :status
     end
@@ -97,6 +106,7 @@ ActiveAdmin.register Category do
     attributes_table do
       row :name
       row :parent_id
+      row :category_type
       row :image do |cat|
         unless !cat.image.present?
           image_tag(cat.try(:image).try(:image).try(:url, :medium))

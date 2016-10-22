@@ -13,6 +13,13 @@ class Category < ActiveRecord::Base
 
 	scope :active, -> { where(status: 1) }
 	
+	############################ Constants ################################
+	
+	CATEGORY_TYPE = {'Power Generator'=> 'P', 'Oil & Gas'=> 'O'}
+	enum category_type: {'Power Generator'=> 'P', 'Oil & Gas'=> 'O'}
+
+	########################### Validations ################################
+	
 	######## Solr search Start ########
   
 	/searchable do
