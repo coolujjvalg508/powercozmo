@@ -167,8 +167,16 @@
 			<div class="form-group" id="category_select">
 				<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Category<sup>*</sup></label>
 				<div class="col-md-12">
+					
 					<%= f.select :category_id, @categories.map{|id,name| [name,id] }+[['Other', 0]], {include_blank: 'Select Category'}, {disabled: @equipment.require_moderation == 1} %>
-					<%= text_field_tag "other[category_name]", params[:other].present? ? params[:other][:category_name] : "",class: 'form-control equipment-other-field', placeholder: 'Category name', style: "display:none;" %>
+					
+					<div id="other_category_div" style="display:none;">
+						<%= text_field_tag "other[category_name]", params[:other].present? ? params[:other][:category_name] : "",class: 'form-control equipment-other-field marginB10', placeholder: 'Category name', style: "display:none;" %>
+						
+						<%= select_tag "other[category_type]", options_for_select(Category::CATEGORY_TYPE, selected: params[:other].present? ? params[:other][:category_type] : ""), include_blank: 'Select Category Type', class: 'equipment-other-field', style: "display:none;" %>
+												
+					</div>
+					
 					<%= form_error_msg_for(@equipment,:category_id, "Category") %>
 				</div>
 			</div>

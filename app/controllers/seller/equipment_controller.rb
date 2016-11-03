@@ -22,9 +22,7 @@ class Seller::EquipmentController < Seller::BaseController
   end
 
   def create
-      
-    #abort(params[:equipment][:shipping_package].to_json)
-    
+   
     if params[:equipment][:images_attributes].present?
       params[:equipment][:images_attributes].each do |index,img|
         unless params[:equipment][:images_attributes][index][:image].present?
@@ -39,11 +37,14 @@ class Seller::EquipmentController < Seller::BaseController
       p_category = Category.find_by_name("Complete power plant").id
       new_params[:category_id] = p_category
     end
+    
     @equipment = current_user.equipment.new(new_params)
+    
     if @equipment.valid?
       new_params = process_new_master_data(p_category)
       @equipment = current_user.equipment.new(new_params)
     end
+    
     if equipment_params[:images_attributes].present?
       index = 0
       equipment_params[:images_attributes].each do |key,value|
@@ -262,7 +263,16 @@ class Seller::EquipmentController < Seller::BaseController
         @field = attribute[0..-4]
         @new_category_name = params[:other]["#{@field}_name".to_sym]
         if @new_category_name.present?
-          category_params = {:name => @new_category_name,:status => "inactive"}
+        
+		  new_category_type = params[:other]["#{@field}_type".to_sym]	
+          
+          if new_category_type.present?
+			category_type = new_category_type
+          else
+			category_type = ''
+          end
+          
+          category_params = {:name => @new_category_name,:status => "inactive", :category_type => category_type}
           if attribute == 'sub_sub_category_id'
             category_params[:parent_id] = new_params[:sub_category_id]
           elsif attribute == 'sub_category_id'

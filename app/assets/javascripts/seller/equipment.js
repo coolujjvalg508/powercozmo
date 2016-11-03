@@ -117,11 +117,16 @@ $(document).ready(function($) {
   $("#equipment_category_id").on('change', function(){
     if($(this).val() == "0"){
       $('#other_category_name').show();
+      $('#other_category_type').show();
+      $('#other_category_div').show();
       $('#sub_category_select').hide();
       $('#sub_sub_category_select').hide();
     }
     else {
       $('#other_category_name').val('').hide();
+      $('#other_category_type').val('').hide();
+      $('.selectric-equipment-other-field p.label').html('Select Category Type');
+      $('#other_category_div').hide();
       $('#sub_category_select').show();
       $('#sub_sub_category_select').show();
     }
@@ -148,6 +153,8 @@ $(document).ready(function($) {
   if($("#equipment_manufacturer_id").val() == "0") $("#other_manufacturer_name").show();
   if($("#equipment_category_id").val() == "0"){
     $("#other_category_name").show();
+    $("#other_category_type").show();
+    $("#other_category_div").show();
     $("#sub_category_select").hide();
     $('#sub_sub_category_select').hide();
   }

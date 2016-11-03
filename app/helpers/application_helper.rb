@@ -57,6 +57,10 @@ module ApplicationHelper
 	def root_categories
 		Category.active.order('name asc').roots
 	end
+	
+	def root_categories_from_type(category_type)
+		Category.active.order('name asc').roots.where('category_type = ?', category_type)
+	end
 
 	def unresponded_offers
 		if current_user.present? && current_user.is_a?(User)

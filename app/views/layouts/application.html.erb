@@ -197,33 +197,65 @@
 							<% end %>
 							
 						</div>
-<!--/.navbar-header-->
+<!-- /. navbar-header -->
 		  
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							<ul class="nav navbar-nav navbar-right">
 								
 								<li class="dropdown"> 
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Home <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+									<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Home <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 									<ul class="dropdown-menu">
 										<li><%= link_to "What is power Cozmo?", root_path(anchor: "about_power_cozmo"), class: "anchor" %></li>
 										<li><%= link_to "Who we are?", about_path(anchor: "about_us"), class: "anchor" %></li>
 										<li><%= link_to "FAQ", faq_path %></li>
 									</ul>
 								</li>
-								
-								<li class="dropdown"> 
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-									<ul class="dropdown-menu cat-drp">
-										<% root_categories.each do |category| %>
-											<li>
-												<%=link_to truncate(category.name, length: 45),listing_filter_path(filter: {category_id: category.id}) %>
-											</li>
+																				
+								<li class="cd-dropdown-wrapper"> 
+									<a href="javascript:void(0);" class="cd-dropdown-trigger">Categories <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+									<ul class="muslty-dp" id="nav">
+										<% (Category::CATEGORY_TYPE).each do |category| %>
+											<% categories_from_type = root_categories_from_type(category[1]) %>	
+											<% if categories_from_type.present? %>
+												<li>
+													<a href="javascript:void(0);"><strong><%= category[0].to_s %><i class="fa fa-angle-down pull-right" aria-hidden="true"></i></strong></a>
+													<ul>
+														<% categories_from_type.roots.each_with_index do |category,index| %>
+														
+															<% sub_cat_count = 0 %>
+															<% category.children.each do |sub_category_check| %>
+																<% if sub_category_check.status.present? && sub_category_check.status == "active" %>
+																	<% sub_cat_count = 1 %>
+																	<% break %>
+																<% end %>
+															<% end %>
+														
+															<% if (sub_cat_count > 0) %>
+																<li>
+																	<%= link_to (category.name.to_s + '<i class="fa fa-angle-right" aria-hidden="true"></i>').html_safe,listing_filter_path(filter: {category_id: category.id}) %>
+																	<ul>
+																		<% category.children.each do |sub_category| %>
+																			<% if sub_category.status.present? && sub_category.status == "active" %>
+																				<li>
+																					<%=link_to sub_category.name,listing_filter_path(filter: {category_id: category.id, sub_category_id: sub_category.id}) %>
+																				</li>
+																			<% end %>
+																		<% end %>
+																	</ul>
+																</li>
+															<% else %>
+																<li><%= link_to category.name,listing_filter_path(filter: {category_id: category.id}) %></li>
+															<% end %>
+														<% end %>
+													</ul>
+												</li>
+											<% end %>
 										<% end %>
-									</ul>
-								</li>
-								
+									</ul> 
+								</li>					
+									
 								<li class="dropdown"> 
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Buy <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+									<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Buy <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 									<ul class="dropdown-menu">
 										<li><a href="<%= new_buying_request_path%>">Post buying request</a></li>
 										<li><a href="<%= buying_requests_path %>">Buying request list</a></li>
@@ -236,7 +268,7 @@
 								</li>
 								
 								<li class="dropdown"> 
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Sell <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+									<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Sell <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 									<ul class="dropdown-menu">
 										<li><%= link_to "List your equipment", new_seller_equipment_path %></li>
 										<li><%= link_to "How to sell?", root_path(anchor: "how-one"), class: "anchor" %></li>
@@ -259,7 +291,7 @@
 									</ul>
 								</li>
 								
-								<li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Why Us <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+								<li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Why Us <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 									<ul class="dropdown-menu">
 										<li><%= link_to "Why buy from power Cozmo?", root_path(anchor: "why-two"), class: "anchor" %></li>
 										<li><%= link_to "Why sell on power Cozmo?", root_path(anchor: "why-one"), class: "anchor" %></li>

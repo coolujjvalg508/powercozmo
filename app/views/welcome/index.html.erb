@@ -6,36 +6,86 @@
 			<div class="text-center banner-txt text-uppercase">
 				<%= SiteSetting.last.try(:homepage_text) || 'for used and surplus of capital power equipment and power generation plants, providing effective sources and logistics solutions to buyers and sellers' %>
 			</div>
-			
+	
 <%= form_tag listing_filter_path, method: :get do %>
-			
+
+	<%= hidden_field_tag "filter[category_id]" %>
+	<%= hidden_field_tag "filter[sub_category_id]" %>
+
 			<div class="clearfix">
 				<div class="col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
-					<div class="col-md-3 col-sm-4 col-xs-12 padding">
+					
+					<div class="col-md-3 col-sm-4 col-xs-12 padding category_menu">
 						<div class="cd-dropdown-wrapper"> 
 							
-							<div class="cd-dropdown-trigger clearfix">
-							  
-							  <%= select_tag "filter[category_id]", options_from_collection_for_select(@categories, "id", "name"), include_blank: 'Select Category', class: 'custom-select' %>
-							  
+							<!--<div class="cd-dropdown-trigger clearfix">
+							
+							<%= select_tag "filter[category_id]", options_from_collection_for_select(@categories, "id", "name"), include_blank: 'Select Category', class: 'custom-select' %>
+							
+							</div>-->
+							
+							<div class="cd-dropdown-wrapper"> 
+								<a href="javascript:void(0);" class="cd-dropdown-trigger" id="home-search-cat"><span id='search-category-title'>Categories</span> <!--<i class="fa fa-angle-down" aria-hidden="true"></i>--></a>
+								
+								<ul class="muslty-dp" id="nav">
+									<% (Category::CATEGORY_TYPE).each do |category| %>
+										<% categories_from_type = root_categories_from_type(category[1]) %>	
+										<% if categories_from_type.present? %>
+											<li>
+												<a href="javascript:void(0);"><strong><%= category[0].to_s %><i class="fa fa-angle-down pull-right" aria-hidden="true"></i></strong></a>
+												<ul>
+													<% categories_from_type.roots.each_with_index do |category,index| %>
+													
+														<% sub_cat_count = 0 %>
+														<% category.children.each do |sub_category_check| %>
+															<% if sub_category_check.status.present? && sub_category_check.status == "active" %>
+																<% sub_cat_count = 1 %>
+																<% break %>
+															<% end %>
+														<% end %>
+													
+														<% if (sub_cat_count > 0) %>
+															<li>
+																<a href="javascript:void(0);" data-category-id="<%= category.id %>" data-sub-category-id="" data-category-name="<%= category.name %>" class="search-category"><%= category.name %> <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+																<ul>
+																	<% category.children.each do |sub_category| %>
+																		<% if sub_category.status.present? && sub_category.status == "active" %>
+																			<li>
+																				<a href="javascript:void(0);" data-category-id="<%= category.id %>" data-sub-category-id="<%= sub_category.id %>" data-category-name="<%= sub_category.name %>" class="search-category"><%= sub_category.name %></a>
+																			</li>
+																		<% end %>
+																	<% end %>
+																</ul>
+															</li>
+														<% else %>
+															<li>
+																<a href="javascript:void(0);" data-category-id="<%= category.id %>" data-sub-category-id="" data-category-name="<%= category.name %>" class="search-category"><%= category.name %></a>
+															</li>
+														<% end %>
+													<% end %>
+												</ul>
+											</li>
+										<% end %>
+									<% end %>
+								</ul> 
 							</div>
-          
+							
 						</div>
 					</div>
 					
 					<div class="col-md-7 col-sm-5 col-xs-12 padding">
 						
 						<%= search_field_tag "q[name_or_identifier_or_country_name_or_description_or_manufacturer_name_or_sub_category_name_or_sub_sub_category_name_cont]", "", placeholder: "Search Name, Identifier, Manufacturer, Country", title: "Search Name, Identifier, Manufacturer, Country", class: "form-control" %>
-        						
+						
 					</div>
 					<div class="col-md-2 col-sm-3 col-xs-12 padding">
 						<button class="btn-orange text-uppercase"><i class="fa fa-search" aria-hidden="true"></i> search </button>
 					</div>
 				</div>
 			</div>
-			
-<% end %>			
-				
+
+<% end %>
+
 		</div>
 	</div>
 </section>
@@ -109,7 +159,7 @@
 										<center><%= image_tag "buy-icon.png", alt: 'Sell' %></center>
 									</span> 
 									<span class="hidden-xs hidden-sm">How we market your equipment?</span> 
-								</a> 
+								</a>
 							</li>
 						</ul>
       
@@ -1003,5 +1053,14 @@
 			$('html, body').animate({scrollTop:scrollto}, 0);
 		}
 	  }
+	  
+	$(".search-category").click(function(){
+		
+		$("#filter_category_id").val($(this).attr('data-category-id'));
+		$("#filter_sub_category_id").val($(this).attr('data-sub-category-id'));
+		$("#search-category-title").html($(this).attr('data-category-name'));
+	
+	});
+	  
 })
 </script>
