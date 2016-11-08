@@ -51,7 +51,7 @@
 			<div class="col-md-8 col-sm-12 col-xs-12 ListingdetailsWrap">
 				<div class="row marginB15">
 					<div class="col-md-6 col-sm-6 col-xs-12 product-title">
-						<%= "#{@equipment.name} - #{@equipment.identifier}" %>
+						<%= "#{@equipment.identifier} - #{@equipment.name}" %>
 					</div>
 					
 					<div class="col-md-6 col-sm-6 col-xs-12 product-social"> 
@@ -109,17 +109,22 @@
 					
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#Description">Description</a></li>
+						<li><a data-toggle="tab" href="#Condition">Condition </a></li>
 						<li><a data-toggle="tab" href="#Shipping">Shipping</a></li>
 						
 						<% if @equipment.faults && @equipment.faults != '' %>
 							<li><a data-toggle="tab" href="#Faults">Faults </a></li>
 						<% end %>
-						
+												
 					</ul>
 										
 					<div class="tab-content">
 						<div id="Description" class="text-overflow-wrap clearfix tab-pane fade in active">
 							<p><%= @equipment.description %></p>
+						</div>
+						
+						<div id="Condition" class="text-overflow-wrap clearfix tab-pane fade">
+							<p><%= @equipment.condition %></p>
 						</div>
 						
 						<div id="Shipping" class="text-overflow-wrap clearfix tab-pane fade">
@@ -193,6 +198,7 @@
 								<p><%= @equipment.faults %></p>
 							</div>
 						<% end %>
+						
 					</div>
 				</div>
 				
@@ -230,7 +236,7 @@
 								<% else %>
 									<%= image_tag "seller/myprofile-placeholder-img.png", class: "img-circle img-thumbnail profile-img-detail" %></span>
 								<% end %>
-								<%= @equipment.user.name %>
+								<%= @equipment.try(:user).try(:name) %>
 							</div>
 								
 							<div class="clearfix ListingAddress">

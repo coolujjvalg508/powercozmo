@@ -494,7 +494,7 @@ footer .footer-company { padding: 22px 0; color: #959595; font-size: 12px; }
 .ListingButton .default-btn:hover{ background:#c11c11;}
 .ListingButton .btn-orange{ border:0px; color:#fff; font-size:16px; font-weight:500; padding:6px 10px; border-radius:2px; margin-left:5px;}
 .ListingdetailsWrap .nav-tabs{ border-bottom:0px;}
-.ListingdetailsWrap .nav-tabs > li > a{ border-color:#fff; padding:5px 40px 5px 0; font-size:18px; color:#e74a3f;}
+.ListingdetailsWrap .nav-tabs > li > a{ border-color:#fff; padding:5px 15px 5px 0; font-size:15px; color:#e74a3f;}
 .ListingdetailsWrap .nav-tabs > li.active > a, .ListingdetailsWrap .nav-tabs > li.active > a:hover, .ListingdetailsWrap .nav-tabs > li.active > a:focus{ border-color:#fff; color:#2d2d2d;}
 .ListingdetailsWrap .nav > li > a:hover, .ListingdetailsWrap .nav > li > a:focus { background:none;}
 .ListingdetailsWrap .tab-pane{ padding:15px 0;}

@@ -85,7 +85,7 @@
                         <% else %>
                         <%= wicked_pdf_image_tag "cdt-prfl.jpg" %></span>
                         <% end %></div>
-              <div class="dtl-rt-prfl-rt"> <span><%= "#{@equipment.user.try(:profile).try(:first_name) || "John"} #{@equipment.user.try(:profile).try(:last_name) || "Doe"}" %></span> </div>
+              <div class="dtl-rt-prfl-rt"> <span><%= "#{@equipment.try(:user).try(:profile).try(:first_name) || "John"} #{@equipment.try(:user).try(:profile).try(:last_name) || "Doe"}" %></span> </div>
             </div>
             <div class="ad-gray-info" style="height: 80px;">
               <div class="ad-gray-l"><i class="fa fa-map-marker"></i> Location : <span><%= @equipment.try(:country).try(:name) %></span> </div>
