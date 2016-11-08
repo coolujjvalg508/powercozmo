@@ -60,6 +60,19 @@ $(document).ready(function() {
       }
     })
   })
+  
+  $("select#equipment_category_type").change(function(e){
+    $.getJSON("/admin/equipment/categories_by_category_type",{category_type: $(this).val(), ajax: 'true'}, function(response){
+      var options = '';
+      for (var i = 0; i < response.length; i++) {
+        options += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
+      }
+      
+		$("select#equipment_category_id").html('<option value="">Select Category</option>'+options);
+      
+    })
+  })
+
 
   $('form#new_equipment, form#edit_equipment').on('click', 'li.has_many_container a.has_many_add', function() {
     if($("input[type='file'][id^=equipment_images_attributes_][id$=_image]").length >= 3)
@@ -292,3 +305,45 @@ $(document).ready(function() {
     $('.just-datetime-picker-time-minute').unwrap();
   }
 });
+
+/* JS for category section start */
+$(document).ready(function() {
+		
+	var cat_val = $('#category_parent_id').val();
+	if(cat_val == ''){
+		$('#category_category_type_input').show();
+	}else{
+		$('#category_category_type_input').hide();
+	}
+	
+	$('#category_parent_id').change(function(){
+		var cat_val = $(this).val();
+		if(cat_val == ''){
+			$('#category_category_type_input').show();
+		}else{
+			$('#category_category_type_input').hide();
+		}
+		$('#category_category_type_error').remove();
+	});
+	
+	$('#new_category, #edit_category').submit(function(){
+		
+		var cat_val = $('#category_parent_id').val();
+		if(cat_val == ''){
+			var cat_type = $('#category_category_type').val();
+			
+			if(cat_type == ''){
+				$('#category_category_type').after('<p class="inline-errors" id="category_category_type_error">Select category type</p>');
+				return false;
+			}
+			
+		}else{
+			$('#category_category_type').val('');
+		}
+			
+	});
+	
+});
+/* JS for category section end */
+
+

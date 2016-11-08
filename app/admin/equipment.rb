@@ -1,6 +1,6 @@
 ActiveAdmin.register Equipment do
   menu label: 'Equipments', if: proc{ (current_admin_user.has_permission('equipment_read') || current_admin_user.has_permission('equipment_write') || current_admin_user.has_permission('equipment_delete'))}
-	permit_params :name, :equipment_model, :condition, :owner_name, :manufacturer_id, :category_id, :sub_category_id, :sub_sub_category_id, :city, :country_id, :price, :currency, :rating, :description, :status, :availble_for,:availble_for_date, :availble_for_time_hour, :availble_for_time_minute, :manufacture_year, :user_id,:availble_for, :power_plant_age, :power_plant_type, :turbine_model, :turbine_manufacturer_name, :equipment_type, :faults, :pickup_port, :images_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image,:image_cache]
+	permit_params :name, :equipment_model, :condition, :owner_name, :manufacturer_id, :category_type, :category_id, :sub_category_id, :sub_sub_category_id, :city, :country_id, :price, :currency, :rating, :description, :status, :availble_for,:availble_for_date, :availble_for_time_hour, :availble_for_time_minute, :manufacture_year, :user_id,:availble_for, :power_plant_age, :power_plant_type, :turbine_model, :turbine_manufacturer_name, :equipment_type, :faults, :pickup_port, :images_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image,:image_cache]
 
   batch_action "Update 'Status' for", form: { status: Equipment.statuses.map{|status, value| [status.to_s.humanize, status.to_s] } } do |ids, inputs|
     # Equipment.where(id: ids).update_all(status: inputs[:status])
@@ -32,7 +32,12 @@ ActiveAdmin.register Equipment do
     sub_categories = category.present? ? category.children.active : []
     render json: sub_categories, status: 200
   end
-
+  
+  collection_action :categories_by_category_type, method: :get do
+    category = Category.active.where(category_type: params[:category_type].to_s)
+    render json: category, status: 200
+  end
+  
   controller do
 
     def action_methods
@@ -102,7 +107,18 @@ ActiveAdmin.register Equipment do
       f.input :turbine_model
       f.input :turbine_manufacturer_name
       f.input :manufacturer_id, as: :select, collection: Hash[Manufacturer.active.pluck(:id, :name)].map{|id,name| [name,id] }, include_blank: 'Select Manufacturer'
-      f.input :category_id, as: :select, collection: Hash[Category.roots.active.pluck(:id, :name)].map{|id,name| [name,id] }, include_blank: 'Select Category', label: 'Category<abbr title="required">*</abbr>'.html_safe
+      
+      
+      f.input :category_type, as: :select, collection: Category::CATEGORY_TYPE, include_blank: 'Select Category Type', label: 'Category Type<abbr title="required">*</abbr>'.html_safe
+      
+      @categories = {}
+      if f.object.category_type.present?
+        @categories = Hash[Category.roots.active.where(category_type: f.object.category_type).pluck(:id, :name)]
+      end
+      
+      f.input :category_id, as: :select, collection: @categories.map{|id,name| [name,id] }, include_blank: 'Select Category', label: 'Category<abbr title="required">*</abbr>'.html_safe
+      
+      
       @sub_categories = {}
       if f.object.category_id.present?
         category = Category.active.where(id: f.object.category_id).first
@@ -186,8 +202,10 @@ ActiveAdmin.register Equipment do
     column :rating
     column 'Seller', sortable: :user_id do |equipment|
       name = equipment.user.try(:name).to_s
-      name = equipment.user.email unless name.present?
-      link_to name, admin_seller_path(equipment.user)
+      name = equipment.user.try(:email) unless name.present?
+      if equipment.user
+		link_to name, admin_seller_path(equipment.user)
+      end
     end
     column :status do |equipment|
       equipment.status.to_s.humanize
@@ -272,8 +290,10 @@ ActiveAdmin.register Equipment do
       row :rating
       row 'Seller' do
         name = equipment.user.try(:name).to_s
-        name = equipment.user.email if name.blank?
-        link_to name, admin_seller_path(equipment.user)
+        name = equipment.user.try(:email) if name.blank?
+        if equipment.user
+			link_to name, admin_seller_path(equipment.user)
+        end
       end
       row :faults
       row :status do
