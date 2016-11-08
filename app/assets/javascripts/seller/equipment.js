@@ -11,6 +11,7 @@ $('#datetimepicker1').datetimepicker({
 
 $('select').selectric();
 $("select#equipment_category_id,select#equipment_sub_category_id").change(function(e){
+	
   $.getJSON("/seller/fetch_categories",{id: $(this).val(), ajax: 'true'}, function(response){
     var options = '';
     for (var i = 0; i < response.length; i++) {
@@ -31,6 +32,25 @@ $("select#equipment_category_id,select#equipment_sub_category_id").change(functi
     }
   })
 })
+
+$("select#equipment_category_type").change(function(e){
+	
+	$.getJSON("/seller/fetch_categories_by_category_type",{category_type: $(this).val(), ajax: 'true'}, function(response){
+		var options = '';
+		for (var i = 0; i < response.length; i++) {
+		  options += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
+		}
+
+		$("select#equipment_category_id").html('<option value="">Select Category</option>'+options+'<option value="0">Other</option>');
+		$("select#equipment_category_id").selectric();
+		$("select#equipment_sub_category_id").selectric();
+		$("select#equipment_sub_sub_category_id").selectric();
+
+	  
+    
+	})
+})
+
 $("ul.equipment_rating_stars li").click(function(e) {
   var rating = parseInt($(this).data("value"))
   $("#equipment_rating").val(rating)
@@ -117,16 +137,16 @@ $(document).ready(function($) {
   $("#equipment_category_id").on('change', function(){
     if($(this).val() == "0"){
       $('#other_category_name').show();
-      $('#other_category_type').show();
-      $('#other_category_div').show();
+      //$('#other_category_type').show();
+      //$('#other_category_div').show();
       $('#sub_category_select').hide();
       $('#sub_sub_category_select').hide();
     }
     else {
       $('#other_category_name').val('').hide();
-      $('#other_category_type').val('').hide();
-      $('.selectric-equipment-other-field p.label').html('Select Category Type');
-      $('#other_category_div').hide();
+      //$('#other_category_type').val('').hide();
+      //$('.selectric-equipment-other-field p.label').html('Select Category Type');
+      //$('#other_category_div').hide();
       $('#sub_category_select').show();
       $('#sub_sub_category_select').show();
     }
@@ -153,8 +173,8 @@ $(document).ready(function($) {
   if($("#equipment_manufacturer_id").val() == "0") $("#other_manufacturer_name").show();
   if($("#equipment_category_id").val() == "0"){
     $("#other_category_name").show();
-    $("#other_category_type").show();
-    $("#other_category_div").show();
+    //$("#other_category_type").show();
+    //$("#other_category_div").show();
     $("#sub_category_select").hide();
     $('#sub_sub_category_select').hide();
   }

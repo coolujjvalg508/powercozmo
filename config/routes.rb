@@ -51,6 +51,7 @@ Rails.application.routes.draw do
       get 'listings/filter' => 'equipment#filter', as: "listing_filter"
       resources :equipment
       get 'fetch_categories' => 'equipment#categories'
+      get 'fetch_categories_by_category_type' => 'equipment#categories_by_category_type'
       resources "equipment-enquiries", only: [:index, :show, :destroy], :controller => :equipment_enquiries, :as => :equipment_enquiries do
         collection do
           get 'unread'

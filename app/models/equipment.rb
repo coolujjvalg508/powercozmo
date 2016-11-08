@@ -37,7 +37,7 @@ class Equipment < ActiveRecord::Base
   CONDITION_TYPES = %w(New Surplus Used Refurbished)
   POWER_PLANT_TYPES = ['steam','gas','diesel gen','solar','wind']
   ############# Server Validations ####################
-  validates :name, :category_id, :city, :country_id, :price, :currency, :description, :availble_for,:equipment_type, presence: true
+  validates :name, :category_type, :category_id, :city, :country_id, :price, :currency, :description, :availble_for,:equipment_type, presence: true
   validates :equipment_model, :condition, :manufacture_year, presence: true, if: "equipment_type == 'equipment'"
   validates :power_plant_type, :power_plant_age, :turbine_model, :turbine_manufacturer_name, presence: true, if: "equipment_type == 'power_plant'"
   validates :power_plant_type, :inclusion => { :in => POWER_PLANT_TYPES }, if: "equipment_type == 'power_plant' && power_plant_type.present?"

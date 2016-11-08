@@ -163,20 +163,27 @@
 <div class="col-sm-12 col-md-6">	
 	<div class="panel panel-default panel-hovered panel-stacked mb30">
 		<div class="panel-body">
+			
+			<div class="form-group">
+				<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Category Type<sup>*</sup></label>
+				<div class="col-md-12">
+										
+					<%= f.select :category_type, options_for_select(Category::CATEGORY_TYPE, selected: @equipment[:category_type]), {include_blank: 'Select Category Type'}, {disabled: @equipment.require_moderation == 1} %>
+										
+					<%= form_error_msg_for(@equipment,:category_type, "Category Type") %>
+				</div>
+			</div>
+			
+			<div class="clearfix"></div>
 						
-			<div class="form-group" id="category_select">
+			<div class="form-group mt20" id="category_select">
 				<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Category<sup>*</sup></label>
 				<div class="col-md-12">
 					
 					<%= f.select :category_id, @categories.map{|id,name| [name,id] }+[['Other', 0]], {include_blank: 'Select Category'}, {disabled: @equipment.require_moderation == 1} %>
 					
-					<div id="other_category_div" style="display:none;">
 						<%= text_field_tag "other[category_name]", params[:other].present? ? params[:other][:category_name] : "",class: 'form-control equipment-other-field marginB10', placeholder: 'Category name', style: "display:none;" %>
 						
-						<%= select_tag "other[category_type]", options_for_select(Category::CATEGORY_TYPE, selected: params[:other].present? ? params[:other][:category_type] : ""), include_blank: 'Select Category Type', class: 'equipment-other-field', style: "display:none;" %>
-												
-					</div>
-					
 					<%= form_error_msg_for(@equipment,:category_id, "Category") %>
 				</div>
 			</div>

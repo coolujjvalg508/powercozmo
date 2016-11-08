@@ -105,7 +105,11 @@ class Seller::EquipmentController < Seller::BaseController
           equipment_image.image = File.open(img_path , 'rb')
         end
       end
+            
       @equipment.images.build if (@equipment.images.count==0 && index < 4)
+      
+      @categories = Hash[Category.roots.active.where(category_type: @equipment[:category_type]).pluck(:id, :name)]
+      
       category = Category.active.where(id: @equipment.category_id).first
   		@sub_categories = Hash[category.children.active.pluck(:id, :name)] if category.present?
       sub_category = Category.active.where(id: @equipment.sub_category_id).first
@@ -222,6 +226,9 @@ class Seller::EquipmentController < Seller::BaseController
         end
       end
       @equipment.images.build if (@equipment.images.count==0 && index < 4)
+      
+      @categories = Hash[Category.roots.active.where(category_type: @equipment[:category_type]).pluck(:id, :name)]
+      
       category = Category.active.where(id: @equipment.category_id).first
       @sub_categories = Hash[category.children.active.pluck(:id, :name)] if category.present?
       sub_category = Category.active.where(id: @equipment.sub_category_id).first
@@ -245,6 +252,11 @@ class Seller::EquipmentController < Seller::BaseController
     sub_categories = category.present? ? category.children.active : []
   	render json: sub_categories, status: 200
   end
+  
+  def categories_by_category_type
+    category = Category.active.where(category_type: params[:category_type].to_s)
+  	render json: category, status: 200
+  end
 
   def process_new_master_data(power_plant_category = nil)
     new_params = equipment_params
@@ -264,14 +276,12 @@ class Seller::EquipmentController < Seller::BaseController
         @new_category_name = params[:other]["#{@field}_name".to_sym]
         if @new_category_name.present?
         
-		  new_category_type = params[:other]["#{@field}_type".to_sym]	
-          
-          if new_category_type.present?
-			category_type = new_category_type
+          if attribute == 'category_id'
+			category_type = params[:equipment][:category_type].to_s
           else
 			category_type = ''
           end
-          
+                    
           category_params = {:name => @new_category_name,:status => "inactive", :category_type => category_type}
           if attribute == 'sub_sub_category_id'
             category_params[:parent_id] = new_params[:sub_category_id]
@@ -333,7 +343,7 @@ class Seller::EquipmentController < Seller::BaseController
   private
 
 	def equipment_params
-	 params.require(:equipment).permit(:name, :equipment_model, :condition, :owner_name, :manufacturer_id, :category_id, :sub_category_id, :sub_sub_category_id, :city, :country_id, :price, :currency, :rating, :description, :status, :manufacture_year, :user_id, :availble_for, :power_plant_age, :power_plant_type, :turbine_model, :turbine_manufacturer_name, :require_moderation, :equipment_type, :faults, :pickup_port, :images_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image,:image_cache])
+	 params.require(:equipment).permit(:name, :equipment_model, :condition, :owner_name, :manufacturer_id, :category_type, :category_id, :sub_category_id, :sub_sub_category_id, :city, :country_id, :price, :currency, :rating, :description, :status, :manufacture_year, :user_id, :availble_for, :power_plant_age, :power_plant_type, :turbine_model, :turbine_manufacturer_name, :require_moderation, :equipment_type, :faults, :pickup_port, :images_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image,:image_cache])
 	end
 	
   def find_equipment
@@ -344,13 +354,16 @@ class Seller::EquipmentController < Seller::BaseController
   end
 
   def get_equipment_form_data
+    
     @manufactures = Hash[Manufacturer.active.pluck(:id, :name)]
     @countries = Hash[Country.active.pluck(:id, :name)]
-    @categories = Hash[Category.roots.active.pluck(:id, :name)]
+    #@categories = Hash[Category.roots.active.pluck(:id, :name)]
+    @categories = {}
     @currencies = Currency.active.pluck(:name,:symbol)
     @sub_categories = {}
     @child_categories = {}
     if @equipment.present?
+	  @categories = Hash[Category.roots.active.where(category_type: @equipment[:category_type]).pluck(:id, :name)]
       category = Category.where(id: @equipment.category_id).first
       @categories[category.id] ||= category.name if category.present?
       @sub_categories = Hash[category.children.active.pluck(:id, :name)] if category.present?
