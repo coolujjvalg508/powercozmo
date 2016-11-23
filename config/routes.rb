@@ -111,6 +111,8 @@ Rails.application.routes.draw do
     get 'approve_enquiry_request' => 'equipment_enquiries#approve_enquiry'
     post 'send_reply/:id' => 'contact_requests#send_reply', as: :create_reply
     get 'download_proposal_attachemnt' => 'buying_proposals#download'
+    get 'edit_page_content' => 'page_content_managements#edit_page_content'
+    post 'save_page_content' => 'page_content_managements#save_page_content'
   end
 end
 

@@ -1,0 +1,97 @@
+<% flash.each do |key, value| 
+	if key == 'notice' %>
+		<div class="alert text-success"><%= value %></div>
+    <% else %>
+		<div class="alert text-danger"><%= value %></div>
+	<% end	%>
+<% end %>
+
+<div id="active_admin_content" class="without_sidebar" style="width: 100% !important; padding:15px !important;">
+	<div id="main_content_wrapper">
+		<div id="main_content">
+			<%= form_for('pageContent', url: '/admin/save_page_content?page_url=' + params[:page_url], html: { method: :post, :id => "update_page_content" }) do |f| %>
+				<%= hidden_field_tag "pageContent[page_url]", params[:page_url] %>
+				
+				<fieldset class="inputs">
+					<legend><span>Edit: <%= params[:page_url] %></span></legend>
+					<ol>
+						
+						<li class="string input required stringish">
+							<label class="label">Page Url<abbr title="required">*</abbr></label>
+							<%= f.text_field :page_url, class: '', id: 'fname', value: params[:page_url], disabled: 'disabled' %>
+						</li>
+						
+						<li class="select input optional">
+							
+							<label class="label">Page Section<abbr title="required">*</abbr></label>
+							<%= f.select(:page_section, options_for_select(@page_section, selected: (params[:pageContent]) ? params[:pageContent][:page_section] : ''), :prompt => "Select Page Section") %>
+							<p class="inline-errors" id="page_section_error"></p>
+						</li>
+						
+						<% @pages.each_with_index do |page,index| %>
+						
+							<% content_val = page.content
+								if params[:pageContent]
+									if page.id.to_s ==  params[:pageContent][:page_section].to_s									
+										content_val = params[:pageContent][:content][page.id.to_s]
+									end 
+								end 
+							%>
+						
+							<li class="select input optional content-data" id="content-data<%= page.id %>" style="display: none;">
+								<label class="label">Content<abbr title="required">*</abbr></label>
+								<%= f.bootsy_area :content, class: '', rows: "25", name: 'pageContent[content][' + page.id.to_s + ']', id: 'content' + page.id.to_s , placeholder: 'Enter Content', value: content_val, editor_options: { image: false } %>
+								<p class="inline-errors" id="content_error<%= page.id %>"></p>
+							</li>
+														
+						<% end %>
+						
+					</ol>
+				</fieldset>
+				
+				<fieldset class="actions">
+					<ol>
+						<li class="action input_action " id="submit_action">
+							<input type="submit" name="commit" value="Update" />
+						</li>
+						<li class="cancel">
+							<a href="/admin/page_content_managements">Cancel</a>
+						</li>
+					</ol>
+				</fieldset>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	
+	var val = $('#pageContent_page_section').val();
+	
+	$('#content-data' + val).show();
+	
+	$('#pageContent_page_section').change(function(){
+		var val = $(this).val();
+		$('.content-data').hide();
+		$('#content-data' + val).show();
+	});
+	
+	$('#update_page_content').submit(function(){
+		
+		$('.inline-errors').html('');
+		var page_section_val = $('#pageContent_page_section').val();
+		var page_content_val = $('#content' + page_section_val).val();
+		
+		if(page_section_val == ''){
+			$('#page_section_error').html('Please select page section');
+			return false;
+		}
+		else if(page_content_val == ''){
+			$('#content_error' + page_section_val).html('Please enter content');
+			return false;
+		}
+		
+	});
+	
+</script>

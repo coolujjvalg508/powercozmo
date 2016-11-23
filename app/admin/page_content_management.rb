@@ -7,12 +7,15 @@ ActiveAdmin.register PageContentManagement do
 
   actions :all, except: [:new, :destroy]
 
+  config.filters =   false
   action_item :back, only: :show do
     link_to "Back", admin_page_content_managements_path, method: :get
   end
+  
 
   controller do 
-    def action_methods
+  
+   def action_methods
       super
       if current_admin_user.role == 'super_admin'
         super
@@ -28,62 +31,73 @@ ActiveAdmin.register PageContentManagement do
         super - disallowed
       end
     end
+
+	def index
+		@pages = PageContentManagement.order(:page_url).group(:page_url)
+		render 'index', :layout => 'active_admin'
+	end
+	
+	def edit_page_content
+	
+		#abort(params.to_json)
+	
+		@pages = PageContentManagement.where('page_url = ? ', params[:page_url]).order(:page_section)
+		
+		@page_section = {}
+		
+		@pages.each do |page| 
+			@page_section[page[:page_section]] = page[:id]
+		end
+				
+		#abort(@page_section.to_json)
+		#abort(@pages.to_json)
+		render 'edit_page_content', :layout => 'active_admin'
+	end
+	
+	def save_page_content
+	
+		
+	
+		page_id = params[:pageContent][:page_section]
+		content_data = params[:pageContent][:content][page_id]
+		#abort(params[:pageContent][:content][page_id])
+		#abort(params.to_json)
+	
+		@pages = PageContentManagement.where('page_url = ? ', params[:page_url]).order(:page_section)
+		
+		@page_section = {}
+		
+		@pages.each do |page| 
+			@page_section[page[:page_section]] = page[:id]
+		end
+		
+		page_content = PageContentManagement.find_by(id: page_id)
+		
+		if page_content
+		
+			if page_content.update(content: content_data)
+					
+				flash[:notice] = "Page content successfully updated."
+				redirect_to '/admin/edit_page_content?page_url=' + params[:page_url]
+			else
+				
+				if page_content.errors.messages[:content][0]
+					flash[:error] = 'Content ' + page_content.errors.messages[:content][0]
+				else
+					flash[:error] = "An error occurred !"
+				end
+			
+				render 'edit_page_content', :layout => 'active_admin'
+			end
+		
+		else
+			flash[:error] = "Please select page section !"
+			render 'edit_page_content', :layout => 'active_admin'
+		end
+
+	end
+        
   end
-
-
-  batch_action "Update status for", form: { active: [['Active',1],['Inactive',0]] } do |ids, inputs|
-    page_content = PageContentManagement.where(id: ids)
-    page_content.update_all(active: inputs[:active])
-    redirect_to collection_path, notice: "Status updated successfully"
-  end
-
-  # Index
-  index :download_links => false do
-    selectable_column
-    column :page_url
-    column :page_section
-    column 'Content' do |page|
-      ActionView::Base.full_sanitizer.sanitize(page.content.html_safe).gsub(/\n\t\t\s+/, '').first(60)
-    end  
-    column "Status" do |status|
-      status.try(:active) ? 'Active' : 'Inactive'
-    end
-    actions   
-  end
-
-  # New/Edit Form
-  form do |f|
-    f.inputs "Static Page" do
-    	
-      f.input :page_url, :label => 'Page Url', :as => :string, :input_html => { :disabled => true } 
-      f.input :page_section, :label => 'Page Section', :as => :string, :input_html => { :disabled => true } 
-      li do
-        insert_tag(Arbre::HTML::Label, "Content", class: "label") { content_tag(:abbr, "*", title: "required") }
-        f.bootsy_area :content, :rows => 25, :cols => 25, editor_options: { html: true }
-      end
-      
-      f.input :active
-    end
-    f.actions
-  end
-
-  # Filters
-  filter :page_url, :as => :string
-  filter :page_section, :as => :string
-  filter :active, as: :select, collection: [['Active',1], ['InActive', 0]], label: "Status"
-
-  # Show Page
-  show do
-    attributes_table do
-      row :page_url
-      row :page_section
-      row 'Content' do |sp|
-        text_node sp.content.html_safe
-      end
-      row :active
-      row :created_at
-      row :updated_at
-    end
-  end
+  
 
 end

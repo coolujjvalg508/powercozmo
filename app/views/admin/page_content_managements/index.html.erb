@@ -1,0 +1,52 @@
+<div class="panel">
+	<h3>Page Content Management</h3>
+	<div class="panel_contents">
+  
+		<div class="paginated_collection">
+			<div class="paginated_collection_contents">
+				<div class="index_content">
+					<div class="index_as_table">
+						<table border="0" cellspacing="0" cellpadding="0" id="index_table_categories" class="index_table index" paginator="true">
+							<thead>
+								<tr>
+									<th class="col"><center>S.No.</center></th>
+									<th class="co">Page</th>
+									<th class="col col-actions"></th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							<% if @pages.present? 
+								td_class = 'odd' 
+								@pages.each_with_index do |page,index| %>
+									<tr class="<%= td_class %>">
+										<td class="col text-center"><%= index + 1 %></td>
+										<td class="col"><%= page.page_url %></td>
+										<td class="col col-actions text-center">
+											<div class="table_actions">
+												<a class="edit_link member_link" href="/admin/edit_page_content?page_url=<%= page.page_url %>">Edit</a>
+											</div>
+										</td>
+									</tr>
+								<% if td_class == 'odd'
+										td_class = 'even'
+									else 
+										td_class = 'odd'
+									end	
+								end %>	
+							<% else %>
+								<tr class="odd">
+									<td class="col col-name text-center" colspan="3">No record found !</td>
+								</tr>	
+							<% end %>	
+							
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
