@@ -29,6 +29,7 @@
 //= require seller/plugins/bootstrap-rating.min
 //= require seller/app
 //= require seller/index.init
+//= require owl.carousel
 // require_tree .
 
 $(document).ready(function(){

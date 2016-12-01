@@ -74,14 +74,26 @@ $(document).ready(function($) {
     }
     else $('#other_manufacturer_name').hide();
   });
+  
+  
   $("#buying_request_category_id").on('change', function() {
     if($(this).val() == "0"){
       $('#buying_request_category_name').show();
     }
-    else $('#buying_request_category_name').hide();
+    else {
+		$('#buying_request_category_name').hide();
+	}
   });
-  if($("#buying_request_brand_id").val() == "0") $('#other_manufacturer_name').show();
-  if($("#buying_request_category_id").val() == '0') $('#buying_request_category_name').show();
+  
+  if($("#buying_request_brand_id").val() == "0"){
+	   $('#other_manufacturer_name').show();
+  }
+  
+  if($("#buying_request_category_id").val() == '0') {
+	  $('#buying_request_category_name').show();
+	  
+  }
+  
 
   $('.share-menu').hide();
   $('#social-share').on('click', function(){

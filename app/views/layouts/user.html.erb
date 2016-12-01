@@ -75,11 +75,11 @@
 				
 				
 				<% if unread_notifications_count > 0 %>
-	          		<%= link_to "<i class='ion ion-speakerphone'></i> <span class='badge badge-danger badge-xs circle'>#{unread_notifications_count}</span>".html_safe, unread_seller_equipment_enquiries_path, class: 'dropdown-toggle', data: {toggle: 'dropdown'}, remote: true %>
+	          		<%= link_to "<i class='fa fa-bell-o'></i> <span class='badge badge-danger badge-sm circle'>#{unread_notifications_count}</span>".html_safe, unread_seller_equipment_enquiries_path, class: 'dropdown-toggle', data: {toggle: 'dropdown'}, remote: true %>
 	          	<% else %>
 	          		<a href="javascript:;" data-toggle="dropdown">
-						<i class="ion ion-speakerphone"></i>
-						<span class="badge badge-danger badge-xs circle"><%= unread_notifications_count %></span>
+						<i class="fa fa-bell-o"></i>
+						<span class="badge badge-danger badge-sm circle"><%= unread_notifications_count %></span>
 					</a>
 	          	<% end %>
 
@@ -121,11 +121,12 @@
 			<li class="notify-drop hidden-xs dropdown">
 				
 				<% if unread_inbox_count > 0 %>
-					<%= link_to "<i class='ion ion-email'></i> <span class='badge badge-danger badge-xs circle'>#{unread_inbox_count}</span>".html_safe, unread_seller_messages_path, class: 'dropdown-toggle dropdown', data: {toggle: 'dropdown'}, remote: true %>
+					<%= link_to "<i class='fa fa-envelope-o' aria-hidden='true'></i> <span class='badge badge-danger badge-sm circle'>#{unread_inbox_count}</span>".html_safe, unread_seller_messages_path, class: 'dropdown-toggle dropdown', data: {toggle: 'dropdown'}, remote: true %>
 				<% else %>
 					<a href="javascript:;" data-toggle="dropdown">
-						<i class="ion ion-email"></i>
-						<span class="badge badge-danger badge-xs circle"><%= unread_inbox_count %></span>
+						 
+						<i class="fa fa-envelope-o" aria-hidden="true"></i>
+						<span class="badge badge-danger badge-sm circle"><%= unread_inbox_count %></span>
 					</a>
 				<% end %>
 				
@@ -191,7 +192,7 @@
 			<div class="nav-head">
 				<!-- site logo -->
 				<%= link_to root_path, class: "site-logo text-uppercase" do %>
-					<i class="ion ion-disc"></i>
+					<%= image_tag "seller/dsh-logo-mini.png" %>
 					<span class="text"><%= image_tag "seller/dsh-pc-logo.png" %></span>
 				<% end %>
 				
@@ -258,7 +259,7 @@
 						<a href="javascript:;">
 							<i class="ion ion-email"></i>
 							<span class="text">Message Center</span>
-							<span class="badge badge-xs badge-danger" title="<%= current_user.try(:unread_inbox_count).to_i %>"><%= current_user.try(:unread_inbox_count).to_i > 99 ? "99+" : current_user.try(:unread_inbox_count).to_i %></span>
+							<span class="badge badge-sm badge-danger" title="<%= current_user.try(:unread_inbox_count).to_i %>"><%= current_user.try(:unread_inbox_count).to_i > 99 ? "99+" : current_user.try(:unread_inbox_count).to_i %></span>
 							<i class="arrow ion-chevron-left"></i>
 						</a>
 						<ul class="inner-drop list-unstyled">
@@ -402,6 +403,13 @@
 			<%= yield %>
 			
 		</div>
+
+
+
+
+
+
+
 	</div> <!-- #end main-container -->
 
 	<!-- theme settings -->

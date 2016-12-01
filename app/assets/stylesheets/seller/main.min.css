@@ -30,7 +30,7 @@ hr.dashed {
 }
 .fa {
   line-height: 1.57142857;
-  font-size: 13px;
+  font-size: 15px;
 }
 code {
   font-size: 75%;
@@ -4086,7 +4086,7 @@ fieldset[disabled] .btn-youtube.active {
 .main-container .nav-wrap .nav-head .site-logo > span.text {
   position: absolute;
   top: 12.33333333px;
-  margin-left: 22px;
+  margin-left: 20px;
 }
 .main-container .nav-wrap .nav-foot {
   background: #f0f0f0;
@@ -4183,6 +4183,7 @@ fieldset[disabled] .btn-youtube.active {
   font-weight: bold;
   text-transform: uppercase;
   font-size: 12px;
+  font-weight: 400;
 }
 .main-container .nav-wrap .site-nav .nav-list > li a .arrow {
   margin-left: 150px;
@@ -4476,7 +4477,7 @@ fieldset[disabled] .btn-youtube.active {
   background: #e91e63;
 }
 .app.theme-one .main-container .nav-wrap .nav-head {
-  background: #c2185b;
+  background: #eee;
 }
 .app.theme-two .site-head {
   background: #4caf50;
@@ -5104,7 +5105,7 @@ fieldset[disabled] .btn-youtube.active {
   border-color: #e91e63;
 }
 .page-dashboard .profile-widget, .page-dashboard .activities {
-  min-height: 334px;
+  min-height: 341px;
 }
 .page-dashboard .profile-widget .top-info {
   border-bottom: 1px solid #eeeeee;
@@ -5152,7 +5153,7 @@ fieldset[disabled] .btn-youtube.active {
   background: #fff;
 }
 .page-dashboard .list-widget ul > li {
-  padding: 13px 20px;
+  padding: 12px 20px;
   border-bottom: 1px solid #eeeeee;
   cursor: pointer;
 }

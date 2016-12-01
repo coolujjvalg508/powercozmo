@@ -62,6 +62,7 @@ class BuyingRequestsController < ApplicationController
     temp_image_attributes = {}
 
     new_params = buying_request_params
+    
 		@buying_request = BuyingRequest.new(buying_request_params)
 		if @buying_request.valid?
 			if new_params[:brand_id] == "0"
@@ -72,11 +73,13 @@ class BuyingRequestsController < ApplicationController
 	        new_params.delete(:brand_id)
 	      end
 	    end
+	   
 	    if new_params[:category_id] == "0"
 	    	if new_params[:category_name].present?
 	    		new_params.delete(:category_id)
 	    	end
 	    end
+	    
       @buying_request = BuyingRequest.new(new_params)
 		end
 		@buying_request.status = "New"
@@ -94,17 +97,19 @@ class BuyingRequestsController < ApplicationController
         end
       end
     end
+     
 		if @buying_request.save
 			@tmp_images.each do |key, tmp_image|
-        img_path = Rails.root.to_s + '/public' + tmp_image
-        if File.exists?(img_path)
-          buying_request_image = @buying_request.images.new
-          buying_request_image.image = File.open(img_path , 'rb')
-          buying_request_image.save
-        end
-      end
+			img_path = Rails.root.to_s + '/public' + tmp_image
+			if File.exists?(img_path)
+			  buying_request_image = @buying_request.images.new
+			  buying_request_image.image = File.open(img_path , 'rb')
+			  buying_request_image.save
+			end
+		end
 			redirect_to new_buying_request_path, notice: 'Successfully Created'
 		else
+		
       @tmp_images.each do |key, tmp_image|
         img_path = Rails.root.to_s + '/public' + tmp_image
         if File.exists?(img_path)

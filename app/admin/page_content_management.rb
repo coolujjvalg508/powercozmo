@@ -38,9 +38,7 @@ ActiveAdmin.register PageContentManagement do
 	end
 	
 	def edit_page_content
-	
-		#abort(params.to_json)
-	
+		
 		@pages = PageContentManagement.where('page_url = ? ', params[:page_url]).order(:page_section)
 		
 		@page_section = {}
@@ -48,21 +46,15 @@ ActiveAdmin.register PageContentManagement do
 		@pages.each do |page| 
 			@page_section[page[:page_section]] = page[:id]
 		end
-				
-		#abort(@page_section.to_json)
-		#abort(@pages.to_json)
+		
 		render 'edit_page_content', :layout => 'active_admin'
 	end
 	
 	def save_page_content
 	
-		
-	
 		page_id = params[:pageContent][:page_section]
 		content_data = params[:pageContent][:content][page_id]
-		#abort(params[:pageContent][:content][page_id])
-		#abort(params.to_json)
-	
+		
 		@pages = PageContentManagement.where('page_url = ? ', params[:page_url]).order(:page_section)
 		
 		@page_section = {}
