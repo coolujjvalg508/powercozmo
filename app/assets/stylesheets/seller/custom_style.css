@@ -322,3 +322,5 @@ p.response-msg { word-wrap: break-word; }
 }
 
 .list-widget a{color: #333 !important;}
+
+.page-dashboard .panel-heading{font-size: 14px !important;}

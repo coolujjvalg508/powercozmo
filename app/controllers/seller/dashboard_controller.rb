@@ -1,7 +1,7 @@
 class Seller::DashboardController < Seller::BaseController
 	
 	def index
-		@equipments = current_user.equipment.all.order('created_at desc').page(params[:page]).per(5)
+		@equipments = current_user.equipment.all.order('created_at desc').page(params[:page]).per(3)
 		@buying_requests = BuyingRequest.approved
 		@received_messages = current_user.mailbox.inbox.where.not("#{Mailboxer::Message.table_name}.sender_type = ? AND #{Mailboxer::Message.table_name}.sender_id = ?",current_user.class.name,current_user.id)
 		@offers = EquipmentEnquiry.joins(:equipment).where("equipment_enquiries.enquiry_type IN (?) AND (equipment.user_id = ? OR equipment_enquiries.user_id = ?)", [2,3], current_user.id, current_user.id).approved.order("created_at DESC")
@@ -11,7 +11,7 @@ class Seller::DashboardController < Seller::BaseController
 		
 		@received_proposals = BuyingProposal.joins(:buying_request).where('(buying_requests.user_id = ? OR buying_requests.email = ?)', current_user, current_user.email)
 		
-		@my_buying_request_list = BuyingRequest.all.order("created_at DESC").where('(buying_requests.user_id = ? OR buying_requests.email = ?)', current_user, current_user.email).page(params[:page]).per(5)
+		@my_buying_request_list = BuyingRequest.all.order("created_at DESC").where('(buying_requests.user_id = ? OR buying_requests.email = ?)', current_user, current_user.email).page(params[:page]).per(3)
 						
 		@page_content_data = PageContentManagement.where(:page_url => "user_dashboard")
 		@content_data = {}
