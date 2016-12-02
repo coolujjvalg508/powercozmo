@@ -304,22 +304,27 @@ p.response-msg { word-wrap: break-word; }
   width: 240px;
   margin-left: 20px;
 }
-.dashboard-search .form-search input {
-  border: 1px solid #f7f7f7;
+
+.dashboard-search .form-control {
+  border: 1px solid #ccc;
   color: #535353;
+  height: 44px;
+  line-height: 42px;
 }
-.dashboard-search .form-search input:focus {
+.dashboard-search .form-control:focus {
   content: " ";
   background: #f7f7f7;
   box-shadow: none;
 }
-.dashboard-search .form-search button {
+.dashboard-search #search-btn {
   border: none;
   position: absolute;
-  top: 7px;
-  right: 8px;
+  top: 8px;
+  right: 27px;
   background: transparent;
+  padding: 0px;
 }
+
 
 .list-widget a{color: #333 !important;}
 
