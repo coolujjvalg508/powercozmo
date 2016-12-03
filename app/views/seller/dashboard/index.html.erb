@@ -1,6 +1,5 @@
 <!-- dashboard page -->
 <div class="page page-dashboard padding0">
-
 	<div class="page-wrap clearfix">
 	<div class="col-md-9 col-sm-12">
 		<div class="row">
@@ -163,7 +162,7 @@
 		</div>
 
 
-		<% if @my_buying_request_list.present? %>
+		<% if @buying_requests.present? %>
 			<!-- row -->
 			<div class="row">
 				<!-- Basic Table -->
@@ -184,7 +183,12 @@
 									</tr>
 								</thead>
 								<tbody>
-									<% @my_buying_request_list.each_with_index do |br,index| %>
+									<% @buying_requests.each_with_index do |br,index| 
+
+										if index > 3 
+											break
+										end	
+										%>
 										<tr>
 											<td><%= br.identifier%></td>
 											<td><%= br.title%></td>
@@ -194,9 +198,14 @@
 												
 												<%= link_to '<i class="fa fa-eye marginR5 bluecolor"></i>'.html_safe, seller_my_buying_request_path(br), title: "View"%>
 												
-												<%= link_to '<i class="fa fa-edit marginR5 bluecolor"></i>'.html_safe, edit_buying_request_path(br), title: "Edit" %>
-												
-												<%= link_to '<i class="fa fa-trash marginL5 redcolor"></i>'.html_safe, seller_buying_request_path(br),method: :delete,data: { confirm: 'Are you sure?' }, title: "Delete" %>
+												<% if br.user_id != current_user[:id] && br.email != current_user[:email] %>
+													<% if br.expiration_date >= Date.today %>
+													  <%= link_to '<i class="fa fa-info-circle marginR5 redcolor"></i>'.html_safe, seller_request_for_more_info_path(buying_request_id: br.id), title: "Request For Info" %>
+													<% end %>
+													<% if br.expiration_date >= Date.today %>
+													  <%= link_to '<i class="fa fa-mail-reply marginR5 greencolor"></i>'.html_safe, new_seller_buying_proposal_path(buying_request_id: br.id), title: "Submit Your Proposal" %>
+													<% end %>
+												<% end %>
 							
 											</td>
 										</tr>
@@ -208,8 +217,7 @@
 				</div>
 			</div>
 		<% end %>
-		
-		
+	
 		
 		<!-- row -->
 		<div class="row">
@@ -317,115 +325,12 @@
 		</div>
 		<!-- #end row -->
 
-</div>
+		</div>
 
-<div class="col-md-3 col-sm-12 pos-rel">
-<div class="row">
-<div class="RightPanel clearfix">
-
-<div class="RightUserTitle">User Guide</div>
-<div class="RightIndent">
-	<p>
-		<% if @content_data['user_guide'] %>
-			<%= @content_data['user_guide'].html_safe %>
-		<% end %>
-	</p>
-	<!-- <p class="text-right"><a href="#">Getting Started</a></p> -->
-
-</div>
-
-
-<div class="RightUserTitle">How it Works</div>
-<div class="RightIndent">
-<div class="howwork-title">For Seller</div>
-	<p>
-		<% if @content_data['how_it_work_for_seller'] %>
-			<%= @content_data['how_it_work_for_seller'].html_safe %>
-		<% end %>
-	</p>
-	<!-- <ul>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-	</ul> -->
-	<!-- <p class="text-right"><a href="#">Getting Started</a></p> -->
-
-<div class="howwork-title">For Buyers</div>
-	<p>
-		<% if @content_data['how_it_work_for_buyer'] %>
-			<%= @content_data['how_it_work_for_buyer'].html_safe %>
-		<% end %>
-	</p>
-	<!-- <ul>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-	</ul>
-	<p class="text-right"><a href="#">Getting Started</a></p> -->
-
-
-
-</div>
-
-
-<div class="tipwrap">
-<ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab" href="#tipsseller">Tips for Seller</a></li>
-  <li><a data-toggle="tab" href="#tipsbuyer">Tips for buyer</a></li>
-</ul>
-
-<div class="tab-content">
-  <div id="tipsseller" class="tab-pane fade in active">
-    <div class="RightIndent">
-
-	<p>
-		<% if @content_data['tips_for_seller'] %>
-			<%= @content_data['tips_for_seller'].html_safe %>
-		<% end %>
-	</p>
-
-	<!-- <p>content here</p>
-	<p class="text-right"><a href="#">Getting Started</a></p> -->
-
-</div>
-  </div>
-  <div id="tipsbuyer" class="tab-pane fade">
-    	<div class="RightIndent">
-
-    	<p>
-			<% if @content_data['tips_for_buyer'] %>
-				<%= @content_data['tips_for_buyer'].html_safe %>
-			<% end %>
-		</p>
-	<!-- <p>content here</p>
-	<p class="text-right"><a href="#">Getting Started</a></p> -->
-
-</div>
-  </div>
-   
-</div>
-
-</div>
- 
-
-
-
-
-
-
-
-
-</div>
-
-
-</div>
-</div>
-
+		<div class="col-md-3 col-sm-12 pos-rel">
+			<%= render partial: "right_section" %>
+		</div>
 
 	</div> <!-- #end page-wrap -->
 </div>
 <!-- #end dashboard page -->
-
-
-
-

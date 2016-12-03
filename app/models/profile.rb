@@ -20,6 +20,12 @@ class Profile < ActiveRecord::Base
 	def name
 		first_name.to_s+' '+last_name.to_s
 	end
+	
+	############################ Constants ################################
+  
+	BUSINESS_TYPE = ["Agent", "Association", "Business Service", "Buying Office", "Distributor/Wholesaler", "Government ministry/Bureau/Commission", "Manufacturer ", "Trading Company", "Other"]
+	
+    ########################### Validations ################################
 
 end
 

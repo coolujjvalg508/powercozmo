@@ -24,7 +24,7 @@ setTimeout(function() {
    resizeCanvas();
 }, 1000);
 
-$('#nav-resize-btn').click(function(){
+$('#nav-resize-btn, #digital-signature-tab').click(function(){
 	setTimeout(function() {
 	   resizeCanvas();
 	}, 100);

@@ -5,9 +5,25 @@ class Seller::ProfileController < Seller::BaseController
   	unless @user.image.present?
   		@user.build_image
   	end
+
+  	@page_content_data = PageContentManagement.where(:page_url => "profile")
+	@content_data = {}
+	@page_content_data.each do |v|		
+		@content_data[v.page_section] = v.content		
+	end
+
+  	@open_tab = 'contact';
+
   end
 
   def update
+
+  	@open_tab = 'contact';
+  	@page_content_data = PageContentManagement.where(:page_url => "profile")
+	@content_data = {}
+	@page_content_data.each do |v|		
+		@content_data[v.page_section] = v.content		
+	end
         
   	params[:user] ||= {'submit'=> true}
   	if params[:user] == {'submit'=> true}
@@ -27,6 +43,7 @@ class Seller::ProfileController < Seller::BaseController
 	     if (@user.errors.messages[:password_confirmation].present? && @user.errors.messages[:password_confirmation][0] == "doesn't match Password")
 	     	@new_error_msg = "Password confirmation doesn't match."
 	     end
+	      @open_tab = 'account';
 	      render 'edit'
 	    end
 	
@@ -38,8 +55,21 @@ class Seller::ProfileController < Seller::BaseController
 		flash[:notice] = "Digital signature successfully updated."
 	    redirect_to edit_seller_profile_path(current_user)
 	
+	elsif (params[:commit] == 'DoneCompanyInfo') 
+	
+		@open_tab = 'company';
+		@profile = Profile.find_by(id: params[:user][:profile_attributes][:id])
+
+		if @profile.update(company_name: params[:user][:profile_attributes][:company_name], website: params[:user][:profile_attributes][:website], company_address: params[:user][:profile_attributes][:company_address], company_telephone: params[:user][:profile_attributes][:company_telephone], business_type: params[:user][:profile_attributes][:business_type])
+	
+			flash[:notice] = "Company info updated successfully."
+			redirect_to edit_seller_profile_path(current_user)
+	    else
+	    	render 'edit'
+	    end	
 	    
   	else
+
 	  	if @user.update_attributes(user_params)
 	  		if params[:commit] == "Done"
 	  			unless @user.email == params[:user][:email]
@@ -61,6 +91,6 @@ class Seller::ProfileController < Seller::BaseController
 
   private
 	def user_params
-	 params.require(:user).permit(:email, :password, :password_confirmation,:current_password, :user_type, :profile_attributes => [ :first_name, :last_name, :company_name, :website, :phone_number, :country_id, :digital_signature ], :image_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image])
+	 params.require(:user).permit(:email, :password, :password_confirmation,:current_password, :user_type, :profile_attributes => [ :first_name, :last_name, :company_name, :website, :phone_number, :country_id, :digital_signature, :telephone, :job_title, :company_address, :company_telephone, :business_type ], :image_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image])
 	end
 end

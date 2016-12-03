@@ -180,8 +180,10 @@ p.response-msg { word-wrap: break-word; }
 .pos-rel{ postion:relative;}
 .padding{padding: 0px !important;}
 .padding10{ padding: 10px !important; } 
+.paddingT15{ padding-top: 15px !important; }
 .paddingL15{ padding-left: 15px !important; } 
 .paddingR15{ padding-right: 15px !important; } 
+.paddingB15{ padding-bottom: 15px !important; }
 
 .margin10{ margin: 10px !important; }
 .marginT5{ margin-top: 5px !important; } 
@@ -273,6 +275,7 @@ p.response-msg { word-wrap: break-word; }
 .dashboard-table .marginR5{ margin-right: 5px !important;}
 .dashboard-table .bluecolor{ color: #03A9F5; }
 .dashboard-table .redcolor{ color: #FF0204; }
+.dashboard-table .greencolor{ color: #00a65a; }
 .dashboard-table .pagination { padding: 0 15px !important; }
 .dashboard-table .label-danger{ width: 80px; }
 /* Custom css */
@@ -304,7 +307,6 @@ p.response-msg { word-wrap: break-word; }
   width: 240px;
   margin-left: 20px;
 }
-
 .dashboard-search .form-control {
   border: 1px solid #ccc;
   color: #535353;
@@ -325,7 +327,26 @@ p.response-msg { word-wrap: break-word; }
   padding: 0px;
 }
 
-
 .list-widget a{color: #333 !important;}
 
 .page-dashboard .panel-heading{font-size: 14px !important;}
+
+.dashboard-profile .control-label{ font-size: 12px; color: #ccc !important; }
+.dashboard-profile .form-control{ padding: 6px 0; }
+.dashboard-profile .myprofile-content{ border:1px solid #ccc;} 
+.dashboard-profile .update-profile .btn{ display: block; width: 100%; border-radius: 0px; }
+
+.dash-profile-box .profile-updateb{ padding: 5px !important; background: #fff; }
+.update-profile-box h3{ font-size: 20px; color: #555; font-weight: 500; margin:10px 0 10px;}
+.update-profile-box p{ font-size: 16px; color: #999; padding: 0 0 10px; margin: 0px; }
+
+.page-dashboard.plrno{ padding-left: 0px !important; padding-right: 0px !important; }
+
+.set-right-section-content{height: 120px; overflow: hidden;}
+.profile-brief{padding-top: 15px; padding-bottom: 15px; min-height: 205px;}
+
+.upload-image-input label{position: relative; top: 50px;}
+.font-size-20{font-size: 20px !important;}
+.font-size-24{font-size: 24px !important;}
+.nav-tabs > li > a:hover{color: #367fa9 !important;}
+

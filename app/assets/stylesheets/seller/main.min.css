@@ -4191,7 +4191,7 @@ fieldset[disabled] .btn-youtube.active {
   color: #464646;
 }
 .main-container .nav-wrap .site-nav .nav-list > li a .badge {
-  margin-left: 125px;
+  margin-left: 132px;
 }
 .main-container .nav-wrap .site-nav .nav-list li.active a,
 .main-container .nav-wrap .site-nav .nav-list li.open > a {
@@ -5973,3 +5973,5 @@ button.md-no-style {
   -ms-transform: translate(0, 0);
   opacity: .8;
 }
+
+.update-profile-box{padding-top: 10px;}
