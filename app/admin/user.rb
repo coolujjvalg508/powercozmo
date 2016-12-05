@@ -1,7 +1,7 @@
 ActiveAdmin.register User, :as => 'Seller' do
   menu label: 'Sellers', parent: 'Users', if: proc{ (current_admin_user.has_permission('seller_read') || current_admin_user.has_permission('seller_write') || current_admin_user.has_permission('seller_delete'))}
 
-  permit_params :email, :email_confirmation, :password, :password_confirmation, :role, :user_type, profile_attributes: [:id, :first_name, :last_name, :company_name, :phone_number, :country_id, :website, :business_activity] , image_attributes: [:id, :image, :imageable_id, :imageable_type, :image_cache]
+  permit_params :email, :email_confirmation, :password, :password_confirmation, :role, :user_type, profile_attributes: [:id, :first_name, :last_name, :company_name, :phone_number, :country_id, :website, :business_activity, :telephone, :job_title, :company_address, :company_telephone, :business_type] , image_attributes: [:id, :image, :imageable_id, :imageable_type, :image_cache]
 
   action_item :back, only: :show do
    link_to "Back", collection_path, method: :get
@@ -135,15 +135,37 @@ ActiveAdmin.register User, :as => 'Seller' do
       row 'Last Name' do |user|
         user.try(:profile).try(:last_name)
       end
+     
+      row 'Phone Number' do |user|
+        user.try(:profile).try(:phone_number)
+      end
+      row 'Telephone' do |user|
+        user.try(:profile).try(:telephone)
+      end
+
+      row 'Job Title' do |user|
+        user.try(:profile).try(:job_title)
+      end
+
       row 'Company Name' do |user|
         user.try(:profile).try(:company_name)
       end
       row 'Website' do |user|
         user.try(:profile).try(:website)
       end
-      row 'Phone Number' do |user|
-        user.try(:profile).try(:phone_number)
+
+      row 'Company Address' do |user|
+        user.try(:profile).try(:company_address)
       end
+
+      row 'Company Telephone' do |user|
+        user.try(:profile).try(:company_telephone)
+      end
+
+      row 'Business Type' do |user|
+        user.try(:profile).try(:business_type)
+      end
+
       row 'Business Activity' do |user|
         user.try(:profile).try(:business_activity)
       end
@@ -183,10 +205,15 @@ ActiveAdmin.register User, :as => 'Seller' do
     f.inputs "Profile Details",for: [:profile, f.object.profile || Profile.new] do |profile|
       profile.input :first_name
       profile.input :last_name
-      profile.input :company_name
       profile.input :phone_number
-      profile.input :country_id, as: :select, collection: Country.active.pluck(:name, :id), include_blank: 'Select Country', label: 'Country<abbr title="required">*</abbr>'.html_safe
+      profile.input :telephone
+      profile.input :job_title
+      profile.input :company_name
+      profile.input :company_address
       profile.input :website
+      profile.input :company_telephone
+      profile.input :country_id, as: :select, collection: Country.active.pluck(:name, :id), include_blank: 'Select Country', label: 'Country<abbr title="required">*</abbr>'.html_safe
+      profile.input :business_type, as: :select, collection: (Profile::BUSINESS_TYPE), include_blank: 'Select Business Type'
       profile.input :business_activity
     end
 

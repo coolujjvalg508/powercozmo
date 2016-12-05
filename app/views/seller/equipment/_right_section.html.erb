@@ -1,0 +1,89 @@
+<div class="row">
+	<div class="RightPanel clearfix">
+		<div class="RightUserTitle">Tips</div>
+		<div id="section_tips">
+			<% if @content_data['user_guide'] %>
+				<%= @content_data['user_guide'].html_safe %>
+			<% else %>
+
+				<div class="RightIndent">
+					<div class="howwork-title">Product Keywords</div>
+					<p>
+						Please enter keywords that are similar to the product name or words that buyers might use to search for your product (e.g. different name for same product in English), so as to ensure that your product will appear when buyers use these keywords to search for products.Please note: exactly matching your keywords is a must, singular and plural forms are considered identical keywords.
+					</p>
+				</div>
+
+				<div class="RightIndent">
+					<div class="howwork-title">To maximize your online marketing results and speed up the processing of your website, we wish to ensure the images you upload meet the following standards:</div>
+					<p>Image must be sharp, clear and in focus with product details clearly visible.</p>
+					<ul>
+						<li>Basic specifications: Ask developer to put image standard</li>
+						<li>Size: 360 x 360 pixels (12.7 x 12.7cm) or above</li>
+						<li>Resolution: 100 dpi or above</li>
+						<li>Color mode: RGB (system doesn't accept CMYK color mode)</li>
+						<li>Format: JPG (or JPEG)</li>
+						<li>Weight/size(Recommend): 40KB - 2MB</li>
+					</ul>
+				</div>
+
+				<div class="RightIndent">
+					<div class="howwork-title">Primary Product Information</div>
+					<ul>
+						<li>Ensure accurate search results and make your product more attractive</li>
+					</ul>
+				</div>
+
+				<div class="RightIndent">
+					<div class="howwork-title">Benefits of shipping information</div>
+					<ul>
+						<li>Helps buyers to calculate a product's landed cost to quickly filter out any unsuitable suppliers</li>
+		 				<li>Shortens the inquiry process and gets you more meaningful inquiries</li>
+					</ul>
+				</div>
+
+			<% end %>
+		</div>
+		<div class="RightIndent">
+			<p class="text-right"><a href="javascript:void(0);" id="section_tips_link" class="tips-view-link" data-reference="section_tips" data-view="more">View More</a></p> 	
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+  $(".alert").fadeIn();
+  $(".alert").fadeOut(30000);
+
+  	//js start for auto show hide 
+  	if($( "#section_tips" ).height() <= 450 ){
+		$("#section_tips_link").hide();
+	}else{
+		$("#section_tips").addClass('set-right-section-tips-block');
+	}
+
+	$(".tips-view-link").click(function(){
+		var view = $(this).attr('data-view');
+		var reference = $(this).attr('data-reference');
+
+		if(view == 'more'){
+			$(this).attr('data-view', 'less');
+			$(this).html('View Less');	
+			$("#" + reference).removeClass('set-right-section-tips-block');
+
+			if($( "#" + reference ).height() <= 450 ){
+				$(this).hide();
+			}
+
+		}else{
+			$(this).attr('data-view', 'more');
+			$(this).html('View More');
+			$("#" + reference).addClass('set-right-section-tips-block');	
+		}
+	});
+	//js end for auto show hide 
+
+
+});
+
+</script>

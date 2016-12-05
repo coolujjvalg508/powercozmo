@@ -36,51 +36,51 @@ $(document).ready(function(){
   $(".alert").fadeIn();
   $(".alert").fadeOut(30000);
 
-  //js start for auto show hide 
-  if($( "#section_user_guide" ).height() <= 120 ){
-	$("#section_user_guide_link").hide();
-}else{
-	$("#section_user_guide").addClass('set-right-section-content');
-}
-
-if($( "#section_how_it_work_for_seller" ).height() <= 120 ){
-	$("#section_how_it_work_for_seller_link").hide();
-}else{
-	$("#section_how_it_work_for_seller").addClass('set-right-section-content');
-}
-
-if($( "#section_how_it_work_for_buyer" ).height() <= 120 ){
-	$("#section_how_it_work_for_buyer_link").hide();
-}else{
-	$("#section_how_it_work_for_buyer").addClass('set-right-section-content');
-}
-
-if($( "#section_tips_for_seller" ).height() <= 120 ){
-	$("#section_tips_for_seller_link").hide();
-}else{
-	$("#section_tips_for_seller").addClass('set-right-section-content');
-}
-
-$(".view-link").click(function(){
-	var view = $(this).attr('data-view');
-	var reference = $(this).attr('data-reference');
-
-	if(view == 'more'){
-		$(this).attr('data-view', 'less');
-		$(this).html('View Less');	
-		$("#" + reference).removeClass('set-right-section-content');
-
-		if($( "#" + reference ).height() <= 120 ){
-			$(this).hide();
-		}
-
+  	//js start for auto show hide 
+  	if($( "#section_user_guide" ).height() <= 120 ){
+		$("#section_user_guide_link").hide();
 	}else{
-		$(this).attr('data-view', 'more');
-		$(this).html('View More');
-		$("#" + reference).addClass('set-right-section-content');	
+		$("#section_user_guide").addClass('set-right-section-content');
 	}
-});
-//js end for auto show hide 
+
+	if($( "#section_how_it_work_for_seller" ).height() <= 120 ){
+		$("#section_how_it_work_for_seller_link").hide();
+	}else{
+		$("#section_how_it_work_for_seller").addClass('set-right-section-content');
+	}
+
+	if($( "#section_how_it_work_for_buyer" ).height() <= 120 ){
+		$("#section_how_it_work_for_buyer_link").hide();
+	}else{
+		$("#section_how_it_work_for_buyer").addClass('set-right-section-content');
+	}
+
+	if($( "#section_tips_for_seller" ).height() <= 120 ){
+		$("#section_tips_for_seller_link").hide();
+	}else{
+		$("#section_tips_for_seller").addClass('set-right-section-content');
+	}
+
+	$(".view-link").click(function(){
+		var view = $(this).attr('data-view');
+		var reference = $(this).attr('data-reference');
+
+		if(view == 'more'){
+			$(this).attr('data-view', 'less');
+			$(this).html('View Less');	
+			$("#" + reference).removeClass('set-right-section-content');
+
+			if($( "#" + reference ).height() <= 120 ){
+				$(this).hide();
+			}
+
+		}else{
+			$(this).attr('data-view', 'more');
+			$(this).html('View More');
+			$("#" + reference).addClass('set-right-section-content');	
+		}
+	});
+	//js end for auto show hide 
 
 
 });

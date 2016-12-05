@@ -19,10 +19,22 @@ class Seller::EquipmentController < Seller::BaseController
   def new
   	@equipment = current_user.equipment.new
     @equipment.images.build
+
+    @page_content_data = PageContentManagement.where(:page_url => "equipment_add")
+    @content_data = {}
+    @page_content_data.each do |v|    
+      @content_data[v.page_section] = v.content   
+    end
   end
 
   def create
-   
+
+    @page_content_data = PageContentManagement.where(:page_url => "equipment_add")
+    @content_data = {}
+    @page_content_data.each do |v|    
+      @content_data[v.page_section] = v.content   
+    end
+
     if params[:equipment][:images_attributes].present?
       params[:equipment][:images_attributes].each do |index,img|
         unless params[:equipment][:images_attributes][index][:image].present?
@@ -121,9 +133,23 @@ class Seller::EquipmentController < Seller::BaseController
 
   def edit
     @equipment.images.build if @equipment.images.count==0
+
+    @page_content_data = PageContentManagement.where(:page_url => "equipment_add")
+    @content_data = {}
+    @page_content_data.each do |v|    
+      @content_data[v.page_section] = v.content   
+    end
+
   end
 
   def update
+
+    @page_content_data = PageContentManagement.where(:page_url => "equipment_add")
+    @content_data = {}
+    @page_content_data.each do |v|    
+      @content_data[v.page_section] = v.content   
+    end
+
     new_params = equipment_params
     # if(@equipment.equipment_type != new_params[:equipment_type])
     if params[:equipment][:images_attributes].present?

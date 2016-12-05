@@ -10,11 +10,7 @@ class Seller::DashboardController < Seller::BaseController
 		@orders = Order.all.order('created_at desc').joins(:equipment).where('equipment.user_id = ? OR orders.user_id = ? ', current_user, current_user)
 		
 		@received_proposals = BuyingProposal.joins(:buying_request).where('(buying_requests.user_id = ? OR buying_requests.email = ?)', current_user, current_user.email)
-		
-		@my_buying_request_list = BuyingRequest.all.order("created_at DESC").where('(buying_requests.user_id = ? OR buying_requests.email = ?)', current_user, current_user.email).limit(4)
-		
-		#@buying_requests_list = BuyingRequest.approved.order("created_at DESC").limit(4)
-								
+										
 		@page_content_data = PageContentManagement.where(:page_url => "user_dashboard")
 		@content_data = {}
 		@page_content_data.each do |v|		

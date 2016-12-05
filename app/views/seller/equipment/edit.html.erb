@@ -5,22 +5,29 @@
 		<li class="active">Edit</li>
 	</ol>
 	
-	<div class="page-wrap">
+	<div class="page-wrap clearfix">
 		
-		<div class="row">
-			<!-- dashboard header -->
-			<div class="col-md-12">
-				<div class="dash-head clearfix mb20">
-					<div class="left">
-						<h4 class="mb5 text-light">Edit <span id='header_name_edit'>Equipment</span></h4>
+		<div class="col-md-9 col-sm-12 col-xs-12">
+			<div class="row">
+				<!-- dashboard header -->
+				<div class="col-md-12">
+					<div class="dash-head clearfix mb20">
+						<div class="left">
+							<h4 class="mb5 text-light">Edit <span id='header_name_edit'>Equipment</span></h4>
+						</div>
 					</div>
 				</div>
+			</div> <!-- #end row -->
+			
+			<!-- row -->
+			<div class="row">
+				<%= render partial: "form" %>
 			</div>
-		</div> <!-- #end row -->
-		
-		<!-- row -->
-		<div class="row">
-			<%= render partial: "form" %>
 		</div>
+
+		<div class="col-md-3 col-sm-12 col-xs-12"> 
+			<%= render partial: "right_section" %>
+		</div>	
+
 	</div>
 </div>

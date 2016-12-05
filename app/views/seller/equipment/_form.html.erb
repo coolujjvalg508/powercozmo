@@ -1,464 +1,444 @@
 <section class="content equipment-content">
-<%= nested_form_for [:seller,@equipment], html: { role: "form" }  do |f| %>
+<div class="row">
+	<div class="col-md-12">
+	 <!-- tab style -->
+		<div class="clearfix mb20 dashboard-profile">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#tab-classification" data-toggle="tab" id="tab-classification-lnk">Equipment Classification</a></li>
+				<li><a href="#tab-information" data-toggle="tab" id="tab-information-lnk">Primary Information</a></li>
+				<li><a href="#tab-description" data-toggle="tab" id="tab-description-lnk">Description & Faults</a></li>
+				<li><a href="#tab-price" data-toggle="tab" id="tab-price-lnk">Price</a></li>
+				<li><a href="#tab-shipping" data-toggle="tab" id="tab-shipping-lnk">Shipping</a></li>
+			</ul>
 
-<!-- col-left -->
-<div class="col-sm-12 col-md-6">	
-	<div class="panel panel-default panel-hovered panel-stacked mb30">
-		<div class="panel-body">
-						
-			<div style="display: <%=(action_name == 'edit' || action_name == 'update' ) ? 'none' : 'block'%>">
-				<div class="ui-radio ui-radio-primary">
-					<label class="ui-radio-inline">
-						<%= f.radio_button :equipment_type, "equipment",:checked => f.object.equipment_type.present? ? f.object.equipment_type == "equipment" : true,class: "eq_type fl"%>
-						<span>Equipment</span>
-					</label>
-					
-					<label class="ui-radio-inline">
-						<%= f.radio_button :equipment_type, "power_plant",:checked => f.object.equipment_type.present? ? f.object.equipment_type == "power_plant" : false, class: "eq_radio_label fl eq_type" %>
-						<span>Power Plant</span>
-					</label>	
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group">
-				<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Name<sup>*</sup></label>
-				<div class="col-md-12">
-					<%= f.text_field :name, class: 'form-control', placeholder: 'Enter name' %>
-					<%= form_error_msg_for(@equipment,:name) %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20 eq_total">
-				<label class="col-md-12 control-label">Equipment Model Number<sup>*</sup></label>
-				<div class="col-md-12">
-					<%= f.text_field :equipment_model, class: 'form-control', placeholder: 'Enter Equipment Model number' %>
-					<%= form_error_msg_for(@equipment,:equipment_model, 'Equipment model') %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20 eq_total">
-				<label class="col-md-12 control-label">Equipment Condition<sup>*</sup></label>
-				<div class="col-md-12">
-					<%= f.select :condition, Equipment::CONDITION_TYPES, {prompt: 'Select Equipment Condition'} %>
-					<%= form_error_msg_for(@equipment,:condition, 'Equipment condition') %>
-				</div>
-			</div>
-						
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20 pp_total hide">
-				<label class="col-md-12 control-label">Power Plant Type<sup>*</sup></label>
-				<div class="col-md-12">
-					<%= f.select :power_plant_type, Equipment::POWER_PLANT_TYPES.inject([]){|arr,ele|arr << [ele.capitalize, ele]}, {include_blank: 'Select Power Plant Type'}%>
-					<%= form_error_msg_for(@equipment,:power_plant_type, 'Power Plant type') %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20 pp_total hide">
-				<label class="col-md-12 control-label">Power Plant Age<sup>*</sup></label>
-				<div class="col-md-12">
-					<%= f.text_field :power_plant_age, class: 'form-control',placeholder: 'Enter Power Plant Age. e.g 4 years' %>
-					<%= form_error_msg_for(@equipment,:power_plant_age, 'Power Plant Age') %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20">
-				<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Owner Name</label>
-				<div class="col-md-12">
-					<%= f.text_field :owner_name, class: 'form-control', placeholder: 'Enter Owner Name' %>
-					<p class="text-danger text-right xsmall">We strongly recommend to write Owner Name</p>
-					<%= form_error_msg_for(@equipment,:owner_name) %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20 eq_total">
-				<label class="col-md-12 control-label">Equipment Manufacturer's Name</label>
-				<div class="col-md-12">
-					<%= f.select :manufacturer_id, @manufactures.map{|id,name| [name,id] }+[['Other', 0]], include_blank: 'Select Equipment Manufacturer' %>
-					<%= text_field_tag "other[manufacturer_name]", params[:other].present? ? params[:other][:manufacturer_name] : "",class: 'form-control equipment-other-field', placeholder: 'Manufacturer name*', style: "display:none;" %>
-					<%= form_error_msg_for(@equipment,:manufacturer_id, "Manufacture name") %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20 pp_total hide">
-				<label class="col-md-12 control-label">Turbine Model<sup>*</sup></label>
-				<div class="col-md-12">
-					<%= f.text_field :turbine_model, class: 'form-control', placeholder: 'Enter Turbine Model' %>
-					<%= form_error_msg_for(@equipment,:turbine_model, 'Turbine model') %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20 pp_total hide">
-				<label class="col-md-12 control-label">Turbine Manufacturer Name<sup>*</sup></label>
-				<div class="col-md-12">
-					<%= f.text_field :turbine_manufacturer_name, class: 'form-control', placeholder: 'Enter Turbine Manufacturer Name' %>
-					<%= form_error_msg_for(@equipment,:turbine_model, 'Turbine manufacturer name') %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20">
-				<label class="col-md-12 control-label">Expiration Date<sup>*</sup></label>
-				<div class="col-md-12">
-					<div class="input-group date" id='datetimepicker1'>
-						<%= f.text_field :availble_for, class: 'form-control', placeholder: 'Expiration Date' %>
-						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-					</div>
-					<%= form_error_msg_for(@equipment,:availble_for, 'Expiration Date') %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20 eq_total">
-				<label class="col-md-12 control-label">Manufacture Year<sup>*</sup></label>
-				<div class="col-md-12">
-					<%= f.select :manufacture_year, (1950..Date.today.year).to_a.reverse , {prompt: 'Select Year'} %>
-					<%= form_error_msg_for(@equipment,:manufacture_year) %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20">
-				<label class="col-md-12 control-label">Price<sup>*</sup></label>
-				<div class="col-md-12">
-					<%= f.text_field :price, class: 'form-control', placeholder: 'Enter Price' %>
-					<%= form_error_msg_for(@equipment,:price) %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20">
-				<label class="col-md-12 control-label">Currency<sup>*</sup></label>
-				<div class="col-md-12">
-					<%= f.select :currency, @currencies.map{|name,symbol| [(name.to_s+' (<span>'+symbol.to_s+'</span>)').html_safe,symbol] }, {prompt: 'Select Currency'} %>
-					<%= form_error_msg_for(@equipment,:currency) %>
-				</div>
-			</div>
-			
-				
-		</div>	
-	</div>	
-</div>
+<%= nested_form_for [:seller,@equipment], html: { role: "form" }  do |f| %>			
+			<div class="tab-content">
+				<div class="tab-pane active" id="tab-classification">
+					<div class="row">
+						<div class="col-md-12 mb20">
 
-<div class="col-sm-12 col-md-6">	
-	<div class="panel panel-default panel-hovered panel-stacked mb30">
-		<div class="panel-body">
-			
-			<div class="form-group">
-				<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Category Type<sup>*</sup></label>
-				<div class="col-md-12">
-										
-					<%= f.select :category_type, options_for_select(Category::CATEGORY_TYPE, selected: @equipment[:category_type]), {include_blank: 'Select Category Type'}, {disabled: @equipment.require_moderation == 1} %>
-										
-					<%= form_error_msg_for(@equipment,:category_type, "Category Type") %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-						
-			<div class="form-group mt20" id="category_select">
-				<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Category<sup>*</sup></label>
-				<div class="col-md-12">
-					
-					<%= f.select :category_id, @categories.map{|id,name| [name,id] }+[['Other', 0]], {include_blank: 'Select Category'}, {disabled: @equipment.require_moderation == 1} %>
-					
-						<%= text_field_tag "other[category_name]", params[:other].present? ? params[:other][:category_name] : "",class: 'form-control equipment-other-field marginB10', placeholder: 'Category name', style: "display:none;" %>
-						
-					<%= form_error_msg_for(@equipment,:category_id, "Category") %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20" id="sub_category_select">
-				<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Sub Category</label>
-				<div class="col-md-12">
-					<%= f.select :sub_category_id, @sub_categories.map{|id,name| [name,id] }+[['Other', 0]], {include_blank: 'Select Sub Category'}, {disabled: @equipment.require_moderation == 1} %>
-					<%= text_field_tag "other[sub_category_name]", params[:other].present? ? params[:other][:sub_category_name] : "",class: 'form-control equipment-other-field', placeholder: 'Sub Category name', style: "display:none;" %>
-					<%= form_error_msg_for(@equipment,:sub_category_id, "Sub Category") %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20 eq_total" id="sub_sub_category_select">
-				<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Sub Sub Category</label>
-				<div class="col-md-12">
-					<%= f.select :sub_sub_category_id, @child_categories.map{|id,name| [name,id] }+[['Other', 0]], {include_blank: 'Select Sub Sub Category'}, {disabled: @equipment.require_moderation == 1} %>
-					<%= text_field_tag "other[sub_sub_category_name]", params[:other].present? ? params[:other][:sub_sub_category_name] : "",class: 'form-control equipment-other-field', placeholder: 'Sub Sub Category name', style: "display:none;" %>
-					<%= form_error_msg_for(@equipment,:sub_sub_category_id,'Sub Sub Category') %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20">
-				<label class="col-md-12 control-label">Pickup Port</label>
-				<div class="col-md-12">
-					<%= f.text_field :pickup_port, class: 'form-control', placeholder: 'Enter Pickup Port' %>
-					<%= form_error_msg_for(@equipment,:pickup_port) %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20">
-				<label class="col-md-12 control-label">Location City<sup>*</sup></label>
-				<div class="col-md-12">
-					<%= f.text_field :city, class: 'form-control', placeholder: 'Enter City' %>
-					<%= form_error_msg_for(@equipment,:city) %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20">
-				<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Location Country<sup>*</sup></label>
-				<div class="col-md-12">
-					<%= f.select :country_id, @countries.map{|id,name| [name,id] }, {prompt: 'Select Country'} %>
-					<%= form_error_msg_for(@equipment,:country_id, 'Country') %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20">
-				<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Description<sup>*</sup></label>
-				<div class="col-md-12">
-					<%= f.text_area :description, class: 'form-control', placeholder: 'Description', rows: 5 %>
-					<%= form_error_msg_for(@equipment,:description) %>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div class="form-group mt20">
-				<label class="col-md-12 control-label">Faults</label>
-				<div class="col-md-12">
-					<%= f.text_area :faults, class: 'form-control', placeholder: 'Faults', rows: 5 %>
-					<%= form_error_msg_for(@equipment,:faults) %>
-				</div>
-			</div>
-																
-		</div>	
-	</div>	
-</div>
-
-<div class="clearfix"></div>
-
-<div class="col-sm-12 col-md-6">	
-	<div class="panel panel-default panel-hovered panel-stacked mb30">
-		<div class="panel-body">
-				
-				<div class="eqp-form-box" id="images-box">
-					<h3><span class="eq_type_text">Equipment</span> Photo</h3>
-					<label for="description"><strong>Tips</strong></label>
-
-					<ul class="static-txt-lst">
-						<li><strong>a.</strong> The first image will be the master image which will show in the product list page.</li>
-						<li><strong>b.</strong> Notes: Make sure the file is no larger than 5MB. Image must be one of the following formats: JPG/JPEG, GIF or PNG.</li>
-						<li><strong>c.</strong> More good quality images will help you grab buyers attention faster</li>
-					</ul>
-					<%
-					  @tmp_images ||= {}
-					  nested_form_count = 0
-					%>
-					<%= f.fields_for :images do |img| %>
-						<div class="upload-image">
-							<div class="form-group mrg-btm-zero">
-								<label for="description">Upload an image</label>
-								<div class="upload-image-input">
-									<%
-									  img_src = img.object.image.present? ? img.object.image : @tmp_images[img.index.to_s]
-									  tmp_image_src = @tmp_images[img.index.to_s]
-									  nested_form_count += 1
-									%>
-									<%= img.hidden_field :tmp_image, value: tmp_image_src %>
-									<%= img.hidden_field :id %>
-									<%= img.link_to_remove "<i class='fa fa-close'></i>".html_safe %>
-									<%= image_tag img_src, class: 'equipment_preview_image', id: "equipment_images_attributes_"+img.index.to_s+"_preview", style: img_src.present? ? "height:95%;width:100%" : '' %>
-									<%= img.file_field :image, title: " ", class: 'form-control upload-photo-input', accept: 'image/*' %>
-									<%= img.hidden_field :image_cache %>
+							<div style="display: <%=(action_name == 'edit' || action_name == 'update' ) ? 'none' : 'block'%>">
+								<div class="ui-radio ui-radio-primary">
+									<label class="ui-radio-inline">
+										<%= f.radio_button :equipment_type, "equipment",:checked => f.object.equipment_type.present? ? f.object.equipment_type == "equipment" : true,class: "eq_type fl"%>
+										<span>Equipment</span>
+									</label>
+									
+									<label class="ui-radio-inline">
+										<%= f.radio_button :equipment_type, "power_plant",:checked => f.object.equipment_type.present? ? f.object.equipment_type == "power_plant" : false, class: "eq_radio_label fl eq_type" %>
+										<span>Power Plant</span>
+									</label>	
 								</div>
 							</div>
+							
+							<div class="clearfix"></div>
+
+							<div class="form-group">
+								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Category Type<sup>*</sup></label>
+								<div class="col-md-12">
+														
+									<%= f.select :category_type, options_for_select(Category::CATEGORY_TYPE, selected: @equipment[:category_type]), {include_blank: 'Select Category Type'}, {disabled: @equipment.require_moderation == 1} %>
+														
+									<%= form_error_msg_for(@equipment,:category_type, "Category Type") %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+										
+							<div class="form-group mt20" id="category_select">
+								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Category<sup>*</sup></label>
+								<div class="col-md-12">
+									
+									<%= f.select :category_id, @categories.map{|id,name| [name,id] }+[['Other', 0]], {include_blank: 'Select Category'}, {disabled: @equipment.require_moderation == 1} %>
+									
+										<%= text_field_tag "other[category_name]", params[:other].present? ? params[:other][:category_name] : "",class: 'form-control equipment-other-field marginB10', placeholder: 'Category name', style: "display:none;" %>
+										
+									<%= form_error_msg_for(@equipment,:category_id, "Category") %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20" id="sub_category_select">
+								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Sub Category</label>
+								<div class="col-md-12">
+									<%= f.select :sub_category_id, @sub_categories.map{|id,name| [name,id] }+[['Other', 0]], {include_blank: 'Select Sub Category'}, {disabled: @equipment.require_moderation == 1} %>
+									<%= text_field_tag "other[sub_category_name]", params[:other].present? ? params[:other][:sub_category_name] : "",class: 'form-control equipment-other-field', placeholder: 'Sub Category name', style: "display:none;" %>
+									<%= form_error_msg_for(@equipment,:sub_category_id, "Sub Category") %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20 eq_total" id="sub_sub_category_select">
+								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Sub Sub Category</label>
+								<div class="col-md-12">
+									<%= f.select :sub_sub_category_id, @child_categories.map{|id,name| [name,id] }+[['Other', 0]], {include_blank: 'Select Sub Sub Category'}, {disabled: @equipment.require_moderation == 1} %>
+									<%= text_field_tag "other[sub_sub_category_name]", params[:other].present? ? params[:other][:sub_sub_category_name] : "",class: 'form-control equipment-other-field', placeholder: 'Sub Sub Category name', style: "display:none;" %>
+									<%= form_error_msg_for(@equipment,:sub_sub_category_id,'Sub Sub Category') %>
+								</div>
+							</div>
+
+							<div class="clearfix mt20 col-md-12">
+								<a href="javascript:void(0);" data-ref="tab-information-lnk" class="tab-next-lnk btn btn-primary mr5 pull-right">Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+							</div>	
+
 						</div>
-					<% end %>
-				
-				
-					<%= f.link_to_add "<div class='tips-for-imgupload'><div class='add-new-img' title='Add one more image'><span class='ion-plus img-add'></span></div></div>".html_safe, :images, style: nested_form_count >= 4 ? "display:none" : "" %>
-				
-			  </div>
-			  
-			  <div class="clearfix"></div>
-										
-		</div>	
-	</div>	
-</div>
-
-<div class="col-sm-12 col-md-6">	
-	<div class="panel panel-default panel-hovered panel-stacked mb30">
-		<div class="panel-body">
-				
-			<div class="form-group eqp-form-box">
-				<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Condition Rating</label>
-				<div class="col-md-12">
-					<%= f.hidden_field :rating %>
-					<ul class="equipment_rating_stars">
-					<% 5.times do |i| %>
-						<li class="<%=f.object.rating.to_i >= i+1 ? 'filled-star' : '' %>" id="equipment_rating_<%= i+1 %>" data-value="<%= i+1 %>"><i class="fa fa-star"></i></li>
-					  <% end %>
-					</ul>
-					<%= form_error_msg_for(@equipment,:rating) %>
+					</div>
 				</div>
-			</div>	
-			
-			<div class="clearfix"></div>
-				
-			<div class="mt20">	
-				<h3 class="static-txt-hd">How to create a better listing:</h3>
-				<ul class="static-txt-lst">
-					<li>include a price</li>
-					<li>write a full and accurate description. Make it sell!</li>
-					<li>don't copy the manufacturer's description from their website</li>
-					<li>upload several photos</li>
-					<li>upload a video</li>
-				</ul>
-			</div>
+
+				<div class="tab-pane" id="tab-information">
+					<div class="row">
+						<div class="col-md-12 mb20">
+
+							<div class="form-group">
+								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Name<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= f.text_field :name, class: 'form-control', placeholder: 'Enter name' %>
+									<%= form_error_msg_for(@equipment,:name) %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20 eq_total">
+								<label class="col-md-12 control-label">Equipment Model Number<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= f.text_field :equipment_model, class: 'form-control', placeholder: 'Enter Equipment Model number' %>
+									<%= form_error_msg_for(@equipment,:equipment_model, 'Equipment model') %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20 eq_total">
+								<label class="col-md-12 control-label">Equipment Condition<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= f.select :condition, Equipment::CONDITION_TYPES, {prompt: 'Select Equipment Condition'} %>
+									<%= form_error_msg_for(@equipment,:condition, 'Equipment condition') %>
+								</div>
+							</div>
 										
-		</div>	
-	</div>	
-</div>
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20 pp_total hide">
+								<label class="col-md-12 control-label">Power Plant Type<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= f.select :power_plant_type, Equipment::POWER_PLANT_TYPES.inject([]){|arr,ele|arr << [ele.capitalize, ele]}, {include_blank: 'Select Power Plant Type'}%>
+									<%= form_error_msg_for(@equipment,:power_plant_type, 'Power Plant type') %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20 pp_total hide">
+								<label class="col-md-12 control-label">Power Plant Age<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= f.text_field :power_plant_age, class: 'form-control',placeholder: 'Enter Power Plant Age. e.g 4 years' %>
+									<%= form_error_msg_for(@equipment,:power_plant_age, 'Power Plant Age') %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Owner Name</label>
+								<div class="col-md-12">
+									<%= f.text_field :owner_name, class: 'form-control', placeholder: 'Enter Owner Name' %>
+									<p class="text-danger text-right xsmall">We strongly recommend to write Owner Name</p>
+									<%= form_error_msg_for(@equipment,:owner_name) %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20 eq_total">
+								<label class="col-md-12 control-label">Equipment Manufacturer's Name</label>
+								<div class="col-md-12">
+									<%= f.select :manufacturer_id, @manufactures.map{|id,name| [name,id] }+[['Other', 0]], include_blank: 'Select Equipment Manufacturer' %>
+									<%= text_field_tag "other[manufacturer_name]", params[:other].present? ? params[:other][:manufacturer_name] : "",class: 'form-control equipment-other-field', placeholder: 'Manufacturer name*', style: "display:none;" %>
+									<%= form_error_msg_for(@equipment,:manufacturer_id, "Manufacture name") %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20 pp_total hide">
+								<label class="col-md-12 control-label">Turbine Model<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= f.text_field :turbine_model, class: 'form-control', placeholder: 'Enter Turbine Model' %>
+									<%= form_error_msg_for(@equipment,:turbine_model, 'Turbine model') %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20 pp_total hide">
+								<label class="col-md-12 control-label">Turbine Manufacturer Name<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= f.text_field :turbine_manufacturer_name, class: 'form-control', placeholder: 'Enter Turbine Manufacturer Name' %>
+									<%= form_error_msg_for(@equipment,:turbine_model, 'Turbine manufacturer name') %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label">Expiration Date<sup>*</sup></label>
+								<div class="col-md-12">
+									<div class="input-group date" id='datetimepicker1'>
+										<%= f.text_field :availble_for, class: 'form-control', placeholder: 'Expiration Date' %>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									</div>
+									<%= form_error_msg_for(@equipment,:availble_for, 'Expiration Date') %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20 eq_total">
+								<label class="col-md-12 control-label">Manufacture Year<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= f.select :manufacture_year, (1950..Date.today.year).to_a.reverse , {prompt: 'Select Year'} %>
+									<%= form_error_msg_for(@equipment,:manufacture_year) %>
+								</div>
+							</div>		
 
-<div class="col-sm-12 col-md-6">	
-	<div class="panel panel-default panel-hovered panel-stacked mb30">
-		<div class="panel-body">
-				
-			<h3 class="static-txt-hd">Listing Tip</h3>
-			<p class="mrg-btm-zero">It has been said that a picture is worth a thousand words. This is especially true when selling equipment online, where many of the buyers will place a bid without inspecting the item in person. Providing 15 to 20 quality photos of the interior, exterior and mechanical components of your item will increase the amount buyers are willing to bid</p>
-										
-		</div>	
-	</div>	
-</div>
+							<div class="clearfix"></div>
+							<div class="form-group mt20 col-md-12">
+								<div class="eqp-form-box">
+									<label class="col-md-12 control-label">Condition Rating</label>
+									<div class="col-md-12">
+										<%= f.hidden_field :rating %>
+										<ul class="equipment_rating_stars">
+										<% 5.times do |i| %>
+											<li class="<%=f.object.rating.to_i >= i+1 ? 'filled-star' : '' %>" id="equipment_rating_<%= i+1 %>" data-value="<%= i+1 %>"><i class="fa fa-star"></i></li>
+										  <% end %>
+										</ul>
+										<%= form_error_msg_for(@equipment,:rating) %>
+									</div>
+								</div>
+							</div>
 
+							<div class="clearfix mt20 col-md-12">
+								<a href="javascript:void(0);" data-ref="tab-description-lnk" class="tab-next-lnk btn btn-primary mr5 pull-right">Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
 
-<div class="col-sm-12 col-md-12">	
-	<div class="panel panel-default panel-hovered panel-stacked mb30">
-		<div class="panel-body">
-						
-			<div class="form-group">
-				<div class="col-md-12">
-					<label class="control-label text-bold">Packages Detail :</label>
-					<%= link_to 'javascript:void(0);', class: "pull-right add-package", title: "Add More Packages"  do %>
-								<i class="fa fa-plus"></i><span> Add More</span>
-							<% end %>
+								<a href="javascript:void(0);" data-ref="tab-classification-lnk" class="tab-next-lnk btn btn-primary mr5 pull-right"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Previous</a>
+							</div>	
+							
+						</div>
+					</div>
 				</div>
-				<div class="col-md-12 basic-table">
-					
-					<table class="table">
-						<thead>
-							<tr>
-								<th>Length</th>
-								<th>Width</th>
-								<th>Height</th>
-								<th>Weight</th>										
-								<th></th>	
-							</tr>
-						</thead>
-						
-						<tbody id="package-list">
+
+				<div class="tab-pane" id="tab-description">
+					<div class="row">
+						<div class="col-md-12 mb20">
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Description<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= f.text_area :description, class: 'form-control', placeholder: 'Description', rows: 5 %>
+									<%= form_error_msg_for(@equipment,:description) %>
+								</div>
+							</div>
 							
-							<% i = 0 %>
-							<%= f.fields_for :shipping_package do |s| %>
+							<div class="clearfix"></div>
 							
-								<% @equipment.shipping_package.each_with_index do |s_package,index| %>
-									<% i = index + 1 %>
-									
-									<tr id="package-list-<%= index %>">
-									
-										<td>
-											<%= s.text_field :length, autocomplete: "off", class: 'form-control', id: 'length' + index.to_s, placeholder: 'Enter Length', value: s_package.length, name: 'equipment[shipping_package][' + index.to_s + '][length]' %>
-										</td>
-										
-										<td>
-											<%= s.text_field :width, autocomplete: "off", class: 'form-control', id: 'width' + index.to_s, placeholder: 'Enter Width', value: s_package.width, name: 'equipment[shipping_package][' + index.to_s + '][width]' %>
-										</td>
-										
-										<td>
-											<%= s.text_field :height, autocomplete: "off", class: 'form-control', id: 'height' + index.to_s, placeholder: 'Enter Height', value: s_package.height, name: 'equipment[shipping_package][' + index.to_s + '][height]' %>
-										</td>
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Faults & Shortages</label>
+								<div class="col-md-12">
+									<%= f.text_area :faults, class: 'form-control', placeholder: 'Equipment Faults & Shortages', rows: 5 %>
+									<%= form_error_msg_for(@equipment,:faults) %>
+								</div>
+							</div>
+
+							<div class="eqp-form-box" id="images-box">
+								<h3><span class="eq_type_text">Equipment</span> Photo</h3>
+								<%
+								  @tmp_images ||= {}
+								  nested_form_count = 0
+								%>
+								<%= f.fields_for :images do |img| %>
+									<div class="upload-image">
+										<div class="form-group mrg-btm-zero">
+											<label for="description">Upload an image</label>
+											<div class="upload-image-input">
+												<%
+												  img_src = img.object.image.present? ? img.object.image : @tmp_images[img.index.to_s]
+												  tmp_image_src = @tmp_images[img.index.to_s]
+												  nested_form_count += 1
+												%>
+												<%= img.hidden_field :tmp_image, value: tmp_image_src %>
+												<%= img.hidden_field :id %>
+												<%= img.link_to_remove "<i class='fa fa-close'></i>".html_safe %>
+												<%= image_tag img_src, class: 'equipment_preview_image', id: "equipment_images_attributes_"+img.index.to_s+"_preview", style: img_src.present? ? "height:95%;width:100%" : '' %>
+												<%= img.file_field :image, title: " ", class: 'form-control upload-photo-input', accept: 'image/*' %>
+												<%= img.hidden_field :image_cache %>
+											</div>
+										</div>
+									</div>
+								<% end %>
+							
+							
+								<%= f.link_to_add "<div class='tips-for-imgupload'><div class='add-new-img' title='Add one more image'><span class='ion-plus img-add'></span></div></div>".html_safe, :images, style: nested_form_count >= 4 ? "display:none" : "" %>
+							
+						  	</div>
+
+							<div class="clearfix mt20 col-md-12">
+								<a href="javascript:void(0);" data-ref="tab-price-lnk" class="tab-next-lnk btn btn-primary mr5 pull-right">Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+
+								<a href="javascript:void(0);" data-ref="tab-information-lnk" class="tab-next-lnk btn btn-primary mr5 pull-right"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Previous</a>
+							</div>	
 						
-										<td>
-											<%= s.text_field :weight, autocomplete: "off", class: 'form-control', id: 'weight' + index.to_s, placeholder: 'Enter Weight', value: s_package.weight, name: 'equipment[shipping_package][' + index.to_s + '][weight]' %>
-										</td>
-										<td>
-											<%= link_to 'javascript:void(0);', class: "pull-right remove-package", title: "Remove Package", data_reference: 'package-list-' + index.to_s  do %>
-												<i class="fa fa-remove"></i>
+						</div>
+					</div>
+				</div>
+
+				<div class="tab-pane" id="tab-price">
+					<div class="row">
+						<div class="col-md-12 mb20">
+							<div class="form-group">
+								<label class="col-md-12 control-label">Price<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= f.text_field :price, class: 'form-control', placeholder: 'Enter Price' %>
+									<%= form_error_msg_for(@equipment,:price) %>
+								</div>
+							</div>
+							<div class="clearfix"></div>							
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label">Currency<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= f.select :currency, @currencies.map{|name,symbol| [(name.to_s+' (<span>'+symbol.to_s+'</span>)').html_safe,symbol] }, {prompt: 'Select Currency'} %>
+									<%= form_error_msg_for(@equipment,:currency) %>
+								</div>
+							</div>
+
+							<div class="clearfix mt20 col-md-12">
+								<a href="javascript:void(0);" data-ref="tab-shipping-lnk" class="tab-next-lnk btn btn-primary mr5 pull-right">Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+
+								<a href="javascript:void(0);" data-ref="tab-description-lnk" class="tab-next-lnk btn btn-primary mr5 pull-right"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Previous</a>
+							</div>		
+
+						</div>
+					</div>
+				</div>
+
+				<div class="tab-pane" id="tab-shipping">
+					<div class="row">
+						<div class="col-md-12 mb20">
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label">Pickup Port (Nearest Port , Airport)</label>
+								<div class="col-md-12">
+									<%= f.text_field :pickup_port, class: 'form-control', placeholder: 'Enter Pickup Port' %>
+									<%= form_error_msg_for(@equipment,:pickup_port) %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label">Location City<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= f.text_field :city, class: 'form-control', placeholder: 'Enter City' %>
+									<%= form_error_msg_for(@equipment,:city) %>
+								</div>
+							</div>
+							
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Location Country<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= f.select :country_id, @countries.map{|id,name| [name,id] }, {prompt: 'Select Country'} %>
+									<%= form_error_msg_for(@equipment,:country_id, 'Country') %>
+								</div>
+							</div>
+
+							<div class="clearfix"></div>
+
+							<div class="form-group mt20">
+								<div class="col-md-12">
+									<label class="control-label text-bold">Packages Detail :</label>
+									<%= link_to 'javascript:void(0);', class: "pull-right add-package", title: "Add More Packages"  do %>
+												<i class="fa fa-plus"></i><span> Add More</span>
 											<% end %>
-										</td>
+								</div>
+								<div class="col-md-12 basic-table">
 									
-									</tr>
-									
-								<% end %>	
-							<% end %>
-		
-							<input type="hidden" id="package-counter" value="<%= i %>">
-							
-						</tbody>
-					</table>
-					
-				</div>
-			</div>
-													
-		</div>	
-	</div>	
-</div>
-
-
-
-
-
-
-
-<div class="clearfix"></div>
-
-<div class="col-sm-12 col-md-12">	
-	<div class="panel panel-default panel-hovered panel-stacked mb30">
-		<div class="panel-body">
-				
-			<h3 class="static-txt-hd">Location of Item</h3>
-			<p class="mrg-btm-zero">The item's location is where Buyers must go to pick up the item once they have paid in full. The Owner Name, Email Address and Phone Number provided will be given to the successful Buyer, so they can contact the storage location and schedule a removal appointment, if necessary. We may contact this person if we have questions about removal.</p>
+									<table class="table">
+										<thead>
+											<tr>
+												<th>Length</th>
+												<th>Width</th>
+												<th>Height</th>
+												<th>Weight</th>										
+												<th></th>	
+											</tr>
+										</thead>
 										
-		</div>	
-	</div>	
-</div>
+										<tbody id="package-list">
+											
+											<% i = 0 %>
+											<%= f.fields_for :shipping_package do |s| %>
+											
+												<% @equipment.shipping_package.each_with_index do |s_package,index| %>
+													<% i = index + 1 %>
+													
+													<tr id="package-list-<%= index %>">
+													
+														<td>
+															<%= s.text_field :length, autocomplete: "off", class: 'form-control', id: 'length' + index.to_s, placeholder: 'Enter Length', value: s_package.length, name: 'equipment[shipping_package][' + index.to_s + '][length]' %>
+														</td>
+														
+														<td>
+															<%= s.text_field :width, autocomplete: "off", class: 'form-control', id: 'width' + index.to_s, placeholder: 'Enter Width', value: s_package.width, name: 'equipment[shipping_package][' + index.to_s + '][width]' %>
+														</td>
+														
+														<td>
+															<%= s.text_field :height, autocomplete: "off", class: 'form-control', id: 'height' + index.to_s, placeholder: 'Enter Height', value: s_package.height, name: 'equipment[shipping_package][' + index.to_s + '][height]' %>
+														</td>
+										
+														<td>
+															<%= s.text_field :weight, autocomplete: "off", class: 'form-control', id: 'weight' + index.to_s, placeholder: 'Enter Weight', value: s_package.weight, name: 'equipment[shipping_package][' + index.to_s + '][weight]' %>
+														</td>
+														<td>
+															<%= link_to 'javascript:void(0);', class: "pull-right remove-package", title: "Remove Package", data_reference: 'package-list-' + index.to_s  do %>
+																<i class="fa fa-remove"></i>
+															<% end %>
+														</td>
+													
+													</tr>
+													
+												<% end %>	
+											<% end %>
+						
+											<input type="hidden" id="package-counter" value="<%= i %>">
+											
+										</tbody>
+									</table>
+									
+								</div>
+							</div>	
 
-<div class="clearfix right">
-   <button type="submit" class="btn btn-primary mr5" value="Submit" name="commit">Submit</button>
-</div>
 
-  
-<% end %>
+							<div class="clearfix col-md-12">
+							   <button type="submit" class="btn btn-primary mr5 pull-right" value="Submit" name="commit"><i class="fa fa-check" aria-hidden="true"></i> Submit</button>
+
+							   <a href="javascript:void(0);" data-ref="tab-price-lnk" class="tab-next-lnk btn btn-primary mr5 pull-right"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Previous</a>
+							</div>
+
+						</div>
+					</div>
+				</div>	
+
+			</div>
+<% end %>			
+		</div>
+	</div>
+</div>						
+
+
 </section>
+
 <%= javascript_include_tag "seller/equipment" %>
 
 
@@ -478,8 +458,15 @@
         
     });
     
-     $(document).on('click', '.remove-package', function () {
-            var ref = $(this).attr('data_reference');
-            $("#" + ref).remove();
-      });
+    $(document).on('click', '.remove-package', function () {
+        var ref = $(this).attr('data_reference');
+        $("#" + ref).remove();
+    });
+
+    $('.tab-next-lnk').click(function(){
+    	var ref = $(this).attr('data-ref');
+
+    	$("#" + ref).trigger('click');
+    });
+
 </script>

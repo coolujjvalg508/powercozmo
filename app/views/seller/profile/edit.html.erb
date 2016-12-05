@@ -1,6 +1,6 @@
 <%= stylesheet_link_tag 'signature-pad', media: 'all'%>
 
-<% total_point = 70
+<% total_point = 75
 	complete_points = 0
 
 	if current_user.email && current_user.email != ''
@@ -59,8 +59,11 @@
 		complete_points = complete_points + 5	
 	end
 
-	profile_complete = (complete_points *100 ) / total_point
+	if (!current_user.image.blank? && !current_user.image.try(:image).blank?)
+		complete_points = complete_points + 5
+	end
 
+	profile_complete = (complete_points *100 ) / total_point
  %>
 
 <div class="page page-forms-elements page-dashboard plrno">
