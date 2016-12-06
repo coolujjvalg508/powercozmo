@@ -1,6 +1,12 @@
 class Equipment < ActiveRecord::Base
   attr_accessor :sub_cat_id
   just_define_datetime_picker :availble_for
+
+  ########################## Uploaders ######################
+
+  mount_uploader :attachment, EquipmentFileUploader
+  ######################### Constants #########################
+
   ############## scopes ############
   scope :not_inactive, -> { where.not(status: 'inactive') }
   #below fetching active and in progress equipmnts as per current enum
@@ -37,15 +43,15 @@ class Equipment < ActiveRecord::Base
   CONDITION_TYPES = %w(New Surplus Used Refurbished)
   POWER_PLANT_TYPES = ['steam','gas','diesel gen','solar','wind']
   ############# Server Validations ####################
-  validates :name, :category_type, :category_id, :city, :country_id, :price, :currency, :description, :availble_for,:equipment_type, presence: true
+  validates :name, :category_type, :category_id, :city, :country_id, :price, :currency, :description, :availble_for,:equipment_type, :minimum_accepted_price, presence: true
   validates :equipment_model, :condition, :manufacture_year, presence: true, if: "equipment_type == 'equipment'"
   validates :power_plant_type, :power_plant_age, :turbine_model, :turbine_manufacturer_name, presence: true, if: "equipment_type == 'power_plant'"
   validates :power_plant_type, :inclusion => { :in => POWER_PLANT_TYPES }, if: "equipment_type == 'power_plant' && power_plant_type.present?"
   validates :identifier, uniqueness: true, :if => "identifier.present?"
   validates :identifier, :format => { :with => /\A^[\w\-]+\z/i,
     :message => "can only contain letters and numbers." }, if: "identifier.present?"
-  validates :price, numericality: { :greater_than_or_equal_to => 0.1, message: "can only be numerics" }
-  validates_format_of :price, :with  => /\A[0-9]{0,10}[\.]*[0-9]{0,2}\z/, :message => "can't be more then 9999999999.99"
+  validates :price, :minimum_accepted_price, numericality: { :greater_than_or_equal_to => 0.1, message: "can only be numerics" }
+  validates_format_of :price, :minimum_accepted_price, :with  => /\A[0-9]{0,10}[\.]*[0-9]{0,2}\z/, :message => "can't be more then 9999999999.99"
   validates :condition, :inclusion => { :in => CONDITION_TYPES }, if: "equipment_type == 'equipment'"
   validate :availble_for_cannot_be_in_the_past
 	validates_associated :images

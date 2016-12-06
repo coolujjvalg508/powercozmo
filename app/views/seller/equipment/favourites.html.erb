@@ -1,5 +1,3 @@
-
-
 <div class="page page-ui-tables page-dashboard">
 	<ol class="breadcrumb breadcrumb-small">
 		<li><a href="<%= seller_dashboard_path %>">Home</a></li>
@@ -60,8 +58,8 @@
 												
 											</td>
 											<td class="text-center">
-												<%= link_to '<i class="ion-eye"></i>'.html_safe, equipment_details_path(favourite.equipment), title: "View" %>
-												<%= link_to '<i class="ion-ios-trash"></i>'.html_safe, seller_remove_favourite_path(favourite), method: :delete, data: { confirm: 'Are you sure?' }, title: "Remove from favourites" %>
+												<%= link_to '<i class="fa fa-eye marginR5 bluecolor"></i>'.html_safe, equipment_details_path(favourite.equipment), title: "View" %>
+												<%= link_to '<i class="fa fa-trash marginL5 redcolor"></i>'.html_safe, seller_remove_favourite_path(favourite), method: :delete, data: { confirm: 'Are you sure?' }, title: "Remove from favourites" %>
 											</td>
 																						
 										</tr>
@@ -70,13 +68,149 @@
 							</table>
 							<%= paginate @equipments, :theme => 'listing_page_theme' %>
 						 <% else %>
-							<p class="no-result">No Favourite Equipments Found</p>
+							<p class="no-result">Your wish list is empty. Visit these sections for some inspiration !</p>
 						 <% end %>	
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
+		<!-- Latest Posted Equipment start-->
+
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a href="#LatestAds" aria-controls="home" role="tab" data-toggle="tab">Latest Ads</a></li>
+					<li role="presentation"><a href="#PopularAds" aria-controls="profile" role="tab" data-toggle="tab">Popular Ads</a></li>
+				</ul>
+				
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="LatestAds">
+						<div class="row">
+<% if @latest_ads.present? %>										
+	<% @latest_ads.each do |ad| %>
+							<div class="col-md-4 col-sm-4 col-xs-12">
+								<div class="postedbox clearfix">
+									<div class="clearfix row marginB10">
+										<div class="col-md-5 col-sm-5 col-xs-5">
+											<a href="<%= equipment_details_path(ad) %>">
+												<% if ad.try(:images).try(:first).try(:image) %>
+													<%= image_tag ad.try(:images).try(:first).try(:image).try(:card_image).try(:url), class: 'img-responsive' %>
+												<% else %>
+													<%= image_tag "equipment-noimage.png", class: 'img-responsive' %>
+												<% end %>
+											</a>
+										</div>
+										<div class="col-md-7 col-sm-7 col-xs-7 leftpading">
+											<div class="latest-title marginB10">
+												<a href="<%= equipment_details_path(ad) %>"><%= "#{ad.identifier} - #{truncate(ad.name, length: 20)}" %></a>
+											</div>
+											<div class="latest-txt marginB10"><%= truncate(ad.description, length: 50) %></div>
+											<div class="latest-txt marginB10"><span>Price :</span> <%= number_to_currency(ad.price, unit: raw(ad.currency)) %></div>
+											<div class="latest-txt marginB10">
+												<% if ad.equipment_type == "equipment"%>
+													<span>Manufacturing : </span> <%= ad.manufacture_year%>
+												<% else %>
+													<span>Power Plant Age : </span> <%= ad.power_plant_age%><
+												<% end %>
+											</div>
+											<div class="latest-txt marginB10">
+												<% if ad.equipment_type == "equipment"%>
+													<span>Brand : </span><%= truncate(ad.try(:manufacturer).try(:name),length: 15)%>
+												<% else %>
+													<span>Turbine Brand : </span><%= truncate(ad.turbine_manufacturer_name, length: 12)%>
+												<% end %>
+											</div>
+										</div>
+									</div>
+								
+									<div class="postwrap clearfix marginB5">
+										<div class="col-md-7 col-sm-6 col-xs-6 rating-post">
+											Rating : 							
+											<img src="<%= ad.try(:rating).to_i >= 1 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="1">
+											<img src="<%= ad.try(:rating).to_i >= 2 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="2">
+											<img src="<%= ad.try(:rating).to_i >= 3 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="3">
+											<img src="<%= ad.try(:rating).to_i >= 4 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="4">
+											<img src="<%= ad.try(:rating).to_i >= 5 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="5">
+										</div>
+										<div class="col-md-5 col-sm-6 col-xs-6">
+											<%= link_to 'MORE INFO', equipment_details_path(ad), class: "btn btn-primary mr5 pull-right waves-effect" %>
+										</div>
+									</div>
+								</div>
+							</div>				
+	<% end %>
+<% else %>
+	<div class="text-center">Latest Ads Empty !</div>	
+<% end %>		
+						</div>
+					</div>
+					
+					<div role="tabpanel" class="tab-pane" id="PopularAds">
+						<div class="row">	
+<% if @popular_ads.present? %>							
+	<% @popular_ads.each do |ad| %>
+							<div class="col-md-4 col-sm-4 col-xs-12">
+								<div class="postedbox clearfix">
+									<div class="clearfix row marginB10">
+										<div class="col-md-5 col-sm-5 col-xs-5">
+											<a href="<%= equipment_details_path(ad) %>">
+												<% if ad.try(:images).try(:first).try(:image) %>
+													<%= image_tag ad.try(:images).try(:first).try(:image).try(:card_image).try(:url), class: 'img-responsive' %>
+												<% else %>
+													<%= image_tag "equipment-noimage.png", class: 'img-responsive' %>
+												<% end %>
+											</a>
+										</div>
+										<div class="col-md-7 col-sm-7 col-xs-7 leftpading">
+											<div class="latest-title marginB10">
+												<a href="<%= equipment_details_path(ad) %>"><%= "#{ad.identifier} - #{truncate(ad.name, length: 20)}" %></a>
+											</div>
+											<div class="latest-txt marginB10"><%= truncate(ad.description, length: 50) %></div>
+											<div class="latest-txt marginB10"><span>Price :</span> <%= number_to_currency(ad.price, unit: raw(ad.currency)) %></div>
+											<div class="latest-txt marginB10">
+												<% if ad.equipment_type == "equipment"%>
+													<span>Manufacturing : </span> <%= ad.manufacture_year%>
+												<% else %>
+													<span>Power Plant Age : </span> <%= ad.power_plant_age%><
+												<% end %>
+											</div>
+											<div class="latest-txt marginB10">
+												<% if ad.equipment_type == "equipment"%>
+													<span>Brand : </span><%= truncate(ad.try(:manufacturer).try(:name),length: 15)%>
+												<% else %>
+													<span>Turbine Brand : </span><%= truncate(ad.turbine_manufacturer_name, length: 12)%>
+												<% end %>
+											</div>
+										</div>
+									</div>
+								
+									<div class="postwrap clearfix marginB5">
+										<div class="col-md-7 col-sm-6 col-xs-6 rating-post">
+											Rating : 							
+											<img src="<%= ad.try(:rating).to_i >= 1 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="1">
+											<img src="<%= ad.try(:rating).to_i >= 2 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="2">
+											<img src="<%= ad.try(:rating).to_i >= 3 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="3">
+											<img src="<%= ad.try(:rating).to_i >= 4 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="4">
+											<img src="<%= ad.try(:rating).to_i >= 5 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="5">
+										</div>
+										<div class="col-md-5 col-sm-6 col-xs-6">
+											<%= link_to 'MORE INFO', equipment_details_path(ad), class: "btn btn-primary mr5 pull-right waves-effect" %>
+										</div>
+									</div>
+								</div>
+							</div>				
+	<% end %>
+<% else %>
+	<div class="text-center">Pouplar Ads Empty !</div>	
+<% end %>		
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- Latest Posted Equipment end-->
+
 <% if @categories.present? %>		
 		
 		<div class="col-sm-12 col-md-12 mb10 marginT10">	
@@ -106,7 +240,7 @@
 				</div>
 			</div>
 		</div>
-<% end %>		
+<% end %>	
 		
 	</div>
 </div>
@@ -133,4 +267,3 @@
 		
 	}); 
 </script>
-

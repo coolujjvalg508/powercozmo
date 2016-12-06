@@ -236,7 +236,7 @@
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Description<sup>*</sup></label>
 								<div class="col-md-12">
-									<%= f.text_area :description, class: 'form-control', placeholder: 'Description', rows: 5 %>
+									<%= f.text_area :description, class: 'form-control', placeholder: 'Enter Description', rows: 5 %>
 									<%= form_error_msg_for(@equipment,:description) %>
 								</div>
 							</div>
@@ -246,13 +246,40 @@
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Faults & Shortages</label>
 								<div class="col-md-12">
-									<%= f.text_area :faults, class: 'form-control', placeholder: 'Equipment Faults & Shortages', rows: 5 %>
+									<%= f.text_area :faults, class: 'form-control', placeholder: 'Enter Faults & Shortages', rows: 5 %>
 									<%= form_error_msg_for(@equipment,:faults) %>
 								</div>
 							</div>
 
-							<div class="eqp-form-box" id="images-box">
-								<h3><span class="eq_type_text">Equipment</span> Photo</h3>
+							<div class="clearfix"></div>
+							
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Keywords</label>
+								<div class="col-md-12">
+									<%= f.text_area :keywords, class: 'form-control', placeholder: 'Enter Keywords', rows: 5 %>
+									<%= form_error_msg_for(@equipment,:keywords) %>
+								</div>
+							</div>
+
+							<div class="clearfix"></div>
+
+							<div class="form-group mt20">
+								<div class="col-md-12 file-field">										
+									<%= f.file_field :attachment, class: "filestyle", "data-buttonName" => "btn-primary" %>
+									<%= f.hidden_field :attachment_cache %>
+									<%= form_error_msg_for(@equipment, :attachment)%>
+
+									<% if @equipment.attachment.present? %>
+										<%= link_to @equipment.attachment.url.split('/').last, @equipment.attachment.url, target: :blank%>
+									<% end %>
+
+								</div>
+							</div>
+
+							<div class="clearfix"></div>
+
+							<div class="eqp-form-box mt20 marginL15 marginR15" id="images-box">
+								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Photo</label>
 								<%
 								  @tmp_images ||= {}
 								  nested_form_count = 0
@@ -303,7 +330,17 @@
 									<%= form_error_msg_for(@equipment,:price) %>
 								</div>
 							</div>
-							<div class="clearfix"></div>							
+							<div class="clearfix"></div>	
+
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label">Minimum Accepted Price(<sup>*</sup>Not to disclose)<sup>*</sup></label>
+								<div class="col-md-12">
+									<%= f.text_field :minimum_accepted_price, class: 'form-control', placeholder: 'Enter Minimum Accepted Price' %>
+									<%= form_error_msg_for(@equipment,:minimum_accepted_price) %>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label">Currency<sup>*</sup></label>
 								<div class="col-md-12">

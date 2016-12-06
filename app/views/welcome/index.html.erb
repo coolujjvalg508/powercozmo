@@ -466,8 +466,8 @@
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane active" id="LatestAds">
 				<div class="row">
-					
-<% @latest_ads.each do |ad| %>
+<% if @latest_ads.present? %>					
+	<% @latest_ads.each do |ad| %>
 					<div class="col-md-4 col-sm-4 col-xs-12">
 						<div class="postedbox clearfix">
 							<div class="clearfix row marginB10">
@@ -482,7 +482,7 @@
 								</div>
 								<div class="col-md-7 col-sm-7 col-xs-7 leftpading">
 									<div class="latest-title marginB10">
-										<a href="<%= equipment_details_path(ad) %>"><%= "#{truncate(ad.name, length: 20)} - #{ad.identifier}" %></a>
+										<a href="<%= equipment_details_path(ad) %>"><%= "#{ad.identifier} - #{truncate(ad.name, length: 20)}" %></a>
 									</div>
 									<div class="latest-txt marginB10"><%= truncate(ad.description, length: 50) %></div>
 									<div class="latest-txt marginB10"><span>Price :</span> <%= number_to_currency(ad.price, unit: raw(ad.currency)) %></div>
@@ -517,15 +517,18 @@
 								</div>
 							</div>
 						</div>
-					</div>				
+					</div>
+	<% end %>
+<% else %>
+	<div class="text-center error-msg">Latest Ads Empty !</div>								
 <% end %>		
 				</div>
 			</div>
 			
 			<div role="tabpanel" class="tab-pane" id="PopularAds">
 				<div class="row">
-					
-<% @popular_ads.each do |ad| %>
+<% if @popular_ads.present? %>					
+	<% @popular_ads.each do |ad| %>
 					<div class="col-md-4 col-sm-4 col-xs-12">
 						<div class="postedbox clearfix">
 							<div class="clearfix row marginB10">
@@ -540,7 +543,7 @@
 								</div>
 								<div class="col-md-7 col-sm-7 col-xs-7 leftpading">
 									<div class="latest-title marginB10">
-										<a href="<%= equipment_details_path(ad) %>"><%= "#{truncate(ad.name, length: 20)} - #{ad.identifier}" %></a>
+										<a href="<%= equipment_details_path(ad) %>"><%= "#{ad.identifier} - #{truncate(ad.name, length: 20)}" %></a>
 									</div>
 									<div class="latest-txt marginB10"><%= truncate(ad.description, length: 50) %></div>
 									<div class="latest-txt marginB10"><span>Price :</span> <%= number_to_currency(ad.price, unit: raw(ad.currency)) %></div>
@@ -575,15 +578,18 @@
 								</div>
 							</div>
 						</div>
-					</div>				
+					</div>
+	<% end %>
+<% else %>
+	<div class="text-center error-msg">Popular Ads Empty !</div>								
 <% end %>		
 				</div>
 			</div>
 			
 			<div role="tabpanel" class="tab-pane" id="RandomAds">
 				<div class="row">
-					
-<% @random_ads.each do |ad| %>
+<% if @random_ads.present? %>					
+	<% @random_ads.each do |ad| %>
 					<div class="col-md-4 col-sm-4 col-xs-12">
 						<div class="postedbox clearfix">
 							<div class="clearfix row marginB10">
@@ -598,7 +604,7 @@
 								</div>
 								<div class="col-md-7 col-sm-7 col-xs-7 leftpading">
 									<div class="latest-title marginB10">
-										<a href="<%= equipment_details_path(ad) %>"><%= "#{truncate(ad.name, length: 20)} - #{ad.identifier}" %></a>
+										<a href="<%= equipment_details_path(ad) %>"><%= "#{ad.identifier} - #{truncate(ad.name, length: 20)}" %></a>
 									</div>
 									<div class="latest-txt marginB10"><%= truncate(ad.description, length: 50) %></div>
 									<div class="latest-txt marginB10"><span>Price :</span> <%= number_to_currency(ad.price, unit: raw(ad.currency)) %></div>
@@ -633,7 +639,10 @@
 								</div>
 							</div>
 						</div>
-					</div>				
+					</div>		
+	<% end %>
+<% else %>
+	<div class="text-center error-msg">Random Ads Empty !</div>						
 <% end %>		
 				</div>
 			</div>

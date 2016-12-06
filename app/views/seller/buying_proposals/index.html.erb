@@ -82,9 +82,9 @@
 											</td>
 											<td class="text-center">
 												<% if params[:action] == 'received_proposals'  %>
-													<%= link_to '<i class="ion-eye"></i>'.html_safe, seller_received_proposal_path(proposal), title: "View" %>
+													<%= link_to '<i class="fa fa-eye marginR5 bluecolor"></i>'.html_safe, seller_received_proposal_path(proposal), title: "View" %>
 												<% else %> 
-													<%= link_to '<i class="ion-eye"></i>'.html_safe, seller_buying_proposal_path(proposal), title: "View" %>
+													<%= link_to '<i class="fa fa-eye marginR5 bluecolor"></i>'.html_safe, seller_buying_proposal_path(proposal), title: "View" %>
 												<% end %>
 											</td>				
 																					

@@ -10,7 +10,7 @@ class Seller::DashboardController < Seller::BaseController
 		@orders = Order.all.order('created_at desc').joins(:equipment).where('equipment.user_id = ? OR orders.user_id = ? ', current_user, current_user)
 		
 		@received_proposals = BuyingProposal.joins(:buying_request).where('(buying_requests.user_id = ? OR buying_requests.email = ?)', current_user, current_user.email)
-										
+								
 		@page_content_data = PageContentManagement.where(:page_url => "user_dashboard")
 		@content_data = {}
 		@page_content_data.each do |v|		

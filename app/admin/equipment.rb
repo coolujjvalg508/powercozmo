@@ -1,6 +1,6 @@
 ActiveAdmin.register Equipment do
   menu label: 'Equipments', if: proc{ (current_admin_user.has_permission('equipment_read') || current_admin_user.has_permission('equipment_write') || current_admin_user.has_permission('equipment_delete'))}
-	permit_params :name, :equipment_model, :condition, :owner_name, :manufacturer_id, :category_type, :category_id, :sub_category_id, :sub_sub_category_id, :city, :country_id, :price, :currency, :rating, :description, :status, :availble_for,:availble_for_date, :availble_for_time_hour, :availble_for_time_minute, :manufacture_year, :user_id,:availble_for, :power_plant_age, :power_plant_type, :turbine_model, :turbine_manufacturer_name, :equipment_type, :faults, :pickup_port, :images_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image,:image_cache]
+	permit_params :name, :equipment_model, :condition, :owner_name, :manufacturer_id, :category_type, :category_id, :sub_category_id, :sub_sub_category_id, :city, :country_id, :price, :currency, :rating, :description, :status, :availble_for,:availble_for_date, :availble_for_time_hour, :availble_for_time_minute, :manufacture_year, :user_id,:availble_for, :power_plant_age, :power_plant_type, :turbine_model, :turbine_manufacturer_name, :equipment_type, :faults, :pickup_port, :attachment, :minimum_accepted_price, :keywords, :images_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image,:image_cache]
 
   batch_action "Update 'Status' for", form: { status: Equipment.statuses.map{|status, value| [status.to_s.humanize, status.to_s] } } do |ids, inputs|
     # Equipment.where(id: ids).update_all(status: inputs[:status])
@@ -140,12 +140,15 @@ ActiveAdmin.register Equipment do
       f.input :availble_for, label: 'Expiration Date', as: :just_datetime_picker#:string, input_html: {:class => "hasDatetimePicker"}
       f.input :manufacture_year, as: :select, collection: (1950..Date.today.year).to_a.reverse, include_blank: 'Select Year'
       f.input :price
+      f.input :minimum_accepted_price
       f.input :currency, as: :select, collection: Hash[Currency.active.pluck(:name,:symbol)].map{|name,symbol| [(name.to_s+' (<span>'+symbol.to_s+'</span>)').html_safe,symbol] }, include_blank: 'Select Currency'
+      f.input :keywords
       f.input :rating, as: :select, collection: (1..5).to_a, include_blank: 'Select Rating'
       f.input :user_id, label: 'Seller', as: :select, collection: User.select_options, include_blank: 'Select Seller'
       if ((controller.action_name == 'edit' || controller.action_name == 'update') && ["inactive","active"].include?(f.object.status))
         f.input :status
       end
+      f.input :attachment, :hint => (f.object.try(:attachment).try(:url).try(:split, '/').try(:last)), label: 'Attach File'
       f.inputs 'Images' do
         f.has_many :images, allow_destroy: true, new_record: true do |ff|
           ff.input :image, as: :file, label: "Image", hint: ff.template.image_tag(ff.object.image.try(:url))
@@ -280,6 +283,9 @@ ActiveAdmin.register Equipment do
       row 'Price' do
         equipment.currency.to_s.html_safe+equipment.price.to_s
       end
+      row 'Minimum Accepted Price' do
+        equipment.currency.to_s.html_safe+equipment.minimum_accepted_price.to_s
+      end
       row :description
       row 'Expiration Date' do
         equipment.availble_for.strftime("%d-%b-%Y %H:%M") if equipment.availble_for.present?
@@ -296,9 +302,17 @@ ActiveAdmin.register Equipment do
         end
       end
       row :faults
+      row :keywords
       row :status do
         equipment.status.to_s.humanize
       end
+
+      row :attachment do |br|
+        if br.attachment.present?
+          link_to br.attachment.url.to_s.split('/').last, br.attachment.url, target: :blank
+        end
+      end
+      
       row :created_at
       row :updated_at
       row 'Images' do

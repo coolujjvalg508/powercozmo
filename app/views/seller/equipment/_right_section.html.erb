@@ -52,38 +52,37 @@
 <script type="text/javascript">
 	
 	$(document).ready(function(){
-  $(".alert").fadeIn();
-  $(".alert").fadeOut(30000);
+  		$(".alert").fadeIn();
+  		$(".alert").fadeOut(30000);
 
-  	//js start for auto show hide 
-  	if($( "#section_tips" ).height() <= 450 ){
-		$("#section_tips_link").hide();
-	}else{
-		$("#section_tips").addClass('set-right-section-tips-block');
-	}
-
-	$(".tips-view-link").click(function(){
-		var view = $(this).attr('data-view');
-		var reference = $(this).attr('data-reference');
-
-		if(view == 'more'){
-			$(this).attr('data-view', 'less');
-			$(this).html('View Less');	
-			$("#" + reference).removeClass('set-right-section-tips-block');
-
-			if($( "#" + reference ).height() <= 450 ){
-				$(this).hide();
-			}
-
+	  	//js start for auto show hide 
+	  	if($( "#section_tips" ).height() <= 450 ){
+			$("#section_tips_link").hide();
 		}else{
-			$(this).attr('data-view', 'more');
-			$(this).html('View More');
-			$("#" + reference).addClass('set-right-section-tips-block');	
+			$("#section_tips").addClass('set-right-section-tips-block');
 		}
+
+		$(".tips-view-link").click(function(){
+			var view = $(this).attr('data-view');
+			var reference = $(this).attr('data-reference');
+
+			if(view == 'more'){
+				$(this).attr('data-view', 'less');
+				$(this).html('View Less');	
+				$("#" + reference).removeClass('set-right-section-tips-block');
+
+				if($( "#" + reference ).height() <= 450 ){
+					$(this).hide();
+				}
+
+			}else{
+				$(this).attr('data-view', 'more');
+				$(this).html('View More');
+				$("#" + reference).addClass('set-right-section-tips-block');	
+			}
+		});
+		//js end for auto show hide 
+
 	});
-	//js end for auto show hide 
-
-
-});
 
 </script>

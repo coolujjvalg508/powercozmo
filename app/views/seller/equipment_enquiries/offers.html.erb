@@ -51,8 +51,8 @@
 											<td class="text-center"><%= offer.replied_as == "Requested" ? "Requested": offer.replied_as == "Accepted" ? "Yes" : "No"%></td>
 											<td class="text-center">
 												
-												<%=link_to '<i class="ion-eye"></i>'.html_safe, seller_offer_path(offer), title: 'View'%>
-												<%=link_to '<i class="ion-ios-trash"></i>'.html_safe, seller_offer_path(offer), method: 'delete', data: {confirm: 'Are you sure to delete the offer?'}, title: 'Delete'%>
+												<%=link_to '<i class="fa fa-eye marginR5 bluecolor"></i>'.html_safe, seller_offer_path(offer), title: 'View'%>
+												<%=link_to '<i class="fa fa-trash marginL5 redcolor"></i>'.html_safe, seller_offer_path(offer), method: 'delete', data: {confirm: 'Are you sure to delete the offer?'}, title: 'Delete'%>
 												
 											</td>											
 										</tr>

@@ -58,21 +58,21 @@ end %>
 											<td class="text-center">
 												
 												<% if params[:action] == 'my_buying_request_list' %>
-													<%= link_to '<i class="ion-eye"></i>View'.html_safe, seller_my_buying_request_path(br), title: "View", class: "btn btn-info"%>
+													<%= link_to '<i class="fa fa-eye marginR5 bluecolor"></i>'.html_safe, seller_my_buying_request_path(br), title: "View" %>
 													
-													<%= link_to '<i class="ion-ios-compose"></i>Edit'.html_safe, edit_buying_request_path(br), title: "Edit", class: "btn btn-info mt5" %>
+													<%= link_to '<i class="fa fa-edit marginR5 bluecolor"></i>'.html_safe, edit_buying_request_path(br), title: "Edit" %>
 													
-													<%= link_to '<i class="ion-ios-trash"></i>Delete'.html_safe, seller_buying_request_path(br),method: :delete,data: { confirm: 'Are you sure?' }, title: "Delete", class: "btn btn-danger mt5" %>
+													<%= link_to '<i class="fa fa-trash marginL5 redcolor"></i>'.html_safe, seller_buying_request_path(br),method: :delete,data: { confirm: 'Are you sure?' }, title: "Delete" %>
 												
 												<% else %>
-													<%= link_to '<i class="ion-eye"></i>View'.html_safe, seller_buying_request_path(br), title: "View", class: "btn btn-info"%>
+													<%= link_to '<i class="fa fa-eye marginR5 bluecolor"></i>'.html_safe, seller_buying_request_path(br), title: "View" %>
 													
 													<% if br.user_id != current_user[:id] && br.email != current_user[:email] %>
 														<% if br.expiration_date >= Date.today %>
-														  <%= link_to '<i class="ion-edit"></i>Request Info'.html_safe, seller_request_for_more_info_path(buying_request_id: br.id), title: "Request For Info", class: "btn btn-info mt5"%>
+														  <%= link_to '<i class="fa fa-info-circle marginR5 redcolor"></i>'.html_safe, seller_request_for_more_info_path(buying_request_id: br.id), title: "Request For Info" %>
 														<% end %>
 														<% if br.expiration_date >= Date.today %>
-														  <%= link_to '<i class="ion-edit"></i>Submit Proposal'.html_safe, new_seller_buying_proposal_path(buying_request_id: br.id), title: "Submit Your Proposal", class: "btn btn-info mt5"%>
+														  <%= link_to '<i class="fa fa-mail-reply marginR5 greencolor"></i>'.html_safe, new_seller_buying_proposal_path(buying_request_id: br.id), title: "Submit Your Proposal" %>
 														<% end %>
 													<% end %>
 												

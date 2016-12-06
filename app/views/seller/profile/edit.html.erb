@@ -484,10 +484,25 @@ end
 			<div class="row">
 				<div class="RightPanel clearfix">
 					<div class="RightUserTitle">TIPS</div>
+					<div id="section_tips">
+						<div class="RightIndent">
+							<% if @content_data['tips'] %>
+								<%= @content_data['tips'].html_safe %>
+							<% else %>	
+
+								<ul>
+									<li>Detailed of company information helps Power cozmo to finalize your deal faster. You can get&nbsp;More opportunities&nbsp;if your company information is complete enough.</li>
+									<li>We will response faster to inquiries sent from business e-mails.</li>
+									<li>A complete profile will allow Power cozmo to provide you with better overall service.</li>
+									<li>Please upload a photo that matches the gender, age and status details in your personal profile.</li>
+									<li>Use a photo that is appropriate for a business setting. Group photos are not allowed.</li>
+								</ul>
+
+							<% end %>
+						</div>
+					</div>
 					<div class="RightIndent">
-						<% if @content_data['tips'] %>
-							<%= @content_data['tips'].html_safe %>
-						<% end %>
+						<p class="text-right"><a href="javascript:void(0);" id="section_tips_link" class="tips-view-link" data-reference="section_tips" data-view="more">View More</a></p> 	
 					</div>
 				</div>
 			</div>
@@ -590,10 +605,7 @@ window.open("data:application/octet-stream;base64," + base64);*/
         }
       }
     });
-  });
-
-  // Image form validation
-  $(document).ready(function(){
+  
     $("#image_form").validate({
       rules: {
         "user[image_attributes][image]": {
@@ -609,10 +621,7 @@ window.open("data:application/octet-stream;base64," + base64);*/
         error.insertAfter(element);
       }
     });
-  });
-
-  // Change password form validation
-  $(document).ready(function(){
+  
     $("#change_password_form").validate({
       ignore: ':hidden:not(select)',
       rules: {
@@ -637,6 +646,36 @@ window.open("data:application/octet-stream;base64," + base64);*/
         error.insertAfter(element);
       }
     });
+
+   	 	//js start for auto show hide 
+	  	if($( "#section_tips" ).height() <= 450 ){
+			$("#section_tips_link").hide();
+		}else{
+			$("#section_tips").addClass('set-right-section-tips-block');
+		}
+
+		$(".tips-view-link").click(function(){
+			var view = $(this).attr('data-view');
+			var reference = $(this).attr('data-reference');
+
+			if(view == 'more'){
+				$(this).attr('data-view', 'less');
+				$(this).html('View Less');	
+				$("#" + reference).removeClass('set-right-section-tips-block');
+
+				if($( "#" + reference ).height() <= 450 ){
+					$(this).hide();
+				}
+
+			}else{
+				$(this).attr('data-view', 'more');
+				$(this).html('View More');
+				$("#" + reference).addClass('set-right-section-tips-block');	
+			}
+		});
+		//js end for auto show hide 
+
+
   });
 
   $('#mobnumber').keypress(function (e) {

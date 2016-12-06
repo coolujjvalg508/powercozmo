@@ -30,6 +30,7 @@
 //= require seller/app
 //= require seller/index.init
 //= require owl.carousel
+//= require bootstrap-filestyle.min
 // require_tree .
 
 $(document).ready(function(){
