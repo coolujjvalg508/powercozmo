@@ -41,16 +41,16 @@
 								<tbody>
 									<% @questions.each_with_index do |question,index| %>
 										<tr style="<%='font-weight: bold;' unless question.is_read? %>">
-											<td class="text-center"><%=index+1%></td>
+											<td class="text-center"><%= index+1 %></td>
 											<td><%= question.equipment.identifier %></td>
 											<td><%= question.equipment.name %></td>
-											<td><%=question.try(:equipment).try(:name)%>, <%=question.try(:equipment).try(:country).try(:name)%></td>
-											<td><%=question.try(:name)%>, <%=question.try(:country).try(:name)%></td>
-											<td><%= raw(question.try(:equipment).try(:currency)) %><%=question.try(:equipment).try(:price)%></td>
+											<td><%= question.try(:equipment).try(:user).try(:profile).try(:first_name) %> <%= question.try(:equipment).try(:user).try(:profile).try(:last_name) %>, <%= question.try(:equipment).try(:country).try(:name) %></td>
+											<td><%= question.try(:name) %>, <%= question.try(:country).try(:name) %></td>
+											<td><%= raw(question.try(:equipment).try(:currency)) %><%= question.try(:equipment).try(:price) %></td>
 											<td class="text-center">
 												
-												<%=link_to '<i class="fa fa-eye marginR5 bluecolor"></i>'.html_safe,seller_question_path(id: question.id), title: 'View'%>
-												<%=link_to '<i class="fa fa-trash marginL5 redcolor"></i>'.html_safe,seller_question_path(id: question.id),method: 'delete',data: {confirm: 'Are you sure to delete the question?'}, title: 'Delete'%>
+												<%= link_to '<i class="fa fa-eye marginR5 bluecolor"></i>'.html_safe,seller_question_path(id: question.id), title: 'View' %>
+												<%= link_to '<i class="fa fa-trash marginL5 redcolor"></i>'.html_safe,seller_question_path(id: question.id),method: 'delete',data: {confirm: 'Are you sure to delete the question?'}, title: 'Delete' %>
 												
 											</td>											
 										</tr>

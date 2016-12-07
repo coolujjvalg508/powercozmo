@@ -42,17 +42,17 @@
 								<tbody>
 									<% @offers.each_with_index do |offer, index| %>
 										<tr style="<%='font-weight: bold;' unless offer.is_read? %>">
-											<td class="text-center"><%=index+1%></td>
+											<td class="text-center"><%= index+1 %></td>
 											<td><%= offer.equipment.identifier %></td>
 											<td><%= offer.equipment.name %></td>
-											<td><%=offer.try(:equipment).try(:name)%>, <%=offer.try(:equipment).try(:country).try(:name)%></td>
-											<td><%=offer.try(:name)%>, <%=offer.try(:country).try(:name)%></td>
+											<td><%= offer.try(:equipment).try(:user).try(:profile).try(:first_name) %> <%= offer.try(:equipment).try(:user).try(:profile).try(:last_name) %>, <%= offer.try(:equipment).try(:country).try(:name) %></td>
+											<td><%= offer.try(:name) %>, <%= offer.try(:country).try(:name) %></td>
 											<td><%= raw(offer.try(:equipment).try(:currency)) %><%= offer.bidding_price || offer.equipment.price %></td>
-											<td class="text-center"><%= offer.replied_as == "Requested" ? "Requested": offer.replied_as == "Accepted" ? "Yes" : "No"%></td>
+											<td class="text-center"><%= offer.replied_as == "Requested" ? "Requested": offer.replied_as == "Accepted" ? "Yes" : "No" %></td>
 											<td class="text-center">
 												
-												<%=link_to '<i class="fa fa-eye marginR5 bluecolor"></i>'.html_safe, seller_offer_path(offer), title: 'View'%>
-												<%=link_to '<i class="fa fa-trash marginL5 redcolor"></i>'.html_safe, seller_offer_path(offer), method: 'delete', data: {confirm: 'Are you sure to delete the offer?'}, title: 'Delete'%>
+												<%= link_to '<i class="fa fa-eye marginR5 bluecolor"></i>'.html_safe, seller_offer_path(offer), title: 'View' %>
+												<%= link_to '<i class="fa fa-trash marginL5 redcolor"></i>'.html_safe, seller_offer_path(offer), method: 'delete', data: {confirm: 'Are you sure to delete the offer?'}, title: 'Delete' %>
 												
 											</td>											
 										</tr>
