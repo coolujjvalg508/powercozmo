@@ -109,7 +109,6 @@
 					
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#Description">Description</a></li>
-						<li><a data-toggle="tab" href="#Condition">Condition </a></li>
 						<li><a data-toggle="tab" href="#Shipping">Shipping</a></li>
 						
 						<% if @equipment.faults && @equipment.faults != '' %>
@@ -118,29 +117,25 @@
 												
 					</ul>
 										
-					<div class="tab-content">
-						<div id="Description" class="text-overflow-wrap clearfix tab-pane fade in active">
+					<div class="tab-content panel panel-default marginT10">
+						<div id="Description" class="text-overflow-wrap clearfix tab-pane fade in active padding10">
 							<p><%= @equipment.description %></p>
 						</div>
-						
-						<div id="Condition" class="text-overflow-wrap clearfix tab-pane fade">
-							<p><%= @equipment.condition %></p>
-						</div>
-						
-						<div id="Shipping" class="text-overflow-wrap clearfix tab-pane fade">
+												
+						<div id="Shipping" class="text-overflow-wrap clearfix tab-pane fade padding10">
 							<div class="col-md-6 marginB10 padding">
-								<span class="col-md-5 paddingR">Pickup Port</span>
+								<span class="col-md-5 padding text-bold">Pickup Port</span>
 								<span class="col-md-1">:</span>
 								<span class="col-md-5 padding"><%= @equipment.pickup_port %></span>
 							</div>
 							<div class="col-md-6 marginB10 padding">
-								<span class="col-md-5 paddingR">Pickup City</span>
+								<span class="col-md-5 paddingR text-bold">Pickup City</span>
 								<span class="col-md-1">:</span>
 								<span class="col-md-5 padding"><%= @equipment.city %></span>
 							</div>
 							<div class="clearfix"></div>
 							<div class="col-md-6 marginB10 padding">
-								<span class="col-md-5 paddingR">Pickup Country</span>
+								<span class="col-md-5 padding text-bold">Pickup Country</span>
 								<span class="col-md-1">:</span>
 								<span class="col-md-5 padding"><%= @equipment.try(:country).try(:name) %></span>
 							</div>
@@ -149,12 +144,12 @@
 							
 							<% if no_of_package > 0 %>
 								<div class="col-md-6 marginB10 padding">
-									<span class="col-md-5 paddingR">No Of Packages</span>
+									<span class="col-md-5 paddingR text-bold">No Of Packages</span>
 									<span class="col-md-1">:</span>
 									<span class="col-md-5 padding"><%= no_of_package %></span>
 								</div>
 								
-								<div class="col-sm-12 col-md-12 marginT10 marginB5 padding">Packages Dimensions :</div>	
+								<div class="col-sm-12 col-md-12 marginT10 marginB5 padding text-bold">Packages Dimensions :</div>	
 								<div class="col-sm-12 col-md-12 padding">
 										
 									<div class="panel panel-default panel-hovered panel-stacked mb30 basic-table">
@@ -194,7 +189,7 @@
 						</div>
 						
 						<% if @equipment.faults && @equipment.faults != '' %>
-							<div id="Faults" class="text-overflow-wrap clearfix tab-pane fade">
+							<div id="Faults" class="text-overflow-wrap clearfix tab-pane fade padding10">
 								<p><%= @equipment.faults %></p>
 							</div>
 						<% end %>
@@ -241,21 +236,26 @@
 								
 							<div class="clearfix ListingAddress">
 								<ul>
-									<li class="col-md-6 col-sm-6 col-xs-6"><img src="/assets/location-icon.jpg" alt="Location" class="marginR5"> <%= @equipment.try(:country).try(:name) %></li>
-									<li class="col-md-6 col-sm-6 col-xs-6"><img src="/assets/brand-icon.jpg" class="marginR5" alt="Brand">
+									<li class="col-md-6 col-sm-6 col-xs-6"><img src="/assets/location-icon.jpg" title="Location" alt="Location" class="marginR5"> <%= @equipment.try(:country).try(:name) %></li>
+									<li class="col-md-6 col-sm-6 col-xs-6"><img src="/assets/brand-icon.jpg" class="marginR5" alt="Brand" title="Brand">
 										<% if @equipment.equipment_type == "equipment"%>
 										  <%= truncate(@equipment.try(:manufacturer).try(:name), length: 15)%>
 										<% else %>
 										  <%= truncate(@equipment.turbine_manufacturer_name, length: 12)%>
 										<% end %>
 									</li>
-									<li class="col-md-6 col-sm-6 col-xs-6"><img src="/assets/manufacturing-icon.jpg" class="marginR5" alt="2010"> 
+									<li class="col-md-6 col-sm-6 col-xs-6"><img src="/assets/manufacturing-icon.jpg" title="Year" class="marginR5" alt="Year"> 
 										<% if @equipment.equipment_type == "equipment"%>
 											<%= @equipment.manufacture_year%>
 										  <% else %>
 											<%= @equipment.power_plant_age%>
 										  <% end %>
 									</li>
+
+									<li class="col-md-6 col-sm-6 col-xs-6"><img src="/assets/condition-icon.jpg" class="marginR5" alt="Condition" title="Condition"> 
+										<%= @equipment.condition %>
+									</li>
+									
 									<li class="col-md-6 col-sm-6 col-xs-6 paddingT15">Rating 
 											
 										<img src="<%= @equipment.try(:rating).to_i >= 1 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="1">
@@ -270,6 +270,7 @@
 							</div>
 							
 							<div class="clearfix PriceDetailswrap">
+
 								<div class="col-md-6 col-sm-6 col-xs-6 PriceDetails">Price : <span class="gray-color"><%= number_to_currency(@equipment.price, unit: raw(@equipment.currency)) %></span></div>
 								
 								<div class="col-md-6 col-sm-6 col-xs-6">

@@ -72,6 +72,7 @@ label { font-weight: normal; }
 .paddingL40 { padding-left: 40px !important; }
 
 /* Font Text */
+.text-bold {font-weight: bold !important;}
 .txt12 { font-size: 12px !important; }
 .txt13 { font-size: 13px !important; }
 .txt15 { font-size: 15px !important; }
@@ -512,7 +513,7 @@ footer .footer-company { padding: 22px 0; color: #959595; font-size: 12px; }
 .ListingProfile img{ margin-right:10px;}
 .ListingRightPanel .ListingAddress{ background:#f7f7f7; padding:10px 0;}
 .ListingRightPanel .ListingAddress li{ padding:8px 15px;}
-.ListingRightPanel .PriceDetailswrap{ padding:15px 0;}
+.ListingRightPanel .PriceDetailswrap{ padding-bottom:15px;}
 .PriceDetailswrap .PriceDetails{ padding-top:13px; font-size:16px; color:#252525;}
 .PriceDetailswrap .btn-orange{ padding:10px 10px; float:right;}
 
@@ -609,6 +610,6 @@ header .nav.navbar-nav.navbar-right { position: relative; }
   left: -5px;
 }
 .muslty-dp .fa-angle-down{position: relative; top: 13px;}
-
+.detail-tab-content {margin: 15px 0px; padding: 10px; border-radius: 4px; border: 10px solid #e6e6e6;}
 
 
