@@ -4,7 +4,7 @@ class UserMailer < Devise::Mailer
   layout 'mailer'
   before_filter :add_inline_attachment!
 
-  def confirmation_instructions(record, token, opts={})
+  def confirmation_instructions(record, token, opts={})  
   	@system_email = SystemEmail.find_by(title: 'Registration email to user when registered through registration.')
     @subject =  @system_email.try(:subject).to_s
     @subject = "Welcome to PowerCozmo" if @subject.blank?
