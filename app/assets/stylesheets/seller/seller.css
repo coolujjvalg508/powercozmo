@@ -14,5 +14,6 @@
 *= require seller/plugins/perfect-scrollbar
 *= require seller/main.min
 *= require owl.carousel.css
+*= require seller/themify-icons
 *= require_self
 */

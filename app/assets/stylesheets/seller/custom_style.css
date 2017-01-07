@@ -256,14 +256,32 @@ p.response-msg { word-wrap: break-word; }
 #dash-slide { padding: 20px 0; }
 .dashboar-slide-box{ border-radiou:5px; padding: 15px; background: #eee; margin: 0 10px;}
 .dash-slide-count{ margin-bottom: 15px; color: #E66963; font-size: 30px;}
-.dash-slide-title{ font-size: 16px; color: #555; font-weight: 400; }
+.dash-slide-title {
+  color: #2f3941;
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  text-transform: uppercase;
+}
 .dash-slide-count img { width: auto !important; display: inline-block  !important; vertical-align: middle;; margin-left: 10px; }
 #dash-slide .owl-next { display: inline-block !important; background:url(/assets/seller/dashboard/next-arrow.png) no-repeat center center; width: 26px; height: 27px;}
 #dash-slide .owl-prev { display: inline-block !important; background:url(/assets/seller/dashboard/prev-arrow.png) no-repeat center center; width: 26px; height: 27px;}
 #dash-slide .owl-nav { padding-top: 10px; position: absolute; right: 10px; text-align: center; top: -47px;}
 
-.post-btn a{ padding: 0 20px; height: 46px; line-height: 44px; color: #fff; text-align: center; display: block; width: 100%; background: #03A9F5;}
-.post-btn a:hover, .post-btn a:active, .post-btn a:focus{ color: #fff; }
+.post-btn a {
+  background-color: #fff;
+  border: 1px solid #39677c;
+  border-radius: 5px;
+  color: #39677c;
+  display: block;
+  font-size: 13px;
+  min-height: 120px;
+  padding: 20px 0 10px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+}
 
 .dashboard-tablenew.panel-heading{ margin: 0px !important; padding: 15px !important;}
 .panel-body.padding0{ padding: 0 !important; }
@@ -403,3 +421,77 @@ p.response-msg { word-wrap: break-word; }
   width:100%;
 }
 .file-field .input-group-btn > .btn{height: 34px !important;}
+.slider-patern .owl-item .dashboar-slide-box {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  margin: 0 5px;
+  padding: 15px 0;
+}
+.slider-patern #dash-slide {
+  padding: 0px 30px 20px 30px;
+}
+.slider-patern .owl-item .dashboar-slide-box i {
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.dash-slide-count {
+  color: #e66963;
+  font-size: 30px;
+  margin: 10px 0;
+}
+.main-heding { border-bottom: 1px solid #dddddd; 
+background: #fafafa;
+background: -moz-linear-gradient(top,  #fafafa 0%, #efefef 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fafafa), color-stop(100%,#efefef));
+background: -webkit-linear-gradient(top,  #fafafa 0%,#efefef 100%);
+background: -o-linear-gradient(top,  #fafafa 0%,#efefef 100%);
+background: -ms-linear-gradient(top,  #fafafa 0%,#efefef 100%);
+background: linear-gradient(to bottom,  #fafafa 0%,#efefef 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafafa', endColorstr='#efefef',GradientType=0 );
+}
+.post-btn a span {
+  display: block;
+  font-size: 30px;
+  margin: 0 0 12px;
+}
+
+.form-with input.form-control[type="search"] {
+  background: transparent none repeat scroll 0 0;
+  border: 1px solid #ddd;
+  border-radius: 5px !important;
+  font-size: 15px;
+  height: 50px;
+  line-height: 50px;
+  padding-right: 45px;
+}
+
+.main-box .table th{ border-bottom: 1px solid #cbcbcb; border-left: 0px solid #cbcbcb; color: #878787; font-size: 11px; color: #878787; font-weight: normal; padding:8px 15px 8px; 
+background: #fafafa;
+background: -moz-linear-gradient(top,  #fafafa 0%, #efefef 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fafafa), color-stop(100%,#efefef));
+background: -webkit-linear-gradient(top,  #fafafa 0%,#efefef 100%);
+background: -o-linear-gradient(top,  #fafafa 0%,#efefef 100%);
+background: -ms-linear-gradient(top,  #fafafa 0%,#efefef 100%);
+background: linear-gradient(to bottom,  #fafafa 0%,#efefef 100%);
+}
+
+.main-heding .fa.fa-list {
+  border-right: 1px solid #e3e3e3;
+  left: 0;
+  margin: 0 5px 0 0;
+  padding: 10px 10px 10px 0;
+}
+.main-heding.no-t-padding {
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+.main-heding p {
+  color: #666;
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+}

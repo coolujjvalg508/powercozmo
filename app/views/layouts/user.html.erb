@@ -38,21 +38,10 @@
 	<header class="site-head" id="site-head">
 		<ul class="list-unstyled left-elems">
 			<!-- nav trigger/collapse -->
-			 <li>
+			 <!-- <li>
 				<a href="javascript:;" class="nav-trigger ion ion-drag" id="nav-resize-btn"></a>
-			</li>
+			</li> -->
 			<!-- #end nav-trigger 
-
-			<!-- Search box -->
-			<li>
-				<div class="form-search hidden-xs">
-					<%= form_tag(seller_listing_filter_path, method: :get) do %>
-						<input type="search" class="form-control" placeholder="Type here for search..." name="q" value="<%=params[:q]%>">
-						<button type="submit" id="search-btn" class="ion ion-ios-search-strong"></button>
-					<% end %>
-				</div>
-			</li>	<!-- #end search-box -->
-			
 
 			<!-- site-logo for mobile nav -->
 			<li>
@@ -160,12 +149,8 @@
 		<ul class="list-unstyled right-elems">
 			<!-- profile drop -->
 			<li class="profile-drop hidden-xs dropdown">
-				<a href="javascript:;" data-toggle="dropdown">
-					 <% if (current_user.image.blank? || current_user.image.try(:image).blank?)%>
-				          	<img src="/assets/seller/myprofile-placeholder-img.png" class="img-circle" alt="User Image">
-					  <% else %>
-						<%= image_tag(current_user.image.try(:image).try(:thumb).try(:url), class: "img-circle",alt: "User Image") %>
-					  <% end %>
+				<a href="javascript:;" data-toggle="dropdown" class="my-acount">
+					<span class="ti-user"></span>  My Account
 				</a>
 				<ul class="dropdown-menu dropdown-menu-right">
 					<li>
@@ -192,15 +177,29 @@
 			<div class="nav-head">
 				<!-- site logo -->
 				<%= link_to root_path, class: "site-logo text-uppercase" do %>
-					<%= image_tag "seller/dsh-logo-mini.png" %>
+					
 					<span class="text"><%= image_tag "seller/dsh-pc-logo.png" %></span>
 				<% end %>
 				
 			</div>
 
+
 			<!-- Site nav (vertical) -->
 
 			<nav class="site-nav clearfix" role="navigation">
+
+
+<div class="sidebarSep"></div>
+ 
+				<div class="form-search hidden-xs">
+					<%= form_tag(seller_listing_filter_path, method: :get) do %>
+						<input type="search" class="form-control" placeholder="Type here for search..." name="q" value="<%=params[:q]%>">
+						<button type="submit" id="search-btn" class="ion ion-ios-search-strong"></button>
+					<% end %>
+				</div>
+			 
+<div class="sidebarSep"></div>
+
 				<div class="profile clearfix mb15">					
 					<% if (current_user.image.blank? || current_user.image.try(:image).blank?)%>
 				          	<img src="/assets/seller/myprofile-placeholder-img.png" class="img-circle" alt="User Image">
@@ -216,8 +215,18 @@
 					</div>
 				</div>
 
+				<div class="sidebarSep"></div>
+
 				<!-- navigation -->
 				<ul class="list-unstyled clearfix nav-list mb15">
+
+
+
+	
+
+
+
+
 					<li class="<%= 'active' if seller_dashboard_path == url_for(only_path: true) %>">
 						<a href="<%= seller_dashboard_path %>" title="Dashboard">
 							<i class="ion ion-monitor"></i>
