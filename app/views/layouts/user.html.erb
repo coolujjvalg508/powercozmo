@@ -378,10 +378,7 @@
 				</ul> <!-- #end navigation -->
 			</nav>
 
-			<!-- nav-foot -->
-			<footer class="nav-foot">
-				<p><%= SiteSetting.last.copy_right_text.html_safe%></p>
-			</footer>
+			
 
 		</aside>
 		<!-- #end main-navigation -->
@@ -410,6 +407,12 @@
 			<% flash.discard %>
 			
 			<%= yield %>
+
+
+			<!-- nav-foot -->
+			<footer class="nav-foot">
+				<p><%= SiteSetting.last.copy_right_text.html_safe%></p>
+			</footer>
 			
 		</div>
 

@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900);
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
 /** Shared **/
 html,
 body {
@@ -8,7 +8,7 @@ body {
 body {
   /*letter-spacing: .5px;*/
   background: #efefef;
-   font-family: 'Roboto', sans-serif; 
+   font-family: 'Lato', sans-serif;
 }
 *:focus {
   outline: none!important;
@@ -1814,8 +1814,8 @@ fieldset[disabled] .btn-youtube.active {
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
   vertical-align: middle;
-  padding-left: 22px;
-  padding-right: 22px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 .table > thead > tr > th {
   border-bottom-width: 1px;
@@ -2085,9 +2085,7 @@ fieldset[disabled] .btn-youtube.active {
 }
 .tab-content {
   padding: 20px;
-  background: #fff;
-  border: 1px solid #e4e4e4;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  background: #fff; 
 }
 .nav {
   cursor: inherit;
@@ -2110,7 +2108,7 @@ fieldset[disabled] .btn-youtube.active {
 .nav-tabs > li {
   margin-bottom: -1px;
   font-weight: 500;
-  z-index: 999;
+  z-index: 9;
 }
 .nav-tabs > li.active > a {
   -webkit-transition: 0.22s ease-in;
@@ -3759,6 +3757,8 @@ fieldset[disabled] .btn-youtube.active {
 }
 .app.nav-expand .main-container .content-container {
   width: calc(100% - 220px);
+  position: relative;
+  padding: 0 0 30px 0;
   margin-left: 220px;
 }
 .app.body-full #site-head,
@@ -6139,4 +6139,17 @@ button.md-no-style {
   color: #666;
   font-size: 13px;
   padding: 10px 15px;
+}
+
+.dashboard-search .sear-bun, .dashboard-search .sear-bun:hover { background: rgba(0, 0, 0, 0) url("/assets/seller/search-icon.png") repeat scroll 0 0;}
+.dashboard-search .form-with button.sear-bun {
+  background-repeat: no-repeat;
+  height: 45px;
+  width: 43px;
+}
+.dashboard-search > p {
+  color: #404040;
+  font-size: 15px;
+  font-weight: 400;
+  margin: 42px 0 6px;
 }

@@ -38,25 +38,25 @@ $(document).ready(function(){
   $(".alert").fadeOut(30000);
 
   	//js start for auto show hide 
-  	if($( "#section_user_guide" ).height() <= 120 ){
+  	if($( "#section_user_guide" ).height() <= 140 ){
 		$("#section_user_guide_link").hide();
 	}else{
 		$("#section_user_guide").addClass('set-right-section-content');
 	}
 
-	if($( "#section_how_it_work_for_seller" ).height() <= 120 ){
+	if($( "#section_how_it_work_for_seller" ).height() <= 140 ){
 		$("#section_how_it_work_for_seller_link").hide();
 	}else{
 		$("#section_how_it_work_for_seller").addClass('set-right-section-content');
 	}
 
-	if($( "#section_how_it_work_for_buyer" ).height() <= 120 ){
+	if($( "#section_how_it_work_for_buyer" ).height() <= 140 ){
 		$("#section_how_it_work_for_buyer_link").hide();
 	}else{
 		$("#section_how_it_work_for_buyer").addClass('set-right-section-content');
 	}
 
-	if($( "#section_tips_for_seller" ).height() <= 120 ){
+	if($( "#section_tips_for_seller" ).height() <= 140 ){
 		$("#section_tips_for_seller_link").hide();
 	}else{
 		$("#section_tips_for_seller").addClass('set-right-section-content');
@@ -71,7 +71,7 @@ $(document).ready(function(){
 			$(this).html('View Less');	
 			$("#" + reference).removeClass('set-right-section-content');
 
-			if($( "#" + reference ).height() <= 120 ){
+			if($( "#" + reference ).height() <= 140 ){
 				$(this).hide();
 			}
 
