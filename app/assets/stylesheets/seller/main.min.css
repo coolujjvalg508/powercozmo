@@ -340,10 +340,10 @@ select[multiple].input-group-sm > .input-group-btn > .dropdown > .btn {
 }
 .btn {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  -webkit-transition: 0.2s;
-  -o-transition: 0.2s;
-  transition: 0.2s;
+  font-size: 15px;
+  padding: 8px 25px;
   position: relative;
+  transition: all 0.2s ease 0s;
 }
 .btn > i:before {
   margin-right: 6px;
@@ -2105,25 +2105,15 @@ fieldset[disabled] .btn-youtube.active {
 .nav-tabs {
   border-bottom: none;
 }
-.nav-tabs > li {
-  margin-bottom: -1px;
-  font-weight: 500;
-  z-index: 9;
-}
-.nav-tabs > li.active > a {
-  -webkit-transition: 0.22s ease-in;
-  -o-transition: 0.22s ease-in;
-  transition: 0.22s ease-in;
-  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.02), -1px 0 0 rgba(0, 0, 0, 0.015), 1px 0 0 rgba(0, 0, 0, 0.015);
-}
+ 
+ 
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-  background-color: #fff;
+  background-color: #e9e9e9;
 }
 .nav-tabs > li > a:hover {
-  color: #e91e63;
-  border-color: transparent;
+  color: #404040; 
 }
 .tabs-flip .nav-tabs > li.active > a {
   border-color: transparent;
@@ -4054,17 +4044,15 @@ fieldset[disabled] .btn-youtube.active {
   }
 }
 .main-container .nav-wrap .nav-head {
-  height: 55px;
+  background-image: url("/assets/seller/bodyBg.png");
   display: table;
+  height: 55px;
   overflow: hidden;
-  width: 220px;
-  position: fixed;
   padding-left: 22px;
+  position: fixed;
+  transition: all 0.25s ease-in 0s;
+  width: 220px;
   z-index: 1000;
-  -webkit-transition: 0.25s ease-in;
-  -o-transition: 0.25s ease-in;
-  transition: 0.25s ease-in;
-  background: #303f9f;
 }
 .main-container .nav-wrap .nav-head .site-logo {
   color: #fff;
@@ -4475,9 +4463,6 @@ fieldset[disabled] .btn-youtube.active {
   background: #455a64;
 }
  
-.app.theme-four .main-container .nav-wrap .nav-head {
-  background: transparent none repeat scroll 0 0 !important;
-}
 .app.theme-five .site-head {
   background: #795548;
 }
@@ -6152,4 +6137,41 @@ button.md-no-style {
   font-size: 15px;
   font-weight: 400;
   margin: 42px 0 6px;
+}
+
+
+/*********************************17-1-2017*******************************/
+.profile-box {
+  background-color: #f6f6f6;
+  border: 1px solid #dcdcdc;
+  box-shadow: none;
+  display: table;
+  width: 100%;
+}
+.profile-box {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f9f9f9+0,f2f2f2+100 */
+background: #f9f9f9; /* Old browsers */
+background: -moz-linear-gradient(top, #f9f9f9 0%, #f2f2f2 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #f9f9f9 0%,#f2f2f2 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #f9f9f9 0%,#f2f2f2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#f2f2f2',GradientType=0 ); /* IE6-9 */
+  border: 1px solid #d7d7d7;
+  border-radius: 5px;
+  box-shadow: none;
+  display: table;
+  margin: 15px 0;
+  width: 100%;
+}
+
+.update-profile-box i {
+  color: #ff4320;
+  display: block;
+  font-size: 14px;
+  font-style: normal;
+  line-height: normal;
+  margin: 15px 0 0;
+}
+.update-profile-box span p {
+  font-size: 13px;
+  margin: 5px 0 0;
 }

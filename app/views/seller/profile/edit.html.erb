@@ -66,14 +66,9 @@
 	profile_complete = (complete_points *100 ) / total_point
  %>
 
-<div class="page page-forms-elements page-dashboard plrno">
-	<ol class="breadcrumb breadcrumb-small">
-		<li><a href="<%= seller_dashboard_path %>">Home</a></li>
-		<li class="active">My Profile</li>
-	</ol>
-	
+<div class="page page-forms-elements page-dashboard plrno padding0">	
 	<div class="page-wrap clearfix">
-		<div class="col-md-9 col-sm-12 col-xs-12">
+		<div class="col-md-9 col-sm-12 no-padding">
 
 			<div class="row">
 				<!-- dashboard header -->
@@ -87,11 +82,12 @@
 			</div> <!-- #end row -->
 		
 
-			<div class="row mb20 dash-profile-box">
+			<div class="row mb20 dash-profile-box no-marging">
 
-				<div class="col-md-8 col-sm-7 col-xs-12 ">
-			 		<div class="panel panel-default panel-hovered">
-			  			<div class="panel-body profile-updateb">
+				<div class="col-md-12">
+			 		 
+			  			<div class="profile-box">
+<div class="col-md-9 col-sm-7">
 			  				<div class="profile-brief">
 			  					<div class="col-md-4 col-sm-5 col-xs-4">
 			  						<center>
@@ -102,37 +98,48 @@
 									  	<% end %>
 						  			</center>
 			  					</div>
-				  				<div class="col-md-8 col-sm-7 col-xs-4 update-profile-box">
+				  				<div class="col-md-8 col-sm-7 col-xs-4 update-profile-box no-padding">
 				  					<h3><%= current_user.name.to_s.titleize %></h3>
-					 				<p><i class="fa fa-map-marker font-size-20" aria-hidden="true"></i> <span class="marginL10"><%= current_user.profile.country.name %></span></p>
-					 				<p><i class="fa fa-envelope-o font-size-20" aria-hidden="true"></i> <span><%= current_user.email %></span></p>
+					 				<p><%= current_user.profile.country.name %></p>
+					 				<p><%= current_user.email %></p>
+
+					 				<span>
+					 					<i>Only Member who have completed the Profile can add posts or RFQ</i>
+					 					<p>Please Complete your profile</p>
+
+					 				</span>
 				  				</div>
 			  				</div>
-			  			</div>
-					</div>	
-				</div>
+			  				</div>
 
-
-				<div class="col-md-4 col-sm-5 col-xs-12">
-					<div class="panel panel-default panel-hovered">
-				  		<div class="panel-body">
+			  				<div class="col-md-3 col-sm-5">
+			  					 
+				  		 
 		 					<div data-percent="<%= profile_complete %>" class="easypiechart" id="easypiechartDemo">
 								<div class="data">
 									<strong class="font-size-24"><%= profile_complete %>%</strong> <br>Profile Complete
 								</div>
-							</div>
+							 
 
 				  		</div>
-				  	</div>
+				  	 
+
+			  				</div>
+
+			  			 
+					</div>	
 				</div>
+
+
+				 
 
 			</div>
 
 
-			<div class="row">
+			<div class="row no-margin">
 				<div class="col-md-12">
 				 <!-- tab style -->
-					<div class="clearfix mb20 dashboard-profile">
+					<div class="clearfix mb20 dashboard-profile same-color-box">
 						<ul class="nav nav-tabs">
 							<li class="<%= (@open_tab == '' || @open_tab == 'contact') ? 'active' : ''  %>"><a href="#tab-contact" data-toggle="tab">contact</a></li>
 							<li class="<%= (@open_tab == 'company') ? 'active' : ''  %>"><a href="#company-info" data-toggle="tab">company info</a></li>
@@ -480,8 +487,8 @@ end
 
 		</div>
 
-		<div class="col-md-3 col-sm-12 col-xs-12"> 
-			<div class="row">
+		<div class="col-md-3 col-sm-12 col-xs-12 no-padding"> 
+			<div class="row no-margin">
 				<div class="RightPanel clearfix">
 					<div class="RightUserTitle">TIPS</div>
 					<div id="section_tips">

@@ -169,7 +169,7 @@ p.response-msg { word-wrap: break-word; }
 .unread-msg-top img{width: 40px;}
 .equipment-content .eqp-form-box .upload-image{margin-right: 10px; width: 45% !important;}
 
-.btn-primary{background-color: #2196f3 !important; border-color: #2196f3 !important;}
+ 
 .equipment-content .eqp-form-box .tips-for-imgupload{width: 110px !important;}
 .img-add{position: relative !important; top: 40% !important;}
 .equipment-content .eqp-form-box .upload-image{margin-top: 20px;}
@@ -241,7 +241,7 @@ p.response-msg { word-wrap: break-word; }
 /* Custom style to change main theme style start */
 .site-head{background: #03a9f4 !important;}
 .app.theme-four .site-head{background: #03a9f4 !important;}
-.main-container .nav-wrap .nav-head{background: /*#eee*/ #eee !important;}
+ 
 /* Custom style to change main theme style end */
 .RightArrow { position: absolute; right: -9px; top: -8px; color:#ddd;}
 .RightArrow  .fa{ font-size:22px;}
@@ -323,7 +323,10 @@ p.response-msg { word-wrap: break-word; }
 .tipwrap .nav-tabs > li{ width: 50%; }
 .tipwrap .nav-tabs > li > a { margin-left: 0px;}
 
-.tipwrap .nav-tabs > li.active > a, .tipwrap .nav-tabs > li.active > a:hover, .tipwrap .nav-tabs > li.active > a:focus { background: #03A9F5; color: #fff;}
+.tipwrap .nav-tabs > li.active > a, .tipwrap .nav-tabs > li.active > a:hover, .tipwrap .nav-tabs > li.active > a:focus {
+  background-color: #fff;
+  color: #404040;
+}
 
 
 .dashboard-table .table > thead > tr > th, .dashboard-table .table > tbody > tr > td, .dashboard-table .table > tfoot > tr > td { font-size: 12px; color: #666; }
@@ -363,14 +366,25 @@ p.response-msg { word-wrap: break-word; }
 .dashboard-profile .update-profile .btn{ display: block; width: 100%; border-radius: 0px; }
 
 .dash-profile-box .profile-updateb{ padding: 5px !important; background: #fff; }
-.update-profile-box h3{ font-size: 20px; color: #555; font-weight: 500; margin:10px 0 10px;}
-.update-profile-box p{ font-size: 16px; color: #999; padding: 0 0 10px; margin: 0px; }
+.update-profile-box h3 {
+  color: #6c6a6b;
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0 0 5px;
+}
+.update-profile-box p {
+  color: #333;
+  font-size: 13px;
+  line-height: 18px;
+  margin: 0;
+  padding: 0;
+}
 
 .page-dashboard.plrno{ padding-left: 0px !important; padding-right: 0px !important; }
 
 .set-right-section-content{height: 140px; overflow: hidden;}
 .set-right-section-tips-block{height: 450px; overflow: hidden;}
-.profile-brief{padding-top: 15px; padding-bottom: 15px; min-height: 205px;}
+.profile-brief{padding-top: 15px; padding-bottom: 15px; min-height: 2px;}
 
 .upload-image-input label{position: relative; top: 50px;}
 .font-size-20{font-size: 20px !important;}
@@ -378,10 +392,7 @@ p.response-msg { word-wrap: break-word; }
 /*.nav-tabs > li > a:hover{color: #367fa9 !important;}*/
 .equipment_rating_stars .fa-star{cursor: pointer;}
 
-.nav-tabs > li > a:hover, .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
-	background-color: #3C697F !important;
-	color: #fff !important;
-}
+ 
 
 .postedbox {
     background-color: #fff;
@@ -597,3 +608,57 @@ footer.nav-foot {
   right: 0;
   text-align: center;
 }
+
+.dash-head h4 {
+  color: #ff4321;
+  font-size: 16px;
+  font-weight: 500;
+}
+.profile-brief center {
+  border: 5px solid #fff;
+  border-radius: 50%;
+  box-shadow: 2px 2px 2px 0 #999;
+}
+.same-color-box {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.tipwrap .nav-tabs, .same-color-box .nav-tabs{border-bottom: 1px solid #dddddd; 
+background: #fafafa;
+background: -moz-linear-gradient(top,  #fafafa 0%, #efefef 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fafafa), color-stop(100%,#efefef));
+background: -webkit-linear-gradient(top,  #fafafa 0%,#efefef 100%);
+background: -o-linear-gradient(top,  #fafafa 0%,#efefef 100%);
+background: -ms-linear-gradient(top,  #fafafa 0%,#efefef 100%);
+background: linear-gradient(to bottom,  #fafafa 0%,#efefef 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafafa', endColorstr='#efefef',GradientType=0 );
+border-radius: 5px 5px 0 0;}
+.tipwrap .nav-tabs{ box-shadow: 0;}
+.tipwrap .nav-tabs li{ border-bottom: solid 1px #ddd; }
+.nav-tabs > li > a {border-radius: 0;}
+.same-color-box .nav-tabs > li > a {
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  border-bottom-color: #ddd !important;
+  border-bottom-style: solid;
+  border-image: none;
+  border-left-color: -moz-use-text-color;
+  border-left-style: none;
+  border-radius: 0;
+  border-right-color: #ddd !important;
+  border-right-style: solid;
+  border-top: 0 none !important;
+  border-width: 0 1px 1px 0 !important;
+  font-weight: 500;
+  margin: 0 !important;
+}
+
+button.btn{/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#5b8293+0,36586b+100 */
+background: #5b8293; /* Old browsers */
+background: -moz-linear-gradient(top, #5b8293 0%, #36586b 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #5b8293 0%,#36586b 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #5b8293 0%,#36586b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5b8293', endColorstr='#36586b',GradientType=0 ); /* IE6-9 */}
