@@ -119,7 +119,7 @@ select { border: 1px solid #e9e8e8; background:  #fff; padding:  6px; }
 .dashboard .table-responsive { -webkit-overflow-scrolling: touch;}
 
 /** CSS ADDED FOR EQUIPMENT PAGE**/
-.equipment-content .eqp-form-box, .myprofile-content .mp-form-box, .new-msg-content .new-msg-form-box { width:100%; float:left; background:#fff; border:1px solid #e3e6e8; padding:18px 20px; box-sizing:border-box; -moz-box-sizing:border-box; -o-box-sizing:border-box; -webkit-box-sizing:border-box; -ms-box-sizing:border-box; margin-bottom:30px;}
+.equipment-content .eqp-form-box, .myprofile-content .mp-form-box, .new-msg-content .new-msg-form-box { width:100%; float:left; background:#fff; border:1px solid #cdcdcd; padding:18px 20px; box-sizing:border-box; -moz-box-sizing:border-box; -o-box-sizing:border-box; -webkit-box-sizing:border-box; -ms-box-sizing:border-box; margin-bottom:30px;}
 .equipment-content .half-width-box { width:48.7%; }
 .equipment-content .half-width-box:last-child { float:right; min-height:172px;}
 .equipment-content .eqp-form-left .eqp-form-box:last-child { margin-bottom:0px;}
@@ -135,13 +135,33 @@ select { border: 1px solid #e9e8e8; background:  #fff; padding:  6px; }
 .equipment-content .eqp-form-box p { display:block; font-size:14px; color:#757575; line-height:normal; margin:0px 0px 23px;}
 /** CSS ADDED ON 29-04-2016 **/
 .equipment-content .eqp-form-box select.form-control { padding:6px 8px;}
-.equipment-content .eqp-form-box .upload-image { width:49%; float:left;}
-.equipment-content .eqp-form-box .upload-image-input { width:100%; height:274px; text-align:center; border:1px solid #e9e8e8; background:url(/assets/seller/upload-img-placeholder.png) no-repeat center center; margin-top:10px;}
+.equipment-content .eqp-form-box .upload-image-input {
+  background: rgba(0, 0, 0, 0) url("/assets/seller/upload-img-placeholder.png") no-repeat scroll center center;
+  border: 1px solid #cdcdcd;
+  height: 180px;
+  text-align: center;
+  position: relative;
+  width: 100%;}
+}
 .equipment-content .eqp-form-box .upload-image input[type="file"]{ opacity:0; width:100%; height:100%;}
-.equipment-content .eqp-form-box .tips-for-imgupload { width:49%; float:right; margin-top:30px;}
 .equipment-content .eqp-form-box .tips-for-imgupload p { font-size:12px; line-height:18px; color:#757575; margin:0px 0px 14px;}
 .equipment-content .eqp-form-box .tips-for-imgupload label { margin-bottom:10px;}
-.equipment-content .eqp-form-box .add-new-img { width:107px;float:left;border:1px solid #e9e8e8; height:107px; text-align:center; cursor:pointer;}
+.equipment-content .eqp-form-box .add-new-img {
+  background-color: #f0f0f0;
+  border: 0 solid #e9e8e8;
+  cursor: pointer;
+  float: left;
+  height: 100%;
+  line-height: 180px;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+.equipment-content .eqp-form-box .add-new-img span.img-add {
+  color: #a8a8a8;
+  font-size: 40px;
+  top: auto !important;
+}
 .equipment-content .eqp-form-box .add-new-img i { display:inline-block; color:#f0f4f6; font-size:50px; margin-top:30px;}
 .equipment-content .custom-btn, .myprofile-content .custom-btn, .new-msg-content .new-msg-form-box .custom-btn { float:right; border:none; background:#36ace3; color:#fff; text-transform:uppercase;min-width:140px; min-height:30px; line-height:28px; border-radius:0px; margin-top:67px;}
 .equipment-content .custom-btn:hover, .myprofile-content .custom-btn:hover, .new-msg-content .new-msg-form-box .custom-btn:hover { background:#037bb3;}
@@ -195,7 +215,7 @@ ul.menu li a { height: auto !important; }
 .selectric-responsive { width: 100%; }
 .selectric { border: 1px solid #e6e6e6; background: #fff; position: relative; }
 .selectric .label { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0 38px 0 10px; line-height: 38px; color: #444; height: 38px; }
-.selectric .button { display: block; position: absolute; right: 10px; top: 15px; width: 38px; height: 38px; color: #BBB; text-align: center; font: 0/0 a; *font: 20px/38px Lucida Sans Unicode, Arial Unicode MS, Arial;
+.selectric .button { display: block; position: absolute; right: 5px; top: 15px; width: 38px; height: 38px; color: #BBB; text-align: center; font: 0/0 a; *font: 20px/38px Lucida Sans Unicode, Arial Unicode MS, Arial;
 background: url(/assets/seller/select-arr.png); width: 25px; height: 22px; display: block; }
 .selectric .button:after { content: normal; position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; width: 0; height: 0; border: 4px solid transparent; border-top-color: #BBB; border-bottom: none; }
 .selectric-hover .selectric .button { color: #A2A2A2; }
@@ -251,7 +271,7 @@ a:hover.btn-delete { background: #ca5f3b; }
 .fnone { float: none !important; }
 .reject-btn { background: #d60000 !important; }
 .reject-btn:hover { background: #b30000 !important; }
-.form-group textarea { width: 100%; border: 1px solid #e9e8e8; padding: 10px; }
+.form-group textarea { width: 100%; border: 1px solid #cdcdcd; padding: 10px; }
 .exp-date { position: relative; }
 .exp-date i { position: absolute; top: 10px; right: 10px; }
 .file-upload { overflow: hidden; }
@@ -371,3 +391,4 @@ select { background: url(select-arr.png) no-repeat center right #fff; }
 .new-msg-right { width:60%; float:right;}
 .proposal-cnt-area-midd { margin: 0 10px; }
 }
+

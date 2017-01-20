@@ -151,19 +151,16 @@ a.text-purple:hover {
   font-size: 10px;
 }
 .form-control {
+  border: 1px solid #c9c9c9;
   box-shadow: none;
-  -webkit-transition: 0.2s ease-in-out;
-  -o-transition: 0.2s ease-in-out;
-  transition: 0.2s ease-in-out;
-  border: none;
-  border-radius: 0!important;
-  border-bottom: 1px solid #e0e0e0;
-  position: relative;
+  height: 40px;
   overflow: hidden;
+  position: relative;
+  transition: all 0.2s ease-in-out 0s;
 }
 .form-control:focus {
   box-shadow: none;
-  border-bottom-color: #1976d2;
+  border-color: #FF5231;
   content: "";
 }
 .form-control::-moz-placeholder {
@@ -2084,7 +2081,7 @@ fieldset[disabled] .btn-youtube.active {
   transform: translate(0, -1px);
 }
 .tab-content {
-  padding: 20px;
+  padding: 15px;
   background: #fff; 
 }
 .nav {
@@ -2978,29 +2975,26 @@ fieldset[disabled] .btn-youtube.active {
   -o-transition: 0.25s;
   transition: 0.25s;
 }
-.ui-checkbox label > span:before,
-.ui-checkbox label > i:before,
-.ui-radio label > span:before,
-.ui-radio label > i:before {
-  content: "";
-  width: 20px;
-  height: 20px;
-  top: 1px;
-  left: 0;
-  border: 2px solid #919191;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+.ui-checkbox label > span::before, .ui-checkbox label > i::before, .ui-radio label > span::before, .ui-radio label > i::before {
   background-color: #ffffff;
+  border: 1px solid #666;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  content: "";
+  height: 17px;
+  left: 0;
+  top: 4px;
+  width: 17px;
 }
 .ui-checkbox label > input:checked + span:after,
 .ui-checkbox label > input:checked + i:after,
 .ui-radio label > input:checked + span:after,
 .ui-radio label > input:checked + i:after {
-  content: "\f122";
-  font-family: 'ionicons';
-  left: 5px;
-  top: 2px;
-  font-size: 12px;
-  color: #6a6a6a;
+  content: "";
+  font-family: "themify";
+  left: 0px;
+  top: 0px;
+  font-size: 18px;
+  color: #666;
 }
 .ui-checkbox.ui-checkbox-circle label > span:before,
 .ui-checkbox.ui-checkbox-circle label > i:before,
@@ -3108,14 +3102,14 @@ fieldset[disabled] .btn-youtube.active {
 .ui-radio-info label > input:checked + span:after,
 .ui-checkbox-info label > input:checked + i:after,
 .ui-radio-info label > input:checked + i:after {
-  color: #ffffff;
+  color: #333;
 }
 .ui-checkbox-info label > input:checked + span:before,
 .ui-radio-info label > input:checked + span:before,
 .ui-checkbox-info label > input:checked + i:before,
 .ui-radio-info label > input:checked + i:before {
-  background-color: #2196f3;
-  border: 1px solid #1590f2;
+  background-color:transparent;
+  border: 1px solid transparent;
 }
 .ui-radio-primary label > input:checked + span:after,
 .ui-radio-pink label > input:checked + span:after,
@@ -4297,17 +4291,13 @@ fieldset[disabled] .btn-youtube.active {
     margin-left: 0;
   }
 }
-.page {
-  padding: 15px;
-}
+ 
 @media (max-width: 320px) {
   .page .row > [class^='col'] {
     width: 100%;
   }
 }
-.page .page-wrap > .row {
-  padding: 0 15px;
-}
+ 
 .content-container.ng-enter {
   z-index: 9999;
   -webkit-animation: 0.3s scaleUp ease-in;
@@ -6174,4 +6164,69 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', end
 .update-profile-box span p {
   font-size: 13px;
   margin: 5px 0 0;
+}
+.top-margin-15{ margin-top: 15px; }
+
+.pref-tag .ui-checkbox.ui-checkbox-info {
+  margin: 0;
+}
+.col-md-4.col-sm-6.ui-checkbox.ui-checkbox-info label {
+  border: 1px solid #ddd;
+  height: 40px;
+  margin: 0 0 10px;
+  padding: 10px 0 0 10px;
+  width: 100%;
+}
+.no-radius {
+  border-radius: 0;
+}
+.orang-gradient{/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fe5d36+0,ff4421+100 */
+background: #fe5d36; /* Old browsers */
+background: -moz-linear-gradient(top, #fe5d36 0%, #ff4421 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #fe5d36 0%,#ff4421 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #fe5d36 0%,#ff4421 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fe5d36', endColorstr='#ff4421',GradientType=0 ); /* IE6-9 */}
+.input-group .input-group-addon {
+  background-color: #dadada;
+}
+.input-group-addon span.glyphicon {
+  color: #7b7b7b;
+}
+.start-rating {
+  border: 1px solid #cbcbcb;
+  height: 40px;
+}
+.equipment_rating_stars > li {
+  display: inline-block;
+  list-style: outside none none;
+  vertical-align: middle;
+}
+.equipment_rating_stars .filled-star{ color: #FF4D27; }
+.equipment_rating_stars {
+  color: #666;
+  list-style: outside none none;
+  margin: 5px 0 0 10px;
+  padding: 0;
+}
+
+.grad-fields .btn-primary{/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fe5d36+0,ff4421+100 */
+background: #fe5d36; /* Old browsers */
+background: -moz-linear-gradient(top, #fe5d36 0%, #ff4421 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #fe5d36 0%,#ff4421 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #fe5d36 0%,#ff4421 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fe5d36', endColorstr='#ff4421',GradientType=0 ); /* IE6-9 */}
+.btn-primary { border-color: #e63c19;}
+.grad-fields span.glyphicon {
+  margin: 0 5px 0 0;
+}
+.grad-fields input.form-control {
+  background-color: #fff;
+  height: 34px;
+}
+
+a {
+    color: #ff4221;
+}
+a:hover, a:active, a:focus{
+    color: #ff5231;
 }

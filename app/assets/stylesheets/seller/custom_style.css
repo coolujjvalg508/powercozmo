@@ -167,12 +167,11 @@ p.response-msg { word-wrap: break-word; }
 .text-white{color: #fff !important;}
 .unread-msg-top{max-height: 200px; overflow-y: auto;}
 .unread-msg-top img{width: 40px;}
-.equipment-content .eqp-form-box .upload-image{margin-right: 10px; width: 45% !important;}
+ 
 
  
-.equipment-content .eqp-form-box .tips-for-imgupload{width: 110px !important;}
+ 
 .img-add{position: relative !important; top: 40% !important;}
-.equipment-content .eqp-form-box .upload-image{margin-top: 20px;}
 .content{padding: 0px !important;}
 .equipment-content .eqp-form-box, .myprofile-content .mp-form-box, .new-msg-content .new-msg-form-box{margin-bottom: 0px!important;} 
 
@@ -395,25 +394,29 @@ p.response-msg { word-wrap: break-word; }
  
 
 .postedbox {
-    background-color: #fff;
-    border-radius: 3px;
-    box-shadow: 0 1px 1px rgba(0, 0, 1, 0.39);
-    min-height: 237px;
-    /*padding: 6px;*/
+  background-color: #fff;
+  border: 1px solid #ddd;
+  min-height: inherit;
+  padding: 10px 10px 0;
 }
-.latest-txt{color: #888;
-    font-size: 14px;}
-.latest-txt span {
-    color: #4c4c4c;
+.latest-txt {
+  color: #666;
+  font-size: 13px;
+  line-height: normal;
+  margin: 0 0 2px;
 }
 
 .latest-title a {
-    color: #222 !important;
-    display: block;
-    font-size: 16px;
-    font-weight: 500;
-    margin-top: 2px;
-}    
+  color: #666 !important;
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: normal;
+  margin-top: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .Uploadbtn {
   position: relative;
@@ -662,3 +665,138 @@ background: -moz-linear-gradient(top, #5b8293 0%, #36586b 100%); /* FF3.6-15 */
 background: -webkit-linear-gradient(top, #5b8293 0%,#36586b 100%); /* Chrome10-25,Safari5.1-6 */
 background: linear-gradient(to bottom, #5b8293 0%,#36586b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5b8293', endColorstr='#36586b',GradientType=0 ); /* IE6-9 */}
+
+
+.gry-gradient{background: #fafafa;
+background: -moz-linear-gradient(top,  #fafafa 0%, #efefef 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fafafa), color-stop(100%,#efefef));
+background: -webkit-linear-gradient(top,  #fafafa 0%,#efefef 100%);
+background: -o-linear-gradient(top,  #fafafa 0%,#efefef 100%);
+background: -ms-linear-gradient(top,  #fafafa 0%,#efefef 100%);
+background: linear-gradient(to bottom,  #fafafa 0%,#efefef 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafafa', endColorstr='#efefef',GradientType=0 );}
+.mor-fin {
+  border-top: 1px solid #ddd;
+  margin: 0 -10px;
+  padding: 10px 0;
+}
+a.vm-btn {
+  color: #40687c;
+  float: right;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.rating-post > img {
+  width: 12px;
+}
+a.vm-btn:hover {
+  color: #f74f08;
+}
+.ext-info {
+  border-bottom: 1px solid #ddd;
+  font-size: 13px;
+  line-height: 35px;
+  padding: 0 12px;
+}
+.ext-info p {
+  margin: 0;
+}
+.orang-gradient:hover{ color: #fff; opacity: .8; }
+.orang-gradient {
+  border: 1px solid #de3510;
+  border-radius: 3px;
+  color: #fff !important;
+  display: inline-block;
+  font-weight: 400;
+  margin: 0 0 0 10px;
+  padding: 5px 15px;
+  text-shadow: 0 1px 1px #666;
+}
+.equp-add .control-label {
+  color: #333 !important;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+.equp-add .form-group {
+  display: table;
+  width: 100%;
+}
+.equp-add .selectric { border: 1px solid #cdcdcd;}
+.eq-radio-sec {
+  padding: 15px 0 30px;
+}
+.eq_type.fl {
+  display: none;
+}
+.eq-radio > span::before {
+  border: 3px solid #666;
+  border-radius: 50%;
+  bottom: 0;
+  content: "";
+  height: 20px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  width: 20px;
+}
+.eq-radio > span {
+  color: #333;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 0 0 0 25px;
+  position: relative;
+  text-transform: uppercase;
+}
+.eq-radio {
+  margin: 0 15px 0 0;
+}
+.eq-radio input:checked ~ span::before{ border-color:#FF4221; }
+.equp-add .control-label i {
+  color: #999;
+  font-style: normal;
+}
+.upload-imag .fields {
+  float: left;
+  width: 25%;
+}
+.equipment-content .eqp-form-box .upload-image-input img {
+  bottom: 0;
+  height: auto !important;
+  left: 0;
+  margin: auto;
+  max-height: 100%;
+  max-width: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto !important;
+}
+.upload-image .form-control.upload-photo-input {
+  cursor: pointer;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.upload-image .remove_nested_fields {
+  color: #fe5630;
+  left: 10px;
+  position: absolute;
+  top: 3px;
+  z-index: 99;
+}
+.add_nested_fields {
+  border: 1px solid #ddd;
+  float: right;
+  height: 180px;
+  position: relative;
+  width: 25%;
+}
+.upload-imag .fields .upload-image {
+  padding: 0 5px;
+}

@@ -1,8 +1,8 @@
-<section class="content equipment-content">
-<div class="row">
+<section class="content equipment-content equp-add">
+<div class="row no-margin">
 	<div class="col-md-12">
 	 <!-- tab style -->
-		<div class="clearfix mb20 dashboard-profile">
+		<div class="clearfix mb20 dashboard-profile same-color-box">
 			<ul class="nav nav-tabs">
 				<li class="active"><a href="#tab-classification" data-toggle="tab" id="tab-classification-lnk">Equipment Classification</a></li>
 				<li><a href="#tab-information" data-toggle="tab" id="tab-information-lnk">Primary Information</a></li>
@@ -15,23 +15,25 @@
 			<div class="tab-content">
 				<div class="tab-pane active" id="tab-classification">
 					<div class="row">
-						<div class="col-md-12 mb20">
+						<div class="col-md-12 mb20 no-padding">
 
 							<div style="display: <%=(action_name == 'edit' || action_name == 'update' ) ? 'none' : 'block'%>">
-								<div class="ui-radio ui-radio-primary">
-									<label class="ui-radio-inline">
+								<div class="col-md-12">
+								<div class="eq-radio-sec">
+									<label class="eq-radio">
 										<%= f.radio_button :equipment_type, "equipment",:checked => f.object.equipment_type.present? ? f.object.equipment_type == "equipment" : true,class: "eq_type fl"%>
 										<span>Equipment</span>
 									</label>
 									
-									<label class="ui-radio-inline">
+									<label class="eq-radio">
 										<%= f.radio_button :equipment_type, "power_plant",:checked => f.object.equipment_type.present? ? f.object.equipment_type == "power_plant" : false, class: "eq_radio_label fl eq_type" %>
 										<span>Power Plant</span>
 									</label>	
 								</div>
+								</div>
 							</div>
 							
-							<div class="clearfix"></div>
+							 
 
 							<div class="form-group">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Category Type<sup>*</sup></label>
@@ -43,7 +45,7 @@
 								</div>
 							</div>
 							
-							<div class="clearfix"></div>
+							 
 										
 							<div class="form-group mt20" id="category_select">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Category<sup>*</sup></label>
@@ -57,7 +59,7 @@
 								</div>
 							</div>
 							
-							<div class="clearfix"></div>
+							 
 							
 							<div class="form-group mt20" id="sub_category_select">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Sub Category</label>
@@ -68,7 +70,7 @@
 								</div>
 							</div>
 							
-							<div class="clearfix"></div>
+							 
 							
 							<div class="form-group mt20 eq_total" id="sub_sub_category_select">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Sub Sub Category</label>
@@ -80,7 +82,7 @@
 							</div>
 
 							<div class="clearfix mt20 col-md-12">
-								<a href="javascript:void(0);" data-ref="tab-information-lnk" class="tab-next-lnk btn btn-primary mr5 pull-right">Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+								<a href="javascript:void(0);" data-ref="tab-information-lnk" class="tab-next-lnk orang-gradient pull-right">Next </a>
 							</div>	
 
 						</div>
@@ -89,7 +91,7 @@
 
 				<div class="tab-pane" id="tab-information">
 					<div class="row">
-						<div class="col-md-12 mb20">
+						<div class="col-md-12 mb20 no-padding">
 
 							<div class="form-group">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Name<sup>*</sup></label>
@@ -99,7 +101,7 @@
 								</div>
 							</div>
 							
-							<div class="clearfix"></div>
+							 
 							
 							<div class="form-group mt20 eq_total">
 								<label class="col-md-12 control-label">Equipment Model Number<sup>*</sup></label>
@@ -109,7 +111,7 @@
 								</div>
 							</div>
 							
-							<div class="clearfix"></div>
+							 
 							
 							<div class="form-group mt20 eq_total">
 								<label class="col-md-12 control-label">Equipment Condition<sup>*</sup></label>
@@ -119,7 +121,7 @@
 								</div>
 							</div>
 										
-							<div class="clearfix"></div>
+							 
 							
 							<div class="form-group mt20 pp_total hide">
 								<label class="col-md-12 control-label">Power Plant Type<sup>*</sup></label>
@@ -129,7 +131,7 @@
 								</div>
 							</div>
 							
-							<div class="clearfix"></div>
+							 
 							
 							<div class="form-group mt20 pp_total hide">
 								<label class="col-md-12 control-label">Power Plant Age<sup>*</sup></label>
@@ -139,7 +141,7 @@
 								</div>
 							</div>
 							
-							<div class="clearfix"></div>
+							 
 							
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Owner Name</label>
@@ -150,7 +152,7 @@
 								</div>
 							</div>
 							
-							<div class="clearfix"></div>
+							 
 							
 							<div class="form-group mt20 eq_total">
 								<label class="col-md-12 control-label">Equipment Manufacturer's Name</label>
@@ -161,7 +163,7 @@
 								</div>
 							</div>
 							
-							<div class="clearfix"></div>
+							 
 							
 							<div class="form-group mt20 pp_total hide">
 								<label class="col-md-12 control-label">Turbine Model<sup>*</sup></label>
@@ -171,7 +173,7 @@
 								</div>
 							</div>
 							
-							<div class="clearfix"></div>
+							 
 							
 							<div class="form-group mt20 pp_total hide">
 								<label class="col-md-12 control-label">Turbine Manufacturer Name<sup>*</sup></label>
@@ -181,7 +183,7 @@
 								</div>
 							</div>
 							
-							<div class="clearfix"></div>
+							 
 							
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label">Expiration Date<sup>*</sup></label>
@@ -194,7 +196,7 @@
 								</div>
 							</div>
 							
-							<div class="clearfix"></div>
+							 
 							
 							<div class="form-group mt20 eq_total">
 								<label class="col-md-12 control-label">Manufacture Year<sup>*</sup></label>
@@ -204,11 +206,13 @@
 								</div>
 							</div>		
 
-							<div class="clearfix"></div>
-							<div class="form-group mt20 col-md-12">
-								<div class="eqp-form-box">
+							 
+							<div class="form-group mt20 eq_total"">
+								
 									<label class="col-md-12 control-label">Condition Rating</label>
+									 
 									<div class="col-md-12">
+									<div class="start-rating">
 										<%= f.hidden_field :rating %>
 										<ul class="equipment_rating_stars">
 										<% 5.times do |i| %>
@@ -216,14 +220,15 @@
 										  <% end %>
 										</ul>
 										<%= form_error_msg_for(@equipment,:rating) %>
+										</div>
 									</div>
-								</div>
+								 
 							</div>
 
 							<div class="clearfix mt20 col-md-12">
-								<a href="javascript:void(0);" data-ref="tab-description-lnk" class="tab-next-lnk btn btn-primary mr5 pull-right">Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+								<a href="javascript:void(0);" data-ref="tab-description-lnk" class="tab-next-lnk orang-gradient pull-right">Next  </a>
 
-								<a href="javascript:void(0);" data-ref="tab-classification-lnk" class="tab-next-lnk btn btn-primary mr5 pull-right"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Previous</a>
+								<a href="javascript:void(0);" data-ref="tab-classification-lnk" class="tab-next-lnk orang-gradient pull-right"> Previous</a>
 							</div>	
 							
 						</div>
@@ -232,7 +237,7 @@
 
 				<div class="tab-pane" id="tab-description">
 					<div class="row">
-						<div class="col-md-12 mb20">
+						<div class="col-md-12 mb20 no-padding">
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Description<sup>*</sup></label>
 								<div class="col-md-12">
@@ -241,7 +246,7 @@
 								</div>
 							</div>
 							
-							<div class="clearfix"></div>
+							 
 							
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Faults & Shortages</label>
@@ -251,7 +256,7 @@
 								</div>
 							</div>
 
-							<div class="clearfix"></div>
+							 
 							
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Keywords</label>
@@ -261,10 +266,10 @@
 								</div>
 							</div>
 
-							<div class="clearfix"></div>
+							 
 
 							<div class="form-group mt20">
-								<div class="col-md-12 file-field">										
+								<div class="col-md-12 file-field grad-fields">										
 									<%= f.file_field :attachment, class: "filestyle", "data-buttonName" => "btn-primary" %>
 									<%= f.hidden_field :attachment_cache %>
 									<%= form_error_msg_for(@equipment, :attachment)%>
@@ -276,10 +281,13 @@
 								</div>
 							</div>
 
-							<div class="clearfix"></div>
-
-							<div class="eqp-form-box mt20 marginL15 marginR15" id="images-box">
-								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Photo</label>
+							 
+							<div class="form-group mt20">
+							<label class="col-md-12 control-label">Equipment Photo <i>(Upload an image)</i></label>
+							
+							<div class="col-md-12">
+							<div class="eqp-form-box upload-imag " id="images-box">
+								 
 								<%
 								  @tmp_images ||= {}
 								  nested_form_count = 0
@@ -287,7 +295,7 @@
 								<%= f.fields_for :images do |img| %>
 									<div class="upload-image">
 										<div class="form-group mrg-btm-zero">
-											<label for="description">Upload an image</label>
+											 
 											<div class="upload-image-input">
 												<%
 												  img_src = img.object.image.present? ? img.object.image : @tmp_images[img.index.to_s]
@@ -297,7 +305,7 @@
 												<%= img.hidden_field :tmp_image, value: tmp_image_src %>
 												<%= img.hidden_field :id %>
 												<%= img.link_to_remove "<i class='fa fa-close'></i>".html_safe %>
-												<%= image_tag img_src, class: 'equipment_preview_image', id: "equipment_images_attributes_"+img.index.to_s+"_preview", style: img_src.present? ? "height:95%;width:100%" : '' %>
+												<%= image_tag img_src, class: 'equipment_preview_image', id: "equipment_images_attributes_"+img.index.to_s+"_preview", style: img_src.present? ? "" : '' %>
 												<%= img.file_field :image, title: " ", class: 'form-control upload-photo-input', accept: 'image/*' %>
 												<%= img.hidden_field :image_cache %>
 											</div>
@@ -309,11 +317,13 @@
 								<%= f.link_to_add "<div class='tips-for-imgupload'><div class='add-new-img' title='Add one more image'><span class='ion-plus img-add'></span></div></div>".html_safe, :images, style: nested_form_count >= 4 ? "display:none" : "" %>
 							
 						  	</div>
+						  	</div>
+						  	</div>
 
 							<div class="clearfix mt20 col-md-12">
-								<a href="javascript:void(0);" data-ref="tab-price-lnk" class="tab-next-lnk btn btn-primary mr5 pull-right">Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+								<a href="javascript:void(0);" data-ref="tab-price-lnk" class="tab-next-lnk orang-gradient pull-right">Next </a>
 
-								<a href="javascript:void(0);" data-ref="tab-information-lnk" class="tab-next-lnk btn btn-primary mr5 pull-right"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Previous</a>
+								<a href="javascript:void(0);" data-ref="tab-information-lnk" class="tab-next-lnk orang-gradient pull-right"> Previous</a>
 							</div>	
 						
 						</div>
@@ -322,7 +332,7 @@
 
 				<div class="tab-pane" id="tab-price">
 					<div class="row">
-						<div class="col-md-12 mb20">
+						<div class="col-md-12 mb20 no-padding">
 							<div class="form-group">
 								<label class="col-md-12 control-label">Price<sup>*</sup></label>
 								<div class="col-md-12">
@@ -330,7 +340,7 @@
 									<%= form_error_msg_for(@equipment,:price) %>
 								</div>
 							</div>
-							<div class="clearfix"></div>	
+							 	
 
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label">Minimum Accepted Price(<sup>*</sup>Not to disclose)<sup>*</sup></label>
@@ -339,7 +349,7 @@
 									<%= form_error_msg_for(@equipment,:minimum_accepted_price) %>
 								</div>
 							</div>
-							<div class="clearfix"></div>
+							 
 
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label">Currency<sup>*</sup></label>
@@ -350,9 +360,9 @@
 							</div>
 
 							<div class="clearfix mt20 col-md-12">
-								<a href="javascript:void(0);" data-ref="tab-shipping-lnk" class="tab-next-lnk btn btn-primary mr5 pull-right">Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+								<a href="javascript:void(0);" data-ref="tab-shipping-lnk" class="tab-next-lnk orang-gradient pull-right">Next</a>
 
-								<a href="javascript:void(0);" data-ref="tab-description-lnk" class="tab-next-lnk btn btn-primary mr5 pull-right"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Previous</a>
+								<a href="javascript:void(0);" data-ref="tab-description-lnk" class="tab-next-lnk orang-gradient pull-right">Previous</a>
 							</div>		
 
 						</div>
@@ -361,7 +371,7 @@
 
 				<div class="tab-pane" id="tab-shipping">
 					<div class="row">
-						<div class="col-md-12 mb20">
+						<div class="col-md-12 mb20 no-padding">
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label">Pickup Port (Nearest Port , Airport)</label>
 								<div class="col-md-12">
@@ -370,7 +380,7 @@
 								</div>
 							</div>
 							
-							<div class="clearfix"></div>
+							 
 							
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label">Location City<sup>*</sup></label>
@@ -380,7 +390,7 @@
 								</div>
 							</div>
 							
-							<div class="clearfix"></div>
+							 
 							
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Location Country<sup>*</sup></label>
@@ -390,7 +400,7 @@
 								</div>
 							</div>
 
-							<div class="clearfix"></div>
+							 
 
 							<div class="form-group mt20">
 								<div class="col-md-12">
@@ -458,9 +468,9 @@
 
 
 							<div class="clearfix col-md-12">
-							   <button type="submit" class="btn btn-primary mr5 pull-right" value="Submit" name="commit"><i class="fa fa-check" aria-hidden="true"></i> Submit</button>
+							   <button type="submit" class="orang-gradient pull-right" value="Submit" name="commit">  Submit</button>
 
-							   <a href="javascript:void(0);" data-ref="tab-price-lnk" class="tab-next-lnk btn btn-primary mr5 pull-right"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Previous</a>
+							   <a href="javascript:void(0);" data-ref="tab-price-lnk" class="tab-next-lnk orang-gradient pull-right">  Previous</a>
 							</div>
 
 						</div>

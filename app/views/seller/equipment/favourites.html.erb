@@ -1,14 +1,11 @@
-<div class="page page-ui-tables page-dashboard">
-	<ol class="breadcrumb breadcrumb-small">
-		<li><a href="<%= seller_dashboard_path %>">Home</a></li>
-		<li class="active">My Favourites</li>
-	</ol>
+<div class="page page-dashboard padding0">
+	 
 	
 	<div class="page-wrap">
 		
-		<div class="row">
+		<div class="row no-margin no-padding">
 			<!-- dashboard header -->
-			<div class="col-md-12">
+			<div class="col-md-12 no-padding">
 				<div class="dash-head clearfix mb20">
 					<div class="left">
 						<h4 class="mb5 text-light">My Favourites</h4>
@@ -17,15 +14,18 @@
 			</div>
 		</div> <!-- #end row -->
 		
-		<div class="col-sm-12 col-md-12 mb10 marginT10">	
-			<span class="text-bold">Watch Later List</span>  
-		</div>
+		 
 		<!-- row -->
-		<div class="row">
+		<div class="row no-marging">
 			<div class="col-md-12">
-				<div class="panel panel-lined panel-hovered mb20 table-responsive basic-table">
+		<div class="main-box top-margin-15">
+			<div class="main-heding no-t-padding"><i class="fa fa-list" aria-hidden="true"></i> <p>Watch Later List</p> 
+				</div>
+
+
+				<div class="panel-body padding0 dashboard-table">
 					
-					<div class="panel-body">
+					 
 						<% if @equipments.present? %>
 							<table class="table">
 								<thead>
@@ -58,8 +58,8 @@
 												
 											</td>
 											<td class="text-center">
-												<%= link_to '<i class="fa fa-eye marginR5 bluecolor"></i>'.html_safe, equipment_details_path(favourite.equipment), title: "View" %>
-												<%= link_to '<i class="fa fa-trash marginL5 redcolor"></i>'.html_safe, seller_remove_favourite_path(favourite), method: :delete, data: { confirm: 'Are you sure?' }, title: "Remove from favourites" %>
+												<%= link_to '<span class="ti-eye"></span>'.html_safe, equipment_details_path(favourite.equipment), title: "View" %>
+												<%= link_to '<span class="ti-trash redcolor"></span>'.html_safe, seller_remove_favourite_path(favourite), method: :delete, data: { confirm: 'Are you sure?' }, title: "Remove from favourites" %>
 											</td>
 																						
 										</tr>
@@ -70,162 +70,178 @@
 						 <% else %>
 							<p class="no-result">Your wish list is empty. Visit these sections for some inspiration !</p>
 						 <% end %>	
-					</div>
+					 
+				</div>
 				</div>
 			</div>
 		</div>
 
 		<!-- Latest Posted Equipment start-->
 
-		<div class="row">
+		<div class="row no-margin">
 			<div class="col-md-12">
-				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active"><a href="#LatestAds" aria-controls="home" role="tab" data-toggle="tab">Latest Ads</a></li>
-					<li role="presentation"><a href="#PopularAds" aria-controls="profile" role="tab" data-toggle="tab">Popular Ads</a></li>
-				</ul>
-				
-				<div class="tab-content">
-					<div role="tabpanel" class="tab-pane active" id="LatestAds">
-						<div class="row">
-<% if @latest_ads.present? %>										
-	<% @latest_ads.each do |ad| %>
-							<div class="col-md-4 col-sm-4 col-xs-12">
-								<div class="postedbox clearfix">
-									<div class="clearfix row marginB10">
-										<div class="col-md-5 col-sm-5 col-xs-5">
-											<a href="<%= equipment_details_path(ad) %>">
-												<% if ad.try(:images).try(:first).try(:image) %>
-													<%= image_tag ad.try(:images).try(:first).try(:image).try(:card_image).try(:url), class: 'img-responsive' %>
-												<% else %>
-													<%= image_tag "equipment-noimage.png", class: 'img-responsive' %>
-												<% end %>
-											</a>
-										</div>
-										<div class="col-md-7 col-sm-7 col-xs-7 leftpading">
-											<div class="latest-title marginB10">
-												<a href="<%= equipment_details_path(ad) %>"><%= "#{ad.identifier} - #{truncate(ad.name, length: 20)}" %></a>
-											</div>
-											<div class="latest-txt marginB10"><%= truncate(ad.description, length: 50) %></div>
-											<div class="latest-txt marginB10"><span>Price :</span> <%= number_to_currency(ad.price, unit: raw(ad.currency)) %></div>
-											<div class="latest-txt marginB10">
-												<% if ad.equipment_type == "equipment"%>
-													<span>Manufacturing : </span> <%= ad.manufacture_year%>
-												<% else %>
-													<span>Power Plant Age : </span> <%= ad.power_plant_age%><
-												<% end %>
-											</div>
-											<div class="latest-txt marginB10">
-												<% if ad.equipment_type == "equipment"%>
-													<span>Brand : </span><%= truncate(ad.try(:manufacturer).try(:name),length: 15)%>
-												<% else %>
-													<span>Turbine Brand : </span><%= truncate(ad.turbine_manufacturer_name, length: 12)%>
-												<% end %>
-											</div>
-										</div>
-									</div>
-								
-									<div class="postwrap clearfix marginB5">
-										<div class="col-md-7 col-sm-6 col-xs-6 rating-post">
-											Rating : 							
-											<img src="<%= ad.try(:rating).to_i >= 1 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="1">
-											<img src="<%= ad.try(:rating).to_i >= 2 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="2">
-											<img src="<%= ad.try(:rating).to_i >= 3 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="3">
-											<img src="<%= ad.try(:rating).to_i >= 4 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="4">
-											<img src="<%= ad.try(:rating).to_i >= 5 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="5">
-										</div>
-										<div class="col-md-5 col-sm-6 col-xs-6">
-											<%= link_to 'MORE INFO', equipment_details_path(ad), class: "btn btn-primary mr5 pull-right waves-effect" %>
-										</div>
-									</div>
-								</div>
-							</div>				
-	<% end %>
-<% else %>
-	<div class="text-center">Latest Ads Empty !</div>	
-<% end %>		
-						</div>
-					</div>
+				<div class="clearfix mb20 dashboard-profile same-color-box">
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a href="#LatestAds" aria-controls="home" role="tab" data-toggle="tab">Latest Ads</a></li>
+						<li role="presentation"><a href="#PopularAds" aria-controls="profile" role="tab" data-toggle="tab">Popular Ads</a></li>
+					</ul>
 					
-					<div role="tabpanel" class="tab-pane" id="PopularAds">
-						<div class="row">	
-<% if @popular_ads.present? %>							
-	<% @popular_ads.each do |ad| %>
-							<div class="col-md-4 col-sm-4 col-xs-12">
-								<div class="postedbox clearfix">
-									<div class="clearfix row marginB10">
-										<div class="col-md-5 col-sm-5 col-xs-5">
-											<a href="<%= equipment_details_path(ad) %>">
-												<% if ad.try(:images).try(:first).try(:image) %>
-													<%= image_tag ad.try(:images).try(:first).try(:image).try(:card_image).try(:url), class: 'img-responsive' %>
-												<% else %>
-													<%= image_tag "equipment-noimage.png", class: 'img-responsive' %>
-												<% end %>
-											</a>
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="LatestAds">
+							<div class="row">
+	<% if @latest_ads.present? %>										
+		<% @latest_ads.each do |ad| %>
+								<div class="col-md-4 col-sm-4 col-xs-12">
+									<div class="postedbox clearfix">
+										<div class="clearfix row marginB10">
+											<div class="col-md-5 col-sm-5 col-xs-5">
+												<a href="<%= equipment_details_path(ad) %>">
+													<% if ad.try(:images).try(:first).try(:image) %>
+														<%= image_tag ad.try(:images).try(:first).try(:image).try(:card_image).try(:url), class: 'img-responsive' %>
+													<% else %>
+														<%= image_tag "equipment-noimage.png", class: 'img-responsive' %>
+													<% end %>
+												</a>
+											</div>
+											<div class="col-md-7 col-sm-7 col-xs-7 leftpading">
+												
+												<div class="latest-txt "><%= truncate(ad.description, length: 50) %></div>
+												<div class="latest-txt "><span>Price :</span> <%= number_to_currency(ad.price, unit: raw(ad.currency)) %></div>
+												<div class="latest-txt ">
+													<% if ad.equipment_type == "equipment"%>
+														<span>Manufacturing : </span> <%= ad.manufacture_year%>
+													<% else %>
+														<span>Power Plant Age : </span> <%= ad.power_plant_age%><
+													<% end %>
+												</div>
+												<div class="latest-txt ">
+													<% if ad.equipment_type == "equipment"%>
+														<span>Brand : </span><%= truncate(ad.try(:manufacturer).try(:name),length: 15)%>
+													<% else %>
+														<span>Turbine Brand : </span><%= truncate(ad.turbine_manufacturer_name, length: 12)%>
+													<% end %>
+												</div>
+
+												<div class="rating-post">
+												<img src="<%= ad.try(:rating).to_i >= 1 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="1">
+												<img src="<%= ad.try(:rating).to_i >= 2 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="2">
+												<img src="<%= ad.try(:rating).to_i >= 3 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="3">
+												<img src="<%= ad.try(:rating).to_i >= 4 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="4">
+												<img src="<%= ad.try(:rating).to_i >= 5 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="5">
+												</div>
+
+											</div>
 										</div>
-										<div class="col-md-7 col-sm-7 col-xs-7 leftpading">
-											<div class="latest-title marginB10">
-												<a href="<%= equipment_details_path(ad) %>"><%= "#{ad.identifier} - #{truncate(ad.name, length: 20)}" %></a>
+									
+										<div class="postwrap clearfix gry-gradient mor-fin">
+											<div class="col-md-8 col-sm-8 col-xs-8">
+											<div class="latest-title">
+													<a href="<%= equipment_details_path(ad) %>"><%= "#{ad.identifier} - #{truncate(ad.name, length: 20)}" %></a>
+												</div>
 											</div>
-											<div class="latest-txt marginB10"><%= truncate(ad.description, length: 50) %></div>
-											<div class="latest-txt marginB10"><span>Price :</span> <%= number_to_currency(ad.price, unit: raw(ad.currency)) %></div>
-											<div class="latest-txt marginB10">
-												<% if ad.equipment_type == "equipment"%>
-													<span>Manufacturing : </span> <%= ad.manufacture_year%>
-												<% else %>
-													<span>Power Plant Age : </span> <%= ad.power_plant_age%><
-												<% end %>
-											</div>
-											<div class="latest-txt marginB10">
-												<% if ad.equipment_type == "equipment"%>
-													<span>Brand : </span><%= truncate(ad.try(:manufacturer).try(:name),length: 15)%>
-												<% else %>
-													<span>Turbine Brand : </span><%= truncate(ad.turbine_manufacturer_name, length: 12)%>
-												<% end %>
+											<div class="col-md-4 col-sm-4 col-xs-4">
+												<%= link_to 'MORE INFO', equipment_details_path(ad), class: "vm-btn" %>
 											</div>
 										</div>
 									</div>
-								
-									<div class="postwrap clearfix marginB5">
-										<div class="col-md-7 col-sm-6 col-xs-6 rating-post">
-											Rating : 							
-											<img src="<%= ad.try(:rating).to_i >= 1 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="1">
-											<img src="<%= ad.try(:rating).to_i >= 2 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="2">
-											<img src="<%= ad.try(:rating).to_i >= 3 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="3">
-											<img src="<%= ad.try(:rating).to_i >= 4 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="4">
-											<img src="<%= ad.try(:rating).to_i >= 5 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="5">
+								</div>				
+		<% end %>
+	<% else %>
+		<div class="text-center">Latest Ads Empty !</div>	
+	<% end %>		
+							</div>
+						</div>
+						
+						<div role="tabpanel" class="tab-pane" id="PopularAds">
+							<div class="row">	
+	<% if @popular_ads.present? %>							
+		<% @popular_ads.each do |ad| %>
+								<div class="col-md-4 col-sm-4 col-xs-12">
+									<div class="postedbox clearfix">
+										<div class="clearfix row marginB10">
+											<div class="col-md-5 col-sm-5 col-xs-5">
+												<a href="<%= equipment_details_path(ad) %>">
+													<% if ad.try(:images).try(:first).try(:image) %>
+														<%= image_tag ad.try(:images).try(:first).try(:image).try(:card_image).try(:url), class: 'img-responsive' %>
+													<% else %>
+														<%= image_tag "equipment-noimage.png", class: 'img-responsive' %>
+													<% end %>
+												</a>
+											</div>
+											<div class="col-md-7 col-sm-7 col-xs-7 leftpading">
+												
+												<div class="latest-txt "><%= truncate(ad.description, length: 50) %></div>
+												<div class="latest-txt "><span>Price :</span> <%= number_to_currency(ad.price, unit: raw(ad.currency)) %></div>
+												<div class="latest-txt ">
+													<% if ad.equipment_type == "equipment"%>
+														<span>Manufacturing : </span> <%= ad.manufacture_year%>
+													<% else %>
+														<span>Power Plant Age : </span> <%= ad.power_plant_age%><
+													<% end %>
+												</div>
+												<div class="latest-txt ">
+													<% if ad.equipment_type == "equipment"%>
+														<span>Brand : </span><%= truncate(ad.try(:manufacturer).try(:name),length: 15)%>
+													<% else %>
+														<span>Turbine Brand : </span><%= truncate(ad.turbine_manufacturer_name, length: 12)%>
+													<% end %>
+												</div>
+												<div class="rating-post">
+												<img src="<%= ad.try(:rating).to_i >= 1 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="1">
+												<img src="<%= ad.try(:rating).to_i >= 2 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="2">
+												<img src="<%= ad.try(:rating).to_i >= 3 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="3">
+												<img src="<%= ad.try(:rating).to_i >= 4 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="4">
+												<img src="<%= ad.try(:rating).to_i >= 5 ? '/assets/orange-star.png' : '/assets/grey-star.png' %>" alt="5">
+												</div>
+											</div>
 										</div>
-										<div class="col-md-5 col-sm-6 col-xs-6">
-											<%= link_to 'MORE INFO', equipment_details_path(ad), class: "btn btn-primary mr5 pull-right waves-effect" %>
+									
+										<div class="postwrap clearfix gry-gradient mor-fin">
+											<div class="col-md-7 col-sm-6 col-xs-6">
+												<div class="latest-title">
+													<a href="<%= equipment_details_path(ad) %>"><%= "#{ad.identifier} - #{truncate(ad.name, length: 20)}" %></a>
+												</div>
+											</div>
+											<div class="col-md-5 col-sm-6 col-xs-6">
+												<%= link_to 'MORE INFO', equipment_details_path(ad), class: "vm-btn" %>
+											</div>
 										</div>
 									</div>
-								</div>
-							</div>				
-	<% end %>
-<% else %>
-	<div class="text-center">Pouplar Ads Empty !</div>	
-<% end %>		
+								</div>				
+		<% end %>
+	<% else %>
+		<div class="text-center">Pouplar Ads Empty !</div>	
+	<% end %>		
+							</div>
 						</div>
 					</div>
+
+
 				</div>
 			</div>
 		</div>
 <!-- Latest Posted Equipment end-->
 
-<% if @categories.present? %>		
-		
-		<div class="col-sm-12 col-md-12 mb10 marginT10">	
-			<span class="text-bold">Preferences</span>  
-		</div>
+<% if @categories.present? %>
 
-		<!-- row -->
-		<div class="row">
+
+
+<div class="row no-marging">
 			<div class="col-md-12">
-				<div class="panel panel-lined panel-hovered mb20">
+		<div class="main-box top-margin-15">
+			<div class="main-heding no-t-padding"><i class="fa fa-list" aria-hidden="true"></i> <p>Preferences</p> 
+			
+				</div>
+<div class="gry-gradient ext-info"><p>Time to time, you will find some products that you are interested or some buyers that you really need.</p></div>
+
+				<div class="panel-body padding0 dashboard-table">
+					
+					 <div class="panel panel-lined panel-hovered mb20">
 	<%= form_tag do |f| %>			
-					<div class="panel-body">
+					<div class="panel-body pref-tag">
 						
 		<% @categories.each_with_index do |category,index| %>
-						<div class="col-md-4 col-sm-6 marginT10 marginB10 ui-checkbox ui-checkbox-info">
+						<div class="col-md-4 col-sm-6  ui-checkbox ui-checkbox-info">
 														
 							<label>
 								<%= check_box_tag "cat[" + category.id.to_s + "]", category.id, (checked = true if category.category_id ), :class => "preference_category" %>
@@ -238,8 +254,14 @@
 					</div>
 	<% end %>					
 				</div>
+							
+							
+					 
+				</div>
+				</div>
 			</div>
 		</div>
+
 <% end %>	
 		
 	</div>

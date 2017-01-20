@@ -1,26 +1,30 @@
 <div class="page page-forms-elements page-dashboard">
-	<ol class="breadcrumb breadcrumb-small">
-		<li><a href="<%= seller_dashboard_path %>">Home</a></li>
-		 <li><a href="<%= seller_equipment_index_path %>">Equipment</a></li>
-		<li class="active">Edit</li>
-	</ol>
+ 
 	
 	<div class="page-wrap clearfix">
 		
-		<div class="col-md-9 col-sm-12 col-xs-12">
-			<div class="row">
+		<div class="col-md-9 col-sm-12 col-xs-12 no-padding">
+			<div class="row no-margin no-padding">
 				<!-- dashboard header -->
-				<div class="col-md-12">
+				<div class="col-md-12 no-padding">
 					<div class="dash-head clearfix mb20">
 						<div class="left">
-							<h4 class="mb5 text-light">Edit <span id='header_name_edit'>Equipment</span></h4>
+							<h4 class="mb5 text-light">Welcome to Power Cozmo</h4>
 						</div>
 					</div>
 				</div>
 			</div> <!-- #end row -->
+
+			<div class="row no-marging">
+				<div class="col-md-12">
+					<div class="main-box top-margin-15 no-radius">
+						<div class="main-heding no-t-padding no-border"><i class="fa fa-list" aria-hidden="true"></i> <p>Edit Equipment</p></div>
+					</div>
+				</div>
+			</div>
 			
 			<!-- row -->
-			<div class="row">
+			<div class="row no-margin">
 				<%= render partial: "form" %>
 			</div>
 		</div>
