@@ -213,7 +213,7 @@ ul.menu li a { height: auto !important; }
 /* Custom Select */
 .selectric-wrapper { position: relative; cursor: pointer; clear: both; }
 .selectric-responsive { width: 100%; }
-.selectric { border: 1px solid #e6e6e6; background: #fff; position: relative; }
+.selectric { border:1px solid #c9c9c9; background: #fff; position: relative; }
 .selectric .label { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0 38px 0 10px; line-height: 38px; color: #444; height: 38px; }
 .selectric .button { display: block; position: absolute; right: 5px; top: 15px; width: 38px; height: 38px; color: #BBB; text-align: center; font: 0/0 a; *font: 20px/38px Lucida Sans Unicode, Arial Unicode MS, Arial;
 background: url(/assets/seller/select-arr.png); width: 25px; height: 22px; display: block; }

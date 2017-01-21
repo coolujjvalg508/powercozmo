@@ -298,7 +298,8 @@
 											 
 											<div class="upload-image-input">
 												<%
-												  img_src = img.object.image.present? ? img.object.image : @tmp_images[img.index.to_s]
+												  #img_src = img.object.image.present? ? img.object.image : @tmp_images[img.index.to_s]
+												  img_src = img.object.image.present? ? img.object.image : '/assets/pow-shape.png'
 												  tmp_image_src = @tmp_images[img.index.to_s]
 												  nested_form_count += 1
 												%>

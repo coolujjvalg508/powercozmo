@@ -1,29 +1,32 @@
 <div class="page page-ui-tables page-dashboard">
-	<ol class="breadcrumb breadcrumb-small">
-		<li><a href="<%= seller_dashboard_path %>">Home</a></li>
-		<li class="active">My Listed Equipments</li>
-	</ol>
-	
-	<div class="page-wrap">
-		
-		<div class="row">
+ <div class="row no-marging">
 			<!-- dashboard header -->
-			<div class="col-md-12">
-				<div class="dash-head clearfix mb20">
+			<div class="col-md-12 no-padding">
+				<div class="dash-head clearfix mt15 mb20 margin-bt">
 					<div class="left">
-						<h4 class="mb5 text-light">My Listed Equipments</h4>
+						<h4 class="mb5 text-light">Welcome to Power Cozmo</h4>
 					</div>
 				</div>
 			</div>
-		</div> <!-- #end row -->
+		</div>
+	
+	<div class="page-wrap">
+		
+		 
 		
 		<!-- row -->
-		<div class="row">
+		<div class="row no-marging">
 			<!-- Basic Table -->
 			<div class="col-md-12">
 				<div class="panel panel-lined panel-hovered mb20 table-responsive basic-table">
 					
-					<div class="panel-body">
+					<div class="main-box">
+
+					<div class="main-heding no-t-padding"><i class="fa fa-list" aria-hidden="true"></i> <p>My Listed Equipments</p> 				
+				</div>
+
+					<div class="panel-body padding0 dashboard-table">
+					 
 						<% if @equipments.present? %>
 							<table class="table">
 								<thead>
@@ -56,18 +59,25 @@
 												
 											</td>
 											<td class="text-center">
-												<%= link_to '<i class="fa fa-edit marginR5 bluecolor"></i>'.html_safe, edit_seller_equipment_path(equipment), title: "Edit Equipment" %>
-												<%= link_to '<i class="fa fa-trash marginL5 redcolor"></i>'.html_safe, seller_equipment_path(equipment), method: :delete, data: { confirm: 'Are you sure?' }, title: "Delete Equipment" %>
+												<%= link_to '<span class="ti-pencil"></span>'.html_safe, edit_seller_equipment_path(equipment), title: "Edit Equipment" %>
+												<%= link_to '<span class="ti-trash redcolor"></span>'.html_safe, seller_equipment_path(equipment), method: :delete, data: { confirm: 'Are you sure?' }, title: "Delete Equipment" %>
 											</td>
 																						
 										</tr>
 									<% end %>
 								</tbody>
 							</table>
+							
+
 							<%= paginate @equipments, :theme => 'listing_page_theme' %>
 						 <% else %>
 							<p class="no-result">No Equipments Found</p>
 						 <% end %>	
+						 </div>
+						 
+
+
+					</div>
 					</div>
 				</div>
 			</div>

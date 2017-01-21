@@ -1,29 +1,28 @@
 
 
 <div class="page page-dashboard">
-	<ol class="breadcrumb breadcrumb-small">
-		<li><a href="<%= seller_dashboard_path %>">Home</a></li>
-		<li class="active"><%= @ask_for_services.first.title %></li>
-	</ol>
-	
-	<div class="page-wrap">
-		
-		<div class="row">
+
+	 <div class="row no-margin no-padding">
 			<!-- dashboard header -->
-			<div class="col-md-12">
+			<div class="col-md-12 no-padding">
 				<div class="dash-head clearfix mb20">
 					<div class="left">
 						<h4 class="mb5 text-light"><%= @ask_for_services.first.title %></h4>
 					</div>
 				</div>
 			</div>
-		</div> <!-- #end row -->
+		</div>
+	
+	<div class="page-wrap">
+		
+	 
 		
 		<!-- row -->
-		<div class="row">
-			<!-- Basic Table -->
-			<div class="table-responsive col-md-12">
+		<div class="row no-marging">
+<div class="col-md-12">
+				<div class="sta-text">
 				<%= @ask_for_services.first.content.to_s.html_safe %>
+				</div>
 			</div>
 		</div>
 	</div>

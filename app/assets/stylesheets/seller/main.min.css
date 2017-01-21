@@ -3381,13 +3381,11 @@ fieldset[disabled] .btn-youtube.active {
   position: relative;
 }
 .easypiechart > .data {
+  left: 15px;
   position: absolute;
-  -webkit-transform: translate(-50%, -49%);
-  -ms-transform: translate(-50%, -49%);
-  -o-transform: translate(-50%, -49%);
-  transform: translate(-50%, -49%);
-  top: 49%;
-  left: 50%;
+  right: 0;
+  top: 60px;
+  white-space: nowrap;
 }
 /** Only for presentation, buttons **/
 .page-ui-buttons .btn-group button {
@@ -3688,10 +3686,11 @@ fieldset[disabled] .btn-youtube.active {
   }
 }
 .main-container {
-  width: 100%;
+  background: #efefef none repeat scroll 0 0;
+  min-height: 100%;
   overflow: hidden;
   position: relative;
-  background: #efefef;
+  width: 100%;
 }
 .main-container .content-container.fixedHeader .page {
   margin-top: 34px;
@@ -3741,7 +3740,7 @@ fieldset[disabled] .btn-youtube.active {
 }
 .app.nav-expand .main-container .content-container {
   width: calc(100% - 220px);
-  position: relative;
+  min-height:100%;
   padding: 0 0 30px 0;
   margin-left: 220px;
 }
@@ -6215,7 +6214,7 @@ background: -moz-linear-gradient(top, #fe5d36 0%, #ff4421 100%); /* FF3.6-15 */
 background: -webkit-linear-gradient(top, #fe5d36 0%,#ff4421 100%); /* Chrome10-25,Safari5.1-6 */
 background: linear-gradient(to bottom, #fe5d36 0%,#ff4421 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fe5d36', endColorstr='#ff4421',GradientType=0 ); /* IE6-9 */}
-.btn-primary { border-color: #e63c19;}
+ 
 .grad-fields span.glyphicon {
   margin: 0 5px 0 0;
 }
@@ -6229,4 +6228,19 @@ a {
 }
 a:hover, a:active, a:focus{
     color: #ff5231;
+}
+.margin-bt{ margin-bottom: 15px !important; }
+.sta-text {
+
+  font-size: 13px;
+  margin: 15px 0 5px;
+  min-height: 300px;
+}
+.down-load {
+  color: #ff4321;
+  font-weight: 400;
+}
+.table a.down-load span {
+  color: #ff4321;
+  font-size: 11px;
 }
