@@ -150,6 +150,9 @@ a.text-purple:hover {
 .xsmall {
   font-size: 10px;
 }
+.font12 {
+  font-size: 12px !important;
+}
 .form-control {
   border: 1px solid #c9c9c9;
   box-shadow: none;
@@ -6243,4 +6246,13 @@ a:hover, a:active, a:focus{
 .table a.down-load span {
   color: #ff4321;
   font-size: 11px;
+}
+.atach-fil .label.label-primary.attch-btn {
+  background-color: #ff4421 !important;
+  display: inline-block;
+  margin: 0 5px 0 0;
+  padding: 2px 10px;
+}
+.group-forms- .form-control {
+  background-color: #fff;
 }

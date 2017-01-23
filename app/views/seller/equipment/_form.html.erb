@@ -8,7 +8,7 @@
 				<li><a href="#tab-information" data-toggle="tab" id="tab-information-lnk">Primary Information</a></li>
 				<li><a href="#tab-description" data-toggle="tab" id="tab-description-lnk">Description & Faults</a></li>
 				<li><a href="#tab-price" data-toggle="tab" id="tab-price-lnk">Price</a></li>
-				<li><a href="#tab-shipping" data-toggle="tab" id="tab-shipping-lnk">Shipping</a></li>
+				<li id="shippingLiHead"><a href="#tab-shipping" data-toggle="tab" id="tab-shipping-lnk">Shipping</a></li>
 			</ul>
 
 <%= nested_form_for [:seller,@equipment], html: { role: "form" }  do |f| %>			
@@ -469,14 +469,33 @@
 
 
 							<div class="clearfix col-md-12">
-							   <button type="submit" class="orang-gradient pull-right" value="Submit" name="commit">  Submit</button>
-
-							   <a href="javascript:void(0);" data-ref="tab-price-lnk" class="tab-next-lnk orang-gradient pull-right">  Previous</a>
+								<!-- <a href="#tab-preview" data-toggle="tab" id="tab-preview-lnk" class="orang-gradient pull-right"><i class="fa fa-eye font12"></i> Preview</a> -->
+							   <button type="submit" class="orang-gradient pull-right" value="Submit" name="commit">Submit</button>
+							   <a href="javascript:void(0);" data-ref="tab-price-lnk" class="tab-next-lnk orang-gradient pull-right">Previous</a>
 							</div>
 
 						</div>
 					</div>
 				</div>	
+
+				<div class="tab-pane" id="tab-preview">
+					<div class="row">
+						<div class="col-md-12 mb20 no-padding">
+							<div class="form-group">
+								<label class="col-md-12 control-label">Preview</label>
+								<div class="col-md-4">
+									<img src="/assets/pow-shape.png" id="preview_image_view" class="img-responsive" />
+								</div>
+							</div>
+
+							 	
+
+								
+
+						</div>
+					</div>
+				</div>
+
 
 			</div>
 <% end %>			
@@ -515,6 +534,31 @@
     	var ref = $(this).attr('data-ref');
 
     	$("#" + ref).trigger('click');
+    });
+
+    $('#tab-preview-lnk').click(function(){
+    	
+    	$("#shippingLiHead").removeClass('active');
+    	preview_image_src = '/assets/pow-shape.png';
+    	is_img = false;
+    	$('#images-box .fields').each(function(){
+
+    		if(is_img === false){
+
+	    		if($(this).css('display') == 'block'){
+
+	    			var preview_image = $(this).find('.equipment_preview_image').attr('src');
+
+	    			if(preview_image != '' && preview_image != '/assets/pow-shape.png'){
+	    				preview_image_src = preview_image;
+	    				is_img = true;
+	    			}
+	    		}
+	    	}
+    	});
+
+    	$("#preview_image_view").attr('src', preview_image_src);
+
     });
 
 </script>

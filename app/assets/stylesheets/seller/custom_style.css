@@ -550,13 +550,6 @@ background: linear-gradient(to bottom,  #fafafa 0%,#efefef 100%);
   font-weight: 600;
   text-transform: uppercase;
 }
-.dashboard-table .label {
-  background-color: #345c6e !important;
-  font-size: 10px;
-  font-weight: 500;
-  padding: 2px 8px;
-  text-shadow: 0 1px 0 #333;
-}
 td a span {
   font-size: 14px;
 }
@@ -834,10 +827,18 @@ background: linear-gradient(to bottom,  #fafafa 0%,#efefef 100%);
 .main-box .so-lisitn td{
   border-bottom: 1px solid #ddd;
   border-left: 0 solid #cbcbcb;
-  color: #333 !important;
+  color: #666 !important;
   font-size: 11px !important;
   font-weight: normal;
   padding: 8px 15px;
   text-transform: uppercase;
 }
 .main-box .so-lisitn .table th { border-right: 1px solid #ddd;}
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control { background-color: #fff;}
+.group-forms- .form-group {
+  display: table;
+  width: 100%;
+}
+section.group-forms- {
+  margin: 20px 0 0;
+}
