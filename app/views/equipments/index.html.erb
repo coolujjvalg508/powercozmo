@@ -168,7 +168,7 @@
 							
 								<div class="col-md-4 col-sm-4 col-xs-12">
 									<div class="available-title text-center marginB15">Available for</div>
-									
+
 									<% if ((equipment.status == 'active' || equipment.status == 'in_progress') && available[:status] == 'active') %>
 									
 										<div class="available_for" data-date="<%=equipment.availble_for.strftime("%Y-%m-%d %H:%M:%S")%>" data-total-duration="<%=(equipment.availble_for - equipment.created_at).to_i%>"></div>

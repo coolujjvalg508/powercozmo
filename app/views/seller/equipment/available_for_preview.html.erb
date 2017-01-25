@@ -1,0 +1,52 @@
+<% 
+if params[:available_for].present? && params[:available_for] != ''
+  date = params[:available_for]
+  available_for = DateTime.parse(date).strftime("%Y-%m-%d %H:%M:%S")
+  remaining_time = (DateTime.parse(date).to_i) - (DateTime.parse(Time.now.to_s).to_i)
+else
+  available_for = 0
+  remaining_time = 0
+end
+%>                               
+
+<div class="available_for" data-date="<%= available_for %>" data-total-duration="<%= remaining_time %>"></div>
+
+<script type="text/javascript">
+$(".available_for").TimeCircles({
+    "animation": "smooth",
+    "bg_width": 0.7,
+    "fg_width": 0.03,
+    "circle_radius_multiplier": 0.57, //a cutsom argument for initialization .
+    // custom fuction for duration, deafult is 'auto'
+    // to use it, define data-total-duration in the initialzing element
+    "total_duration": "Created_to_Expiry",
+    //"circle_bg_color": "#F0EDED",
+    "circle_bg_color": "#DDDDDD",
+      "time": {
+        "Days": {
+          "text": "Days",
+          "color": "#36ace3",
+          "show": true
+        },
+        "Hours": {
+          "text": "Hours",
+          "color": "#36ace3",
+          "show": true
+        },
+        "Minutes": {
+          "text": "Minutes",
+          "color": "#36ace3",
+          "show": true
+        },
+        "Seconds": {
+          "text": "Seconds",
+          "color": "#36ace3",
+           "show": false
+        }
+      }
+  });
+
+  $(".available_for").css('border-bottom', '1px solid #e5e5e5');
+  $(".available_for").css('padding-bottom', '16px')
+
+</script>

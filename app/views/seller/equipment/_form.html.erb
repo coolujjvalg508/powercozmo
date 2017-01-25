@@ -39,7 +39,7 @@
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Category Type<sup>*</sup></label>
 								<div class="col-md-12">
 														
-									<%= f.select :category_type, options_for_select(Category::CATEGORY_TYPE, selected: @equipment[:category_type]), {include_blank: 'Select Category Type'}, {disabled: @equipment.require_moderation == 1} %>
+									<%= f.select :category_type, options_for_select(Category::CATEGORY_TYPE, selected: @equipment[:category_type]), {include_blank: 'Select Category Type'}, {disabled: @equipment.require_moderation == 1, 'data-count-field' => 'true'} %>
 														
 									<%= form_error_msg_for(@equipment,:category_type, "Category Type") %>
 								</div>
@@ -51,7 +51,7 @@
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Category<sup>*</sup></label>
 								<div class="col-md-12">
 									
-									<%= f.select :category_id, @categories.map{|id,name| [name,id] }+[['Other', 0]], {include_blank: 'Select Category'}, {disabled: @equipment.require_moderation == 1} %>
+									<%= f.select :category_id, @categories.map{|id,name| [name,id] }+[['Other', 0]], {include_blank: 'Select Category'}, {disabled: @equipment.require_moderation == 1, "data-count-field" => "true"} %>
 									
 										<%= text_field_tag "other[category_name]", params[:other].present? ? params[:other][:category_name] : "",class: 'form-control equipment-other-field marginB10', placeholder: 'Category name', style: "display:none;" %>
 										
@@ -96,7 +96,7 @@
 							<div class="form-group">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Name<sup>*</sup></label>
 								<div class="col-md-12">
-									<%= f.text_field :name, class: 'form-control', placeholder: 'Enter name' %>
+									<%= f.text_field :name, class: 'form-control', placeholder: 'Enter name', "data-count-field" => "true" %>
 									<%= form_error_msg_for(@equipment,:name) %>
 								</div>
 							</div>
@@ -106,7 +106,7 @@
 							<div class="form-group mt20 eq_total">
 								<label class="col-md-12 control-label">Equipment Model Number<sup>*</sup></label>
 								<div class="col-md-12">
-									<%= f.text_field :equipment_model, class: 'form-control', placeholder: 'Enter Equipment Model number' %>
+									<%= f.text_field :equipment_model, class: 'form-control', placeholder: 'Enter Equipment Model number', "data-count-field" => "true" %>
 									<%= form_error_msg_for(@equipment,:equipment_model, 'Equipment model') %>
 								</div>
 							</div>
@@ -116,7 +116,7 @@
 							<div class="form-group mt20 eq_total">
 								<label class="col-md-12 control-label">Equipment Condition<sup>*</sup></label>
 								<div class="col-md-12">
-									<%= f.select :condition, Equipment::CONDITION_TYPES, {prompt: 'Select Equipment Condition'} %>
+									<%= f.select :condition, Equipment::CONDITION_TYPES, {prompt: 'Select Equipment Condition'}, {'data-count-field' => 'true'} %>
 									<%= form_error_msg_for(@equipment,:condition, 'Equipment condition') %>
 								</div>
 							</div>
@@ -146,7 +146,7 @@
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Owner Name</label>
 								<div class="col-md-12">
-									<%= f.text_field :owner_name, class: 'form-control', placeholder: 'Enter Owner Name' %>
+									<%= f.text_field :owner_name, class: 'form-control', placeholder: 'Enter Owner Name', 'data-count-field' => 'true' %>
 									<p class="text-danger text-right xsmall">We strongly recommend to write Owner Name</p>
 									<%= form_error_msg_for(@equipment,:owner_name) %>
 								</div>
@@ -157,7 +157,7 @@
 							<div class="form-group mt20 eq_total">
 								<label class="col-md-12 control-label">Equipment Manufacturer's Name</label>
 								<div class="col-md-12">
-									<%= f.select :manufacturer_id, @manufactures.map{|id,name| [name,id] }+[['Other', 0]], include_blank: 'Select Equipment Manufacturer' %>
+									<%= f.select :manufacturer_id, @manufactures.map{|id,name| [name,id] }+[['Other', 0]], {include_blank: 'Select Equipment Manufacturer'}, {'data-count-field' => 'true'} %>
 									<%= text_field_tag "other[manufacturer_name]", params[:other].present? ? params[:other][:manufacturer_name] : "",class: 'form-control equipment-other-field', placeholder: 'Manufacturer name*', style: "display:none;" %>
 									<%= form_error_msg_for(@equipment,:manufacturer_id, "Manufacture name") %>
 								</div>
@@ -189,7 +189,7 @@
 								<label class="col-md-12 control-label">Expiration Date<sup>*</sup></label>
 								<div class="col-md-12">
 									<div class="input-group date" id='datetimepicker1'>
-										<%= f.text_field :availble_for, class: 'form-control', placeholder: 'Expiration Date' %>
+										<%= f.text_field :availble_for, class: 'form-control', placeholder: 'Expiration Date', 'data-count-field' => 'true' %>
 										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 									</div>
 									<%= form_error_msg_for(@equipment,:availble_for, 'Expiration Date') %>
@@ -201,7 +201,7 @@
 							<div class="form-group mt20 eq_total">
 								<label class="col-md-12 control-label">Manufacture Year<sup>*</sup></label>
 								<div class="col-md-12">
-									<%= f.select :manufacture_year, (1950..Date.today.year).to_a.reverse , {prompt: 'Select Year'} %>
+									<%= f.select :manufacture_year, (1950..Date.today.year).to_a.reverse , {prompt: 'Select Year'}, {'data-count-field' => 'true'} %>
 									<%= form_error_msg_for(@equipment,:manufacture_year) %>
 								</div>
 							</div>		
@@ -241,7 +241,7 @@
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Description<sup>*</sup></label>
 								<div class="col-md-12">
-									<%= f.text_area :description, class: 'form-control', placeholder: 'Enter Description', rows: 5 %>
+									<%= f.text_area :description, class: 'form-control', placeholder: 'Enter Description', rows: 5, 'data-count-field' => 'true' %>
 									<%= form_error_msg_for(@equipment,:description) %>
 								</div>
 							</div>
@@ -251,7 +251,7 @@
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Faults & Shortages</label>
 								<div class="col-md-12">
-									<%= f.text_area :faults, class: 'form-control', placeholder: 'Enter Faults & Shortages', rows: 5 %>
+									<%= f.text_area :faults, class: 'form-control', placeholder: 'Enter Faults & Shortages', rows: 5, 'data-count-field' => 'true' %>
 									<%= form_error_msg_for(@equipment,:faults) %>
 								</div>
 							</div>
@@ -261,7 +261,7 @@
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Keywords</label>
 								<div class="col-md-12">
-									<%= f.text_area :keywords, class: 'form-control', placeholder: 'Enter Keywords', rows: 5 %>
+									<%= f.text_area :keywords, class: 'form-control', placeholder: 'Enter Keywords', rows: 5, 'data-count-field' => 'true' %>
 									<%= form_error_msg_for(@equipment,:keywords) %>
 								</div>
 							</div>
@@ -270,7 +270,7 @@
 
 							<div class="form-group mt20">
 								<div class="col-md-12 file-field grad-fields">										
-									<%= f.file_field :attachment, class: "filestyle", "data-buttonName" => "btn-primary" %>
+									<%= f.file_field :attachment, class: "filestyle", "data-buttonName" => "btn-primary", 'data-count-field' => 'true' %>
 									<%= f.hidden_field :attachment_cache %>
 									<%= form_error_msg_for(@equipment, :attachment)%>
 
@@ -337,7 +337,7 @@
 							<div class="form-group">
 								<label class="col-md-12 control-label">Price<sup>*</sup></label>
 								<div class="col-md-12">
-									<%= f.text_field :price, class: 'form-control', placeholder: 'Enter Price' %>
+									<%= f.text_field :price, class: 'form-control', placeholder: 'Enter Price', 'data-count-field' => 'true' %>
 									<%= form_error_msg_for(@equipment,:price) %>
 								</div>
 							</div>
@@ -346,7 +346,7 @@
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label">Minimum Accepted Price(<sup>*</sup>Not to disclose)<sup>*</sup></label>
 								<div class="col-md-12">
-									<%= f.text_field :minimum_accepted_price, class: 'form-control', placeholder: 'Enter Minimum Accepted Price' %>
+									<%= f.text_field :minimum_accepted_price, class: 'form-control', placeholder: 'Enter Minimum Accepted Price', 'data-count-field' => 'true' %>
 									<%= form_error_msg_for(@equipment,:minimum_accepted_price) %>
 								</div>
 							</div>
@@ -355,7 +355,7 @@
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label">Currency<sup>*</sup></label>
 								<div class="col-md-12">
-									<%= f.select :currency, @currencies.map{|name,symbol| [(name.to_s+' (<span>'+symbol.to_s+'</span>)').html_safe,symbol] }, {prompt: 'Select Currency'} %>
+									<%= f.select :currency, @currencies.map{|name,symbol| [(name.to_s+' (<span>'+symbol.to_s+'</span>)').html_safe,symbol] }, {prompt: 'Select Currency'}, {'data-count-field' => 'true'} %>
 									<%= form_error_msg_for(@equipment,:currency) %>
 								</div>
 							</div>
@@ -376,7 +376,7 @@
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label">Pickup Port (Nearest Port , Airport)</label>
 								<div class="col-md-12">
-									<%= f.text_field :pickup_port, class: 'form-control', placeholder: 'Enter Pickup Port' %>
+									<%= f.text_field :pickup_port, class: 'form-control', placeholder: 'Enter Pickup Port', 'data-count-field' => 'true' %>
 									<%= form_error_msg_for(@equipment,:pickup_port) %>
 								</div>
 							</div>
@@ -386,7 +386,7 @@
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label">Location City<sup>*</sup></label>
 								<div class="col-md-12">
-									<%= f.text_field :city, class: 'form-control', placeholder: 'Enter City' %>
+									<%= f.text_field :city, class: 'form-control', placeholder: 'Enter City', 'data-count-field' => 'true' %>
 									<%= form_error_msg_for(@equipment,:city) %>
 								</div>
 							</div>
@@ -396,7 +396,7 @@
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Location Country<sup>*</sup></label>
 								<div class="col-md-12">
-									<%= f.select :country_id, @countries.map{|id,name| [name,id] }, {prompt: 'Select Country'} %>
+									<%= f.select :country_id, @countries.map{|id,name| [name,id] }, {prompt: 'Select Country'}, {'data-count-field' => 'true'} %>
 									<%= form_error_msg_for(@equipment,:country_id, 'Country') %>
 								</div>
 							</div>
@@ -469,7 +469,7 @@
 
 
 							<div class="clearfix col-md-12">
-								<!-- <a href="#tab-preview" data-toggle="tab" id="tab-preview-lnk" class="orang-gradient pull-right"><i class="fa fa-eye font12"></i> Preview</a> -->
+								<a href="#tab-preview" data-toggle="tab" id="tab-preview-lnk" class="orang-gradient pull-right"><i class="fa fa-eye font12"></i> Preview</a>
 							   <button type="submit" class="orang-gradient pull-right" value="Submit" name="commit">Submit</button>
 							   <a href="javascript:void(0);" data-ref="tab-price-lnk" class="tab-next-lnk orang-gradient pull-right">Previous</a>
 							</div>
@@ -479,20 +479,102 @@
 				</div>	
 
 				<div class="tab-pane" id="tab-preview">
-					<div class="row">
-						<div class="col-md-12 mb20 no-padding">
-							<div class="form-group">
-								<label class="col-md-12 control-label">Preview</label>
-								<div class="col-md-4">
-									<img src="/assets/pow-shape.png" id="preview_image_view" class="img-responsive" />
+
+					<div class="col-md-12 preview-head"><sup>*</sup>HOW YOUR POST WILL APPEAR IN ADS LISTING.</div>
+					<div class="preview-conte">					
+						<div class="ListingIndent clearfix">
+							<div class="col-md-2 col-sm-3 col-xs-12 no-padding">
+								<center><img class="img-responsive" src="/assets/pow-shape.png" id="preview_image_view" ></center>
+							</div>
+								
+							<div class="col-md-6 col-sm-5 col-xs-12 paddingR">
+								<div class="clearfix marginB15">
+									<div class="profile-pic">
+										<% if (current_user.image.blank? || current_user.image.try(:image).blank?)%>
+							          		<img src="/assets/seller/myprofile-placeholder-img.png" class="img-responsive img-circle profile-img-list" alt="User">
+									  	<% else %>
+											<%= image_tag(current_user.image.try(:image).try(:thumb).try(:url), class: "img-responsive img-circle profile-img-list",alt: "User") %>
+									  	<% end %>
+									</div>
+									<div class="profile-box-top">
+										<div class="pro-title">Item-0000 - <span id="name-preview"></span></div>
+										<div class="pro-txt" id="description-preview"></div>
+									</div>
+								</div>
+								
+								<div class="clearfix listwrap">
+									<ul>
+										<li>
+											<div class="col-md-2 col-sm-2 col-xs-2 paddingL">
+												<img src="/assets/location-icon.jpg" alt="Location" class="marginR5"> 
+											</div>
+											<div class="col-md-10 col-sm-10 col-xs-10 paddingL paddingR paddinT8 right-pading-p">
+												Location : <span class="gray-color" id="location-preview"></span>
+											</div>
+										</li>
+										<li>
+											<div class="col-md-2 col-sm-2 col-xs-2 paddingL">
+												<img src="/assets/condition-icon.jpg" alt="Location" class="marginR5"> 
+											</div>
+											<div class="col-md-10 col-sm-10 col-xs-10 paddingL paddingR paddinT8 right-pading-p">		Condition : <span class="gray-color" id="condition-preview"></span>
+											</div>
+										</li>
+										 <div class="clearfix"></div>
+										<li>
+											<div class="col-md-2 col-sm-2 col-xs-2 paddingL">
+												<img src="/assets/condition-icon.jpg" alt="Location" class="marginR5"> 
+											</div>
+											<div class="col-md-10 col-sm-10 col-xs-10 paddingL paddingR paddinT8 right-pading-p">	
+												Manufacturing : <span class="gray-color" id="manufacturing-preview"></span>
+											</div>	
+										</li>
+										<li>
+											<div class="col-md-2 col-sm-2 col-xs-2 paddingL">
+												<img src="/assets/condition-icon.jpg" alt="Location" class="marginR5"> 
+											</div>
+											<div class="col-md-10 col-sm-10 col-xs-10 paddingL paddingR paddinT8 right-pading-p">	
+												Brand : <span class="gray-color" id="brand-preview"></span>
+											</div>	
+										</li>
+									</ul>
 								</div>
 							</div>
-
-							 	
-
-								
-
+							
+							<div class="col-md-4 col-sm-4 col-xs-12  no-padding">
+								<div class="available-title text-center marginB15">Available for</div>
+								<div id="availble_for_content"></div>
+							</div>
 						</div>
+
+
+						<div class="postwrap clearfix gry-gradient mor-fin pre-stars">
+							<div class="col-md-4 col-sm-4 col-xs-6">Price : <span class="gray-color" id="price-preview"></span></div>
+							<div class="col-md-4 col-sm-4 col-xs-6">Rating 
+								<span id="rating-preview"></span>
+							</div>
+								
+							<div class="col-md-4 col-sm-4 col-xs-12">
+								<a class=" orang-gradient pull-right" href="javascript:void(0);">MORE INFO</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="pre-status-se">
+						<div class="col-md-8">
+							<div class="adquery">
+								<span>Ad quality meter</span>
+								<p>Fill out as much details as possible to improve the visibility for your ad!</p>
+							</div>
+					
+						</div>
+
+						<div class="col-md-4 text-right">
+							<div class="prof-bord">
+								<div style="background-color: #000; height: 10px;" id="detail-complete-bar"></div>
+							</div>
+							<span id="quality-meter-value" class="per-up"></span>
+						</div>
+
 					</div>
 				</div>
 
@@ -537,6 +619,34 @@
     });
 
     $('#tab-preview-lnk').click(function(){
+
+    	var price = $("#equipment_currency").val() + $("#equipment_price").val();
+    	var rating = $("#equipment_rating").val() != '' ? $("#equipment_rating").val() : 0;
+    	var location_preview_text = ($("#equipment_country_id").val() != '') ? $("#equipment_country_id :selected").html() : '';
+    	var brand_preview_text = ($("#equipment_manufacturer_id").val() != '') ? $("#equipment_manufacturer_id :selected").html() : '';
+
+    	$("#name-preview").html($("#equipment_name").val());
+    	$("#description-preview").html($("#equipment_description").val());
+    	$("#location-preview").html(location_preview_text);
+    	$("#condition-preview").html($("#equipment_condition").val());
+    	$("#manufacturing-preview").html($("#equipment_manufacture_year").val());
+    	$("#brand-preview").html(brand_preview_text);
+    	$("#price-preview").html(price);
+
+		var rating_html = '<img src="' + ((rating >= 1) ? '/assets/orange-star.png' : '/assets/grey-star.png') + '" alt="1"><img src="' + ((rating >= 2) ? '/assets/orange-star.png' : '/assets/grey-star.png') + '" alt="2"><img src="' + ((rating >= 3) ? '/assets/orange-star.png' : '/assets/grey-star.png') + '" alt="3"><img src="' + ((rating >= 4) ? '/assets/orange-star.png' : '/assets/grey-star.png') + '" alt="4"><img src="' + ((rating >= 5) ? '/assets/orange-star.png' : '/assets/grey-star.png') + '" alt="5">';
+
+		$("#rating-preview").html(rating_html);
+
+    	$.ajax({
+	      url: "/seller/available_for_preview",
+	      type : 'Get',
+	      data: {
+	        available_for: $("#equipment_availble_for").val()
+	      },
+	      success: function( data ) {
+	      	$("#availble_for_content").html(data);
+	      }
+	    });
     	
     	$("#shippingLiHead").removeClass('active');
     	preview_image_src = '/assets/pow-shape.png';
@@ -558,6 +668,44 @@
     	});
 
     	$("#preview_image_view").attr('src', preview_image_src);
+
+    	total_fields = 2;
+    	completed_fields_count = 0;
+    	$("*[data-count-field=true]").each(function(){
+    		total_fields = total_fields + 1;
+
+    		if($(this).val() != ''){
+    			completed_fields_count = completed_fields_count + 1;
+    		}
+    	});
+
+    	if(is_img === true){
+    		completed_fields_count = completed_fields_count + 1;
+    	}
+
+    	if(rating > 0){
+    		completed_fields_count = completed_fields_count + 1;
+    	}
+
+    	percentage_complete = Math.round((completed_fields_count * 100)/total_fields)
+
+    	txt = '';
+    	if(percentage_complete <= 25){
+    		txt = 'Weak';
+    	}
+    	else if (percentage_complete <= 50) {
+    		txt = 'Normal';
+    	}
+    	else if (percentage_complete <= 75) {
+    		txt = 'Good';
+    	}
+    	else {
+    		txt = 'Strong';
+    	}
+
+    	final_txt = percentage_complete + '% - ' + txt;
+    	$("#quality-meter-value").html(final_txt);
+    	$("#detail-complete-bar").css('width', percentage_complete + '%');
 
     });
 

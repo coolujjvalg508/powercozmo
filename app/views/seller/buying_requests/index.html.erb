@@ -24,12 +24,13 @@ end %>
 
 		<div class="row no-marging">
 			<div class="col-md-12">
-		<div class="main-box top-margin-15">
-			<div class="main-heding no-t-padding"><i class="fa fa-list" aria-hidden="true"></i> <p><%= title %></p> 
-				</div>
+				<div class="main-box top-margin-15">
+					<div class="main-heding no-t-padding">
+						<i class="fa fa-list" aria-hidden="true"></i> <p><%= title %></p> 
+					</div>
 
 
-				<div class="panel-body padding0 dashboard-table">
+					<div class="panel-body padding0 dashboard-table">
 					
 					 <% if @buying_requests.present? %>
 							<table class="table">
@@ -66,7 +67,7 @@ end %>
 													<%= link_to '<i class="fa fa-trash marginL5 redcolor"></i>'.html_safe, seller_buying_request_path(br),method: :delete,data: { confirm: 'Are you sure?' }, title: "Delete" %>
 												
 												<% else %>
-													<%= link_to '<span class="ti-trash redcolor"></span>'.html_safe, seller_buying_request_path(br), title: "View" %>
+													<%= link_to '<span class="ti-trash redcolor"></span>'.html_safe, seller_buying_request_path(br), title: "Delete" %>
 													
 													<% if br.user_id != current_user[:id] && br.email != current_user[:email] %>
 														<% if br.expiration_date >= Date.today %>

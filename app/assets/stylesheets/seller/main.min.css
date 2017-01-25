@@ -6256,3 +6256,129 @@ a:hover, a:active, a:focus{
 .group-forms- .form-control {
   background-color: #fff;
 }
+.preview-head{
+  color: #ff4321;
+  font-size: 12px;
+  padding: 10px 0px 10px 0px;
+}
+
+
+/************/
+.ListingIndent .profile-pic {
+  float: left;
+  height: 55px;
+  width: 55px;
+}
+.profile-img-list {
+  height: 55px;
+  width: 55px;
+}
+.ListingIndent .profile-box-top {
+  float: left;
+  width: 80%;
+  padding: 0 0 0 5px;
+}
+.ListingIndent .pro-title {
+  font-size: 12px;
+  margin:0;
+  font-weight: bold;
+}
+.ListingIndent .pro-txt {
+  color: #565656;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 70%;
+  position: absolute;
+}
+.ListingIndent .listwrap li {
+  border: 0 none;
+  float: left;
+  margin:10px 0 0px 0;
+  vertical-align: top;
+  width: 50%;
+  list-style: none;
+}
+
+.ListingIndent .listwrap ul {
+  margin: 0;
+  padding: 0;
+  display: table;
+  width: 100%;
+}
+.paddingL {
+  padding-left: 0 !important;
+}
+ 
+
+.paddingR {
+  padding-right: 0 !important;
+}
+.ListingIndent .available-title {
+  color: rgb(37, 37, 37);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 0;
+  text-transform: uppercase;
+}
+.postwrap.clearfix.gry-gradient.mor-fin.pre-stars {
+  margin: 15px -15px 0 -15px;
+  padding: 10px 0;
+}
+.right-pading-p {
+  padding-left: 7px !important;
+  margin: 3px 0 0 0;
+  font-size: 13px;
+}
+.preview-conte {
+  border: 1px solid #ddd;
+  display: table;
+  width: 100%;
+  padding: 15px 15px 0 15px;
+}
+.pre-status-se {
+  display: table;
+  width: 100%;
+  border: solid 1px #ddd;
+  background-color: #EEEDEE;
+  margin: 15px 0 0 0;
+  padding: 10px 0px;
+}
+.prof-bord > div#detail-complete-bar {
+  background-color: #FF4724!important;
+  height: 100% !important;
+  position: absolute;
+  left: 0;
+  transition: .2s;
+}
+.prof-bord {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  height: 15px;
+  overflow: hidden;
+  position: relative;
+}
+.adquery > span {
+  font-weight: 600;
+  font-size: 15px;
+  color: #333;
+}
+.adquery > p {
+  color: #666;
+}
+.time_circles > div > h4 {
+  font-family: "PoppinsRegular",Arial !important;
+  font-size: 14px !important;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  text-align: center;
+  text-transform: capitalize !important;
+  top: 50px;
+}
+
+.time_circles > div > span {
+  margin-top: 0.2em !important;
+}

@@ -367,6 +367,17 @@ class Seller::EquipmentController < Seller::BaseController
 		Preference.where(user_id: current_user.id, category_id: params[:category_id]).delete_all
 		render json: {message: 'Category successfully removed from preferences.', status: '200'}
   end
+
+  def available_for_preview
+
+    require 'date'
+
+    render layout: false
+
+
+ #=> Friday, Jul 01
+
+  end
   
 
   private

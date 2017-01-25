@@ -92,6 +92,10 @@ Rails.application.routes.draw do
       get 'add_preference' => 'equipment#add_preference'
       get 'remove_preference' => 'equipment#remove_preference'
       get 'ask_for_services' => 'dashboard#ask_for_services'
+      get 'available_for_preview' => 'equipment#available_for_preview'
+
+      # routing for enquiry center
+      get 'inquiry-center' => 'inquiry_center#index', as: 'inquiry_center' 
       
     end
         

@@ -5,6 +5,7 @@ class EquipmentEnquiry < ActiveRecord::Base
 	belongs_to :country
 	belongs_to :equipment
 	has_many :responses, :class_name => "EnquiryResponse", dependent: :destroy
+	has_one :order
   ############ Scopes ##################
   scope :approved, -> { where(status: 2) }
   scope :unresponded, -> { where(response: nil) }
@@ -15,7 +16,8 @@ class EquipmentEnquiry < ActiveRecord::Base
 	############# Enums ##################
 	enum status: { New: 1, Approved: 2, Disapproved: 3 }
 	enum enquiry_type: {question: 1, bid: 2, buy: 3}
-	enum replied_as: {Requested: 1, Accepted: 2, Rejected: 3}
+	#enum replied_as: {Requested: 1, Accepted: 2, Rejected: 3}
+	enum replied_as: {Negotiating: 1, Confirmed: 2, Rejected: 3}
 	enum response_status: {Responded: 1, Forwarded: 2}
 	############# Validations ############
 	validates :name, :email, :mobile, :country_id, :enquiry_type, :equipment_id, :company_name, :company_website, :message, presence: true

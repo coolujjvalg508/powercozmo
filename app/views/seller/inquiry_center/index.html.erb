@@ -1,0 +1,103 @@
+<div class="page page-ui-tables page-dashboard">
+		
+	<div class="page-wrap">
+
+
+		<div class="row no-margin no-padding">
+			<!-- dashboard header -->
+			<div class="col-md-12 no-padding">
+				<div class="dash-head clearfix mb20">
+					<div class="left">
+						<h4 class="mb5 text-light">Welcome to Power Cozmo</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- row -->
+		<div class="row no-marging">
+			<!-- Basic Table -->
+			<div class="col-md-12">
+				<div class="main-box top-margin-15">
+
+					<div class="main-heding no-t-padding">
+						<i class="fa fa-list" aria-hidden="true"></i> <p>Inquiry Center</p> 
+					</div>
+
+						
+					<div class="panel-body padding0 dashboard-table">
+						<% if @result.present? %>
+							<table class="table">
+								<thead>
+									<tr>
+										<th class="text-center">CHECK BOX</th>
+										<th class="text-center">INQUIRY ID</th>
+										<th>PARTNER</th>
+										<th>SUBJECT</th>
+										<th class="text-center">ITEM#</th>
+										<th>ITEM NAME</th>
+										<th>LAST UPDATED</th>
+										<th class="text-center">STATUS</th>										
+									</tr>
+								</thead>
+								
+								<tbody>
+									<% @result.each_with_index do |inquiry, index| %>
+
+										<tr style="<%='font-weight: bold;' unless inquiry.is_read? %>">
+											<td class="text-center">
+												<input name="" id="<%= inquiry.id %>" value="1" class="bulk_action" type="checkbox">
+											</td>
+											
+											<td class="text-center"><%= inquiry.id %></td>
+											
+											<td>
+												
+												<% if inquiry.user_id == current_user.id %>
+													<img src="/assets/flag/png/<%= inquiry.try(:equipment).try(:country).try(:code).downcase %>.png" /> <%= inquiry.try(:equipment).try(:user).try(:profile).try(:first_name) %> <%= inquiry.try(:equipment).try(:user).try(:profile).try(:last_name) %>
+												<% else %>
+													<img src="/assets/flag/png/<%= inquiry.try(:country).try(:code).downcase %>.png" /> <%= inquiry.try(:name) %>
+												<% end %>
+
+											</td>
+
+											<td>
+
+												<% if inquiry.enquiry_type == "question" %>
+
+													Question about <%= inquiry.equipment.name %>
+
+												<% elsif inquiry.enquiry_type == "bid" %>
+
+													Bid for <%= inquiry.equipment.name %>
+
+												<% elsif inquiry.enquiry_type == "buy" %>
+
+													Order request for <%= inquiry.equipment.name %>
+
+												<% end %>	
+												
+											</td>
+
+											<td class="text-center"><%= inquiry.equipment.identifier %></td>
+											
+											<td><%= inquiry.equipment.name %></td>
+
+											<td><%= inquiry.updated_at.strftime("%d-%b-%Y %H:%M %p") if inquiry.updated_at.present? %></td>
+											<td class="text-center">
+												<%= inquiry.replied_as %>												
+											</td>											
+										</tr>
+									<% end %>
+								</tbody>
+							</table>
+							<%= paginate @result, :theme => 'listing_page_theme' %>
+						 <% else %>
+							<p class="no-result">No Inquiry Found</p>
+						 <% end %>	
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

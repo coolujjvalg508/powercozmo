@@ -15,5 +15,6 @@
 *= require seller/main.min
 *= require owl.carousel.css
 *= require seller/themify-icons
+*= require TimeCircles
 *= require_self
 */
