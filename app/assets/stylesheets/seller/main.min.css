@@ -6272,6 +6272,7 @@ a:hover, a:active, a:focus{
 .profile-img-list {
   height: 55px;
   width: 55px;
+  background-color: #DDDDDD;
 }
 .ListingIndent .profile-box-top {
   float: left;
