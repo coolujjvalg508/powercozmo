@@ -17,7 +17,8 @@ class EquipmentEnquiry < ActiveRecord::Base
 	enum status: { New: 1, Approved: 2, Disapproved: 3 }
 	enum enquiry_type: {question: 1, bid: 2, buy: 3}
 	#enum replied_as: {Requested: 1, Accepted: 2, Rejected: 3}
-	enum replied_as: {Negotiating: 1, Confirmed: 2, Rejected: 3}
+	enum replied_as: {Negotiating: 1, Confirmed: 2, Rejected: 3, 'Funded to Power Cozmo': 4, Shipped: 5, 'Payment Released': 6}
+
 	enum response_status: {Responded: 1, Forwarded: 2}
 	############# Validations ############
 	validates :name, :email, :mobile, :country_id, :enquiry_type, :equipment_id, :company_name, :company_website, :message, presence: true

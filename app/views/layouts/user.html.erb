@@ -283,8 +283,15 @@
 							</li>
 						</ul>
 					</li>
+
+					<li class="<%= 'active' if seller_inquiry_center_path == url_for(only_path: true) %>"> 
+						<a href="<%= seller_inquiry_center_path%>"  title="Inquiry Center"> 
+							<i class="ion ion-briefcase"></i> 
+							<span class="text">Inquiry Center</span> 
+						</a>
+					</li>
 					
-					<li class="<%= 'open' if seller_questions_path == url_for(only_path: true) || seller_offers_path == url_for(only_path: true) %>">
+					<!-- <li class="<%= 'open' if seller_questions_path == url_for(only_path: true) || seller_offers_path == url_for(only_path: true) %>">
 						<a href="javascript:;">
 							<i class="ion ion-pricetags"></i>
 							<span class="text">Questions & Offers</span>
@@ -301,7 +308,7 @@
 							</li>
 							
 						</ul>
-					</li>
+					</li> -->
 					
 					<li class="<%= 'open' if new_seller_equipment_path == url_for(only_path: true) || seller_equipment_index_path == url_for(only_path: true) || seller_buying_requests_path == url_for(only_path: true) || seller_buying_proposals_path == url_for(only_path: true) %>">
 						<a href="javascript:;">
@@ -358,12 +365,12 @@
 					</li>
 				
 									
-					<li class="<%= 'active' if seller_orders_path == url_for(only_path: true) %>"> 
+					<!-- <li class="<%= 'active' if seller_orders_path == url_for(only_path: true) %>"> 
 						<a href="<%= seller_orders_path%>"  title="Manage Orders"> 
 							<i class="ion ion-briefcase"></i> 
 							<span class="text">Manage Orders</span> 
 						</a>
-					</li>
+					</li> -->
 					
 					<li class="<%= 'active' if seller_ask_for_services_path == url_for(only_path: true) %>"> 
 						<a href="<%= seller_ask_for_services_path%>"  title="Manage Orders"> 

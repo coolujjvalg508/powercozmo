@@ -374,9 +374,6 @@ class Seller::EquipmentController < Seller::BaseController
 
     render layout: false
 
-
- #=> Friday, Jul 01
-
   end
   
 

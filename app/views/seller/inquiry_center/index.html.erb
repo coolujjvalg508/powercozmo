@@ -18,14 +18,53 @@
 		<div class="row no-marging">
 			<!-- Basic Table -->
 			<div class="col-md-12">
-				<div class="main-box top-margin-15">
+				<div class="main-box top-margin-15 bottom-margin-15px border-botm-none">
 
 					<div class="main-heding no-t-padding">
 						<i class="fa fa-list" aria-hidden="true"></i> <p>Inquiry Center</p> 
 					</div>
 
+					</div>
+
+
+					<div class="main-box top-margin-15 bottom-margin-15px border-botm-none">
+
+					<div class="main-heding no-t-padding">
+						<div class="bred-crumbs">
+						<a href="<%= seller_inquiry_center_path %>" style="margin-right: 15px;" class="<%= (!params[:status].present?) ? 'active' : '' %>">ALL</a>
+						<a href="<%= seller_inquiry_center_path %>?status=1" style="margin-right: 15px;" class="<%= (params[:status].present? && params[:status] == '1') ? 'active' : '' %>">NEGOTIATING</a>
+						<a href="<%= seller_inquiry_center_path %>?status=3" style="margin-right: 15px;" class="<%= (params[:status].present? && params[:status] == '3') ? 'active' : '' %>">REJECTED</a>
+						<a href="<%= seller_inquiry_center_path %>?status=2" style="margin-right: 15px;" class="<%= (params[:status].present? && params[:status] == '2') ? 'active' : '' %>">CONFIRMED</a>
+						<a href="<%= seller_inquiry_center_path %>?status=4" style="margin-right: 15px;" class="<%= (params[:status].present? && params[:status] == '4') ? 'active' : '' %>">FUNDED TO POWER COZMO</a>
+						<a href="<%= seller_inquiry_center_path %>?status=5" style="margin-right: 15px;" class="<%= (params[:status].present? && params[:status] == '5') ? 'active' : '' %>">SHIPPED</a>
+						<a href="<%= seller_inquiry_center_path %>?status=6" class="<%= (params[:status].present? && params[:status] == '6') ? 'active' : '' %>">PAYMENT RELEASED</a>
+					</div>
+					</div>
+
+					</div>
+
+
+					
+
+					<div class="clearfix  bottom-margin-15px">
+					<div class="col-md-3 input-seach-fin">
+						<input type="text" id="inquiry_search_val" value="<%= (params[:search].present?) ? params[:search] : '' %>" placeholder="SEARCH..." />
+						<button type="button" id="inquiry_search_btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+					</div>
+
+					<div class="col-md-9 action-btuns text-right pading-right-non">
+						<a class="profile-box" href="javascript:void(0);" id="delete_inquiry_btn"><span class="ti-trash"></span> Delete</a>
+						<a class="profile-box" href="javascript:void(0);" id="add_to_contact_btn"><span class="ti-plus"></span> Add to contact</a>
+						<a class="profile-box" href="javascript:void(0);" id="reject_inquiry_btn"><span class="ti-cut"></span> Reject the inquiry</a>
+						<a class="profile-box" href="javascript:void(0);" id="report_spam_inquiry_btn"> <span class="ti-announcement"></span> Report as spam</a>
+						<a class="profile-box" href="javascript:void(0);" id="mark_unread_inquiry_btn"><span class="ti-check-box"></span> Mark as unread</a>
+						<a class="profile-box" href="<%= seller_inquiry_center_path %>" class=""><span class="ti-reload"></span> Refresh</a>
+						</div>
+
+					</div>
 						
-					<div class="panel-body padding0 dashboard-table">
+					<div class="main-box">
+<div class="panel-body padding0 dashboard-table">
 						<% if @result.present? %>
 							<table class="table">
 								<thead>
@@ -44,9 +83,16 @@
 								<tbody>
 									<% @result.each_with_index do |inquiry, index| %>
 
+										<% if inquiry.user_id == current_user.id 
+											contact_user_id = inquiry.try(:equipment).try(:user_id)
+										 else 
+										 	contact_user_id = inquiry.user_id
+										 end %>
+
 										<tr style="<%='font-weight: bold;' unless inquiry.is_read? %>">
-											<td class="text-center">
-												<input name="" id="<%= inquiry.id %>" value="1" class="bulk_action" type="checkbox">
+											<td class="text-center chek-s">
+												<input name="" id="<%= inquiry.id %>" data-contact-user="<%= contact_user_id %>" value="1" class="bulk_action" type="checkbox">
+												<b>&nbsp</b>
 											</td>
 											
 											<td class="text-center"><%= inquiry.id %></td>
@@ -54,9 +100,9 @@
 											<td>
 												
 												<% if inquiry.user_id == current_user.id %>
-													<img src="/assets/flag/png/<%= inquiry.try(:equipment).try(:country).try(:code).downcase %>.png" /> <%= inquiry.try(:equipment).try(:user).try(:profile).try(:first_name) %> <%= inquiry.try(:equipment).try(:user).try(:profile).try(:last_name) %>
+													<img src="/assets/flag/gif/<%= inquiry.try(:equipment).try(:country).try(:code).downcase %>.gif" /> <%= inquiry.try(:equipment).try(:user).try(:profile).try(:first_name) %> <%= inquiry.try(:equipment).try(:user).try(:profile).try(:last_name) %>
 												<% else %>
-													<img src="/assets/flag/png/<%= inquiry.try(:country).try(:code).downcase %>.png" /> <%= inquiry.try(:name) %>
+													<img src="/assets/flag/gif/<%= inquiry.try(:country).try(:code).downcase %>.gif" /> <%= inquiry.try(:name) %>
 												<% end %>
 
 											</td>
@@ -93,11 +139,254 @@
 							</table>
 							<%= paginate @result, :theme => 'listing_page_theme' %>
 						 <% else %>
-							<p class="no-result">No Inquiry Found</p>
+							<p class="no-result">No Inquiry Found!</p>
 						 <% end %>	
 					</div>
-				</div>
+					</div>
+				
 			</div>
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+
+	$("#inquiry_search_btn").click(function(){
+		val = $("#inquiry_search_val").val();
+
+		refresh_url = '<%= seller_inquiry_center_path %>?';
+
+  		<% if params[:status].present? %>
+  			refresh_url += 'status=<%= params[:status] %>';
+  		<% end %>
+
+  		if(val != ''){
+  			refresh_url += '&search=' + val;
+  		}
+
+  		window.location.href = refresh_url;
+
+	});
+		
+	$("#delete_inquiry_btn").click(function(){
+
+		
+		inquiry_data = [];
+		$(".bulk_action").each(function(){
+
+			
+			if($(this).prop("checked") === true){
+				inquiry_id = $(this).attr('id');
+
+				inquiry_data.push(inquiry_id);
+			}
+		});
+
+		if (inquiry_data.length === 0) {
+			alert('Please select atleast one inquiry!');
+		}else{
+
+			if (confirm("Are you sure you want to delete selected Inquires?")){
+				$.ajax({
+			      	url: "/seller/delete-inquiry",
+			      	type : 'Post',
+			      	data: {
+			        	inquiry_data: inquiry_data
+			      	},
+			      	success: function( data ) {
+
+			      		refresh_url = '<%= seller_inquiry_center_path %>?';
+
+			      		<% if params[:status].present? %>
+			      			refresh_url += 'status=<%= params[:status] %>';
+			      		<% end %>
+
+			      		<% if params[:search].present? %>
+				  			refresh_url += '&search=<%= params[:search] %>';
+				  		<% end %>
+
+			      		window.location.href = refresh_url;
+			      	}
+			    });
+			}
+		}
+
+	});
+
+	$("#mark_unread_inquiry_btn").click(function(){
+
+		
+		inquiry_data = [];
+		$(".bulk_action").each(function(){
+
+			
+			if($(this).prop("checked") === true){
+				inquiry_id = $(this).attr('id');
+
+				inquiry_data.push(inquiry_id);
+			}
+		});
+
+		if (inquiry_data.length === 0) {
+			alert('Please select atleast one inquiry!');
+		}else{
+
+			if (confirm("Are you sure you want to mark unread selected Inquires?")){
+
+				$.ajax({
+			      	url: "/seller/mark-unread-inquiry",
+			      	type : 'Post',
+			      	data: {
+			        	inquiry_data: inquiry_data
+			      	},
+			      	success: function( data ) {
+
+			      		refresh_url = '<%= seller_inquiry_center_path %>?';
+
+			      		<% if params[:status].present? %>
+			      			refresh_url += 'status=<%= params[:status] %>';
+			      		<% end %>
+
+			      		<% if params[:search].present? %>
+				  			refresh_url += '&search=<%= params[:search] %>';
+				  		<% end %>
+
+			      		window.location.href = refresh_url;
+			      	}
+			    });
+			}
+		}
+
+	});
+
+	$("#reject_inquiry_btn").click(function(){
+
+		
+		inquiry_data = [];
+		$(".bulk_action").each(function(){
+
+			
+			if($(this).prop("checked") === true){
+				inquiry_id = $(this).attr('id');
+
+				inquiry_data.push(inquiry_id);
+			}
+		});
+
+		if (inquiry_data.length === 0) {
+			alert('Please select atleast one inquiry!');
+		}else{
+			if (confirm("Are you sure you want to reject selected Inquires?")){
+				$.ajax({
+			      	url: "/seller/reject-inquiry",
+			      	type : 'Post',
+			      	data: {
+			        	inquiry_data: inquiry_data
+			      	},
+			      	success: function( data ) {
+
+			      		refresh_url = '<%= seller_inquiry_center_path %>?';
+
+			      		<% if params[:status].present? %>
+			      			refresh_url += 'status=<%= params[:status] %>';
+			      		<% end %>
+
+			      		<% if params[:search].present? %>
+				  			refresh_url += '&search=<%= params[:search] %>';
+				  		<% end %>
+
+			      		window.location.href = refresh_url;
+			      	}
+			    });
+			}
+		}
+
+	});
+
+	$("#report_spam_inquiry_btn").click(function(){
+
+		
+		inquiry_data = [];
+		$(".bulk_action").each(function(){
+
+			
+			if($(this).prop("checked") === true){
+				inquiry_id = $(this).attr('id');
+
+				inquiry_data.push(inquiry_id);
+			}
+		});
+
+		if (inquiry_data.length === 0) {
+			alert('Please select atleast one inquiry!');
+		}else{
+			if (confirm("Are you sure you want to report as spam selected Inquires?")){
+				$.ajax({
+			      	url: "/seller/report-spam-inquiry",
+			      	type : 'Post',
+			      	data: {
+			        	inquiry_data: inquiry_data
+			      	},
+			      	success: function( data ) {
+
+			      		refresh_url = '<%= seller_inquiry_center_path %>?';
+
+			      		<% if params[:status].present? %>
+			      			refresh_url += 'status=<%= params[:status] %>';
+			      		<% end %>
+			      		<% if params[:search].present? %>
+				  			refresh_url += '&search=<%= params[:search] %>';
+				  		<% end %>
+
+			      		window.location.href = refresh_url;
+			      	}
+			    });
+			}
+		}
+	});
+
+	$("#add_to_contact_btn").click(function(){
+
+		
+		contact_data = [];
+		$(".bulk_action").each(function(){
+
+			
+			if($(this).prop("checked") === true){
+				user_id = $(this).attr('data-contact-user');
+				contact_data.push(user_id);
+			}
+		});
+
+		if (contact_data.length === 0) {
+			alert('Please select atleast one inquiry!');
+		}else{
+
+			if (confirm("Are you sure you want to add selected user in contact?")){
+				$.ajax({
+			      	url: "/seller/add-user-contact",
+			      	type : 'Post',
+			      	data: {
+			        	contact_data: contact_data
+			      	},
+			      	success: function( data ) {
+
+			      		refresh_url = '<%= seller_inquiry_center_path %>?';
+
+			      		<% if params[:status].present? %>
+			      			refresh_url += 'status=<%= params[:status] %>';
+			      		<% end %>
+			      		<% if params[:search].present? %>
+				  			refresh_url += '&search=<%= params[:search] %>';
+				  		<% end %>
+
+			      		window.location.href = refresh_url;
+			      	}
+			    });
+			}
+		}
+
+	});
+
+
+</script>
