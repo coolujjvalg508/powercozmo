@@ -88,7 +88,7 @@ class Seller::InquiryCenterController < Seller::BaseController
 			end
 		end
 
-		flash[:notice] = "User added to contact successfully."	
+		flash[:notice] = "Partners added to contact successfully."	
 		result = ['success']
 		render :json => result, status: 200
 
