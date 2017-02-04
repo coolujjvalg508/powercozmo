@@ -261,10 +261,10 @@
 						<em><%=format_time(@result.created_at)%><!-- 10/03/2016 --></em>
 					</div>
 					<span class="user-img">
-						<% if (@result.user.image.blank? || @result.user.image.try(:image).blank?)%>
+						<% if (@result.user.try(:image).blank? || @result.user.try(:image).try(:image).blank?)%>
 							<img src="/assets/seller/myprofile-placeholder-img.png" class="img-circle" alt="User Image">
 						<% else %>
-							<%= image_tag(@result.user.image.try(:image).try(:thumb).try(:url), class: "img-circle",alt: "User Image") %>
+							<%= image_tag(@result.user.try(:image).try(:image).try(:thumb).try(:url), class: "img-circle",alt: "User Image") %>
 						<% end %>
 					</span>	
 				</div>
