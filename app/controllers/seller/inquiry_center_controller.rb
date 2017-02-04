@@ -23,6 +23,44 @@ class Seller::InquiryCenterController < Seller::BaseController
 
 	end
 
+	def detail
+
+		@result = EquipmentEnquiry.joins(:equipment).where("(equipment.user_id = #{current_user.id} OR equipment_enquiries.user_id = #{current_user.id}) AND equipment_enquiries.id = ?", params[:id]).approved.order("created_at DESC").first
+
+		if !@result.present?
+			flash[:error] = "invalid Inquiry!"	
+			redirect_to seller_inquiry_center_path
+		end
+
+		@countries = Hash[Country.active.pluck(:id, :name)]
+
+		if "question" == @result.enquiry_type
+			price = @result.equipment.price
+		else 
+			price = @result.bidding_price
+		end	
+
+		@commission = Commission.for_price(price).first.to_f
+		if @commission == 0.0
+			@commission = Commission.order("max_price DESC").first.percent.to_f
+		end
+
+		if @result.order.present? 
+			@total_amount = @result.order.price 
+			@commission_val = (@total_amount * @result.order.commission) / 100 
+			@seller_amount = @total_amount - @commission_val 
+		else 
+			if "question" == @result.enquiry_type
+			@total_amount = @result.equipment.price
+		else 
+			@total_amount = @result.bidding_price
+		end 
+			@commission_val = (@total_amount * @commission) / 100
+			@seller_amount = @total_amount - @commission_val
+		end
+		
+	end
+
 	def delete_inquiry
 
 		if params[:inquiry_data].present?
@@ -88,10 +126,91 @@ class Seller::InquiryCenterController < Seller::BaseController
 			end
 		end
 
-		flash[:notice] = "Partners added to contact successfully."	
+		flash[:notice] = "Partner added to contact successfully."	
 		result = ['success']
 		render :json => result, status: 200
 
 	end
+
+	def save_shipping_inquiry
+    
+		if params[:commit] == 'Update'
+	  
+			equipment_enquiry = EquipmentEnquiry.find_by(id: params[:id])
+
+			@order = Order.find_by(equipment_enquiry_id: params[:id])
+      		  
+			if @order
+				order_id = @order.id
+			else
+				order_id = 0
+			end
+			
+			if params[:equipment][:update_type] == 'seller'
+			
+				i = 0
+				shipping_package = params[:equipment][:shipping_package]
+
+				if shipping_package
+					shipping_package.each_with_index do |s_package, index| 
+						#abort(s_package[1][:width].to_json)
+						
+						length = s_package[1][:length]
+						width = s_package[1][:width]
+						height = s_package[1][:height]
+						weight = s_package[1][:weight]
+						
+						if length != '' || width != '' || height != '' || weight != ''
+							if i == 0
+								ShippingPackage.where(equipment_id: equipment_enquiry.equipment_id).delete_all
+							end
+							ShippingPackage.create(order_id: order_id, equipment_id: equipment_enquiry.equipment_id, length: length, width: width, height: height, weight: weight)
+							i = i + 1
+						end
+					end
+				end
+			
+			    if i > 0
+
+			    	equipment = Equipment.find_by(id: equipment_enquiry.equipment_id)
+					equipment.update(country_id: params[:equipment][:country_id], city: params[:equipment][:city], pickup_port: params[:equipment][:pickup_port])
+
+					if @order
+						@order.update(no_of_packages: i, pickup_country_id: params[:equipment][:country_id], pickup_city: params[:equipment][:city], pickup_port: params[:equipment][:pickup_port])
+					end
+					
+					flash[:notice] = "Successfully updated."
+					redirect_to seller_detail_inquiry_center_path(params[:id])
+					
+				else
+				
+					flash[:error] = "Failed, Enter atlease one shipping package detail!"
+					redirect_to seller_detail_inquiry_center_path(params[:id])
+				
+				end
+			
+			elsif params[:equipment][:update_type] == 'buyer'
+		
+				equipment_enquiry.update(shipping_method: params[:equipment_enquiry][:shipping_method], country_id: params[:equipment_enquiry][:country_id], delivery_city: params[:equipment_enquiry][:delivery_city], delivery_port: params[:equipment_enquiry][:delivery_port])
+
+				if @order
+					@order.update(shipping_method: params[:equipment_enquiry][:shipping_method], delivery_country_id: params[:equipment_enquiry][:country_id], delivery_city: params[:equipment_enquiry][:delivery_city], delivery_port: params[:equipment_enquiry][:delivery_port])
+				end
+				
+				flash[:notice] = "Successfully updated."
+				redirect_to seller_detail_inquiry_center_path(params[:id])
+				
+			else
+				flash[:error] = "Invalid action!"
+				redirect_to seller_detail_inquiry_center_path(params[:id])		
+				
+			end
+			
+	  	else
+			flash[:error] = "Invalid action!"
+			redirect_to seller_detail_inquiry_center_path(params[:id])
+	  	end
+	  
+  	end
 
 end

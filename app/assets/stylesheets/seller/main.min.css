@@ -6395,6 +6395,7 @@ a:hover, a:active, a:focus{
   height: 40px;
   line-height: 40px;
   padding: 0 20px 0 0;
+  margin-right: 15px;
 }
 .bred-crumbs a.active, .bred-crumbs a:hover{ color: #ff4321; }
 .action-btuns a.profile-box {

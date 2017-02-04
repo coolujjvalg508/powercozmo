@@ -96,11 +96,13 @@ Rails.application.routes.draw do
 
       # routing for enquiry center
       get 'inquiry-center' => 'inquiry_center#index', as: 'inquiry_center' 
+      get 'inquiry-center/detail/:id' => 'inquiry_center#detail', as: 'detail_inquiry_center' 
       post 'delete-inquiry' => 'inquiry_center#delete_inquiry', as: 'delete_inquiry' 
       post 'mark-unread-inquiry' => 'inquiry_center#mark_unread_inquiry', as: 'mark_unread_inquiry' 
       post 'reject-inquiry' => 'inquiry_center#reject_inquiry', as: 'reject_inquiry' 
       post 'report-spam-inquiry' => 'inquiry_center#report_spam_inquiry', as: 'report_spam_inquiry' 
       post 'add-user-contact' => 'inquiry_center#add_user_contact', as: 'add_user_contact' 
+      post 'save_shipping_inquiry/:id' => 'inquiry_center#save_shipping_inquiry', as: "save_shipping_inquiry"
       
     end
         

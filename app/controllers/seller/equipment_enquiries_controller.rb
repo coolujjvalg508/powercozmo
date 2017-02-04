@@ -32,12 +32,13 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 		#abort(no_of_package.to_s)
 				
 		if @offer.present?
-			response = @offer.responses.new(user_id: current_user.id, message: enquiry_response_params[:message])
-			if ["Accept","Reject"].include?(params[:commit])
+			response = @offer.responses.new(user_id: current_user.id, message: enquiry_response_params[:message], attachment: enquiry_response_params[:attachment])
+
+			if ["Confirm", "Reject"].include?(params[:commit])
 				response_type = params[:commit]+"ed"  # to make it enum compatable like 'Accepted'
 				if @offer.update(:response => enquiry_response_params[:message], :response_status => "Responded", :replied_as => response_type)
 					response.save
-					if @offer.replied_as == 'Accepted'
+					if @offer.replied_as == 'Confirmed'
 						order_params = [:name, :email, :mobile, :country_id, :company_website, :equipment_id].inject({}) do |params, element|
 							params[element] = @offer[element]
 							params
@@ -77,12 +78,13 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 					flash[:alert] = "Failed to process request, please try again."
 				end
 			else
+
 				if @offer.update(:response => enquiry_response_params[:message])
 					flash[:notice] = "Message sent successfully."
 				else
 					# flash[:alert] = "Failed to process request, please try again."
 					if @offer.errors.messages[:responses][0] == "is invalid"
-						@error = "Please enter maximum 3000 characters"
+						@error = "Please enter maximum 2000 characters"
 					end
 					render :show_offer and return
 				end
@@ -103,8 +105,8 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 	def reply_to_question
 		@question = find_enquiry
 		if @question.present?
-			response = @question.responses.new(user_id: current_user.id, message: enquiry_response_params[:message])
-			if @question.update(:response => enquiry_response_params[:message], :response_status => "Responded", :replied_as => "Accepted")
+			response = @question.responses.new(user_id: current_user.id, message: enquiry_response_params[:message], attachment: enquiry_response_params[:attachment])
+			if @question.update(:response => enquiry_response_params[:message], :response_status => "Responded", :replied_as => "Confirmed")
 					if response.save
 						flash[:notice] = "Message sent successfully."
 					else
@@ -152,6 +154,6 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 	end
 
 	def enquiry_response_params
-		params.require(:enquiry_response).permit(:message)
+		params.require(:enquiry_response).permit(:message, :attachment)
 	end
 end

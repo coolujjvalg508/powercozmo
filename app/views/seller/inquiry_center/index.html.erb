@@ -31,12 +31,12 @@
 
 					<div class="main-heding no-t-padding">
 						<div class="bred-crumbs">
-						<a href="<%= seller_inquiry_center_path %>" style="margin-right: 15px;" class="<%= (!params[:status].present?) ? 'active' : '' %>">ALL</a>
-						<a href="<%= seller_inquiry_center_path %>?status=1" style="margin-right: 15px;" class="<%= (params[:status].present? && params[:status] == '1') ? 'active' : '' %>">NEGOTIATING</a>
-						<a href="<%= seller_inquiry_center_path %>?status=3" style="margin-right: 15px;" class="<%= (params[:status].present? && params[:status] == '3') ? 'active' : '' %>">REJECTED</a>
-						<a href="<%= seller_inquiry_center_path %>?status=2" style="margin-right: 15px;" class="<%= (params[:status].present? && params[:status] == '2') ? 'active' : '' %>">CONFIRMED</a>
-						<a href="<%= seller_inquiry_center_path %>?status=4" style="margin-right: 15px;" class="<%= (params[:status].present? && params[:status] == '4') ? 'active' : '' %>">FUNDED TO POWER COZMO</a>
-						<a href="<%= seller_inquiry_center_path %>?status=5" style="margin-right: 15px;" class="<%= (params[:status].present? && params[:status] == '5') ? 'active' : '' %>">SHIPPED</a>
+						<a href="<%= seller_inquiry_center_path %>" class="<%= (!params[:status].present?) ? 'active' : '' %>">ALL</a>
+						<a href="<%= seller_inquiry_center_path %>?status=1" class="<%= (params[:status].present? && params[:status] == '1') ? 'active' : '' %>">NEGOTIATING</a>
+						<a href="<%= seller_inquiry_center_path %>?status=3" class="<%= (params[:status].present? && params[:status] == '3') ? 'active' : '' %>">REJECTED</a>
+						<a href="<%= seller_inquiry_center_path %>?status=2" class="<%= (params[:status].present? && params[:status] == '2') ? 'active' : '' %>">CONFIRMED</a>
+						<a href="<%= seller_inquiry_center_path %>?status=4" class="<%= (params[:status].present? && params[:status] == '4') ? 'active' : '' %>">FUNDED TO POWER COZMO</a>
+						<a href="<%= seller_inquiry_center_path %>?status=5" class="<%= (params[:status].present? && params[:status] == '5') ? 'active' : '' %>">SHIPPED</a>
 						<a href="<%= seller_inquiry_center_path %>?status=6" class="<%= (params[:status].present? && params[:status] == '6') ? 'active' : '' %>">PAYMENT RELEASED</a>
 					</div>
 					</div>
@@ -95,7 +95,7 @@
 												<b>&nbsp</b>
 											</td>
 											
-											<td class="text-center"><%= inquiry.id %></td>
+											<td class="text-center"><a href="<%= seller_detail_inquiry_center_path(inquiry.id) %>" class="default-font" target="_blank"><%= inquiry.id %></a></td>
 											
 											<td>
 												
@@ -111,23 +111,23 @@
 
 												<% if inquiry.enquiry_type == "question" %>
 
-													Question about <%= inquiry.equipment.name %>
+													<a href="<%= seller_detail_inquiry_center_path(inquiry.id) %>" class="default-font" target="_blank">Question about <%= inquiry.equipment.name %></a>
 
 												<% elsif inquiry.enquiry_type == "bid" %>
 
-													Bid for <%= inquiry.equipment.name %>
+													<a href="<%= seller_detail_inquiry_center_path(inquiry.id) %>" class="default-font" target="_blank">Bid for <%= inquiry.equipment.name %></a>
 
 												<% elsif inquiry.enquiry_type == "buy" %>
 
-													Order request for <%= inquiry.equipment.name %>
+													<a href="<%= seller_detail_inquiry_center_path(inquiry.id) %>" class="default-font" target="_blank">Order request for <%= inquiry.equipment.name %></a>
 
 												<% end %>	
 												
 											</td>
 
-											<td class="text-center"><%= inquiry.equipment.identifier %></td>
+											<td class="text-center"><a href="<%= seller_detail_inquiry_center_path(inquiry.id) %>" class="default-font" target="_blank"><%= inquiry.equipment.identifier %></a></td>
 											
-											<td><%= inquiry.equipment.name %></td>
+											<td><a href="<%= seller_detail_inquiry_center_path(inquiry.id) %>" class="default-font" target="_blank"><%= inquiry.equipment.name %></a></td>
 
 											<td><%= inquiry.updated_at.strftime("%d-%b-%Y %H:%M %p") if inquiry.updated_at.present? %></td>
 											<td class="text-center">

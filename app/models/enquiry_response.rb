@@ -1,4 +1,7 @@
 class EnquiryResponse < ActiveRecord::Base
+
+  mount_uploader :attachment, EquipmentFileUploader
+
   enum status: { responded: 1, forwarded: 2 }
 
   belongs_to :equipment_enquiry
@@ -6,7 +9,7 @@ class EnquiryResponse < ActiveRecord::Base
   belongs_to :forwarded_user, :class_name => "AdminUser", :foreign_key => "forwarded_by"
 
   validates :message, presence: true
-  validates :message, length: { maximum: 3000,
+  validates :message, length: { maximum: 2000,
     too_long: "Please enter maximum %{count} characters" }, :if => "message.present?"
 
 	after_create :update_enquiry_read_by_admin

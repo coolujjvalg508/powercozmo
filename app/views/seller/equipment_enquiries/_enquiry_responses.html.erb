@@ -115,9 +115,10 @@
 									<button type="submit" class="btn btn-success mr5" value="Reply" name="commit">Reply</button>
 									
 								<% else %>
-									<% if enquiry.replied_as=="Requested" && enquiry.equipment.try(:availble_for).present? && enquiry.equipment.try(:availble_for) >= Date.today %>
+
+									<% if enquiry.replied_as=="Negotiating" && enquiry.equipment.try(:availble_for).present? && enquiry.equipment.try(:availble_for) >= Date.today %>
 										
-										<button type="submit" class="btn btn-success mr5" value="Accept" name="commit">Accept</button>
+										<button type="submit" class="btn btn-success mr5" value="Confirm" name="commit">Accept</button>
 										<button type="submit" class="btn btn-danger mr5" value="Reject" name="commit">Reject</button>
 										
 									<% else %>
