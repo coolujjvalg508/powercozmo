@@ -256,8 +256,19 @@
 								</div>
 							</div>
 
-							 
-							
+							<div class="form-group mt20">
+								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Description & Faults PDF</label>									
+								<div class="col-md-12 file-field grad-fields">	
+									<%= f.file_field :pdf_attachment, class: "filestyle", "data-buttonName" => "btn-primary", 'data-count-field' => 'true', accept: 'application/pdf' %>
+									<%= form_error_msg_for(@equipment, :pdf_attachment)%>
+
+									<% if @equipment.pdf_attachment.present? %>
+										<%= link_to @equipment.pdf_attachment.url.split('/').last, @equipment.pdf_attachment.url, target: :blank%>
+									<% end %>
+
+								</div>
+							</div>
+
 							<div class="form-group mt20">
 								<label class="col-md-12 control-label"><span class="eq_type_text">Equipment</span> Keywords</label>
 								<div class="col-md-12">

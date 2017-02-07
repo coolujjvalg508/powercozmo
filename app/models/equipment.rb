@@ -5,6 +5,7 @@ class Equipment < ActiveRecord::Base
   ########################## Uploaders ######################
 
   mount_uploader :attachment, EquipmentFileUploader
+  mount_uploader :pdf_attachment, PdfAttachmentUploader
   ######################### Constants #########################
 
   ############## scopes ############

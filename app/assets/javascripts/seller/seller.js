@@ -84,6 +84,13 @@ $(document).ready(function(){
 	});
 	//js end for auto show hide 
 
+	$('.numericOnly').keyup(function () {
+        this.value = this.value.replace(/[^0-9]/g,'');
+    });
+    $('.floatOnly').keyup(function () {
+        this.value = this.value.replace(/[^0-9\.]/g,'');
+    });
+
 
 });
 

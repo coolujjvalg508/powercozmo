@@ -380,7 +380,7 @@ class Seller::EquipmentController < Seller::BaseController
   private
 
 	def equipment_params
-	 params.require(:equipment).permit(:name, :equipment_model, :condition, :owner_name, :manufacturer_id, :category_type, :category_id, :sub_category_id, :sub_sub_category_id, :city, :country_id, :price, :currency, :rating, :description, :status, :manufacture_year, :user_id, :availble_for, :power_plant_age, :power_plant_type, :turbine_model, :turbine_manufacturer_name, :require_moderation, :equipment_type, :faults, :pickup_port, :minimum_accepted_price, :keywords, :attachment, :images_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image,:image_cache])
+	 params.require(:equipment).permit(:name, :equipment_model, :condition, :owner_name, :manufacturer_id, :category_type, :category_id, :sub_category_id, :sub_sub_category_id, :city, :country_id, :price, :currency, :rating, :description, :status, :manufacture_year, :user_id, :availble_for, :power_plant_age, :power_plant_type, :turbine_model, :turbine_manufacturer_name, :require_moderation, :equipment_type, :faults, :pickup_port, :minimum_accepted_price, :keywords, :attachment, :pdf_attachment, :images_attributes => [:id,:image,:imageable_id,:imageable_type, :_destroy,:tmp_image,:image_cache])
 	end
 	
   def find_equipment

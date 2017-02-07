@@ -395,19 +395,19 @@
 		<div class="content-container" id="content">
 			<% if flash[:alert] %>
 				<div class="alert alert-danger col-md-12 col-xs-12">
-					<div><%= flash[:alert] %></div>
+					<div><%= flash[:alert].html_safe %></div>
 					<% flash.discard(:alert) %>
 				</div>
 			<% end %>
 			<% if flash[:notice] %>
 				<div class="alert alert-success col-md-12 col-xs-12">
-					<div class="notice"><%= flash[:notice] %></div>
+					<div class="notice"><%= flash[:notice].html_safe %></div>
 					<% flash.discard(:notice) %>
 				</div>
 			<% end %>
 			<% if flash[:error] %>
 				<div class="alert alert-danger col-md-12 col-xs-12">
-					<div class="error"><%= flash[:error] %></div>
+					<div class="error"><%= flash[:error].html_safe %></div>
 					<% flash.discard(:error) %>
 				</div>
 			<% end %>

@@ -103,6 +103,8 @@ Rails.application.routes.draw do
       post 'report-spam-inquiry' => 'inquiry_center#report_spam_inquiry', as: 'report_spam_inquiry' 
       post 'add-user-contact' => 'inquiry_center#add_user_contact', as: 'add_user_contact' 
       post 'save_shipping_inquiry/:id' => 'inquiry_center#save_shipping_inquiry', as: "save_shipping_inquiry"
+      put 'inquiry_update_contact/:id' => 'inquiry_center#inquiry_update_contact', as: "inquiry_update_contact"
+      put 'make-offer/:id' => 'inquiry_center#make_offer', as: "make_offer"
       
     end
         

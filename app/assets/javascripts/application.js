@@ -86,6 +86,14 @@ function showAttachment(input){
 $(document).ready(function(){
   $(".alert").fadeIn();
   $(".alert").fadeOut(30000);
+
+  $('.numericOnly').keyup(function () {
+      this.value = this.value.replace(/[^0-9]/g,'');
+  });
+  $('.floatOnly').keyup(function () {
+      this.value = this.value.replace(/[^0-9\.]/g,'');
+  });
+  
   if( navigator.userAgent.match(/iPad|iPhone/i) ) {
 
     $('.modal').on('show.bs.modal', function() {

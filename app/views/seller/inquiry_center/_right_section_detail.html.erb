@@ -1,0 +1,251 @@
+<div class="chatn-box">
+	<div class="tlt-sec-chat">
+		<b> <% if @result.user_id == current_user.id %>
+				<%= truncate(@result.try(:equipment).try(:user).try(:profile).try(:first_name), :length => 18) %>
+			<% else %>
+				<%= truncate(@result.try(:user).try(:profile).try(:first_name), :length => 18) %>
+			<% end %>
+		</b>
+		<span>
+			<i class="ti-location-pin"></i> 
+			<% if @result.user_id == current_user.id %>
+				<%= truncate(@result.try(:equipment).try(:user).try(:profile).try(:country).try(:name), :length => 18) %>
+			<% else %>
+				<%= truncate(@result.try(:country).try(:name), :length => 18) %>
+			<% end %>
+		</span>
+	</div>
+	<div class="clearfix"></div>
+
+	<div class="comment-chates">
+
+		<% msg_style = (@result.user_id == current_user.id) ? '' : 'cust' %>
+		<div class="user-chat-sec <%= msg_style %>">
+			<div class="text-are">
+				<p><%= @result.message.to_s.html_safe %>
+				</p>
+				<em><%=format_time(@result.created_at)%><!-- 10/03/2016 --></em>
+			</div>
+			<span class="user-img">
+				<% if (@result.user.try(:image).blank? || @result.user.try(:image).try(:image).blank?)%>
+					<img src="/assets/seller/myprofile-placeholder-img.png" class="img-circle" alt="User Image">
+				<% else %>
+					<%= image_tag(@result.user.try(:image).try(:image).try(:thumb).try(:url), class: "img-circle",alt: "User Image") %>
+				<% end %>
+			</span>	
+		</div>
+
+<% @result.responses.each_with_index do |enquiry_response,index| %>
+
+	<% if enquiry_response.status == 'forwarded' || enquiry_response.user_id == current_user.id %>
+
+		<% msg_style = (enquiry_response.user_id == current_user.id) ? '' : 'cust' %>
+
+		<div class="user-chat-sec <%= msg_style %>">
+			<div class="text-are">
+				<p><%= enquiry_response.message.to_s.html_safe %>
+					<% if enquiry_response.try(:attachment).try(:url).present? %>
+									
+						<a class="clearfix" target="_blank" href="<%= root_url %><%= enquiry_response.attachment.url %>" download="<%= File.basename(enquiry_response.attachment.url) %>"><%= File.basename(enquiry_response.attachment.url) %></a>
+									
+					<% end %>
+				</p>
+				<em><%=format_time(enquiry_response.created_at)%><!-- 10/03/2016 --></em>
+			</div>
+			<span class="user-img">
+				<% if (enquiry_response.user.image.blank? || enquiry_response.user.image.try(:image).blank?)%>
+					<img src="/assets/seller/myprofile-placeholder-img.png" class="img-circle" alt="User Image">
+				<% else %>
+					<%= image_tag(enquiry_response.user.image.try(:image).try(:thumb).try(:url), class: "img-circle",alt: "User Image") %>
+				<% end %>						
+			</span>
+
+		</div>	
+	<% end %>
+<% end %>
+
+	</div>
+
+<% if @result.equipment.availble_for >= Date.today %>
+	<div class="butns-sec-chat">
+		<%= form_for @result.responses.new, url: seller_respond_to_offer_path(@result), method: :put do |f|%>
+
+			<% if !@result.question? %>
+				<% if((!@result.offered_by_user_id && @result.user_id != current_user.id) || (@result.offered_by_user_id && @result.offered_by_user_id != current_user.id)) %>
+					<% if @result.replied_as=="Negotiating" && @result.equipment.try(:availble_for).present? && @result.equipment.try(:availble_for) >= Date.today %>
+
+						<div class="butn-text">
+							<i class="fa fa-fw" aria-hidden="true"></i>
+							<span>
+								<button type="submit" class="green-button" value="Confirm" name="commit">Accept</button>
+								<button type="submit" class="red-button" value="Reject" name="commit">Reject</button>
+							</span>
+						</div>
+
+					<% end %>
+				<% end %>
+			<% end %>
+
+			<div class="text-updrte">
+				<%= f.text_area :message, class: '', id: "message", maxlength: "2000", placeholder: 'Writing e-mail address, telephone numbers or contacts details is not allowed.', value: params[:enquiry_response].present? ? params[:enquiry_response][:message] : '' %>
+			</div>
+			<div class="count">
+				<p><i id="message_length">0</i>/2000(Min.20)</p>
+			</div>
+			<div class="make-ofer">
+				<% if !@result.buy? && @result.replied_as=="Negotiating" && @result.equipment.try(:availble_for).present? && @result.equipment.try(:availble_for) >= Date.today %>
+					<a href="javascript:void(0);" id="make_offer">Make Offer</a>
+				<% end %>
+				<span>
+					<%= f.file_field :attachment, class: "" %>
+					<b><img src="/assets/seller/attach-.png" alt=""> Attach Files</b>
+				</span>
+				<button type="submit" value="Reply" name="commit">Send</button>
+				<div class="clearfix"></div>
+			</div>
+
+		<% end %>
+
+		<% if !@result.buy? && @result.replied_as=="Negotiating" && @result.equipment.try(:availble_for).present? && @result.equipment.try(:availble_for) >= Date.today %>
+			<div class="clearfix"></div>
+			<%= form_for @result, url: seller_make_offer_path(@result), html: { method: :put, :id => "make-offer-form" } do |f|%>
+				<div id="make_offer_submit" class="bidi-tabl" style="display: none;">
+					<label>Bidding Price:<sup>*</sup></label> 
+					<div class="inpu-tex">
+						<div class="biding-pric">
+							<%= f.text_field :bidding_price, autocomplete: "off", class: 'form-control numericOnly', id: 'bidding_price', placeholder: 'Enter Bidding Price', value: '' %>
+						</div>
+						<button class="send-ord orang-gradient">Submit</button>
+					</div>
+				</div>		
+			<% end %>
+		<% end %>
+
+	</div>
+<% end %>
+		
+</div>
+
+<script type="text/javascript">
+
+	$(document).ready(function(){  
+		$.validator.addMethod("regexEmail", function(value, element, regexpr) {
+	   
+			if(regexpr.test(value)){
+				return false;
+			}else{
+				return true;
+			}
+		}, "Please remove email from message");
+	  
+		$.validator.addMethod("regexPhone", function(value, element, regexpr) {
+
+			if(regexpr.test(value)){	
+				return false;
+			}else{
+				return true;
+			}
+		}, "Please remove phone number from message");
+		  
+		
+		var validator = $("#new_enquiry_response").validate({
+		  //debug: true,
+		  errorElement: 'div',
+		  errorClass: 'error-msg',
+		  ignore: "",
+		  rules: {    
+			'enquiry_response[message]': {
+			  required: true,
+			  minlength: 20,
+			  maxlength: 2000,
+			  regexPhone: /[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
+			  regexEmail: /(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/
+			}
+		  },
+		  messages:{    
+			'enquiry_response[message]': {
+			  required: "Message can't be blank",
+			  maxlength: "Please enter maximum 2000 characters",
+			  minlength: "Please enter minimum 20 characters",
+			  regexEmail: "Please remove email from message",
+			  regexPhone: "Please remove phone number from message"
+			}
+		  }, 
+		  errorPlacement: function(error, element) {
+			error.insertAfter(element);
+		  }, 
+		  submitHandler: function(form) {  
+			//Hack for form submit
+			if ($(form).valid()) 
+			  form.submit(); 
+			return false; // prevent normal form posting
+		  }
+		});
+
+		getMessageLength();
+		$("#message").on('keyup', function(){
+			getMessageLength();
+		});
+
+		function getMessageLength(){
+			message_length = $("#message").val().length;
+			$("#message_length").html(message_length);
+		}
+
+		$("#make_offer").click(function(){
+
+			$("#make_offer_submit").toggle('700');
+
+		});
+
+		var validator_bidding = $("#equipment_enquiry_form").validate({
+		    ignore: ':hidden:not(select)',
+		    rules: {
+		      "enquiry[bidding_price]": {
+		        required: true,
+		        number: true,
+		        regex: /^[0-9]{0,10}[\.]*[0-9]{0,2}$/
+		      }
+		    },
+		    messages: {
+		      "enquiry[bidding_price]": {
+		        required: "Bidding price can not be blank",
+		        number: "Please enter number only",
+		        regex: "Max value for price is 9999999999.99"
+		      }
+		    },
+		    errorPlacement: function(error, element) {
+		      if (element.attr("name") == "enquiry[country_id]") {
+		        error.insertAfter("#country-error");
+		      } else {
+		        error.insertAfter(element);
+		      }
+		    }
+		    		    
+		});
+
+
+		var validator_bidding = $("#make-offer-form").validate({
+		    ignore: ':hidden:not(select)',
+		    rules: {
+		      "equipment_enquiry[bidding_price]": {
+		        required: true,
+		        number: true,
+		        regex: /^[0-9]{0,10}[\.]*[0-9]{0,2}$/
+		      }
+		    },
+		    messages: {
+		      	"equipment_enquiry[bidding_price]": {
+		        	required: "Bidding price can not be blank",
+		        	number: "Please enter number only",
+		        	regex: "Max value for price is 9999999999.99"
+		      	}
+		    },
+		    errorPlacement: function(error, element) {
+		    	error.insertAfter(element);
+		    }
+		    		    
+		});
+		
+	});   
+</script>

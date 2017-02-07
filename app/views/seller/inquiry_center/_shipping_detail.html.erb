@@ -1,0 +1,271 @@
+<div class="first-actordian">
+	<button type="button" data-toggle="collapse" data-target="#demo-2" aria-expanded="false">Shipping  <span class="ti-angle-down"></span></button>
+	<div id="demo-2" class="collapse" aria-expanded="false" style="height: 0px;">
+		<ul class="cont-info">
+			<li>
+				<i>Number of Packages</i>   
+				<b>
+					<% if @result.equipment.shipping_package.present? %>	
+						<% no_of_package = @result.equipment.shipping_package.count %>
+			
+						<% if no_of_package > 0 %>	
+							<%= no_of_package %>
+						<% end %>
+					<% end %>						
+				</b>
+			</li>
+			<li>
+				<i>Shipping Method</i><b><%= @result.try(:shipping_method) %></b>
+			</li>
+		</ul>
+
+		<div class="pack-detals">
+			<div class="tabl-pro">
+				<ul class="tab-hd">
+					<li>Package Dimensions :</li>
+					<li>Length</li>
+					<li>Width</li>
+					<li>Height</li>
+					<li>Weight</li>
+				</ul>
+				
+				<% i = 0 %>
+				<% if @result.equipment.shipping_package.present? %>	
+					<% @result.equipment.shipping_package.each_with_index do |s_package,index| %>
+						<% i = i + 1 %>
+						<ul>
+							<li>Package <%= i %></li>
+							<li><%= s_package.length %></li>
+							<li><%= s_package.width %></li>
+							<li><%= s_package.height %></li>
+							<li><%= s_package.weight %></li>
+						</ul>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+
+		<div class="loacito-adr">
+			<div class="locat-sec">
+				<ul class="cont-info">
+					<li><b class="tit">Pickup Location</b></li>
+					<li><i>Country</i><b><%= @result.equipment.try(:country).try(:name) %></b></li>
+					<li><i>City</i><b><%= @result.equipment.city %></b></li>
+					<li><i>Port</i><b><%= @result.equipment.pickup_port %></b></li>
+				</ul>
+
+				<ul class="cont-info">
+					<li><b class="tit">Drop Location</b></li>
+					<li><i>Country</i><b><%= @result.try(:country).try(:name) %></b></li>
+					<li><i>City</i><b><%= @result.try(:delivery_city) %></b></li>
+					<li><i>Port</i><b><%= @result.try(:delivery_port) %></b></li>
+				</ul>
+
+			</div>
+			<a class="ed-s" href="javascript:void(0);" data-toggle="modal" data-target="#edit_shipping_popup"><span class="ti-pencil"></span> Edit</a>
+		</div>
+	</div>
+</div>
+
+<div id="edit_shipping_popup" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+<!-- Modal content-->
+		<div class="modal-content upd-ship">
+		<div class="pop-hd">
+			<button type="button" class="close fa-co" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>
+			</button>
+
+			<div class="modal-header">
+
+				<h4 class="modal-title">Update Shipping</h4>
+			</div>
+			</div>
+
+			<div class="modal-body">
+
+<% if current_user.id == @result.equipment.user_id %>		
+	<%= form_for(@result.equipment, url: seller_save_shipping_inquiry_path(@result), html: { method: :post, :id => "update_shipping" }) do |f| %>
+		<%= hidden_field_tag "equipment[update_type]", 'seller' %>
+			
+			<div class="sho-pop">
+				<div class="panel-body no-padding">
+					
+					<div class="form-group">
+						<label class="col-md-4 control-label text-bold">Pickup Country</label>
+						<div class="col-md-8">
+							<%= f.select :country_id, @countries.map{|id,name| [name,id] }, {prompt: 'Select Country'} %>
+						</div>
+					</div>
+					
+					
+					
+					<div class="form-group mt20">
+						<label class="col-md-4 control-label text-bold">Pickup City</label>
+						<div class="col-md-8">
+							<%= f.text_field :city, autocomplete: "off", class: 'form-control', id: 'pickup_city', placeholder: 'Enter Pickup City' %>
+						</div>
+					</div>
+					
+					
+					
+					<div class="form-group mt20">
+						<label class="col-md-4 control-label text-bold">Pickup Port</label>
+						<div class="col-md-8">
+							<%= f.text_field :pickup_port, autocomplete: "off", class: 'form-control', id: 'pickup_port', placeholder: 'Enter Pickup port' %>
+						</div>
+					</div>
+					
+					
+					
+					<div class="form-group mt30">
+						<div class="col-md-12">
+							<label class="control-label text-bold">Packages Detail :</label>
+							<%= link_to 'javascript:void(0);', class: "pull-right add-package", title: "Add More Packages"  do %>
+										<i class="fa fa-plus"></i><span> Add More</span>
+									<% end %>
+						</div>
+						<div class="col-md-12 basic-table">
+							
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Length</th>
+										<th>Width</th>
+										<th>Height</th>
+										<th>Weight</th>										
+										<th></th>	
+									</tr>
+								</thead>
+								
+								<tbody id="package-list">
+									
+									<% i = 0 %>
+									<%= f.fields_for :shipping_package do |s| %>
+									
+										<% @result.equipment.shipping_package.each_with_index do |s_package,index| %>
+											<% i = index + 1 %>
+											
+											<tr id="package-list-<%= index %>">
+											
+												<td>
+													<%= s.text_field :length, autocomplete: "off", class: 'form-control', id: 'length' + index.to_s, placeholder: 'Enter Length', value: s_package.length, name: 'equipment[shipping_package][' + index.to_s + '][length]' %>
+												</td>
+												
+												<td>
+													<%= s.text_field :width, autocomplete: "off", class: 'form-control', id: 'width' + index.to_s, placeholder: 'Enter Width', value: s_package.width, name: 'equipment[shipping_package][' + index.to_s + '][width]' %>
+												</td>
+												
+												<td>
+													<%= s.text_field :height, autocomplete: "off", class: 'form-control', id: 'height' + index.to_s, placeholder: 'Enter Height', value: s_package.height, name: 'equipment[shipping_package][' + index.to_s + '][height]' %>
+												</td>
+								
+												<td>
+													<%= s.text_field :weight, autocomplete: "off", class: 'form-control', id: 'weight' + index.to_s, placeholder: 'Enter Weight', value: s_package.weight, name: 'equipment[shipping_package][' + index.to_s + '][weight]' %>
+												</td>
+												<td>
+													<%= link_to 'javascript:void(0);', class: "pull-right remove-package", title: "Remove Package", data_reference: 'package-list-' + index.to_s  do %>
+														<i class="fa fa-remove"></i>
+													<% end %>
+												</td>
+											
+											</tr>
+											
+										<% end %>	
+									<% end %>
+				
+									<input type="hidden" id="package-counter" value="<%= i %>">
+									
+								</tbody>
+							</table>
+							
+						</div>
+					</div>
+					
+					<div class=" col-md-12 clearfix  text-right">
+					   <button type="submit" class="send-ord orang-gradient" value="Update" name="commit">Update</button>
+					</div>	
+								
+				</div>	
+			</div>	
+	<% end %>	
+
+	<script type="text/javascript">
+	    $(document).ready(function(){
+	               
+	        $('.add-package').click(function () {
+	            var i = $('#package-counter').val();
+	            var html_data = '<tr id="package-list-' + i + '"><td><input autocomplete="off" class="form-control" id="length' + i + '" placeholder="Enter Length"  name="equipment[shipping_package][' + i + '][length]" type="text"></td><td><input autocomplete="off" class="form-control" id="width' + i + '" placeholder="Enter Width" name="equipment[shipping_package][' + i + '][width]" type="text"></td><td><input autocomplete="off" class="form-control" id="height' + i + '" placeholder="Enter Height" name="equipment[shipping_package][' + i + '][height]" type="text"></td><td><input autocomplete="off" class="form-control" id="weight' + i + '" placeholder="Enter Weight" name="equipment[shipping_package][' + i + '][weight]" type="text"></td><td><a class="pull-right remove-package" title="Remove Package" data_reference="package-list-' + i + '" href="javascript:void(0);"><i class="fa fa-remove"></i></a></td></tr>';
+	            
+	            $("#package-list").append(html_data);
+	            
+	            i++;
+	            $('#package-counter').val(i);
+	            
+	        });
+	        
+	    });
+	    
+	     $(document).on('click', '.remove-package', function () {
+	            var ref = $(this).attr('data_reference');
+	            $("#" + ref).remove();
+	      });
+	</script>
+
+<% else %>
+	<%= form_for(@result, url: seller_save_shipping_inquiry_path(@result), html: { method: :post, :id => "update_shipping" }) do |f| %>
+		<%= hidden_field_tag "equipment[update_type]", 'buyer' %>
+	
+			<div class="sho-pop">
+				<div class="panel-body no-padding">
+					
+					<div class="form-group">
+						<label class="col-md-4 control-label text-bold">Shipping Method</label>
+						<div class="col-md-8">
+							<%= f.select :shipping_method, options_for_select(Order::SHIPPING_METHOD, @result.try(:shipping_method)), {prompt: 'Select Shipping Method'} %>							
+						</div>
+					</div>
+					
+					
+					
+					<div class="form-group mt20">
+						<label class="col-md-4 control-label text-bold">Delivery Country</label>
+						<div class="col-md-8">
+							<%= f.select :country_id, @countries.map{|id,name| [name,id] }, {prompt: 'Select Country'} %>
+						</div>
+					</div>
+					
+					
+					
+					<div class="form-group mt20">
+						<label class="col-md-4 control-label text-bold">Delivery City</label>
+						<div class="col-md-8">
+							<%= f.text_field :delivery_city, autocomplete: "off", class: 'form-control', id: 'delivery_city', placeholder: 'Enter Delivery City' %>
+						</div>
+					</div>
+					
+					
+					
+					<div class="form-group mt20">
+						<label class="col-md-4 control-label text-bold">Delivery Port</label>
+						<div class="col-md-8">
+							<%= f.text_field :delivery_port, autocomplete: "off", class: 'form-control', id: 'delivery_port', placeholder: 'Enter Delivery port' %>
+						</div>
+					</div>
+					
+					<div class="col-md-12 clearfix text-right">
+					   <button type="submit" class="send-ord orang-gradient" value="Update" name="commit">Update</button>
+					</div>	
+								
+				</div>	
+			</div>	
+		
+	<% end %>
+<% end %>	
+
+			</div>
+
+		</div>
+
+	</div>
+</div>

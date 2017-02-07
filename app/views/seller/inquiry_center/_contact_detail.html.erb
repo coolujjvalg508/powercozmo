@@ -1,0 +1,240 @@
+<div class="first-actordian">
+	<button type="button" data-toggle="collapse" data-target="#demo" aria-expanded="false">Contact <span class="ti-angle-down"></span></button>
+	<div id="demo" class="collapse" aria-expanded="false" style="height: 0px;">
+		<ul class="cont-info">
+
+			<% if @result.user_id == current_user.id %>
+
+				<li>
+					<i>Partner name</i>
+					<b><%= @result.try(:user).try(:profile).try(:first_name) %> <%= @result.try(:user).try(:profile).try(:last_name) %></b>
+				</li>
+
+				<li>
+					<i>Company</i>
+					<b><%= @result.try(:user).try(:profile).try(:company_name) %></b>
+				</li>
+
+				<li>
+					<i>Tel. No.</i>
+					<b><%= @result.try(:user).try(:profile).try(:phone_number) %></b>
+				</li>
+
+				<li>
+					<i>Email</i>
+					<b><%= @result.try(:user).try(:email) %></b>
+				</li>
+
+			<% else %>
+
+				<li>
+					<i>Partner name</i>
+					<b><%= @result.try(:equipment).try(:user).try(:profile).try(:first_name) %> <%= @result.try(:equipment).try(:user).try(:profile).try(:last_name) %></b>
+				</li>
+
+				<li>
+					<i>Company</i>
+					<b><%= @result.try(:equipment).try(:user).try(:profile).try(:company_name) %></b>
+				</li>
+
+				<li>
+					<i>Tel. No.</i>
+					<b><%= @result.try(:equipment).try(:user).try(:profile).try(:phone_number) %></b>
+				</li>
+
+				<li>
+					<i>Email</i>
+					<b><%= @result.try(:equipment).try(:user).try(:email) %></b>
+				</li>
+
+			<% end %>
+
+			<li>
+				<a class="ed-s marginT10 marginB10" href="javascript:void(0);" data-toggle="modal" data-target="#edit_contact_popup"><span class="ti-pencil"></span> Edit</a>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<div id="edit_contact_popup" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+<!-- Modal content-->
+		<div class="modal-content upd-ship">
+			<div class="pop-hd">
+			<button type="button" class="close fa-co" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>
+			</button>
+			<div class="modal-header">
+
+				<h4 class="modal-title">Edit Contact</h4>
+			</div>
+			</div>
+			<div class="modal-body">
+				<div class="sho-pop">
+				<div class="panel-body no-padding">
+
+<% if current_user.id == @result.equipment.user_id %>
+	<!-- If inquiry center page opened at seller end shown seller details -->
+	<%= form_for(@result.equipment.user, url: seller_inquiry_update_contact_path(@result), html: { method: :put, :id => "update_profile" }) do |f| %>
+		<%= f.fields_for :profile do |profile_form| %>
+		<%= hidden_field_tag "user_id", @result.equipment.user.id %>
+					
+							<div class="form-group">
+								<label class="col-md-4 control-label text-bold">Partner Name<sup>*</sup></label>
+								<div class="col-md-8">
+									<div class="row">
+									<div class="col-md-6">
+										<%= profile_form.text_field :first_name, autocomplete: "off", class: 'form-control', id: 'firstname', placeholder: 'Enter First Name' %>
+									</div>
+									<div class="col-md-6">
+										<%= profile_form.text_field :last_name, autocomplete: "off", class: 'form-control', placeholder: 'Enter Last Name' %>
+									</div>
+									</div>
+								</div>
+							</div>
+							
+							
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Company Name<sup>*</sup></label>
+								<div class="col-md-8">
+									<%= profile_form.text_field :company_name, autocomplete: "off", class: 'form-control', id: 'companyname', placeholder: 'Enter Company Name' %>
+									
+								</div>
+							</div>
+
+							
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Tel. No.<sup>*</sup></label>
+								<div class="col-md-8">
+									<%= profile_form.text_field :phone_number, autocomplete: "off", class: 'form-control', id: 'phone_number', placeholder: 'Enter Tel. No.' %>
+								</div>
+							</div>
+							
+							<div class=" col-md-12 clearfix text-right">
+							   <button type="submit" class="send-ord orang-gradient" value="UpdateContact" name="commit">Update</button>
+							</div>
+							
+		<% end %>
+	<% end %>
+								
+<% else %>
+	<!-- If inquiry center page opened at buyer end shown buyer details -->			
+	<%= form_for(@result.user, url: seller_inquiry_update_contact_path(@result), html: { method: :put, :id => "update_profile" }) do |f| %>
+		<%= f.fields_for :profile do |profile_form| %>
+		<%= hidden_field_tag "user_id", @result.user.id %>
+		
+							<div class="form-group">
+								<label class="col-md-4 control-label text-bold">Contact Name<sup>*</sup></label>
+								<div class="col-md-8">
+
+									<div class="row">
+									<div class="col-md-6">
+									<%= profile_form.text_field :first_name, autocomplete: "off", class: 'form-control', id: 'firstname', placeholder: 'Enter First Name' %>
+									
+									</div>
+									<div class="col-md-6">
+										<%= profile_form.text_field :last_name, autocomplete: "off", class: 'form-control', id: 'lastname', placeholder: 'Enter Last Name' %>
+									
+									</div>
+									</div>
+
+								</div>
+							</div>
+							
+							
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Company Name<sup>*</sup></label>
+								<div class="col-md-8">
+									<%= profile_form.text_field :company_name, autocomplete: "off", class: 'form-control', id: 'companyname', placeholder: 'Enter Company Name' %>
+								</div>
+							</div>
+
+							
+							
+							<div class="form-group mt20">
+								<label class="col-md-4 control-label text-bold">Tel. No.<sup>*</sup></label>
+								<div class="col-md-8">
+									<%= profile_form.text_field :phone_number, autocomplete: "off", class: 'form-control', id: 'phone_number', placeholder: 'Enter Tel. No.' %>
+								</div>
+							</div>
+							
+							<div class=" col-md-12 clearfix text-right">
+							   <button type="submit" class="send-ord orang-gradient" value="UpdateContact" name="commit">Update</button>
+							</div>
+							
+									
+		<% end %>
+	<% end %>
+				
+<% end %>
+					</div>
+				</div>
+
+
+
+
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	$(document).ready(function(){  
+		
+		var validator = $("#update_profile").validate({
+		  //debug: true,
+		  errorElement: 'div',
+		  errorClass: 'error-msg',
+		  ignore: "",
+		  rules: {    
+			'user[profile_attributes][first_name]': {
+			  required: true
+			},
+			'user[profile_attributes][last_name]': {
+			  required: true
+			},
+			'user[profile_attributes][company_name]': {
+			  required: true
+			},
+			'user[profile_attributes][phone_number]': {
+			  required: true,
+			  minlength: 10,
+			  maxlength: 18
+			}
+		  },
+		  messages:{    
+			'user[profile_attributes][first_name]': {
+			  required: "Enter first name"
+			},
+			'user[profile_attributes][last_name]': {
+			  required: "Enter last name"
+			},
+			'user[profile_attributes][company_name]': {
+			  required: "Enter company name"
+			},
+			'user[profile_attributes][phone_number]': {
+			  required: "Enter phone number",
+			  minlength: "Must have at least 10 digits",
+			  maxlength: "Must have maximum 18 digits"
+			}
+		  }, 
+		  errorPlacement: function(error, element) {
+			error.insertAfter(element);
+		  }, 
+		  submitHandler: function(form) {  
+			//Hack for form submit
+			if ($(form).valid()) 
+			  form.submit(); 
+			return false; // prevent normal form posting
+		  }
+		});
+
+	});   
+</script>
+		

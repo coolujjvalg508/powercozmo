@@ -213,4 +213,55 @@ class Seller::InquiryCenterController < Seller::BaseController
 	  
   	end
 
+  	def inquiry_update_contact
+
+		if params[:commit] == 'UpdateContact'
+			@user = Profile.find_by(user_id: params[:user_id])
+			if @user.update(first_name: params[:user][:profile_attributes][:first_name], last_name: params[:user][:profile_attributes][:last_name], company_name: params[:user][:profile_attributes][:company_name], phone_number: params[:user][:profile_attributes][:phone_number])
+			
+				flash[:notice] = "Contact detail successfully updated."
+				redirect_to seller_detail_inquiry_center_path(params[:id])
+			else
+				err_msg = ''
+				attrb = []
+				i = 0
+				@user.errors.each do |attribute, message|
+					if !attrb.include?(attribute)
+						attrb[i] = attribute
+				    	err_msg = err_msg.to_s + message.to_s + '<br/>'
+				    	i = i + 1
+					end
+				end
+				flash[:error] = err_msg
+				redirect_to seller_detail_inquiry_center_path(params[:id])
+			end		
+		else
+			flash[:error] = "Invalid action!"
+			redirect_to seller_detail_inquiry_center_path(params[:id])
+		end  
+	end
+
+	def make_offer
+		@enquiry = EquipmentEnquiry.find_by(id: params[:id])
+
+		if @enquiry.update(bidding_price: params[:equipment_enquiry][:bidding_price], offered_by_user_id: current_user.id, enquiry_type: 2, replied_as: 1)
+		
+			flash[:notice] = "Offer sent successfully."
+			redirect_to seller_detail_inquiry_center_path(params[:id])
+		else
+			err_msg = ''
+			attrb = []
+			i = 0
+			@user.errors.each do |attribute, message|
+				if !attrb.include?(attribute)
+					attrb[i] = attribute
+			    	err_msg = err_msg.to_s + message.to_s + '<br/>'
+			    	i = i + 1
+				end
+			end
+			flash[:error] = err_msg
+			redirect_to seller_detail_inquiry_center_path(params[:id])
+		end	
+	end
+
 end

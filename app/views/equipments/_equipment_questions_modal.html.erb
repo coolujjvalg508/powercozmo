@@ -19,6 +19,7 @@
           <%= form_tag(send_equipment_enquiry_path, method: 'post', remote: true, :id => "equipment_enquiry_form" ) do %>
             <%= hidden_field_tag "enquiry[enquiry_type]", 'question' %>
             <%= hidden_field_tag "enquiry[user_id]", current_user[:id] %>
+            <%= hidden_field_tag "enquiry[offered_by_user_id]", current_user[:id] %>
             <div class="ask-quents-form-right ask-quents-form-lft col-lg-6 col-sm-6 col-xs-12 ">
               <div class="tooltip-ico">
                 <a href="#" class="tooltip-info" title="Your question will be sent to the seller immediately and we will email you as soon as they reply."><i class="fa fa-info-circle"></i></a>

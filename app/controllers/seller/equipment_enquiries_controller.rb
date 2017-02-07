@@ -39,6 +39,9 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 				if @offer.update(:response => enquiry_response_params[:message], :response_status => "Responded", :replied_as => response_type)
 					response.save
 					if @offer.replied_as == 'Confirmed'
+
+						@offer.update(:enquiry_type => 3)
+
 						order_params = [:name, :email, :mobile, :country_id, :company_website, :equipment_id].inject({}) do |params, element|
 							params[element] = @offer[element]
 							params
@@ -82,17 +85,17 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 				if @offer.update(:response => enquiry_response_params[:message])
 					flash[:notice] = "Message sent successfully."
 				else
-					# flash[:alert] = "Failed to process request, please try again."
 					if @offer.errors.messages[:responses][0] == "is invalid"
-						@error = "Please enter maximum 2000 characters"
+						flash[:alert] = "Please enter maximum 2000 characters"
 					end
-					render :show_offer and return
 				end
 			end
+			redirect_to seller_detail_inquiry_center_path(params[:id])
 		else
 			flash[:alert] = "Offer not found"
+			redirect_to seller_inquiry_center_path
 		end
-		redirect_to seller_offers_path
+		
 	end
 
 	def show_question
@@ -106,7 +109,7 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 		@question = find_enquiry
 		if @question.present?
 			response = @question.responses.new(user_id: current_user.id, message: enquiry_response_params[:message], attachment: enquiry_response_params[:attachment])
-			if @question.update(:response => enquiry_response_params[:message], :response_status => "Responded", :replied_as => "Confirmed")
+			if @question.update(:response => enquiry_response_params[:message], :response_status => "Responded")
 					if response.save
 						flash[:notice] = "Message sent successfully."
 					else
@@ -118,12 +121,15 @@ class Seller::EquipmentEnquiriesController < Seller::BaseController
 				else
 					@error = @question.errors.full_messages[0]
 				end
+				flash[:alert] = @error
 			end
 			render :action => :show_question and return if @error.present?
+			redirect_to seller_detail_inquiry_center_path(params[:id])
 		else
-			flash[:notice] = "Question not found"
+			flash[:alert] = "Inquiry not found!"
+			redirect_to seller_inquiry_center_path
 		end
-		redirect_to seller_questions_path
+		
 	end
 
 	def destroy

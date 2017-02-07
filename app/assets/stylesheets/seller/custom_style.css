@@ -886,8 +886,10 @@ section.group-forms- {
 }
 .cont-info > li {
   border-bottom: 1px solid rgb(221, 221, 221);
+  display: table;
   line-height: 40px;
   padding: 0 15px;
+  width: 100%;
 }
 .cont-info > li:nth-child(2n+1) {
   background-color: rgb(246, 246, 246);
@@ -953,6 +955,7 @@ section.group-forms- {
 .locat-sec {
   border: 1px solid rgb(221, 221, 221);
   border-radius: 5px;
+  display: table;
   float: left;
   margin: 0 0 12px 15px;
   overflow: hidden;
@@ -963,8 +966,8 @@ section.group-forms- {
     border-right: 1px solid rgb(221, 221, 221);
 }
 .locat-sec ul.cont-info {
-    float: left;
-    width: 50%;
+  display: table-cell;
+  width: 50%;
 }
 .ed-s {
   background-color: rgb(242, 242, 242);
@@ -990,6 +993,9 @@ section.group-forms- {
 }
 .locat-sec .cont-info > li b {
   color: rgb(102, 102, 102);
+  float: right;
+  line-height: normal;
+  width: 68%;
 }
 .locat-sec .cont-info > li i {
   color: rgb(102, 102, 102);
@@ -1009,6 +1015,8 @@ section.group-forms- {
   float: right;
   font-size: 15px;
   font-weight: 600;
+  padding: 0 0 0 10px;
+  position: relative;
 }
 .totl-price.cont-info > li {
   position: relative;
@@ -1020,7 +1028,7 @@ section.group-forms- {
   font-weight: 400;
   pointer-events: none;
   position: absolute;
-  right: 70px;
+  right: 100%;
 }
 .totl-price.cont-info > li:nth-child(2n+1) {
   background-color: rgba(0, 0, 0, 0);
@@ -1036,8 +1044,10 @@ section.group-forms- {
 }
 .totl-price.cont-info > li.tol-rp {
   border: 1px solid rgb(221, 221, 221);
+  display: block;
   margin: 3px 10px 5px;
   padding: 5px;
+  width: auto;
 }
 .send-ord.orang-gradient {
   height: 40px;
@@ -1055,11 +1065,11 @@ section.group-forms- {
   padding: 12px 15px;
 }
 .ord-req p {
-  color: rgb(102, 102, 102);
+  color: #fff;
   margin: 0;
 }
 .ord-req > b {
-  color: rgb(51, 51, 51);
+  color: #fff;
   font-size: 16px;
   font-weight: 400;
 }
@@ -1358,4 +1368,73 @@ section.group-forms- {
 .user-chat-sec span img {
   height: 55px;
   width: 55px;
+}
+.biding-pric, .bidi-tabl button {
+  display: table-cell;
+  vertical-align: bottom;
+}
+.inpu-tex {
+  display: table;
+  width: 100%;
+}
+.inpu-tex .send-ord.orang-gradient {
+  border-radius: 0;
+  margin: 0;
+  width: 100%;
+}
+.bidi-tabl label {
+  color: #666;
+  font-size: 13px;
+  margin: 0 0 5px;
+}
+.locat-sec .cont-info i {
+  line-height: normal;
+  width: 30%;
+}
+.locat-sec .cont-info li b.tit {
+  color: #333;
+  font-size: 14px;
+  text-align: center;
+  width: 100%;
+}
+.locat-sec .cont-info > li {
+  font-size: 13px;
+  line-height: normal;
+  padding: 8px 10px;
+}
+.upd-ship .basic-table table {
+  border: 1px solid #e1e1e1;
+  margin: 0;
+}
+.upd-ship .basic-table table td, .upd-ship .basic-table table th {
+  border: 1px solid #e1e1e1;
+  padding: 8px 10px !important;
+  text-align: center;
+}
+.col-md-12.basic-table {
+  margin: 10px 0 0;
+}
+.upd-ship .form-group {
+  display: table;
+  width: 100%;
+}
+
+.upd-ship .close.fa-co {
+  margin: 5px 10px 0 0;
+}
+.pop-hd {
+  border-bottom: 1px solid #ddd;
+  color: #666;
+  padding: 5px 0 0;
+}
+.upd-ship .basic-table table th {
+  font-weight: 500;
+}
+.upd-ship .send-ord.orang-gradient {
+  margin: 0;
+}
+.ord-req {
+  background-color: rgb(49, 58, 66);
+  border: 2px solid rgb(255, 255, 255);
+  box-shadow: 0 0 0 2px rgb(49, 58, 66);
 }
