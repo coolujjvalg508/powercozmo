@@ -36,6 +36,27 @@
 	
 	<!-- header -->
 	<header class="site-head" id="site-head">
+	<div class="form-search top-head-sr hidden-xs">
+					<%= form_tag(seller_listing_filter_path, method: :get) do %>
+						<input type="search" class="form-control" placeholder="Type here for search..." name="q" value="<%=params[:q]%>">
+						<button type="submit" id="search-btn" class="ion ion-ios-search-strong"></button>
+					<% end %>
+				</div>
+				<div class="favourate">
+			<div class="hov-sec">
+			<span class="ti-heart"></span>
+			<b>Favorites</b></div>
+
+			<div class="over-deata">
+			<h5>Favorite products</h5>
+			<div class="prod-fav">
+			<span><%= image_tag("/images/seller/campaignsbg.jpg", width: "150", alt: "") %></span>
+			<b>product Rotobo Toys</b>
+			</div>
+			<a class="send-ord orang-gradient" href="#">View All Items</a>
+			</div>
+
+			</div>
 		<ul class="list-unstyled left-elems">
 			<!-- nav trigger/collapse -->
 			 <!-- <li>
@@ -53,10 +74,10 @@
 			</li> <!-- #end site-logo -->
 
 			<!-- fullscreen -->
-			<li class="fullscreen hidden-xs">
+			<!-- <li class="fullscreen hidden-xs">
 				<a href="javascript:;"><i class="ion ion-qr-scanner"></i></a>
 
-			</li>	<!-- #end fullscreen -->
+			</li> -->	<!-- #end fullscreen -->
 
 			<!-- notification drop -->
 			<% unread_notifications_count = current_user.try(:unread_notifications_count).to_i %>
@@ -180,7 +201,7 @@
 					
 					<span class="text"><%= image_tag "seller/dsh-pc-logo.png" %></span>
 				<% end %>
-				
+				<div class="sidebarSep"></div>
 			</div>
 
 
@@ -189,18 +210,12 @@
 			<nav class="site-nav clearfix" role="navigation">
 
 
-<div class="sidebarSep"></div>
- 
-				<div class="form-search hidden-xs">
-					<%= form_tag(seller_listing_filter_path, method: :get) do %>
-						<input type="search" class="form-control" placeholder="Type here for search..." name="q" value="<%=params[:q]%>">
-						<button type="submit" id="search-btn" class="ion ion-ios-search-strong"></button>
-					<% end %>
-				</div>
-			 
-<div class="sidebarSep"></div>
 
-				<div class="profile clearfix mb15">					
+ 
+				
+			 
+ 
+				<div class="profile clearfix">					
 					<% if (current_user.image.blank? || current_user.image.try(:image).blank?)%>
 				          	<img src="/assets/seller/myprofile-placeholder-img.png" class="img-circle" alt="User Image">
 					  <% else %>
@@ -209,11 +224,12 @@
 					
 					<div class="group">
 						<h5 class="name">
-							<%= current_user.name.to_s.titleize %>
+							<%= current_user.profile.first_name.to_s.titleize %>
 						</h5>
-						<small class="desig text-uppercase"><%= current_user.profile.company_name.to_s.titleize%></small>
+						<!-- <small class="desig text-uppercase"><%= current_user.profile.company_name.to_s.titleize%></small> -->
 					</div>
 				</div>
+
 
 				<div class="sidebarSep"></div>
 
@@ -238,7 +254,7 @@
 						<a href="javascript:;">
 							<i class="ion ion-person"></i>
 							<span class="text">My power Cozmo</span>
-							<i class="arrow ion-chevron-left"></i>
+							<i class="arrow ion-chevron-right"></i>
 						</a>
 						<ul class="inner-drop list-unstyled">
 							
@@ -269,7 +285,7 @@
 							<i class="ion ion-email"></i>
 							<span class="text">Message Center</span>
 							<span class="badge badge-sm badge-danger" title="<%= current_user.try(:unread_inbox_count).to_i %>"><%= current_user.try(:unread_inbox_count).to_i > 99 ? "99+" : current_user.try(:unread_inbox_count).to_i %></span>
-							<i class="arrow ion-chevron-left"></i>
+							<i class="arrow ion-chevron-right"></i>
 						</a>
 						<ul class="inner-drop list-unstyled">
 							<li class="<%= 'active' if inbox_seller_messages_path == url_for(only_path: true) || message_detail_type.to_s=='inbox' %>">
@@ -295,7 +311,7 @@
 						<a href="javascript:;">
 							<i class="ion ion-pricetags"></i>
 							<span class="text">Questions & Offers</span>
-							<i class="arrow ion-chevron-left"></i>
+							<i class="arrow ion-chevron-right"></i>
 						</a>
 						<ul class="inner-drop list-unstyled">
 							
@@ -314,7 +330,7 @@
 						<a href="javascript:;">
 							<i class="ion ion-social-usd"></i>
 							<span class="text">For Sellers</span>
-							<i class="arrow ion-chevron-left"></i>
+							<i class="arrow ion-chevron-right"></i>
 						</a>
 						<ul class="inner-drop list-unstyled">
 							
@@ -341,7 +357,7 @@
 						<a href="javascript:;">
 							<i class="ion ion-ios-cart"></i>
 							<span class="text">For Buyers</span>
-							<i class="arrow ion-chevron-left"></i>
+							<i class="arrow ion-chevron-right"></i>
 						</a>
 						<ul class="inner-drop list-unstyled">
 							

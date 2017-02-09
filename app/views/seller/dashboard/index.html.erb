@@ -1,9 +1,9 @@
-<!-- dashboard page -->
+dashboard page -->
 <div class="page page-dashboard padding0">
 	<div class="page-wrap clearfix">
 	<div class="col-md-9 col-sm-12 no-padding">
-		<div class="row no-marging">
-			<!-- dashboard header -->
+		<!-- <div class="row no-marging">
+			
 			<div class="col-md-12 no-padding">
 				<div class="dash-head clearfix mt15 mb20">
 					<div class="left">
@@ -11,7 +11,7 @@
 					</div>
 				</div>
 			</div>
-		</div> <!-- #end row -->
+		</div> --> <!-- #end row -->
 		<div class="row no-marging">
 		<div class="col-md-12 col-sm-12 no-padding">
 		 <div class="panel panel-default mb20 mini-box panel-hovered">
@@ -81,7 +81,7 @@
 <div class="col-md-12 col-sm-12 ">
 		 <div class="main-box">
 					
-					<div class="main-heding">Start your online trade for power, oil & gas equipment with power Cozmo now!</div>
+					<div class="main-heding star-text">Start your online trade for power, oil & gas equipment with power Cozmo now!</div>
 					<div class="panel-body">
 				<div class="row">
 					<div class="col-md-6 dashboard-search">
@@ -160,7 +160,7 @@
 											<td>
 												
 												<% if equipment.images.present? %>
-												  <%= image_tag(equipment.images.first.try(:image), alt: equipment.name, style: 'width: 50px;') %>
+												  <%= image_tag(equipment.images.first.try(:image), alt: equipment.name, style: 'width: 75px;') %>
 												<% else %>
 												  <i class="fa fa-file-image-o"></i>
 												<% end %>
@@ -234,7 +234,6 @@
 													  <%= link_to '<span class="ti-back-right"></span>'.html_safe, new_seller_buying_proposal_path(buying_request_id: br.id), title: "Submit Your Proposal" %>
 													<% end %>
 												<% end %>
-							
 											</td>
 										</tr>
 									<% end %>
@@ -346,4 +345,4 @@
 
 	</div> <!-- #end page-wrap -->
 </div>
-<!-- #end dashboard page -->
+<!-- #end dashboard page

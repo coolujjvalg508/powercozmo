@@ -2096,6 +2096,7 @@ fieldset[disabled] .btn-youtube.active {
 .nav > li > a {
   color: #535353;
   text-transform: uppercase;
+  padding: 10px 10px;
   font-size: 12px;
   font-weight: bold;
 }
@@ -3696,13 +3697,13 @@ fieldset[disabled] .btn-youtube.active {
   width: 100%;
 }
 .main-container .content-container.fixedHeader .page {
-  margin-top: 34px;
+  margin-top: 8px;
 }
 .main-container .nav-wrap {
   width: 65px;
   position: fixed;
   overflow-y: auto;
-  top: 0;
+  top: 33px;
   bottom: 0;
 }
 @media (min-width: 768px) {
@@ -3735,8 +3736,8 @@ fieldset[disabled] .btn-youtube.active {
   margin-left: 220px;
 }
 .app.nav-expand .site-head {
-  width: calc(100% - 220px);
-  margin-left: 220px;
+  width: 100%;
+  margin-left: 0;
 }
 .app.nav-expand .main-container .nav-wrap {
   width: 220px;
@@ -4042,30 +4043,30 @@ fieldset[disabled] .btn-youtube.active {
 .main-container .nav-wrap .nav-head {
   background-image: url("/assets/seller/bodyBg.png");
   display: table;
-  height: 55px;
+  height: 50px;
   overflow: hidden;
   padding-left: 22px;
   position: fixed;
   transition: all 0.25s ease-in 0s;
   width: 220px;
   z-index: 1000;
+  padding:0;
+  text-align: left;
 }
 .main-container .nav-wrap .nav-head .site-logo {
   color: #fff;
   font-weight: bolder;
-  display: table-cell;
+  display: table;
   vertical-align: middle;
   font-size: 22px;
   position: relative;
+  width: 100%;
 }
 .main-container .nav-wrap .nav-head .site-logo > i {
   font-size: 25px;
   display: inline-block;
 }
-.main-container .nav-wrap .nav-head .site-logo > span.text {
-  position: absolute;
-  top: 15px;
-}
+ 
 .main-container .nav-wrap .nav-foot {
   background: #f0f0f0;
   position: fixed;
@@ -4090,29 +4091,34 @@ fieldset[disabled] .btn-youtube.active {
   color: #607d8b;
 }
 .main-container .nav-wrap .site-nav {
-  margin-top: 55px;
+  margin-top: 80px;
 }
 .main-container .nav-wrap .site-nav .profile {
   box-shadow: none;
   padding: 0 0 0 10px;
+  display: table;
 }
 .main-container .nav-wrap .site-nav .profile > img {
   border-radius: 100%;
   border: 2px solid #eeeeee;
   width: 50px;
   height: 50px;
-  float: left;
+  display: table-cell;
+  vertical-align: middle;
 }
 .main-container .nav-wrap .site-nav .profile > .group {
-  margin-left: 65px;
+  padding-left: 15px;
   color: #cdcdcd;
+  display: table-cell;
+  vertical-align: middle;
+  margin: 0px;
 }
 .main-container .nav-wrap .site-nav .profile > .group .name,
 .main-container .nav-wrap .site-nav .profile > .group .desig {
   white-space: nowrap;
 }
 .main-container .nav-wrap .site-nav .profile > .group .name {
-  margin-bottom: 0;
+  margin: 0;
 }
 .main-container .nav-wrap .site-nav .nav-list > li {
   position: relative;
@@ -4154,9 +4160,8 @@ fieldset[disabled] .btn-youtube.active {
 }
 .main-container .nav-wrap .site-nav .nav-list > li > a > .text {
   color: #efefef;
-  font-family: arial;
-  font-size: 10px;
-  font-weight: bold;
+  font-size: 11px;
+  font-weight: 500;
   margin-left: 10px;
   margin-top: 10px;
   text-transform: uppercase;
@@ -5997,7 +6002,7 @@ button.md-no-style {
 .sidebarSep {
     background: rgba(0, 0, 0, 0) url("/assets/seller/sidebarSep.png") no-repeat scroll 50% center;
     height: 8px;
-    margin: 16px 0;
+    margin: 10px 0;
     width: 100%;
 }
 .waves-effect span.badge.badge-sm {
@@ -6101,9 +6106,10 @@ button.md-no-style {
   font-size: 38px;
   margin-bottom: 15px;
 }
-.owl-item:nth-child(2n+2) .dash-slide-count i {
+.slider-patern .owl-item .dashboar-slide-box i{
   color: #ffa331;
 }
+.slider-patern .owl-item .dashboar-slide-box:hover i{ color: #e66963 !important; }
 .no-row-margin .row{ margin: 0; }
 .main-box {
   background-color: #fff;
@@ -6128,7 +6134,7 @@ button.md-no-style {
   color: #404040;
   font-size: 15px;
   font-weight: 400;
-  margin: 42px 0 6px;
+  margin: 15px 0 6px;
 }
 
 
@@ -6492,4 +6498,44 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', end
   left: 0;
   position: absolute;
   top: 0;
+}
+
+
+/*****************************changes*********************************/
+.pos-rel {
+  position: fixed;
+  right: 0;
+  height: 100%;
+  width: 265px;
+}
+.RightPanel {
+  position: absolute;
+  right: 0;
+  width: 100%;
+  left: 0;
+  overflow-x: auto;
+  height: 100%;
+  border-bottom: 20px solid #fff;
+}
+.top-head-sr.form-search input[type="search"] {
+  padding: 0 20px 0 5px;
+  height: 27px;
+  line-height: 27px;
+  background: none;
+}
+.form-search.top-head-sr.hidden-xs {
+  display: inline-block;
+  vertical-align: middle;
+  background: none;
+}
+.form-search.top-head-sr button { top: 2px;}
+.main-container .nav-wrap .nav-head .site-logo > span.text {
+  display: table;
+  width: 100%;
+  text-align: center;
+  padding: 8px 0;
+}
+.main-heding.star-text {
+  font-size: 17px;
+  color: #000;
 }

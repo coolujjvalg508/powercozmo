@@ -306,7 +306,14 @@ p.response-msg { word-wrap: break-word; }
 
 .dashboard-table tbody tr:nth-child(2n+2){ background: #eee; }
 .dashboard-table .pagination { padding: 0 15px !important; }
-.dashboard-table .label-danger{ width: 80px; }
+.dashboard-table .label {
+  width: 100%;
+  float: left;
+  text-align: center;
+  font-size: 12px;
+  line-height: 14px;
+  border-radius: 2px;
+}
 .bluecolor{ color: #03A9F5 !important; }
 .redcolor{ color: #FF0204 !important; }
 .greencolor{ color: #00a65a !important; }
@@ -557,7 +564,7 @@ td a span {
 }
 .table td a span {
   color: #2f3840;
-  font-size: 15px;
+  font-size: 16px;
   margin: 0 2px;
 }
 
@@ -1437,4 +1444,65 @@ section.group-forms- {
   background-color: rgb(49, 58, 66);
   border: 2px solid rgb(255, 255, 255);
   box-shadow: 0 0 0 2px rgb(49, 58, 66);
+}
+/****************************2017-8-2*******************************/
+.favourate {
+  display: inline-block;
+  position: relative;
+}
+.hov-sec {
+  display: inline-block;
+}
+.over-deata {
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 0 3px 0 rgb(205, 205, 205);
+  left: 0;
+  opacity: 0;
+  padding: 10px 13px;
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  top: 70px;
+  transition: all 0.2s ease 0s;
+  width: 250px;
+  z-index: 999;
+}
+.prod-fav > span {
+  display: block;
+  padding: 0;
+}
+.over-deata > h5 {
+  border-bottom: 1px solid rgb(221, 221, 221);
+  font-size: 16px;
+  margin: 0 0 15px;
+  padding: 8px 0;
+}
+.over-deata .send-ord.orang-gradient {
+  height: 35px;
+  line-height: 32px;
+  margin:15px 0 5px;
+  width: 100%;
+}
+.prod-fav > b {
+  color: rgb(102, 102, 102);
+  display: block;
+  font-weight: 400;
+  margin: 5px 0 0;
+  text-transform: capitalize;
+}
+.hov-sec b {
+  display: inline-block;
+  font-weight: 400;
+  margin: 0 0 0 5px;
+  vertical-align: middle;
+}
+
+.hov-sec span {
+  display: inline-block;
+  vertical-align: middle;
+}
+.favourate:hover .over-deata {
+  opacity: 1;
+  pointer-events: auto;
+  top: 100%;
 }
