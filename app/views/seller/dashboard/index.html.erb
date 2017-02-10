@@ -1,5 +1,4 @@
-dashboard page -->
-<div class="page page-dashboard padding0">
+ <div class="page page-dashboard padding0">
 	<div class="page-wrap clearfix">
 	<div class="col-md-9 col-sm-12 no-padding">
 		<!-- <div class="row no-marging">
@@ -15,14 +14,14 @@ dashboard page -->
 		<div class="row no-marging">
 		<div class="col-md-12 col-sm-12 no-padding">
 		 <div class="panel panel-default mb20 mini-box panel-hovered">
-					<div class="line"></div>
+					 
 
 					<div class="slider-patern">
 					<div class="dashboard-tablenew panel-heading">To Do List</div>
 
 					<div class="panel-body padding0">
 						
-						 <div class="owl-carousel" id="dash-slide">
+						<div class="owl-carousel" id="dash-slide">
 			
 							<div class="dashboar-slide-box text-center item"> 
 								<a href="<%= inbox_seller_messages_path %>" title="<%= @received_messages.count %> Messages">
@@ -78,15 +77,14 @@ dashboard page -->
 	</div>
 
 <div class="row no-marging">
-<div class="col-md-12 col-sm-12 ">
-		 <div class="main-box">
-					
-					<div class="main-heding star-text">Start your online trade for power, oil & gas equipment with power Cozmo now!</div>
-					<div class="panel-body">
+    <div class="col-md-12 col-sm-12 ">
+		<div class="main-box">		
+			<div class="main-heding star-text">Start your online trade for power, oil & gas equipment with power Cozmo now!</div>
+			<div class="panel-body">
 				<div class="row">
 					<div class="col-md-6 dashboard-search">
 					<p>Search your query here</p>
-						<div class="form-search form-with">						
+				  		<div class="form-search form-with">						
 							<%= form_tag(seller_listing_filter_path, method: :get) do %>
 								<input type="search" class="form-control" placeholder="Type here for search..." name="q" value="<%=params[:q]%>">
 								<button type="submit" class="sear-bun"></button>
@@ -96,9 +94,9 @@ dashboard page -->
 					<div class="col-md-3 post-btn"><a href="<%= new_seller_equipment_path %>"><span class="ti-settings"></span> Post your equipment</a></div>	
 					<div class="col-md-3 post-btn"><a href="<%= new_buying_request_path %>"><span class="ti-notepad"></span> Post request for quotations</a></div>
 				</div>		
-	</div>
-</div>
-</div>
+	        </div>
+        </div>
+    </div>
 </div>
 
 		
