@@ -1,3 +1,8 @@
+<% favourite(current_user.id) 
+   
+%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,15 +50,32 @@
 				<div class="favourate">
 			<div class="hov-sec">
 			<span class="ti-heart"></span>
-			<b>Favorites</b></div>
+			</div>
 
 			<div class="over-deata">
 			<h5>Favorite products</h5>
 			<div class="prod-fav">
-			<span><%= image_tag("/images/seller/campaignsbg.jpg", width: "150", alt: "") %></span>
-			<b>product Rotobo Toys</b>
+			<% if @equipments.present? %>
+			<% @equipments.each_with_index do |fav| %>
+
+				<a href="<%= equipment_details_path(fav.equipment) %>">
+					
+					<b><%= fav.equipment.name %></b>
+					<span>
+						<% if fav.equipment.images.present? %>
+						  <%= image_tag(fav.equipment.images.first.try(:image), width: '70', alt: '') %>
+						<% else %>
+						  <i class="fa fa-file-image-o"></i>
+						<% end %>
+					</span>
+				</a>
+
+			<% end %>
+			<% else %>
+				<p class="no-result">No favourites</p>
+			<% end %>	
 			</div>
-			<a class="send-ord orang-gradient" href="#">View All Items</a>
+			<a class="send-ord orang-gradient" href="<%= seller_favourites_path %>">View All Items</a>
 			</div>
 
 			</div>

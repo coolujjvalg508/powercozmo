@@ -6528,7 +6528,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', end
   vertical-align: middle;
   background: none;
 }
-.form-search.top-head-sr button { top: 2px;}
+.form-search.top-head-sr button { top: 1px;}
 .main-container .nav-wrap .nav-head .site-logo > span.text {
   display: table;
   width: 100%;
@@ -6538,4 +6538,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', end
 .main-heding.star-text {
   font-size: 17px;
   color: #000;
+}
+.prod-fav a span {
+  display: inline-block;
+  border: solid 2px #333;
 }

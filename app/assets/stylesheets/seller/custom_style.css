@@ -1157,7 +1157,7 @@ section.group-forms- {
 .ti-user::before {
   color: rgb(255, 255, 255);
   display: inline-block;
-  font-size: 20px;
+  font-size: 15px;
 }
 .text-are > textarea {
   background-color: rgba(0, 0, 0, 0);
@@ -1203,7 +1203,7 @@ section.group-forms- {
 .cust .text-are {
   float: right;
 }
-
+  
 .cust.user-chat-sec span.user-img {
   float: left;
 }
@@ -1217,6 +1217,7 @@ section.group-forms- {
   font-size: 13px;
   padding: 5px 10px;
   text-align: justify;
+  word-break: break-all;
 }
 .text-are > em {
   bottom: -19px;
@@ -1449,9 +1450,14 @@ section.group-forms- {
 .favourate {
   display: inline-block;
   position: relative;
+  line-height: 30px;
+  border-left: solid 1px #282828;
+  vertical-align: middle;
 }
 .hov-sec {
   display: inline-block;
+  padding: 0 7px 0 10px;
+  cursor: pointer;
 }
 .over-deata {
   background-color: rgb(255, 255, 255);
@@ -1505,4 +1511,22 @@ section.group-forms- {
   opacity: 1;
   pointer-events: auto;
   top: 100%;
+}
+.prod-fav a {
+  display: table;
+  width: 100%;
+  float: left;
+  border-bottom: solid 1px #ddd;
+  padding: 5px 0;
+}
+.prod-fav a b {
+  display: inline-block;
+  line-height: normal;
+  margin-bottom: 5px;
+  width: 110px;
+  vertical-align: middle;
+}
+.over-deata h5{ color: #333; }
+.prod-fav {
+  text-align: left;
 }

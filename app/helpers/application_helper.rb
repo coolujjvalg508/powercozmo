@@ -147,4 +147,8 @@ module ApplicationHelper
 		@devise_mapping ||= Devise.mappings[:user]
 	end
 
+	def favourite(user_id)
+	  @equipments = Favorite.all.joins(:equipment).where('equipment.status != "0" AND favorites.user_id = ?', current_user.id).order('created_at desc').limit(3)	
+    end
+
 end
