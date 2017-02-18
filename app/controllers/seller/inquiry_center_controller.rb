@@ -32,6 +32,12 @@ class Seller::InquiryCenterController < Seller::BaseController
 			redirect_to seller_inquiry_center_path
 		end
 
+		if @result.user_id == current_user.id 
+			@result.update_attribute(:is_read_by_buyer, true)
+		else
+			@result.update_attribute(:is_read, true)
+		end
+
 		@countries = Hash[Country.active.pluck(:id, :name)]
 
 		if "question" == @result.enquiry_type
@@ -84,10 +90,19 @@ class Seller::InquiryCenterController < Seller::BaseController
 	def mark_unread_inquiry
 
 		if params[:inquiry_data].present?
-			EquipmentEnquiry.where('id in (?)', params[:inquiry_data]).update_all(:is_read => false)
+			params[:inquiry_data].each do |val|
+				if val[1]['inquiry_user_type'] == 'buyer'
+					EquipmentEnquiry.where('id=?', val[1]['id']).update_all(:is_read_by_buyer => false)
+				else
+					EquipmentEnquiry.where('id=?', val[1]['id']).update_all(:is_read => false)
+				end
+			end
 		end
 
-		flash[:notice] = "Inquiry marked unread successfully."	
+		if params[:is_show_success_msg] == 'yes'
+			flash[:notice] = "Inquiry marked unread successfully."
+		end
+
 		result = ['success']
 		render :json => result, status: 200
 

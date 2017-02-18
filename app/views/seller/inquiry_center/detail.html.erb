@@ -178,19 +178,27 @@
 	});
 
 	$("#mark_unread_inquiry_btn").click(function(){
-		if (confirm("Are you sure you want to mark unread this Inquiry?")){
+
+		<% if @result.user_id == current_user.id %>
+			inquiry_user_type = 'buyer';
+		<% else %>
+			inquiry_user_type = 'seller';
+		<% end %>
+		unread_data = [];
+		unread_data[0] = {id: <%= @result.id %>, inquiry_user_type:  inquiry_user_type};
+		//if (confirm("Are you sure you want to mark unread this Inquiry?")){
 			$.ajax({
 		      	url: "/seller/mark-unread-inquiry",
 		      	type : 'Post',
 		      	data: {
-		        	inquiry_data: inquiry_data
+		        	inquiry_data: unread_data,
+		        	is_show_success_msg: 'no'
 		      	},
 		      	success: function( data ) {
-		      		refresh_url = '<%= seller_detail_inquiry_center_path(@result.id) %>';
-		      		window.location.href = refresh_url;
+		      		alert('Inquiry marked unread successfully.');
 		      	}
 		    });
-		}
+		//}
 		
 	});
 

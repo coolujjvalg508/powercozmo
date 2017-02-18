@@ -14,8 +14,6 @@
 		<div class="row no-marging">
 		<div class="col-md-12 col-sm-12 no-padding">
 		 <div class="panel panel-default mb20 mini-box panel-hovered">
-					 
-
 					<div class="slider-patern">
 					<div class="dashboard-tablenew panel-heading">To Do List</div>
 
@@ -34,15 +32,17 @@
 
 							<% offer_question_count = @offers.count + @questions.count %>	
 
-							<div class="dashboar-slide-box text-center item" title="<%= offer_question_count %> Offers & Questions"> 
-								<div class="dash-slide-count">
-								<i><%= (offer_question_count > 9999) ? "9999+" : offer_question_count %> </i>
-								<span class="ti-comments"></span></div>
-								<div class="dash-slide-title">Offers & Questions</div>
+							<div class="dashboar-slide-box text-center item" > 
+								<a href="<%= seller_inquiry_center_path%>" title="<%= offer_question_count %> Offers & Questions"> 
+									<div class="dash-slide-count">
+									<i><%= (offer_question_count > 9999) ? "9999+" : offer_question_count %> </i>
+									<span class="ti-comments"></span></div>
+									<div class="dash-slide-title">Offers & Questions</div>
+								</a>
 							</div>
 
 							<div class="dashboar-slide-box text-center item"> 
-								<a href="<%= seller_orders_path%>" title="<%= @orders.count %> Orders"> 
+								<a href="<%= seller_inquiry_center_path%>" title="<%= @orders.count %> Orders"> 
 									<div class="dash-slide-count">
 									<i><%= (@orders.count > 9999) ? "9999+" : @orders.count %> </i>
 									<span class="ti-clipboard"></span></div>
@@ -101,30 +101,24 @@
 
 		
 <script>
-  $(document).ready(function() {
-     
+    $(document).ready(function() {
       var owl = $("#dash-slide");
-     
-      owl.owlCarousel({
-         items : 4,
-          itemsCustom : [
-            [0, 1],
-            [450, 1],
-            [600, 2],
-            [700, 3],
-            [1000, 3],
-            [1200, 4]
-          ],
-          navigation : true,
-          autoPlay : true,
-          dots: false
-     
-      });
-     
+        owl.owlCarousel({
+            items : 4,
+             itemsCustom : [
+              [0, 1],
+              [450, 1],
+              [600, 2],
+              [700, 3],
+              [1000, 3],
+              [1200, 4]
+             ],
+            navigation : true,
+            autoPlay : true,
+            dots: false
+	    });
     });
-
-
-		</script>
+</script>
 		
 		
 		<!-- row -->

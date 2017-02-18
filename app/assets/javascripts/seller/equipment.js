@@ -1,11 +1,19 @@
 var currentdate = new Date();
-var currentDatetime = currentdate.getFullYear()+"-"+(currentdate.getMonth()+1)+"-"+currentdate.getDate()+" "+currentdate.getHours()+":"+currentdate.getMinutes()
+var currentDatetime = currentdate.getFullYear()+"-"+(currentdate.getMonth()+1)+"-"+currentdate.getDate()+" "+currentdate.getHours()+":"+currentdate.getMinutes();
+var currentDatetime1 = currentdate.getFullYear()+"-"+(currentdate.getMonth())
 
 $('#datetimepicker1').datetimepicker({
   format: "dd-mm-yyyy HH:ii:ss P",
   showMeridian: true,
   autoclose: true,
   startDate: currentDatetime,
+  pickerPosition: "bottom-left"
+});
+$('#datetimepicker2').datetimepicker({
+  format: "dd-mm-yyyy",
+  showMeridian: true,
+  autoclose: true,
+  startDate: currentDatetime1,
   pickerPosition: "bottom-left"
 });
 

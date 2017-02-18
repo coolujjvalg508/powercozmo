@@ -68,7 +68,6 @@ end %>
 												
 												<% else %>
 													<%= link_to '<span class="ti-trash redcolor"></span>'.html_safe, seller_buying_request_path(br), title: "Delete" %>
-													
 													<% if br.user_id != current_user[:id] && br.email != current_user[:email] %>
 														<% if br.expiration_date >= Date.today %>
 														  <%= link_to '<span class="ti-info-alt"></span>'.html_safe, seller_request_for_more_info_path(buying_request_id: br.id), title: "Request For Info" %>
@@ -77,7 +76,6 @@ end %>
 														  <%= link_to '<span class="ti-back-right"></span>'.html_safe, new_seller_buying_proposal_path(buying_request_id: br.id), title: "Submit Your Proposal" %>
 														<% end %>
 													<% end %>
-												
 												<% end %>
 											</td>				
 																					

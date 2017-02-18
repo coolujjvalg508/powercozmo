@@ -2,19 +2,8 @@
 	<div class="chat-tab tab clearfix">
 		<% if notifications.present? %>
 			<% notifications.each do |notification| %>
-				<%
-					notification_url = "#"
-					case notification.enquiry_type
-					when 'bid'
-						notification_url = seller_offer_path(notification)
-					when 'buy'
-						notification_url = seller_offer_path(notification)
-					when 'question'
-						notification_url = seller_question_path(notification)				
-					end
-				%>
 				<div class="user-container mb15">
-					<%=link_to notification.notification_message, notification_url %>
+					<%=link_to notification.notification_message, seller_detail_inquiry_center_path(notification) %>
 					<div class="clearfix"></div>
 				</div>
 			<% end %>

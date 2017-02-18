@@ -2,7 +2,7 @@ ActiveAdmin.register EquipmentEnquiry do
 	config.sort_order = 'read_by_admin_asc_and_updated_at_desc' #more detail in multiple column sort initializer
 	menu label: 'Manage Enquiries', if: proc{ (current_admin_user.has_permission('equipmentenquiry_read') || current_admin_user.has_permission('equipmentenquiry_write') || current_admin_user.has_permission('equipmentenquiry_delete'))}
 
-	permit_params :name, :email, :mobile, :country_id, :enquiry_type, :equipment_id, :company_name, :company_website, :message, :bidding_price, :status, :replied_as, :delivery_city, :delivery_port, :shipping_method, :response
+	permit_params :name, :email, :mobile, :country_id, :enquiry_type, :equipment_id, :company_name, :company_website, :message, :bidding_price, :status, :replied_as, :delivery_city, :delivery_port, :shipping_method, :response, :is_spam, :is_read_by_buyer, :response_status, :is_read, :is_read_by_admin, :response_read_by_admin
 
 	action_item :back, only: :show do
 		links = ""
@@ -90,7 +90,7 @@ ActiveAdmin.register EquipmentEnquiry do
 				a.equipment.availble_for
 			end
 			row :equipment
-      row :enquiry_type do |ee|
+      		row :enquiry_type do |ee|
 				ee.enquiry_type.capitalize
 			end
 			row :message
@@ -126,10 +126,15 @@ ActiveAdmin.register EquipmentEnquiry do
 			end
 			
 			row "Admin Approved" do |ee|
-			(ee.status == "Disapproved" || ee.status == "New") ? "No" : "Yes"
-		end
-      row :created_at
-      row :updated_at
+				(ee.status == "Disapproved" || ee.status == "New") ? "No" : "Yes"
+			end
+
+			row "Is Spam" do |ee|
+				(ee.is_spam == true) ? "Yes" : "No"
+			end
+
+      		row :created_at
+      		row :updated_at
     end
 
 		panel "Response from seller", class: 'sub-panel1' do
@@ -184,6 +189,7 @@ ActiveAdmin.register EquipmentEnquiry do
 	filter :bidding_price, label: "Price", as: :numeric
 	filter :country
 	filter :status, as: :select, collection: [['New','1'], ['Approved','2'], ['Disapproved','3']]
+	filter :is_spam, label: "Is Spam", as: :select, collection: [['Yes','1'], ['No','0']]
 	filter :created_at
 
 	batch_action "Update 'Status' for", form: { status: [['New','1'],['Approved','2'], ['Disapproved', '3']] } do |ids, inputs|

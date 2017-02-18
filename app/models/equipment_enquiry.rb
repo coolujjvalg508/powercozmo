@@ -12,6 +12,8 @@ class EquipmentEnquiry < ActiveRecord::Base
   scope :unresponded, -> { where(response: nil) }
 	scope :read, -> { where(is_read: true) }
 	scope :unread, -> { where(is_read: false) }
+	scope :buyer_read, -> { where(is_read_by_buyer: true) }
+	scope :buyer_unread, -> { where(is_read_by_buyer: false) }
 	scope :read_by_admin, -> { where("#{EquipmentEnquiry.table_name}.read_by_admin = ?", true) }
 	scope :unread_by_admin, -> { where("#{EquipmentEnquiry.table_name}.read_by_admin = ?", false) }
 	############# Enums ##################

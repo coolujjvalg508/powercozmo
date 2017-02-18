@@ -1,7 +1,4 @@
-<% favourite(current_user.id) 
-   
-%>
-
+<% favourite(current_user.id) %>
 
 <!DOCTYPE html>
 <html>
@@ -59,7 +56,6 @@
 			<% @equipments.each_with_index do |fav| %>
 
 				<a href="<%= equipment_details_path(fav.equipment) %>">
-					
 					<b><%= fav.equipment.name %></b>
 					<span>
 						<% if fav.equipment.images.present? %>
@@ -128,7 +124,7 @@
 							</li>
 							
 							<li class="clearfix">
-								<a href="<%= seller_offers_path %>">
+								<a href="<%= seller_inquiry_center_path %>">
 									<span class="ion ion-pricetags left bg-success"></span>
 									<div class="desc">
 										<strong>View all Offers</strong>
@@ -136,7 +132,7 @@
 								</a>
 							</li>
 							<li class="clearfix">
-								<a href="<%= seller_questions_path %>">
+								<a href="<%= seller_inquiry_center_path %>">
 									<span class="ion ion-help-circled left bg-info"></span>
 									<div class="desc">
 										<strong>View all Questions</strong>

@@ -38,6 +38,15 @@ $(document).ready(function(){
   $(".alert").fadeIn();
   $(".alert").fadeOut(30000);
 
+  $('#datepicker_date').datetimepicker({
+    format: "dd-mm-yyyy",
+    startDate: new Date(),
+    pickTime: false,
+    minView: 2,
+    autoclose: true,
+    pickerPosition: "bottom-left"
+  });
+
   	//js start for auto show hide 
   	if($( "#section_user_guide" ).height() <= 140 ){
 		$("#section_user_guide_link").hide();

@@ -1,0 +1,314 @@
+<%= nested_form_for [:seller,@buying_request] do |f| %>
+
+	<% user_id = 0 
+	if current_user
+		user_id = current_user.id %>
+		
+	<% end %>
+	<%= hidden_field_tag "buying_request[user_id]", user_id %>					
+					
+	<div class="tab-content">
+		<div id="WhatYouWant" class="tab-pane fade in active">
+			<div class="buyindent clearfix">
+				<div class="buy-txt marginB15">
+					<% if @content_data['what_you_want_description_text'] %>
+						<%= @content_data['what_you_want_description_text'].html_safe %>
+					<% else %>
+						 Use 5 minutes to fill out a Buying Request and match your requested quotes to our Verified Suppliers.
+					<% end %>
+				
+				</div>
+				
+				<div class="row">
+					 <div class="form-group col-md-6 col-sm-6 col-xs-12">
+						<%= f.text_field :title, placeholder: 'Equipment, part, system or service name*', class: "form-control" %>
+						<%= error_message(@buying_request, :title)%>
+					</div>	
+					<!-- <div class="form-group col-md-6 col-sm-6 col-xs-12">
+						
+						<% brand_id = f.object.brand_id %>
+						
+						<%= f.select :brand_id, options_for_select(Manufacturer.pluck(:name, :id)+[['Other', 0]], brand_id), {prompt: 'Select Manufacturer'}, { :class => 'custom-select' } %>
+						
+						<div class="clearfix"></div>
+						<%= text_field_tag "other[manufacturer_name]", params[:other].present? ? params[:other][:manufacturer_name] : "", class: 'br-other-field form-control marginT10', placeholder: 'Manufacturer name', style: "display:none;" %>
+						
+						<div class="select-txt">If you don’t find the right manufacturer, click on Other to write it. </div>
+						<%= error_message(@buying_request, :brand_id)%>	
+					</div> -->
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						<% category_id = f.object.category_id %>
+						<%= f.select :category_id, options_for_select(Category.active.pluck(:name, :id)+[['Other', 0]], category_id), {prompt: 'Select Category*'}, { :class => 'custom-select' } %>
+						<div class="clearfix"></div>
+						<%= f.text_field :category_name, class: 'br-other-field form-control marginT10', placeholder: 'Category name*', style: "display:none;" %>
+						<div class="select-txt">If you don’t find the right category, click on Other to write it. </div>
+						<%= error_message(@buying_request, :category_id)%>
+						<%= error_message(@buying_request, :category_name)%>
+					</div>
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						
+						<% condition = f.object.condition %>
+						<%= f.select :condition, options_for_select(BuyingRequest::CONDITIONS, condition), {prompt: 'Select Condition*'}, { :class => 'custom-select' } %>
+						<%= error_message(@buying_request, :condition)%>
+						
+					</div>
+					<div class="form-group col-md-6 col-sm-6 col-xs-12 ">   
+						<div class='input-group date' id='datepicker_date'>
+							<%= f.text_field :expiration_date, placeholder: 'Expiration Date*', 'data-count-field' => 'true', class: "form-control" %>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+						<%= error_message(@buying_request, :expiration_date)%>	
+					</div>	
+					<div class="form-group col-md-12 col-sm-12 col-xs-12">
+						<%= f.text_area :description, placeholder: 'Description*', class: "form-control message" %>
+						<%= error_message(@buying_request, :description)%>
+					</div>
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+					<label>Attach Pdf</label>										
+						<%= f.file_field :attachment, accept: 'application/pdf', class: "filestyle", "data-buttonName" => "btn-primary" %>
+						<%= f.hidden_field :attachment_cache %>
+						<%= error_message(@buying_request, :attachment)%>
+					</div>
+
+					<div class="form-group col-md-12 col-sm-12 col-xs-12">
+						<label>Attach Photo</label>
+						<div class="clearfix  eqp-upload-img">
+					<%
+					  @tmp_images ||= {}
+					  nested_form_count = 1
+					%>
+					<%= f.fields_for :images do |img| %>
+						<div class="form-group mrg-btm-zero">
+							<div class="upload-image-input">
+								<%
+								img_src = img.object.image.present? ? img.object.image : @tmp_images[img.index.to_s]
+								tmp_image_src = @tmp_images[img.index.to_s]
+								nested_form_count += 1
+								%>
+								<%= img.hidden_field :tmp_image, value: tmp_image_src %>
+								<%= img.hidden_field :id %>
+								<%= img.link_to_remove "<i class='fa fa-times-circle'></i>".html_safe, class: "btn-close-new" %>
+								<%= image_tag img_src, class: 'buying_request_preview_image', id: "buying_request_images_attributes_"+img.index.to_s+"_preview", style: img_src.present? ? "height:90  %;width:100%" : '' %>
+								<%= img.file_field :image, class: 'form-control upload-photo-input', accept: 'image/*' %>
+							</div>
+							<%= img.hidden_field :image_cache %>
+						</div>
+					<% end %>
+							<%= f.link_to_add '<div class="photo"><center><img src="/assets/plus-photo.png" class="img-responsive" alt="Photo"></center></div>'.html_safe, :images, style: nested_form_count >= 4 ? "display:none" : "" %>
+
+						</div>
+					</div>
+					<!-- <div class="form-group col-md-6 col-sm-6 col-xs-12">
+						<%= f.text_field :end_user, placeholder: 'End user', class: "form-control" %>
+					</div> -->
+
+					<!-- <div class="form-group col-md-6 col-sm-6 col-xs-12">
+						<%= f.text_field :city, placeholder: 'City', class: "form-control" %>
+						<%= error_message(@buying_request, :city)%>
+					</div> -->
+
+					<!-- <div class="form-group col-md-12 col-sm-12 col-xs-12 countrywrap">
+						
+						<% location_id = f.object.location_id %>
+						<%= f.select :location_id, options_for_select(Country.active.pluck(:name, :id), location_id), {prompt: 'Select Country'}, { :class => 'custom-select' } %>
+						
+					</div>-->
+					<div class="form-group col-md-12 col-sm-12 col-xs-12">
+						<button type="button" class="btn-orange text-uppercase" id="nxt-btn">next</button>
+					</div>
+					
+				</div>
+												
+			</div>
+		</div>
+
+		<div id="WhoYouAre" class="tab-pane fade">
+			<div class="buyindent clearfix">
+				<div class="buy-txt marginB15">
+					<% if @content_data['who_you_are_description_text'] %>
+						<%= @content_data['who_you_are_description_text'].html_safe %>
+					<% else %>
+						 Please describe about yourself which help us for further communications.
+					<% end %>
+				
+				</div>
+	
+				<div class="row">
+				    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+						
+						<% brand_id = f.object.brand_id %>
+						
+						<%= f.select :brand_id, options_for_select(Manufacturer.pluck(:name, :id)+[['Other', 0]], brand_id), {prompt: 'Select Manufacturer'}, { :class => 'custom-select' } %>
+						
+						<div class="clearfix"></div>
+						<%= text_field_tag "other[manufacturer_name]", params[:other].present? ? params[:other][:manufacturer_name] : "", class: 'br-other-field form-control marginT10', placeholder: 'Manufacturer name', style: "display:none;" %>
+						
+						<div class="select-txt">If you don’t find the right manufacturer, click on Other to write it. </div>
+						<%= error_message(@buying_request, :brand_id)%>
+						
+					</div>
+					
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						<%= f.text_field :origin, placeholder: 'Origin', class: "form-control" %>
+						<%= error_message(@buying_request, :origin)%>
+					</div>
+					
+                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+						<%= f.select :prefered_currency, @currencies.map{|name,symbol| [(name.to_s+' (<span>'+symbol.to_s+'</span>)').html_safe,symbol] }, {prompt: 'Prefered Price Unit'}, {:class => 'custom-select'} %>
+						<%= form_error_msg_for(@equipment,:currency) %>
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						<%= f.text_field :name, placeholder: 'Name', class: "form-control" %>
+						<%= error_message(@buying_request, :name)%>
+					</div>
+					
+					<!-- <div class="form-group col-md-6 col-sm-6 col-xs-12">
+						<%= f.text_field :company_name, placeholder: 'Company Name*', class: "form-control" %>
+						<%= error_message(@buying_request, :company_name)%>
+					</div>
+					
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						
+						<% if current_user
+								email = current_user.email %>
+								<%= f.text_field :email, placeholder: 'Email*', value: email, readonly: true, class: "form-control" %>
+						<% else %>
+								<%= f.text_field :email, placeholder: 'Email*', class: "form-control" %>
+						<% end %>
+						
+						<%= error_message(@buying_request, :email)%>
+						
+					</div>
+					
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						<%= f.text_field :mobile, placeholder: 'Mobile*', class: "form-control" %>
+						<%= error_message(@buying_request, :mobile)%>
+					</div>
+		
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						  <%= f.text_field :company_website, placeholder: 'Company Website*', class: "form-control" %>
+						  <%= error_message(@buying_request, :company_website)%>
+					</div> -->	
+						
+					
+					<div class="form-group col-md-6 col-sm-6 col-xs-12 countrywrap">
+						
+						<% country_id = f.object.country_id %>
+						<%= f.select :country_id, options_for_select(Country.active.pluck(:name, :id), country_id), {prompt: 'Select Country'}, { :class => 'custom-select' } %>
+						<%= error_message(@buying_request, :country_id) %>
+																										
+					</div>
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						<%= f.text_field :delivery_port, placeholder: 'Delivery Port', class: "form-control" %>
+						<%= error_message(@buying_request, :city)%>
+					</div>
+					<div class="form-group col-md-6 col-sm-6 col-xs-12">
+						<%= f.text_field :city, placeholder: 'City', class: "form-control" %>
+						<%= error_message(@buying_request, :city)%>
+					</div>
+									
+					<div class="form-group col-md-12 col-sm-12 col-xs-12">
+						<%= f.text_area :other_information, placeholder: 'Tell us anything else ex. Budgetary Price, Special Requirements', class: "form-control message" %>
+						<%= error_message(@buying_request, :other_information)%>
+					</div>
+					
+					<div class="form-group col-md-12 col-sm-12 col-xs-12">
+						<button type="button" class="btn-orange text-uppercase" onclick="$('#new_buying_request, .edit_buying_request').submit()">Submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+<% end %>
+
+<script type="text/javascript">
+
+	  $('#buying_request_mobile').keypress(function (e) {
+	    if ($(this).val().length<18){
+	      if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57) && e.which != 43 && e.which != 45 ) {
+	        return false;
+	      }
+	    }
+	    else{
+	      if (e.which != 8 && e.which != 0 ) {
+	        return false;
+	      }
+	      return true
+	    }
+	  });
+
+
+	  $(document).on('nested:fieldAdded', function(event){
+	  var field = event.field;
+	  if($("input[type='hidden'][value='false'][id^=buying_request_images_attributes_][id$=_destroy]").length >= 4)
+	  {
+	    $(".add_nested_fields").hide()
+	  }
+
+	  $("input[type='file'][id^=buying_request_images_attributes_][id$=_image]").change(function(){
+	    var input = this
+	    readURL(input)
+	  });
+	})
+	$(document).on('nested:fieldRemoved', function(event){
+	  var field = event.field;
+	  if($("input[type='hidden'][value='false'][id^=buying_request_images_attributes_][id$=_destroy]").length < 4)
+	  {
+	    $(".add_nested_fields").show()
+	  }
+	})
+
+	$("input[type='file'][id^=buying_request_images_attributes_][id$=_image]").change(function(){
+	    var input = this
+	    readURL(input)
+	});
+	function readURL (input) {
+	  var preview_image_id = input.id.split('_')
+	  preview_image_id.pop()
+	  preview_image_id = preview_image_id.join('_')
+	  var ext = input.files[0]['name'].substring(input.files[0]['name'].lastIndexOf('.') + 1).toLowerCase();
+	  if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg" || ext == "jpe")) {
+	    var reader = new FileReader();
+	    reader.onload = function (e) {
+	        $("#"+preview_image_id+"_preview").attr('src', e.target.result);
+	        $("#"+preview_image_id+"_preview").css({"height":"90%","width":"100%"})
+	    }
+	    reader.readAsDataURL(input.files[0]);
+	  }
+	}
+</script>
+<style type="text/css">
+	  .remove_nested_fields{
+	    float: right;
+	    margin-top: -15px;
+	    margin-right: -8px;
+	  }
+	  .upload-photo-input { position: absolute; top: 0; left:  0;  }
+	  .error-mess {
+	    font-size: 11px;
+	  }
+   .add_nested_fields {
+	   border: 1px solid #ddd;
+	   float: right;
+	   height: 98px;
+	   position: relative;
+	   width: 100px;
+    }
+	.upload-image-input {
+		width: 100px;
+		float: left;
+		border: 1px solid #e9e8e8;
+		height: 100px;
+		background: url(/assets/seller/upload-img-placeholder.png) no-repeat center center #fff;
+		background-size: 80%;
+	}
+  
+  .eqp-upload-img .remove_nested_fields{z-index: 1;}
+  a .photo{margin-top: 10px !important; margin-right: 0px !important;}
+  .upload-image-input input{height: 85px !important; position: relative !important;}
+  .btn-close-new {color: #424242; font-size: 20px;}
+  .eqp-upload-img .fields{margin: 10px 20px 10px 0px !important;}
+  
+</style>
+
+

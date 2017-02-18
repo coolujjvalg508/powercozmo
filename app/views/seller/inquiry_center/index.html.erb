@@ -85,13 +85,16 @@
 
 										<% if inquiry.user_id == current_user.id 
 											contact_user_id = inquiry.try(:equipment).try(:user_id)
-										 else 
-										 	contact_user_id = inquiry.user_id
-										 end %>
+											inquiry_user_type = 'buyer' %>	
+											<tr style="<%='font-weight: bold;' unless inquiry.is_read_by_buyer? %>">
+										<% else 
+										 	contact_user_id = inquiry.user_id 
+										 	inquiry_user_type = 'seller' %>
+											<tr style="<%='font-weight: bold;' unless inquiry.is_read? %>">
+										<% end %>
 
-										<tr style="<%='font-weight: bold;' unless inquiry.is_read? %>">
 											<td class="text-center chek-s">
-												<input name="" id="<%= inquiry.id %>" data-contact-user="<%= contact_user_id %>" value="1" class="bulk_action" type="checkbox">
+												<input name="" id="<%= inquiry.id %>" data-contact-user="<%= contact_user_id %>" value="1" class="bulk_action" type="checkbox" data-inquiry-user-type="<%= inquiry_user_type %>">
 												<b>&nbsp</b>
 											</td>
 											
@@ -100,9 +103,9 @@
 											<td>
 												
 												<% if inquiry.user_id == current_user.id %>
-													<img src="/assets/flag/gif/<%= inquiry.try(:equipment).try(:country).try(:code).downcase %>.gif" /> <%= inquiry.try(:equipment).try(:user).try(:profile).try(:first_name) %> <%= inquiry.try(:equipment).try(:user).try(:profile).try(:last_name) %>
+													<img class="flag-img" src="/assets/flag/gif/<%= inquiry.try(:equipment).try(:country).try(:code).downcase %>.gif" /> <%= inquiry.try(:equipment).try(:user).try(:profile).try(:first_name) %> <%= inquiry.try(:equipment).try(:user).try(:profile).try(:last_name) %>
 												<% else %>
-													<img src="/assets/flag/gif/<%= inquiry.try(:country).try(:code).downcase %>.gif" /> <%= inquiry.try(:name) %>
+													<img class="flag-img" src="/assets/flag/gif/<%= inquiry.try(:country).try(:code).downcase %>.gif" /> <%= inquiry.try(:name) %>
 												<% end %>
 
 											</td>
@@ -222,11 +225,15 @@
 			
 			if($(this).prop("checked") === true){
 				inquiry_id = $(this).attr('id');
+				inquiry_user_type = $(this).attr('data-inquiry-user-type');
+				
+				inquiry_data.push({
+		            id: inquiry_id, 
+		            inquiry_user_type:  inquiry_user_type
+		        });
 
-				inquiry_data.push(inquiry_id);
 			}
 		});
-
 		if (inquiry_data.length === 0) {
 			alert('Please select atleast one inquiry!');
 		}else{
@@ -237,7 +244,8 @@
 			      	url: "/seller/mark-unread-inquiry",
 			      	type : 'Post',
 			      	data: {
-			        	inquiry_data: inquiry_data
+			        	inquiry_data: inquiry_data,
+			        	is_show_success_msg: 'yes'
 			      	},
 			      	success: function( data ) {
 
